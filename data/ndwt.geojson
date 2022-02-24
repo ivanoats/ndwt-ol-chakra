@@ -1,0 +1,5093 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639846015-81",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=130",
+        "riverSegment": "Lake Umatilla",
+        "riverName": "Columbia",
+        "riverMile": "234",
+        "bank": "OR",
+        "season": "",
+        "camping": "",
+        "contact": "US Army Corps of Engineers",
+        "phone": "",
+        "website": "",
+        "restrooms-src": "0",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "0",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "0",
+        "handCarried-src": "0",
+        "marina-src": "0",
+        "adaAccess-src": "0"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -120.37,
+          45.695
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639845856-12",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=202",
+        "riverSegment": "Clearwater",
+        "riverName": "Clearwater",
+        "riverMile": "34",
+        "bank": "South",
+        "season": "year round",
+        "camping": "None",
+        "contact": "BLM Cottonwood Field Office",
+        "phone": "(208)962-3425",
+        "website": "http://tinyurl.com/2dhmo9",
+        "restrooms-src": "1",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "1",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "1",
+        "handCarried-src": "0",
+        "marina-src": "0",
+        "adaAccess-src": "0"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -116.45002,
+          46.49144
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639846035-90",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=121",
+        "riverSegment": "Lake Umatilla",
+        "riverName": "Columbia",
+        "riverMile": "278",
+        "bank": "WA",
+        "season": "",
+        "camping": "none",
+        "contact": "The Dalles Natural Resource Management Office",
+        "phone": "",
+        "website": "",
+        "restrooms-src": "0",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "1",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "1",
+        "handCarried-src": "1",
+        "marina-src": "0",
+        "adaAccess-src": "0"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -119.59269,
+          45.93342
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639845951-52",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=159",
+        "riverSegment": "Lake Bonneville",
+        "riverName": "Columbia",
+        "riverMile": "170",
+        "bank": "S- OR",
+        "season": "year round, fuel for vessels April 16-Sept.30",
+        "camping": "None",
+        "contact": "Port of Hood River",
+        "phone": "541-386-1645",
+        "website": "http://tinyurl.com/24vmnd",
+        "restrooms-src": "1",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "1",
+        "dayUseOnly-src": "1",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "1",
+        "handCarried-src": "0",
+        "marina-src": "1",
+        "adaAccess-src": "1"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -121.506617,
+          45.711983
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639845940-47",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=164",
+        "riverSegment": "Lake Bonneville",
+        "riverName": "Columbia",
+        "riverMile": "169",
+        "bank": "OR",
+        "season": "year round",
+        "camping": "None",
+        "contact": "Port of Hood River",
+        "phone": "541-386-1645",
+        "website": "http://tinyurl.com/24mqav",
+        "restrooms-src": "1",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "1",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "0",
+        "handCarried-src": "1",
+        "marina-src": "0",
+        "adaAccess-src": "0"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -121.522583,
+          45.7166
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639845957-55",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=156",
+        "riverSegment": "Lake Bonneville",
+        "riverName": "Columbia",
+        "riverMile": "172",
+        "bank": "WA",
+        "season": "year round",
+        "camping": "None",
+        "contact": "Port of Klickitat",
+        "phone": "509-493-1655",
+        "website": "http://tinyurl.com/27zyt6",
+        "restrooms-src": "1",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "1",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "0",
+        "handCarried-src": "0",
+        "marina-src": "0",
+        "adaAccess-src": "0"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -121.4572,
+          45.70905
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639846134-135",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=76",
+        "riverSegment": "Lake Sacajawea",
+        "riverName": "Snake",
+        "riverMile": "25",
+        "bank": "S -WA",
+        "season": "Year round",
+        "camping": "undeveloped",
+        "contact": "Ice Harbor Lock and Dam",
+        "phone": "",
+        "website": "",
+        "restrooms-src": "0",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "1",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "0",
+        "handCarried-src": "0",
+        "marina-src": "0",
+        "adaAccess-src": "0"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -118.687991,
+          46.368257
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639845931-43",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=168",
+        "riverSegment": "Lake Bonneville",
+        "riverName": "Columbia",
+        "riverMile": "155",
+        "bank": "N-WA",
+        "season": "Camping April 1 - October 31",
+        "camping": "Yes",
+        "contact": "Skamania Parks and Recreation",
+        "phone": "509-427-3980",
+        "website": "http://www.chvs.org/home_valley.html",
+        "restrooms-src": "1",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "1",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "0",
+        "handCarried-src": "1",
+        "marina-src": "0",
+        "adaAccess-src": "1"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -121.778467,
+          45.710733
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639846094-117",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=94",
+        "riverSegment": "Lake Wallula",
+        "riverName": "Columbia",
+        "riverMile": "335",
+        "bank": "WA",
+        "season": "",
+        "camping": "undeveloped",
+        "contact": "",
+        "phone": "",
+        "website": "",
+        "restrooms-src": "0",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "1",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "0",
+        "handCarried-src": "0",
+        "marina-src": "0",
+        "adaAccess-src": "0"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -119.239763,
+          46.245979
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639845911-34",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=177",
+        "riverSegment": "Lower Columbia River Water Trail",
+        "riverName": "Columbia",
+        "riverMile": "144",
+        "bank": "WA",
+        "season": "year round",
+        "camping": "undeveloped",
+        "contact": "US Army Corps of Engineers",
+        "phone": "541-374-4556",
+        "website": "",
+        "restrooms-src": "0",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "1",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "1",
+        "handCarried-src": "0",
+        "marina-src": "0",
+        "adaAccess-src": "0"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -121.96525,
+          45.633767
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639846099-119",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=92",
+        "riverSegment": "Lake Wallula",
+        "riverName": "Columbia",
+        "riverMile": "336",
+        "bank": "WA",
+        "season": "",
+        "camping": "",
+        "contact": "",
+        "phone": "",
+        "website": "",
+        "restrooms-src": "0",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "0",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "0",
+        "handCarried-src": "0",
+        "marina-src": "0",
+        "adaAccess-src": "0"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -119.241768,
+          46.261313
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639845948-51",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=160",
+        "riverSegment": "Lake Bonneville",
+        "riverName": "Columbia",
+        "riverMile": "170",
+        "bank": "OR",
+        "season": "",
+        "camping": "",
+        "contact": "Privately Owned",
+        "phone": "541-386-2200",
+        "website": "",
+        "restrooms-src": "0",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "0",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "0",
+        "handCarried-src": "0",
+        "marina-src": "0",
+        "adaAccess-src": "0"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -121.497883,
+          45.710833
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639845998-73",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=138",
+        "riverSegment": "Lake Celilo",
+        "riverName": "Columbia",
+        "riverMile": "214",
+        "bank": "OR",
+        "season": "",
+        "camping": "Yes",
+        "contact": "Army Corps of Engineers",
+        "phone": "",
+        "website": "",
+        "restrooms-src": "1",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "1",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "0",
+        "handCarried-src": "1",
+        "marina-src": "0",
+        "adaAccess-src": "0"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -120.71,
+          45.711
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639845955-54",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=157",
+        "riverSegment": "Lake Bonneville",
+        "riverName": "Columbia",
+        "riverMile": "172",
+        "bank": "WA",
+        "season": "year round",
+        "camping": "undeveloped",
+        "contact": "Port of Klickitat",
+        "phone": "509-493-1655",
+        "website": "",
+        "restrooms-src": "1",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "1",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "0",
+        "handCarried-src": "0",
+        "marina-src": "0",
+        "adaAccess-src": "0"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -121.455167,
+          45.70465
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639845834-2",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=212",
+        "riverSegment": "Lake Wallula",
+        "riverName": "Columbia",
+        "riverMile": "337.5",
+        "bank": "West",
+        "season": "year round",
+        "camping": "None",
+        "contact": "City of Richland Parks and Recreation Department",
+        "phone": "509-942-7529",
+        "website": "http://tinyurl.com/3ewy2k",
+        "restrooms-src": "1",
+        "potableWater-src": "1",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "1",
+        "picnicShelters-src": "1",
+        "boatRamp-src": "1",
+        "handCarried-src": "1",
+        "marina-src": "0",
+        "adaAccess-src": "1"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -119.271569,
+          46.274805
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639846046-95",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=116",
+        "riverSegment": "Lake Umatilla",
+        "riverName": "Columbia",
+        "riverMile": "289",
+        "bank": "OR",
+        "season": "year round",
+        "camping": "None",
+        "contact": "City of Umatilla",
+        "phone": "(541) 922-3226",
+        "website": "http://www.umatilla-city.org/facts.html",
+        "restrooms-src": "1",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "0",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "1",
+        "handCarried-src": "1",
+        "marina-src": "0",
+        "adaAccess-src": "0"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -119.350084,
+          45.914945
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639846139-137",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=74",
+        "riverSegment": "Lake Sacajawea",
+        "riverName": "Snake",
+        "riverMile": "39",
+        "bank": "N - WA",
+        "season": "Open Year Round. Restrooms/Water provided April 1 - Sept 7",
+        "camping": "Yes",
+        "contact": "Ice Harbor Lock and Dam",
+        "phone": "(\t509)-547-2048",
+        "website": "http://tinyurl.com/2cvgfb",
+        "restrooms-src": "1",
+        "potableWater-src": "1",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "1",
+        "picnicShelters-src": "1",
+        "boatRamp-src": "1",
+        "handCarried-src": "1",
+        "marina-src": "0",
+        "adaAccess-src": "1"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -118.581204,
+          46.533268
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639846011-79",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=132",
+        "riverSegment": "Lake Umatilla",
+        "riverName": "Columbia",
+        "riverMile": "219",
+        "bank": "S- OR",
+        "season": "",
+        "camping": "Yes",
+        "contact": "The Dalles Natural Resource Management Office",
+        "phone": "(541)506-7819",
+        "website": "http://tinyurl.com/22j7eb",
+        "restrooms-src": "1",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "1",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "1",
+        "handCarried-src": "0",
+        "marina-src": "0",
+        "adaAccess-src": "0"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -120.65,
+          45.728
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639846083-112",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=99",
+        "riverSegment": "Lake Wallula",
+        "riverName": "Columbia",
+        "riverMile": "329",
+        "bank": "WA",
+        "season": "",
+        "camping": "",
+        "contact": "",
+        "phone": "",
+        "website": "",
+        "restrooms-src": "0",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "0",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "0",
+        "handCarried-src": "0",
+        "marina-src": "0",
+        "adaAccess-src": "0"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -119.108862,
+          46.217682
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639846039-92",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=119",
+        "riverSegment": "Lake Umatilla",
+        "riverName": "Columbia",
+        "riverMile": "280",
+        "bank": "OR",
+        "season": "year round",
+        "camping": "Yes",
+        "contact": "The Dalles Natural Resource Management Office",
+        "phone": "541-506-7819",
+        "website": "",
+        "restrooms-src": "1",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "1",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "1",
+        "handCarried-src": "1",
+        "marina-src": "0",
+        "adaAccess-src": "0"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -119.55,
+          45.91
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639845893-28",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=185",
+        "riverSegment": "",
+        "riverName": "Clearwater",
+        "riverMile": "6",
+        "bank": "North",
+        "season": "",
+        "camping": "",
+        "contact": "Idaho Fish and Game",
+        "phone": "",
+        "website": "http://tinyurl.com/28x8kh",
+        "restrooms-src": "0",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "1",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "1",
+        "handCarried-src": "0",
+        "marina-src": "0",
+        "adaAccess-src": "0"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -116,
+          46
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639846257-188",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=21",
+        "riverSegment": "Clearwater",
+        "riverName": "Clearwater",
+        "riverMile": "21",
+        "bank": "South",
+        "season": "",
+        "camping": "None",
+        "contact": "Idaho Fish & Game",
+        "phone": "(208) 334-3700",
+        "website": "",
+        "restrooms-src": "1",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "0",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "1",
+        "handCarried-src": "1",
+        "marina-src": "0",
+        "adaAccess-src": "0"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -116.68378,
+          46.51208
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639846154-144",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=67",
+        "riverSegment": "Lake West",
+        "riverName": "Snake",
+        "riverMile": "59",
+        "bank": "S -WA",
+        "season": "Year round Closed on Tuesdays for both Summer and Winter hours..",
+        "camping": "Yes",
+        "contact": "Clarkston Natural Resources Office",
+        "phone": "509-751-0240",
+        "website": "http://tinyurl.com/284x54",
+        "restrooms-src": "1",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "1",
+        "dayUseOnly-src": "1",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "1",
+        "handCarried-src": "1",
+        "marina-src": "1",
+        "adaAccess-src": "1"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -118.220225,
+          46.585647
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639846068-105",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=106",
+        "riverSegment": "Lake Wallula",
+        "riverName": "Columbia",
+        "riverMile": "309",
+        "bank": "",
+        "season": "",
+        "camping": "",
+        "contact": "",
+        "phone": "",
+        "website": "",
+        "restrooms-src": "0",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "0",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "0",
+        "handCarried-src": "0",
+        "marina-src": "0",
+        "adaAccess-src": "0"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -118.986531,
+          46
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639846028-87",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=124",
+        "riverSegment": "Lake Umatilla",
+        "riverName": "Columbia",
+        "riverMile": "262",
+        "bank": "N-WA",
+        "season": "March 15th to October 15th",
+        "camping": "Yes",
+        "contact": "Benton County",
+        "phone": "",
+        "website": "http://www.crowbutte.com/",
+        "restrooms-src": "1",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "1",
+        "picnicShelters-src": "1",
+        "boatRamp-src": "1",
+        "handCarried-src": "0",
+        "marina-src": "0",
+        "adaAccess-src": "1"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -119.85,
+          45.856
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639846090-115",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=96",
+        "riverSegment": "Lake Wallula",
+        "riverName": "Columbia",
+        "riverMile": "334",
+        "bank": "WA",
+        "season": "year round",
+        "camping": "None",
+        "contact": "City of Richland Parks Department",
+        "phone": "(509) 942-7529",
+        "website": "http://tinyurl.com/3pg5fx",
+        "restrooms-src": "1",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "1",
+        "picnicShelters-src": "1",
+        "boatRamp-src": "1",
+        "handCarried-src": "1",
+        "marina-src": "0",
+        "adaAccess-src": "1"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -119.226897,
+          46.238445
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639846088-114",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=97",
+        "riverSegment": "Lake Wallula",
+        "riverName": "Columbia",
+        "riverMile": "330",
+        "bank": "WA",
+        "season": "Year Round",
+        "camping": "None",
+        "contact": "City of Kennewick",
+        "phone": "(509)-585-4529",
+        "website": "http://tinyurl.com/2xqny3",
+        "restrooms-src": "1",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "0",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "1",
+        "handCarried-src": "1",
+        "marina-src": "1",
+        "adaAccess-src": "0"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -119.140141,
+          46.22209
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639846245-183",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=26",
+        "riverSegment": "",
+        "riverName": "Clearwater",
+        "riverMile": "",
+        "bank": "ID",
+        "season": "",
+        "camping": "",
+        "contact": "",
+        "phone": "",
+        "website": "",
+        "restrooms-src": "0",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "0",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "0",
+        "handCarried-src": "0",
+        "marina-src": "0",
+        "adaAccess-src": "0"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -116.818144,
+          46.450916
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639846026-86",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=125",
+        "riverSegment": "Lake Umatilla",
+        "riverName": "Columbia",
+        "riverMile": "259",
+        "bank": "WA",
+        "season": "",
+        "camping": "",
+        "contact": "",
+        "phone": "",
+        "website": "",
+        "restrooms-src": "0",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "0",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "0",
+        "handCarried-src": "0",
+        "marina-src": "0",
+        "adaAccess-src": "0"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -119.29,
+          45.835
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639846059-101",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=110",
+        "riverSegment": "Lake Wallula",
+        "riverName": "Columbia",
+        "riverMile": "296",
+        "bank": "OR",
+        "season": "Gates closed at sunset between May 1st and September 30th.",
+        "camping": "None",
+        "contact": "McNary Lock and Dam",
+        "phone": "",
+        "website": "http://tinyurl.com/yptolj",
+        "restrooms-src": "1",
+        "potableWater-src": "1",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "1",
+        "picnicShelters-src": "1",
+        "boatRamp-src": "0",
+        "handCarried-src": "1",
+        "marina-src": "0",
+        "adaAccess-src": "1"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -119.269871,
+          45.93117
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639845845-7",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=207",
+        "riverSegment": "",
+        "riverName": "Clearwater",
+        "riverMile": "18",
+        "bank": "South",
+        "season": "",
+        "camping": "Tent and RV",
+        "contact": "Idaho Fish & Game",
+        "phone": "(208) 476-4541",
+        "website": "http://tinyurl.com/286spz",
+        "restrooms-src": "1",
+        "potableWater-src": "1",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "0",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "0",
+        "handCarried-src": "1",
+        "marina-src": "0",
+        "adaAccess-src": "0"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -116.72854,
+          46.49602
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639846017-82",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=129",
+        "riverSegment": "Lake Umatilla",
+        "riverName": "Columbia",
+        "riverMile": "242",
+        "bank": "WA",
+        "season": "",
+        "camping": "Yes",
+        "contact": "The Dalles Natural Resource Management Office",
+        "phone": "(541)-386-9225",
+        "website": "http://roosevelt.mediaforte.com/",
+        "restrooms-src": "1",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "1",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "1",
+        "handCarried-src": "1",
+        "marina-src": "0",
+        "adaAccess-src": "0"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -120.22,
+          45.741
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639845928-42",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=169",
+        "riverSegment": "Lake Bonneville",
+        "riverName": "Columbia",
+        "riverMile": "150",
+        "bank": "WA",
+        "season": "year round",
+        "camping": "undeveloped",
+        "contact": "Port of Skamania",
+        "phone": "509-427-5484",
+        "website": "",
+        "restrooms-src": "1",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "1",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "0",
+        "handCarried-src": "0",
+        "marina-src": "0",
+        "adaAccess-src": "1"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -121.882367,
+          45.692167
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639845933-44",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=167",
+        "riverSegment": "Lake Bonneville",
+        "riverName": "Columbia",
+        "riverMile": "160",
+        "bank": "OR",
+        "season": "Day use park and windsurfing area open year round. Camping Mid-March - October.",
+        "camping": "Tent and RV sites",
+        "contact": "Oregon State Parks",
+        "phone": "503-695-2261 x 222",
+        "website": "http://www.oregonstateparks.org/park_171.php",
+        "restrooms-src": "1",
+        "potableWater-src": "1",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "1",
+        "picnicShelters-src": "1",
+        "boatRamp-src": "0",
+        "handCarried-src": "0",
+        "marina-src": "0",
+        "adaAccess-src": "1"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -121.66785,
+          45.69925
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639845973-62",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=149",
+        "riverSegment": "Lake Bonneville",
+        "riverName": "Columbia",
+        "riverMile": "190",
+        "bank": "OR",
+        "season": "year round",
+        "camping": "undeveloped",
+        "contact": "Port of The Dalles",
+        "phone": "541-298-4148",
+        "website": "",
+        "restrooms-src": "1",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "1",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "0",
+        "handCarried-src": "0",
+        "marina-src": "0",
+        "adaAccess-src": "1"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -121.197767,
+          45.626133
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639846163-148",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=63",
+        "riverSegment": "Lake West",
+        "riverName": "Snake",
+        "riverMile": "67",
+        "bank": "N -WA",
+        "season": "Year round",
+        "camping": "Yes",
+        "contact": "Clarkston Natural Resources Office",
+        "phone": "509-751-0240",
+        "website": "http://tinyurl.com/2hv54s",
+        "restrooms-src": "1",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "1",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "0",
+        "handCarried-src": "1",
+        "marina-src": "0",
+        "adaAccess-src": "0"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -118.091199,
+          46.576515
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639845847-8",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=206",
+        "riverSegment": "Clearwater",
+        "riverName": "Clearwater",
+        "riverMile": "5",
+        "bank": "South",
+        "season": "year round",
+        "camping": "None",
+        "contact": "BLM Cottonwood Field Office",
+        "phone": "(503) 588-2701",
+        "website": "",
+        "restrooms-src": "1",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "1",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "0",
+        "handCarried-src": "0",
+        "marina-src": "0",
+        "adaAccess-src": "0"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -116.62625,
+          46.52504
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639845924-40",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=171",
+        "riverSegment": "Lake Bonneville",
+        "riverName": "Columbia",
+        "riverMile": "150",
+        "bank": "WA",
+        "season": "year round",
+        "camping": "None",
+        "contact": "Port of Skamania",
+        "phone": "509-427-5484",
+        "website": "http://tinyurl.com/2d9js8",
+        "restrooms-src": "1",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "1",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "1",
+        "handCarried-src": "1",
+        "marina-src": "0",
+        "adaAccess-src": "1"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -121.878017,
+          45.694067
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639846202-166",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=45",
+        "riverSegment": "Lower Granite Lake",
+        "riverName": "Snake",
+        "riverMile": "111",
+        "bank": "N - WA",
+        "season": "year round",
+        "camping": "Yes",
+        "contact": "Clarkston Natural Resources Office",
+        "phone": "(\t509) 751-0240",
+        "website": "http://tinyurl.com/ysektr",
+        "restrooms-src": "1",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "0",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "1",
+        "handCarried-src": "0",
+        "marina-src": "0",
+        "adaAccess-src": "1"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.37525,
+          46.6241
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639846218-173",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=38",
+        "riverSegment": "Lower Granite Lake",
+        "riverName": "Snake",
+        "riverMile": "140",
+        "bank": "W -WA",
+        "season": "Year round",
+        "camping": "None",
+        "contact": "Clarkston Natural Resources Office",
+        "phone": "(509) 751-0240",
+        "website": "http://tinyurl.com/yu9rmu",
+        "restrooms-src": "1",
+        "potableWater-src": "1",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "1",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "1",
+        "handCarried-src": "0",
+        "marina-src": "0",
+        "adaAccess-src": "1"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.036083,
+          46.41935
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639846121-129",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=82",
+        "riverSegment": "Lake Sacajawea",
+        "riverName": "Snake",
+        "riverMile": "11",
+        "bank": "S -WA",
+        "season": "day-use open year round, Fee campground May 1 to Oct 31, 6a.m. to 10p.m.",
+        "camping": "Yes",
+        "contact": "Ice Harbor Lock and Dam",
+        "phone": "509-547-2048",
+        "website": "http://tinyurl.com/yplt56",
+        "restrooms-src": "1",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "1",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "1",
+        "handCarried-src": "1",
+        "marina-src": "1",
+        "adaAccess-src": "0"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -118.846432,
+          46.260205
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639846209-169",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=42",
+        "riverSegment": "Lower Granite Lake",
+        "riverName": "Snake",
+        "riverMile": "132",
+        "bank": "S -WA",
+        "season": "Opening and closing dates will depend upon use and weather.",
+        "camping": "Yes",
+        "contact": "Clarkston Natural Resources Office",
+        "phone": "509-758-9580 (Summer Only)",
+        "website": "http://tinyurl.com/27b2ev",
+        "restrooms-src": "1",
+        "potableWater-src": "1",
+        "marineDumpStation-src": "1",
+        "dayUseOnly-src": "0",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "1",
+        "handCarried-src": "0",
+        "marina-src": "0",
+        "adaAccess-src": "1"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.195539,
+          46.41609
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639846207-168",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=43",
+        "riverSegment": "Lower Granite Lake",
+        "riverName": "Snake",
+        "riverMile": "126",
+        "bank": "N - ID",
+        "season": "Year round",
+        "camping": "Yes",
+        "contact": "Clarkston Natural Resources Office",
+        "phone": "(505)-751-0240",
+        "website": "http://tinyurl.com/2f8de3",
+        "restrooms-src": "1",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "0",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "1",
+        "handCarried-src": "0",
+        "marina-src": "0",
+        "adaAccess-src": "1"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.23495,
+          46.4724
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639846125-131",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=80",
+        "riverSegment": "Lake Sacajawea",
+        "riverName": "Snake",
+        "riverMile": "15",
+        "bank": "N - WA",
+        "season": "Year round",
+        "camping": "None",
+        "contact": "Ice Harbor Lock and Dam",
+        "phone": "(\t509)-547-2048",
+        "website": "http://tinyurl.com/2yvwrq",
+        "restrooms-src": "0",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "0",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "1",
+        "handCarried-src": "0",
+        "marina-src": "0",
+        "adaAccess-src": "0"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -118.809013,
+          46.29251
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639846070-106",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=105",
+        "riverSegment": "Lake Wallula",
+        "riverName": "Columbia",
+        "riverMile": "312",
+        "bank": "WA",
+        "season": "year round",
+        "camping": "None",
+        "contact": "McNary Lock & Dam",
+        "phone": "(509)-547-4946",
+        "website": "http://tinyurl.com/yuy23z",
+        "restrooms-src": "1",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "1",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "1",
+        "handCarried-src": "1",
+        "marina-src": "0",
+        "adaAccess-src": "0"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -118.937465,
+          46.025706
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639845887-25",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=188",
+        "riverSegment": "Lower Granite Lake",
+        "riverName": "Snake",
+        "riverMile": "113",
+        "bank": "",
+        "season": "",
+        "camping": "undeveloped",
+        "contact": "",
+        "phone": "",
+        "website": "",
+        "restrooms-src": "0",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "1",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "0",
+        "handCarried-src": "0",
+        "marina-src": "0",
+        "adaAccess-src": "0"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.357317,
+          46.6037
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639846145-140",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=71",
+        "riverSegment": "Lake West",
+        "riverName": "Snake",
+        "riverMile": "41.6",
+        "bank": "both - WA",
+        "season": "Year round",
+        "camping": "undeveloped",
+        "contact": "Ice Harbor Lock and Dam",
+        "phone": "",
+        "website": "",
+        "restrooms-src": "1",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "1",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "0",
+        "handCarried-src": "0",
+        "marina-src": "0",
+        "adaAccess-src": "0"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -118.537673,
+          46.560671
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639846136-136",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=75",
+        "riverSegment": "Lake Sacajawea",
+        "riverName": "Snake",
+        "riverMile": "30",
+        "bank": "S -WA",
+        "season": "Year round",
+        "camping": "Yes",
+        "contact": "Ice Harbor Lock and Dam",
+        "phone": "509-547-2048",
+        "website": "http://tinyurl.com/2g57yo",
+        "restrooms-src": "1",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "1",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "1",
+        "handCarried-src": "1",
+        "marina-src": "0",
+        "adaAccess-src": "1"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -118.63432,
+          46.437588
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639845900-30",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=182",
+        "riverSegment": "Lower Granite Lake",
+        "riverName": "Snake",
+        "riverMile": "113",
+        "bank": "North",
+        "season": "",
+        "camping": "undeveloped",
+        "contact": "",
+        "phone": "",
+        "website": "",
+        "restrooms-src": "0",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "1",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "0",
+        "handCarried-src": "0",
+        "marina-src": "0",
+        "adaAccess-src": "0"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117,
+          46
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639846072-107",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=104",
+        "riverSegment": "Lake Wallula",
+        "riverName": "Columbia",
+        "riverMile": "314",
+        "bank": "WA",
+        "season": "",
+        "camping": "",
+        "contact": "",
+        "phone": "",
+        "website": "",
+        "restrooms-src": "0",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "0",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "0",
+        "handCarried-src": "0",
+        "marina-src": "0",
+        "adaAccess-src": "0"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -118.918884,
+          46.100058
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639846103-121",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=90",
+        "riverSegment": "Lake Wallula",
+        "riverName": "Snake",
+        "riverMile": "1",
+        "bank": "N - WA / E (on Columbia)",
+        "season": "Year round launch, park closes Oct to May",
+        "camping": "Yes",
+        "contact": "Ice Harbor Lock and Dam",
+        "phone": "(509)-545-2361",
+        "website": "http://tinyurl.com/24v8xa",
+        "restrooms-src": "1",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "1",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "1",
+        "handCarried-src": "1",
+        "marina-src": "0",
+        "adaAccess-src": "1"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -119.03771,
+          46.201353
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639845920-38",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=173",
+        "riverSegment": "Lake Bonneville",
+        "riverName": "Columbia",
+        "riverMile": "150",
+        "bank": "OR",
+        "season": "year round",
+        "camping": "Tent and RV sites",
+        "contact": "Port of Cascade Locks",
+        "phone": "541-374-8427",
+        "website": "http://www.portofcascadelocks.org/marinepark.htm",
+        "restrooms-src": "1",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "1",
+        "dayUseOnly-src": "1",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "1",
+        "handCarried-src": "1",
+        "marina-src": "1",
+        "adaAccess-src": "1"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -121.8912,
+          45.672183
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639846275-196",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=13",
+        "riverSegment": "Clearwater",
+        "riverName": "Clearwater",
+        "riverMile": "2",
+        "bank": "N - ID",
+        "season": "Year round (Baseball & Softball Diamonds May 23- July)/Little League Baseball",
+        "camping": "None",
+        "contact": "Clarkston Natural Resources Office",
+        "phone": "208-746-2313",
+        "website": "http://www.cityoflewiston.org/parkrec/index.htm",
+        "restrooms-src": "1",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "1",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "0",
+        "handCarried-src": "1",
+        "marina-src": "0",
+        "adaAccess-src": "1"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -116.99883,
+          46.42056
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639846055-99",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=112",
+        "riverSegment": "Lake Wallula",
+        "riverName": "Columbia",
+        "riverMile": "292",
+        "bank": "WA",
+        "season": "",
+        "camping": "",
+        "contact": "McNary Lock & Dam",
+        "phone": "",
+        "website": "http://tinyurl.com/4xg488",
+        "restrooms-src": "0",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "0",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "0",
+        "handCarried-src": "0",
+        "marina-src": "0",
+        "adaAccess-src": "0"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -119.299175,
+          45.943539
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639846156-145",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=66",
+        "riverSegment": "Lake West",
+        "riverName": "Snake",
+        "riverMile": "59.5",
+        "bank": "N -WA",
+        "season": "Memorial Day weekend through September",
+        "camping": "Yes",
+        "contact": "Clarkston Natural Resources Office",
+        "phone": "(509) 399-8020",
+        "website": "http://tinyurl.com/yojob8",
+        "restrooms-src": "1",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "1",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "1",
+        "handCarried-src": "0",
+        "marina-src": "1",
+        "adaAccess-src": "1"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -118.218603,
+          46.593254
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639846053-98",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=113",
+        "riverSegment": "Lake Wallula",
+        "riverName": "Columbia",
+        "riverMile": "292",
+        "bank": "South",
+        "season": "year round",
+        "camping": "None",
+        "contact": "McNary Lock and Dam",
+        "phone": "(541)-922-2268",
+        "website": "",
+        "restrooms-src": "0",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "1",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "1",
+        "handCarried-src": "1",
+        "marina-src": "0",
+        "adaAccess-src": "0"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -119.30102,
+          45.939986
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639846074-108",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=103",
+        "riverSegment": "Lake Wallula",
+        "riverName": "Columbia",
+        "riverMile": "317",
+        "bank": "N- WA",
+        "season": "year round",
+        "camping": "undeveloped",
+        "contact": "Benton County Parks",
+        "phone": "",
+        "website": "",
+        "restrooms-src": "0",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "0",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "0",
+        "handCarried-src": "0",
+        "marina-src": "0",
+        "adaAccess-src": "0"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -118.972277,
+          46.103134
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639846079-110",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=101",
+        "riverSegment": "Lake Wallula",
+        "riverName": "Columbia",
+        "riverMile": "325",
+        "bank": "WA",
+        "season": "year round",
+        "camping": "None",
+        "contact": "Benton County Facilities and Parks",
+        "phone": "(\t509)-783-3118",
+        "website": "http://tinyurl.com/29efgv",
+        "restrooms-src": "1",
+        "potableWater-src": "1",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "1",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "1",
+        "handCarried-src": "1",
+        "marina-src": "0",
+        "adaAccess-src": "0"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -119.050301,
+          46.189888
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639846183-157",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=54",
+        "riverSegment": "Lake Bryan",
+        "riverName": "Snake",
+        "riverMile": "93",
+        "bank": "S -WA",
+        "season": "",
+        "camping": "undeveloped",
+        "contact": "Army Corps of Engineers",
+        "phone": "",
+        "website": "",
+        "restrooms-src": "0",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "0",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "0",
+        "handCarried-src": "0",
+        "marina-src": "0",
+        "adaAccess-src": "0"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.661417,
+          46.700363
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639845953-53",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=158",
+        "riverSegment": "Lake Bonneville",
+        "riverName": "Columbia",
+        "riverMile": "169",
+        "bank": "OR",
+        "season": "year round , restrooms open and fees collected April 16-Sept. 30",
+        "camping": "undeveloped",
+        "contact": "Port of Hood River",
+        "phone": "541-386-1645",
+        "website": "",
+        "restrooms-src": "1",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "1",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "0",
+        "handCarried-src": "0",
+        "marina-src": "1",
+        "adaAccess-src": "1"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -121.5117,
+          45.715033
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639846161-147",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=64",
+        "riverSegment": "Lake West",
+        "riverName": "Snake",
+        "riverMile": "66",
+        "bank": "S -WA",
+        "season": "Year round",
+        "camping": "None",
+        "contact": "Clarkston Natural Resources Office",
+        "phone": "509-751-0240",
+        "website": "http://tinyurl.com/2789aj",
+        "restrooms-src": "1",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "1",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "1",
+        "handCarried-src": "1",
+        "marina-src": "0",
+        "adaAccess-src": "0"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -118.100921,
+          46.561252
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639845960-56",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=155",
+        "riverSegment": "Lake Bonneville",
+        "riverName": "Columbia",
+        "riverMile": "174",
+        "bank": "WA",
+        "season": "year round",
+        "camping": "None",
+        "contact": "Privately Owned",
+        "phone": "",
+        "website": "http://tinyurl.com/2hd3vt",
+        "restrooms-src": "1",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "1",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "0",
+        "handCarried-src": "1",
+        "marina-src": "0",
+        "adaAccess-src": "0"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -121.570083,
+          45.722117
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639845993-71",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=140",
+        "riverSegment": "Lake Celilo",
+        "riverName": "Columbia",
+        "riverMile": "210",
+        "bank": "WA",
+        "season": "",
+        "camping": "Tent and RV",
+        "contact": "Peach Beach RV Park",
+        "phone": "509-773-4698",
+        "website": "http://tinyurl.com/yqrneo",
+        "restrooms-src": "1",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "0",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "0",
+        "handCarried-src": "1",
+        "marina-src": "0",
+        "adaAccess-src": "0"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -120.79,
+          45.7
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639846022-84",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=127",
+        "riverSegment": "Lake Umatilla",
+        "riverName": "Columbia",
+        "riverMile": "243",
+        "bank": "OR",
+        "season": "",
+        "camping": "",
+        "contact": "",
+        "phone": "",
+        "website": "",
+        "restrooms-src": "1",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "1",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "0",
+        "handCarried-src": "0",
+        "marina-src": "0",
+        "adaAccess-src": "0"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -120.2,
+          45.72
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639846222-175",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=36",
+        "riverSegment": "Lower Granite Lake",
+        "riverName": "Snake",
+        "riverMile": "142",
+        "bank": "West",
+        "season": "Year round",
+        "camping": "None",
+        "contact": "Clarkston Resources Office",
+        "phone": "",
+        "website": "http://tinyurl.com/3onngf",
+        "restrooms-src": "1",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "0",
+        "picnicShelters-src": "1",
+        "boatRamp-src": "1",
+        "handCarried-src": "1",
+        "marina-src": "0",
+        "adaAccess-src": "0"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.046945,
+          46.386579
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639846196-163",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=48",
+        "riverSegment": "Lower Granite Lake",
+        "riverName": "Snake",
+        "riverMile": "107.4",
+        "bank": "",
+        "season": "",
+        "camping": "",
+        "contact": "",
+        "phone": "",
+        "website": "",
+        "restrooms-src": "0",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "0",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "0",
+        "handCarried-src": "0",
+        "marina-src": "0",
+        "adaAccess-src": "0"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.42125,
+          46.658067
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639845946-50",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=161",
+        "riverSegment": "Lake Bonneville",
+        "riverName": "Columbia",
+        "riverMile": "170",
+        "bank": "OR",
+        "season": "year round",
+        "camping": "None",
+        "contact": "Oregon State Parks",
+        "phone": "503-695-2261 x222",
+        "website": "http://www.oregonstateparks.org/park_157.php",
+        "restrooms-src": "1",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "1",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "0",
+        "handCarried-src": "0",
+        "marina-src": "0",
+        "adaAccess-src": "0"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -121.477333,
+          45.704333
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639846117-127",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=84",
+        "riverSegment": "Lake Sacajawea",
+        "riverName": "Snake",
+        "riverMile": "9.8",
+        "bank": "",
+        "season": "",
+        "camping": "",
+        "contact": "",
+        "phone": "",
+        "website": "",
+        "restrooms-src": "0",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "0",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "0",
+        "handCarried-src": "0",
+        "marina-src": "0",
+        "adaAccess-src": "0"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -118.876926,
+          46.252776
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639846229-178",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=33",
+        "riverSegment": "Lower Granite Lake",
+        "riverName": "Snake",
+        "riverMile": "146",
+        "bank": "W -WA",
+        "season": "Year round",
+        "camping": "undeveloped",
+        "contact": "City of Asotin",
+        "phone": "509-243-4412",
+        "website": "",
+        "restrooms-src": "1",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "1",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "0",
+        "handCarried-src": "1",
+        "marina-src": "0",
+        "adaAccess-src": "1"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.051283,
+          46.3389
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639846224-176",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=35",
+        "riverSegment": "Lower Granite Lake",
+        "riverName": "Snake",
+        "riverMile": "142",
+        "bank": "WA",
+        "season": "",
+        "camping": "",
+        "contact": "",
+        "phone": "",
+        "website": "",
+        "restrooms-src": "0",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "0",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "0",
+        "handCarried-src": "0",
+        "marina-src": "0",
+        "adaAccess-src": "0"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.039147,
+          46.421968
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639845987-68",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=143",
+        "riverSegment": "Lake Celilo",
+        "riverName": "Columbia",
+        "riverMile": "202",
+        "bank": "OR",
+        "season": "year round",
+        "camping": "None",
+        "contact": "The Dalles Natural Resource Management Office",
+        "phone": "",
+        "website": "",
+        "restrooms-src": "1",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "1",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "1",
+        "handCarried-src": "1",
+        "marina-src": "0",
+        "adaAccess-src": "0"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -120.96,
+          45.65
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639846174-153",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=58",
+        "riverSegment": "Lake Bryan",
+        "riverName": "Snake",
+        "riverMile": "77.5",
+        "bank": "",
+        "season": "",
+        "camping": "",
+        "contact": "Corps of Engineers",
+        "phone": "(505)-751-0240",
+        "website": "",
+        "restrooms-src": "0",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "0",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "0",
+        "handCarried-src": "0",
+        "marina-src": "0",
+        "adaAccess-src": "0"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.896939,
+          46.592331
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639845962-57",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=154",
+        "riverSegment": "Lake Bonneville",
+        "riverName": "Columbia",
+        "riverMile": "174",
+        "bank": "OR",
+        "season": "year round",
+        "camping": "None",
+        "contact": "City of Mosier",
+        "phone": "",
+        "website": "http://tinyurl.com/yr4c6d",
+        "restrooms-src": "1",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "1",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "0",
+        "handCarried-src": "0",
+        "marina-src": "0",
+        "adaAccess-src": "0"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -121.404367,
+          45.682
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639846279-198",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=11",
+        "riverSegment": "Clearwater",
+        "riverName": "Clearwater",
+        "riverMile": "3.5",
+        "bank": "N - ID",
+        "season": "Year round",
+        "camping": "None",
+        "contact": "Clarkston Resources Office",
+        "phone": "",
+        "website": "http://tinyurl.com/4dtvl6",
+        "restrooms-src": "1",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "1",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "1",
+        "handCarried-src": "1",
+        "marina-src": "0",
+        "adaAccess-src": "1"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -116,
+          46
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639846172-152",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=59",
+        "riverSegment": "Lake Bryan",
+        "riverName": "Snake",
+        "riverMile": "72",
+        "bank": "S -WA",
+        "season": "Year round",
+        "camping": "Yes",
+        "contact": "Clarkston Natural Resources Office",
+        "phone": "(505)-751-0240",
+        "website": "http://tinyurl.com/2b95uu",
+        "restrooms-src": "1",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "1",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "1",
+        "handCarried-src": "0",
+        "marina-src": "0",
+        "adaAccess-src": "1"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -118.003812,
+          46.585197
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639846189-160",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=51",
+        "riverSegment": "Lake Bryan",
+        "riverName": "Snake",
+        "riverMile": "105.5",
+        "bank": "N-WA",
+        "season": "Year round",
+        "camping": "Yes",
+        "contact": "Clarkston Natural Resources Office",
+        "phone": "509-397-3208",
+        "website": "http://tinyurl.com/22w5th",
+        "restrooms-src": "1",
+        "potableWater-src": "1",
+        "marineDumpStation-src": "1",
+        "dayUseOnly-src": "0",
+        "picnicShelters-src": "1",
+        "boatRamp-src": "1",
+        "handCarried-src": "1",
+        "marina-src": "1",
+        "adaAccess-src": "1"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.450317,
+          46.684067
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639845937-46",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=165",
+        "riverSegment": "Lake Bonneville",
+        "riverName": "Columbia",
+        "riverMile": "167",
+        "bank": "WA",
+        "season": "year round",
+        "camping": "None",
+        "contact": "US Fish and Wildlife Service",
+        "phone": "(509) 493-1730",
+        "website": "http://tinyurl.com/2g2uev",
+        "restrooms-src": "1",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "1",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "0",
+        "handCarried-src": "0",
+        "marina-src": "0",
+        "adaAccess-src": "1"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -121.56,
+          45.72275
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639846042-93",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=118",
+        "riverSegment": "Lake Umatilla",
+        "riverName": "Columbia",
+        "riverMile": "283",
+        "bank": "S-OR",
+        "season": "year round",
+        "camping": "None",
+        "contact": "The Dalles Natural Resource Management Office",
+        "phone": "503-922-3744",
+        "website": "http://tinyurl.com/4cuffk",
+        "restrooms-src": "1",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "1",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "1",
+        "handCarried-src": "1",
+        "marina-src": "1",
+        "adaAccess-src": "1"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -119.49,
+          45.901
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639846141-138",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=73",
+        "riverSegment": "Lake Sacajawea",
+        "riverName": "Snake",
+        "riverMile": "41",
+        "bank": "S -WA",
+        "season": "Year round",
+        "camping": "Yes",
+        "contact": "Ice Harbor Lock and Dam",
+        "phone": "509-547-2048",
+        "website": "http://tinyurl.com/yt2cfs",
+        "restrooms-src": "1",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "1",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "1",
+        "handCarried-src": "1",
+        "marina-src": "0",
+        "adaAccess-src": "0"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -118.541413,
+          46.556791
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639846213-171",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=40",
+        "riverSegment": "Lower Granite Lake",
+        "riverName": "Snake",
+        "riverMile": "138",
+        "bank": "S -WA",
+        "season": "Year round",
+        "camping": "RV only",
+        "contact": "Hells Canyon Marina",
+        "phone": "509-758-6963",
+        "website": "http://www.hellscanyon.net/",
+        "restrooms-src": "1",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "1",
+        "dayUseOnly-src": "0",
+        "picnicShelters-src": "1",
+        "boatRamp-src": "1",
+        "handCarried-src": "0",
+        "marina-src": "1",
+        "adaAccess-src": "1"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.0696,
+          46.4202
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639846227-177",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=34",
+        "riverSegment": "Lower Granite Lake",
+        "riverName": "Snake",
+        "riverMile": "143",
+        "bank": "E - ID",
+        "season": "Year round",
+        "camping": "undeveloped",
+        "contact": "Hells Gate State Park",
+        "phone": "(208)-799-5015",
+        "website": "",
+        "restrooms-src": "1",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "1",
+        "dayUseOnly-src": "1",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "1",
+        "handCarried-src": "1",
+        "marina-src": "0",
+        "adaAccess-src": "1"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.05375,
+          46.3696
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639845985-67",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=144",
+        "riverSegment": "Lake Celilo",
+        "riverName": "Columbia",
+        "riverMile": "199",
+        "bank": "WA",
+        "season": "",
+        "camping": "",
+        "contact": "The Dalles Natural Resource Management Office",
+        "phone": "",
+        "website": "",
+        "restrooms-src": "1",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "1",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "1",
+        "handCarried-src": "1",
+        "marina-src": "0",
+        "adaAccess-src": "0"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -121.04,
+          45.663
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639845915-36",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=175",
+        "riverSegment": "Bonneville Dam",
+        "riverName": "Columbia",
+        "riverMile": "147",
+        "bank": "WA",
+        "season": "year round",
+        "camping": "undeveloped",
+        "contact": "US Army Corps of Engineers",
+        "phone": "541-374-4556",
+        "website": "",
+        "restrooms-src": "1",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "1",
+        "picnicShelters-src": "1",
+        "boatRamp-src": "1",
+        "handCarried-src": "0",
+        "marina-src": "0",
+        "adaAccess-src": "1"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -121.935017,
+          45.635167
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639846198-164",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=47",
+        "riverSegment": "Lower Granite Lake",
+        "riverName": "Snake",
+        "riverMile": "108",
+        "bank": "N - WA",
+        "season": "Year round",
+        "camping": "Yes",
+        "contact": "Clarkston Natural Resources Office",
+        "phone": "(509) 751-0240",
+        "website": "http://tinyurl.com/24x296",
+        "restrooms-src": "1",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "0",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "1",
+        "handCarried-src": "0",
+        "marina-src": "0",
+        "adaAccess-src": "1"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.417067,
+          46.634917
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639845854-11",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=203",
+        "riverSegment": "Lake Wallula",
+        "riverName": "Columbia",
+        "riverMile": "315",
+        "bank": "",
+        "season": "year round",
+        "camping": "Tent and RV",
+        "contact": "Ice Harbor Lock & Dam",
+        "phone": "",
+        "website": "http://tinyurl.com/3zt3ul",
+        "restrooms-src": "1",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "0",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "1",
+        "handCarried-src": "1",
+        "marina-src": "0",
+        "adaAccess-src": "0"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -118.912411,
+          46.057807
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639846185-158",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=53",
+        "riverSegment": "Lake Bryan",
+        "riverName": "Snake",
+        "riverMile": "102",
+        "bank": "S -WA",
+        "season": "Year round",
+        "camping": "undeveloped",
+        "contact": "Clarkston Natural Resources Office",
+        "phone": "(505)-751-0204",
+        "website": "",
+        "restrooms-src": "1",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "1",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "0",
+        "handCarried-src": "0",
+        "marina-src": "0",
+        "adaAccess-src": "0"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.501255,
+          46.680324
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639846180-156",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=55",
+        "riverSegment": "Lake Bryan",
+        "riverName": "Snake",
+        "riverMile": "88",
+        "bank": "S -WA",
+        "season": "Year round",
+        "camping": "Yes",
+        "contact": "Clarkston Natural Resources Office",
+        "phone": "(509) 751-0240",
+        "website": "http://tinyurl.com/2ho48x",
+        "restrooms-src": "1",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "0",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "1",
+        "handCarried-src": "0",
+        "marina-src": "0",
+        "adaAccess-src": "0"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.749768,
+          46.682524
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639845969-60",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=151",
+        "riverSegment": "Lake Bonneville",
+        "riverName": "Columbia",
+        "riverMile": "190",
+        "bank": "OR",
+        "season": "Open May 25 - November 1.",
+        "camping": "None",
+        "contact": "Northern Wasco County Parks and Recreation",
+        "phone": "541-296-9533",
+        "website": "http://tinyurl.com/35pvtm",
+        "restrooms-src": "1",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "1",
+        "picnicShelters-src": "1",
+        "boatRamp-src": "1",
+        "handCarried-src": "0",
+        "marina-src": "0",
+        "adaAccess-src": "1"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -121.16875,
+          45.600517
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639846105-122",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=89",
+        "riverSegment": "Lake Wallula",
+        "riverName": "Snake",
+        "riverMile": "2",
+        "bank": "WA",
+        "season": "",
+        "camping": "",
+        "contact": "",
+        "phone": "",
+        "website": "",
+        "restrooms-src": "0",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "0",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "0",
+        "handCarried-src": "0",
+        "marina-src": "0",
+        "adaAccess-src": "0"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -119.0189,
+          46.214683
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639845991-70",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=141",
+        "riverSegment": "Lake Celilo",
+        "riverName": "Columbia",
+        "riverMile": "209",
+        "bank": "WA",
+        "season": "",
+        "camping": "",
+        "contact": "",
+        "phone": "",
+        "website": "",
+        "restrooms-src": "0",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "0",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "0",
+        "handCarried-src": "0",
+        "marina-src": "0",
+        "adaAccess-src": "0"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -120.83,
+          45.676
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639845966-59",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=152",
+        "riverSegment": "Lake Bonneville",
+        "riverName": "Columbia",
+        "riverMile": "181",
+        "bank": "OR",
+        "season": "year round",
+        "camping": "none",
+        "contact": "Oregon State Parks",
+        "phone": "503-695-2261 x222",
+        "website": "http://www.oregonstateparks.org/park_161.php",
+        "restrooms-src": "1",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "1",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "0",
+        "handCarried-src": "0",
+        "marina-src": "0",
+        "adaAccess-src": "1"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -121.26455,
+          45.675533
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639846301-208",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=1",
+        "riverSegment": "Clearwater",
+        "riverName": "Clearwater",
+        "riverMile": "40",
+        "bank": "South",
+        "season": "year round",
+        "camping": "None",
+        "contact": "Nez Perce National Historic Park",
+        "phone": "",
+        "website": "",
+        "restrooms-src": "1",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "1",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "0",
+        "handCarried-src": "0",
+        "marina-src": "0",
+        "adaAccess-src": "1"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -116.34823,
+          46.50514
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639846264-191",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=18",
+        "riverSegment": "",
+        "riverName": "Clearwater",
+        "riverMile": "",
+        "bank": "ID",
+        "season": "",
+        "camping": "",
+        "contact": "CMC/BLM",
+        "phone": "",
+        "website": "",
+        "restrooms-src": "0",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "0",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "0",
+        "handCarried-src": "0",
+        "marina-src": "0",
+        "adaAccess-src": "0"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -116.766443,
+          46.476442
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639845942-48",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=163",
+        "riverSegment": "Lake Bonneville",
+        "riverName": "Columbia",
+        "riverMile": "169",
+        "bank": "OR",
+        "season": "year round",
+        "camping": "None",
+        "contact": "Port of Hood River",
+        "phone": "541-386-1645",
+        "website": "",
+        "restrooms-src": "0",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "1",
+        "dayUseOnly-src": "1",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "1",
+        "handCarried-src": "0",
+        "marina-src": "0",
+        "adaAccess-src": "1"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -121.502833,
+          45.711867
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639846152-143",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=68",
+        "riverSegment": "Lake West",
+        "riverName": "Snake",
+        "riverMile": "51",
+        "bank": "S -WA",
+        "season": "Year round",
+        "camping": "Yes",
+        "contact": "Ice Harbor Lock and Dam",
+        "phone": "509-547-2048",
+        "website": "http://tinyurl.com/2gymwe",
+        "restrooms-src": "1",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "1",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "1",
+        "handCarried-src": "1",
+        "marina-src": "0",
+        "adaAccess-src": "0"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -118.36984,
+          46.586974
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639846033-89",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=122",
+        "riverSegment": "Lake Umatilla",
+        "riverName": "Columbia",
+        "riverMile": "269",
+        "bank": "OR",
+        "season": "March 15 through December 15",
+        "camping": "Yes",
+        "contact": "The Dalles Natural Resource Management Office",
+        "phone": "503-481-7217",
+        "website": "http://tinyurl.com/4t4onc",
+        "restrooms-src": "1",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "1",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "1",
+        "handCarried-src": "1",
+        "marina-src": "0",
+        "adaAccess-src": "1"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -119.7,
+          45.846
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639846085-113",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=98",
+        "riverSegment": "Lake Wallula",
+        "riverName": "Columbia",
+        "riverMile": "329",
+        "bank": "WA",
+        "season": "",
+        "camping": "",
+        "contact": "Port of Kennewick",
+        "phone": "509.586.1186",
+        "website": "http://www.portofkennewick.org/",
+        "restrooms-src": "0",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "0",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "1",
+        "handCarried-src": "1",
+        "marina-src": "0",
+        "adaAccess-src": "0"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -119.115994,
+          46.21702
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639846176-154",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=57",
+        "riverSegment": "Lake Bryan",
+        "riverName": "Snake",
+        "riverMile": "83",
+        "bank": "S -WA",
+        "season": "",
+        "camping": "",
+        "contact": "Port of Garfield",
+        "phone": "(509) 843-3740",
+        "website": "http://www.portofgarfield.com/",
+        "restrooms-src": "0",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "0",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "1",
+        "handCarried-src": "1",
+        "marina-src": "0",
+        "adaAccess-src": "0"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.796673,
+          46.616049
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639846044-94",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=117",
+        "riverSegment": "Lake Umatilla",
+        "riverName": "Columbia",
+        "riverMile": "289",
+        "bank": "WA",
+        "season": "Campground - April 1 to October 31, Day-Use - May to September",
+        "camping": "Yes",
+        "contact": "The Dalles Natural Resource Management Office",
+        "phone": "(509) 783-1270",
+        "website": "http://tinyurl.com/ynthwd",
+        "restrooms-src": "1",
+        "potableWater-src": "1",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "0",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "1",
+        "handCarried-src": "1",
+        "marina-src": "0",
+        "adaAccess-src": "1"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -119.35,
+          45.932
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639846205-167",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=44",
+        "riverSegment": "Lower Granite Lake",
+        "riverName": "Snake",
+        "riverMile": "119",
+        "bank": "N -WA",
+        "season": "Year round",
+        "camping": "Yes",
+        "contact": "Clarkston Natural Resources Office",
+        "phone": "(509) 751-0240",
+        "website": "http://tinyurl.com/23xfzh",
+        "restrooms-src": "1",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "1",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "1",
+        "handCarried-src": "0",
+        "marina-src": "0",
+        "adaAccess-src": "1"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.269717,
+          46.5557
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639845944-49",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=162",
+        "riverSegment": "Lake Bonneville",
+        "riverName": "Columbia",
+        "riverMile": "169",
+        "bank": "WA",
+        "season": "year round",
+        "camping": "undeveloped",
+        "contact": "Privately Owned",
+        "phone": "TBD",
+        "website": "",
+        "restrooms-src": "1",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "1",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "0",
+        "handCarried-src": "0",
+        "marina-src": "0",
+        "adaAccess-src": "0"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -121.498017,
+          45.722833
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639846000-74",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=137",
+        "riverSegment": "Lake Celilo",
+        "riverName": "Columbia",
+        "riverMile": "214",
+        "bank": "S-OR",
+        "season": "",
+        "camping": "Yes",
+        "contact": "The Dalles Natural Resource Management Office",
+        "phone": "",
+        "website": "",
+        "restrooms-src": "1",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "0",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "1",
+        "handCarried-src": "0",
+        "marina-src": "0",
+        "adaAccess-src": "0"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -120.71,
+          45.711
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639846037-91",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=120",
+        "riverSegment": "Lake Umatilla",
+        "riverName": "Columbia",
+        "riverMile": "279",
+        "bank": "OR",
+        "season": "",
+        "camping": "",
+        "contact": "",
+        "phone": "",
+        "website": "",
+        "restrooms-src": "0",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "0",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "0",
+        "handCarried-src": "0",
+        "marina-src": "0",
+        "adaAccess-src": "0"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -119.5,
+          45.91
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639846187-159",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=52",
+        "riverSegment": "Lake Bryan",
+        "riverName": "Snake",
+        "riverMile": "103",
+        "bank": "S -WA",
+        "season": "Year round",
+        "camping": "Yes",
+        "contact": "Clarkston Natural Resources Office",
+        "phone": "(509) 751-0240",
+        "website": "http://tinyurl.com/yrdgwu",
+        "restrooms-src": "1",
+        "potableWater-src": "1",
+        "marineDumpStation-src": "1",
+        "dayUseOnly-src": "1",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "1",
+        "handCarried-src": "1",
+        "marina-src": "1",
+        "adaAccess-src": "0"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.469283,
+          46.691417
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639846061-102",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=109",
+        "riverSegment": "Lake Wallula",
+        "riverName": "Columbia",
+        "riverMile": "298",
+        "bank": "S-OR",
+        "season": "Year Round",
+        "camping": "None",
+        "contact": "Oregon State Parks",
+        "phone": "(541)-567-5032",
+        "website": "http://tinyurl.com/yopbvr",
+        "restrooms-src": "1",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "1",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "1",
+        "handCarried-src": "1",
+        "marina-src": "0",
+        "adaAccess-src": "1"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -119.174578,
+          45.917642
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639846211-170",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=41",
+        "riverSegment": "Lower Granite Lake",
+        "riverName": "Snake",
+        "riverMile": "132",
+        "bank": "S -WA",
+        "season": "Year round",
+        "camping": "undeveloped",
+        "contact": "Clarkston Resources Office",
+        "phone": "509-751-0256 or 509-751-0257",
+        "website": "",
+        "restrooms-src": "0",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "1",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "0",
+        "handCarried-src": "0",
+        "marina-src": "0",
+        "adaAccess-src": "0"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.1913,
+          46.420567
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639846031-88",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=123",
+        "riverSegment": "Lake Umatilla",
+        "riverName": "Columbia",
+        "riverMile": "269",
+        "bank": "OR",
+        "season": "",
+        "camping": "",
+        "contact": "",
+        "phone": "",
+        "website": "",
+        "restrooms-src": "1",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "0",
+        "picnicShelters-src": "1",
+        "boatRamp-src": "1",
+        "handCarried-src": "1",
+        "marina-src": "0",
+        "adaAccess-src": "0"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -119.65,
+          45.846
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639846270-194",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=15",
+        "riverSegment": "",
+        "riverName": "Clearwater",
+        "riverMile": "",
+        "bank": "ID",
+        "season": "",
+        "camping": "",
+        "contact": "",
+        "phone": "",
+        "website": "",
+        "restrooms-src": "0",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "0",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "0",
+        "handCarried-src": "1",
+        "marina-src": "0",
+        "adaAccess-src": "0"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.001324,
+          46.401712
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639846114-126",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=85",
+        "riverSegment": "",
+        "riverName": "Snake",
+        "riverMile": "9.7",
+        "bank": "both - WA",
+        "season": "Visitor Center is open from April 1 through October 31, 2005",
+        "camping": "undeveloped",
+        "contact": "Ice Harbor Lock and Dam",
+        "phone": "",
+        "website": "",
+        "restrooms-src": "1",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "1",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "1",
+        "handCarried-src": "1",
+        "marina-src": "0",
+        "adaAccess-src": "1"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -118.881411,
+          46.251092
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639846150-142",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=69",
+        "riverSegment": "Lake West",
+        "riverName": "Snake",
+        "riverMile": "42",
+        "bank": "N -WA",
+        "season": "Year round",
+        "camping": "Yes",
+        "contact": "Ice Harbor Lock and Dam",
+        "phone": "509-547-2048",
+        "website": "http://tinyurl.com/2d278n",
+        "restrooms-src": "1",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "1",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "1",
+        "handCarried-src": "1",
+        "marina-src": "0",
+        "adaAccess-src": "0"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -118.530498,
+          46.569896
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639846024-85",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=126",
+        "riverSegment": "Lake Umatilla",
+        "riverName": "Columbia",
+        "riverMile": "256",
+        "bank": "OR",
+        "season": "",
+        "camping": "Yes",
+        "contact": "The Dalles Natural Resources Management Office",
+        "phone": "541-298-7527",
+        "website": "",
+        "restrooms-src": "1",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "0",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "1",
+        "handCarried-src": "1",
+        "marina-src": "0",
+        "adaAccess-src": "0"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -119.8,
+          45.806
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639846013-80",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=131",
+        "riverSegment": "Lake Umatilla",
+        "riverName": "Columbia",
+        "riverMile": "230",
+        "bank": "WA",
+        "season": "",
+        "camping": "",
+        "contact": "",
+        "phone": "",
+        "website": "",
+        "restrooms-src": "0",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "0",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "0",
+        "handCarried-src": "0",
+        "marina-src": "0",
+        "adaAccess-src": "0"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -120.46,
+          45.721
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639846092-116",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=95",
+        "riverSegment": "Lake Wallula",
+        "riverName": "Columbia",
+        "riverMile": "334",
+        "bank": "WA",
+        "season": "Year round",
+        "camping": "None",
+        "contact": "Franklin County Parks and Recreation",
+        "phone": "509-545-3541",
+        "website": "http://tinyurl.com/23hgtk",
+        "restrooms-src": "1",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "1",
+        "picnicShelters-src": "1",
+        "boatRamp-src": "1",
+        "handCarried-src": "1",
+        "marina-src": "0",
+        "adaAccess-src": "1"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -119.209361,
+          46.245222
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639846178-155",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=56",
+        "riverSegment": "Lake Bryan",
+        "riverName": "Snake",
+        "riverMile": "83",
+        "bank": "N -WA",
+        "season": "Opening and closing dates will depend upon use and weather",
+        "camping": "Yes",
+        "contact": "Clarkston Natural Resources Office",
+        "phone": "509-549-3551",
+        "website": "http://tinyurl.com/2ho2vb",
+        "restrooms-src": "1",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "1",
+        "dayUseOnly-src": "1",
+        "picnicShelters-src": "1",
+        "boatRamp-src": "1",
+        "handCarried-src": "1",
+        "marina-src": "0",
+        "adaAccess-src": "1"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.812771,
+          46.630639
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639846266-192",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=17",
+        "riverSegment": "",
+        "riverName": "Clearwater",
+        "riverMile": "",
+        "bank": "ID",
+        "season": "",
+        "camping": "",
+        "contact": "",
+        "phone": "",
+        "website": "",
+        "restrooms-src": "0",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "0",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "0",
+        "handCarried-src": "0",
+        "marina-src": "0",
+        "adaAccess-src": "0"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -116.806586,
+          46.452211
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639845982-66",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=145",
+        "riverSegment": "Lake Celilo",
+        "riverName": "Columbia",
+        "riverMile": "195",
+        "bank": "N-WA",
+        "season": "Closed Oct 31-March 31",
+        "camping": "Yes",
+        "contact": "Washington State Parks",
+        "phone": "(509) 767-1159",
+        "website": "http://tinyurl.com/ynppf6",
+        "restrooms-src": "1",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "1",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "1",
+        "handCarried-src": "0",
+        "marina-src": "0",
+        "adaAccess-src": "0"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -121.1,
+          45.646
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639846191-161",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=50",
+        "riverSegment": "Lake Bryan",
+        "riverName": "Snake",
+        "riverMile": "107.2",
+        "bank": "",
+        "season": "",
+        "camping": "",
+        "contact": "",
+        "phone": "",
+        "website": "",
+        "restrooms-src": "0",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "0",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "0",
+        "handCarried-src": "0",
+        "marina-src": "0",
+        "adaAccess-src": "0"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.417067,
+          46.6588
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639845964-58",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=153",
+        "riverSegment": "Lake Bonneville",
+        "riverName": "Columbia",
+        "riverMile": "175",
+        "bank": "OR",
+        "season": "year round",
+        "camping": "None",
+        "contact": "City of Mosier",
+        "phone": "(541-400-0354)",
+        "website": "http://windsurf.gorge.net/cgwa/sites/mosier.html",
+        "restrooms-src": "0",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "1",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "0",
+        "handCarried-src": "1",
+        "marina-src": "0",
+        "adaAccess-src": "0"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -121.3949,
+          45.6846
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639845913-35",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=176",
+        "riverSegment": "Bonneville Dam",
+        "riverName": "Columbia",
+        "riverMile": "147",
+        "bank": "OR",
+        "season": "year round",
+        "camping": "undeveloped",
+        "contact": "US Army Corps of Engineers",
+        "phone": "541-374-4556",
+        "website": "",
+        "restrooms-src": "1",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "1",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "0",
+        "handCarried-src": "0",
+        "marina-src": "0",
+        "adaAccess-src": "1"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -121.961917,
+          45.6316
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639846194-162",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=49",
+        "riverSegment": "",
+        "riverName": "Snake",
+        "riverMile": "107.3",
+        "bank": "Both - ID",
+        "season": "Dam Crossing Hours of operation are:\nCLOSED UNTIL FURTHER NOTICE.",
+        "camping": "undeveloped",
+        "contact": "Clarkston Resources Office",
+        "phone": "509-843-1493 ext. 262",
+        "website": "",
+        "restrooms-src": "1",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "1",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "0",
+        "handCarried-src": "0",
+        "marina-src": "0",
+        "adaAccess-src": "1"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.429459,
+          46.661096
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639846200-165",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=46",
+        "riverSegment": "Lower Granite Lake",
+        "riverName": "Snake",
+        "riverMile": "110.5",
+        "bank": "N - WA",
+        "season": "Year round. Water available April 15 to October 15.",
+        "camping": "Yes",
+        "contact": "Clarkston Natural Resources Office",
+        "phone": "(509) 334-3774.",
+        "website": "http://tinyurl.com/yrok4b",
+        "restrooms-src": "1",
+        "potableWater-src": "1",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "0",
+        "picnicShelters-src": "1",
+        "boatRamp-src": "0",
+        "handCarried-src": "1",
+        "marina-src": "0",
+        "adaAccess-src": "1"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.373983,
+          46.63435
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639845898-29",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=183",
+        "riverSegment": "Lake Bryan",
+        "riverName": "Snake",
+        "riverMile": "101",
+        "bank": "South",
+        "season": "",
+        "camping": "Tent only",
+        "contact": "ACOE Clarkston Natural Resources Office",
+        "phone": "(505)-751-0240",
+        "website": "http://tinyurl.com/4m685r",
+        "restrooms-src": "1",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "0",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "0",
+        "handCarried-src": "1",
+        "marina-src": "0",
+        "adaAccess-src": "0"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.5012,
+          46.674833
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639845836-3",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=211",
+        "riverSegment": "Lake Wallula",
+        "riverName": "Columbia",
+        "riverMile": "339",
+        "bank": "West",
+        "season": "year round",
+        "camping": "None",
+        "contact": "City of Richland Parks and Recreation Department",
+        "phone": "509-942-7529",
+        "website": "http://tinyurl.com/4aqwxw",
+        "restrooms-src": "1",
+        "potableWater-src": "1",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "1",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "0",
+        "handCarried-src": "1",
+        "marina-src": "0",
+        "adaAccess-src": "1"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -119.268672,
+          46.294216
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639845922-39",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=172",
+        "riverSegment": "Lake Bonneville",
+        "riverName": "Columbia",
+        "riverMile": "150",
+        "bank": "OR",
+        "season": "year round",
+        "camping": "undeveloped",
+        "contact": "Port of Cascade Locks",
+        "phone": "541-374-8427",
+        "website": "",
+        "restrooms-src": "1",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "1",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "1",
+        "handCarried-src": "0",
+        "marina-src": "0",
+        "adaAccess-src": "1"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -121.896867,
+          45.667517
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639845841-5",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=209",
+        "riverSegment": "",
+        "riverName": "Clearwater",
+        "riverMile": "4",
+        "bank": "North",
+        "season": "",
+        "camping": "None",
+        "contact": "",
+        "phone": "",
+        "website": "",
+        "restrooms-src": "1",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "1",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "1",
+        "handCarried-src": "1",
+        "marina-src": "0",
+        "adaAccess-src": "0"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -116.98374,
+          46.43003
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639845850-9",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=205",
+        "riverSegment": "",
+        "riverName": "Clearwater",
+        "riverMile": "30",
+        "bank": "North",
+        "season": "",
+        "camping": "",
+        "contact": "Idaho fish and game",
+        "phone": "",
+        "website": "",
+        "restrooms-src": "1",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "0",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "0",
+        "handCarried-src": "0",
+        "marina-src": "0",
+        "adaAccess-src": "0"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -116.54964,
+          46.50653
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639846130-133",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=78",
+        "riverSegment": "Lake Sacajawea",
+        "riverName": "Snake",
+        "riverMile": "19",
+        "bank": "N - WA",
+        "season": "Year round",
+        "camping": "Yes",
+        "contact": "Ice Harbor Lock and Dam",
+        "phone": "(509)-547-2048",
+        "website": "http://tinyurl.com/yssuww",
+        "restrooms-src": "0",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "0",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "0",
+        "handCarried-src": "1",
+        "marina-src": "0",
+        "adaAccess-src": "0"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -118.766401,
+          46.331947
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639845883-24",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=190",
+        "riverSegment": "Clearwater",
+        "riverName": "Clearwater",
+        "riverMile": "16",
+        "bank": "",
+        "season": "",
+        "camping": "Yes",
+        "contact": "Idaho Fish and Game",
+        "phone": "",
+        "website": "http://tinyurl.com/28x8kh",
+        "restrooms-src": "1",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "0",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "1",
+        "handCarried-src": "1",
+        "marina-src": "0",
+        "adaAccess-src": "1"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -116.75301,
+          46.47953
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639845935-45",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=166",
+        "riverSegment": "Lake Bonneville",
+        "riverName": "Columbia",
+        "riverMile": "162",
+        "bank": "WA",
+        "season": "year round",
+        "camping": "None",
+        "contact": "Skamania Parks and Recreation",
+        "phone": "509-427-3925",
+        "website": "http://tinyurl.com/yuws4w",
+        "restrooms-src": "1",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "1",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "1",
+        "handCarried-src": "0",
+        "marina-src": "0",
+        "adaAccess-src": "0"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -121.639883,
+          45.7103
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639846006-77",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=134",
+        "riverSegment": "Lake Umatilla",
+        "riverName": "Columbia",
+        "riverMile": "216",
+        "bank": "WA",
+        "season": "",
+        "camping": "",
+        "contact": "",
+        "phone": "",
+        "website": "",
+        "restrooms-src": "0",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "0",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "0",
+        "handCarried-src": "0",
+        "marina-src": "0",
+        "adaAccess-src": "0"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -120.69,
+          45.72
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639845926-41",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=170",
+        "riverSegment": "Lake Bonneville",
+        "riverName": "Columbia",
+        "riverMile": "150",
+        "bank": "WA",
+        "season": "year round",
+        "camping": "None",
+        "contact": "Port of Skamania",
+        "phone": "509-427-5650",
+        "website": "http://www.portofskamania.org/bobsBeach.htm",
+        "restrooms-src": "1",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "1",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "0",
+        "handCarried-src": "0",
+        "marina-src": "0",
+        "adaAccess-src": "1"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -121.8834,
+          45.691467
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639846167-150",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=61",
+        "riverSegment": "Lake Bryan",
+        "riverName": "Snake",
+        "riverMile": "70.3",
+        "bank": "both -WA",
+        "season": "Visitor Center is open year round.",
+        "camping": "undeveloped",
+        "contact": "Clarkston Natural Resources Office",
+        "phone": "(505)-751-0240",
+        "website": "",
+        "restrooms-src": "1",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "1",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "0",
+        "handCarried-src": "0",
+        "marina-src": "0",
+        "adaAccess-src": "1"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -118.027958,
+          46.582126
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639846081-111",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=100",
+        "riverSegment": "Lake Wallula",
+        "riverName": "Columbia",
+        "riverMile": "328",
+        "bank": "WA",
+        "season": "year round",
+        "camping": "None",
+        "contact": "Ice Harbor Lock and Dam",
+        "phone": "(509)-547-2048",
+        "website": "http://tinyurl.com/2zswx7",
+        "restrooms-src": "1",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "1",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "1",
+        "handCarried-src": "1",
+        "marina-src": "1",
+        "adaAccess-src": "0"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -119.087627,
+          46.217859
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639846216-172",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=39",
+        "riverSegment": "Lower Granite Lake",
+        "riverName": "Snake",
+        "riverMile": "139",
+        "bank": "E - ID",
+        "season": "Year round",
+        "camping": "5",
+        "contact": "Clarkston Resources Office",
+        "phone": "(505)-751-0240",
+        "website": "",
+        "restrooms-src": "1",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "1",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "0",
+        "handCarried-src": "0",
+        "marina-src": "0",
+        "adaAccess-src": "1"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.03375,
+          46.421333
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639846132-134",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=77",
+        "riverSegment": "Lake Sacajawea",
+        "riverName": "Snake",
+        "riverMile": "23",
+        "bank": "N - WA",
+        "season": "Year round",
+        "camping": "undeveloped",
+        "contact": "Ice Harbor Lock and Dam",
+        "phone": "509-547-2048",
+        "website": "",
+        "restrooms-src": "0",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "0",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "0",
+        "handCarried-src": "0",
+        "marina-src": "0",
+        "adaAccess-src": "0"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -118.722769,
+          46.366983
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639845989-69",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=142",
+        "riverSegment": "Lake Celilo",
+        "riverName": "Columbia",
+        "riverMile": "204",
+        "bank": "S- OR",
+        "season": "year round",
+        "camping": "None",
+        "contact": "Oregon State Parks",
+        "phone": "",
+        "website": "http://www.oregonstateparks.org/park_35.php",
+        "restrooms-src": "1",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "1",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "1",
+        "handCarried-src": "0",
+        "marina-src": "0",
+        "adaAccess-src": "0"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -120.91,
+          45.634
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639846119-128",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=83",
+        "riverSegment": "Lake Sacajawea",
+        "riverName": "Snake",
+        "riverMile": "10",
+        "bank": "N-WA",
+        "season": "",
+        "camping": "",
+        "contact": "",
+        "phone": "",
+        "website": "",
+        "restrooms-src": "0",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "0",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "0",
+        "handCarried-src": "0",
+        "marina-src": "0",
+        "adaAccess-src": "0"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -118.876952,
+          46.252911
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639845971-61",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=150",
+        "riverSegment": "Lake Bonneville",
+        "riverName": "Columbia",
+        "riverMile": "190",
+        "bank": "OR",
+        "season": "year round",
+        "camping": "None",
+        "contact": "Port of The Dalles",
+        "phone": "541-298-4148",
+        "website": "http://www.portofthedalles.com/m_info.cfm",
+        "restrooms-src": "1",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "1",
+        "dayUseOnly-src": "1",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "1",
+        "handCarried-src": "0",
+        "marina-src": "1",
+        "adaAccess-src": "1"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -121.197767,
+          45.626133
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639846220-174",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=37",
+        "riverSegment": "Lower Granite Lake",
+        "riverName": "Snake",
+        "riverMile": "141",
+        "bank": "E - ID",
+        "season": "Year round",
+        "camping": "None",
+        "contact": "Clarkston Resources Office",
+        "phone": "",
+        "website": "http://tinyurl.com/4a5qk7",
+        "restrooms-src": "1",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "1",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "1",
+        "handCarried-src": "0",
+        "marina-src": "0",
+        "adaAccess-src": "1"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.034567,
+          46.40235
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639845902-31",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=181",
+        "riverSegment": "Lake Wallula",
+        "riverName": "Columbia",
+        "riverMile": "300",
+        "bank": "South",
+        "season": "",
+        "camping": "Tent and RV",
+        "contact": "McNary Dam",
+        "phone": "541-922-2268",
+        "website": "http://tinyurl.com/4nxbdl",
+        "restrooms-src": "1",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "0",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "0",
+        "handCarried-src": "1",
+        "marina-src": "0",
+        "adaAccess-src": "0"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -119.301052,
+          45.921184
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639846128-132",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=79",
+        "riverSegment": "Lake Sacajawea",
+        "riverName": "Snake",
+        "riverMile": "18",
+        "bank": "S -WA",
+        "season": "May 1 to September 30, 2005",
+        "camping": "Yes",
+        "contact": "Ice Harbor Lock and Dam",
+        "phone": "Contact Ice Harbor Dam (509-547-2048)",
+        "website": "http://tinyurl.com/28wjn3",
+        "restrooms-src": "1",
+        "potableWater-src": "1",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "1",
+        "picnicShelters-src": "1",
+        "boatRamp-src": "1",
+        "handCarried-src": "1",
+        "marina-src": "0",
+        "adaAccess-src": "1"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -118.767,
+          46.32403
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639845839-4",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=210",
+        "riverSegment": "Clearwater",
+        "riverName": "Clearwater",
+        "riverMile": "10",
+        "bank": "",
+        "season": "",
+        "camping": "Yes",
+        "contact": "Idaho Fish and Game",
+        "phone": "",
+        "website": "http://tinyurl.com/yrswl2",
+        "restrooms-src": "1",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "1",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "1",
+        "handCarried-src": "1",
+        "marina-src": "0",
+        "adaAccess-src": "1"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -116.86049,
+          46.44683
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639845843-6",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=208",
+        "riverSegment": "Clearwater",
+        "riverName": "Clearwater",
+        "riverMile": "10",
+        "bank": "North",
+        "season": "year round",
+        "camping": "None",
+        "contact": "Idaho Fish and Game",
+        "phone": "(208) 334-3700",
+        "website": "",
+        "restrooms-src": "1",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "1",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "0",
+        "handCarried-src": "1",
+        "marina-src": "0",
+        "adaAccess-src": "0"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -116.84751,
+          46.44395
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639846288-202",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=7",
+        "riverSegment": "Clearwater",
+        "riverName": "Clearwater",
+        "riverMile": "28",
+        "bank": "ID",
+        "season": "year round",
+        "camping": "Yes",
+        "contact": "Idaho Department of Transportation",
+        "phone": "",
+        "website": "http://www.nps.gov/archive/nepe/site19.htm",
+        "restrooms-src": "1",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "1",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "1",
+        "handCarried-src": "0",
+        "marina-src": "0",
+        "adaAccess-src": "1"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -116.56336,
+          46.50956
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639845891-27",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=186",
+        "riverSegment": "Clearwater",
+        "riverName": "Clearwater",
+        "riverMile": "7",
+        "bank": "North",
+        "season": "",
+        "camping": "",
+        "contact": "Idaho Fish and Game",
+        "phone": "",
+        "website": "http://tinyurl.com/28x8kh",
+        "restrooms-src": "0",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "1",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "1",
+        "handCarried-src": "1",
+        "marina-src": "0",
+        "adaAccess-src": "0"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -116,
+          46
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639846020-83",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=128",
+        "riverSegment": "Lake Umatilla",
+        "riverName": "Columbia",
+        "riverMile": "243",
+        "bank": "OR",
+        "season": "",
+        "camping": "Yes",
+        "contact": "Port of Arlington",
+        "phone": "(541) 454-2868",
+        "website": "http://tinyurl.com/2y3575",
+        "restrooms-src": "1",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "1",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "1",
+        "handCarried-src": "0",
+        "marina-src": "0",
+        "adaAccess-src": "1"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -120.2,
+          45.72
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639846048-96",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=115",
+        "riverSegment": "Lake Umatilla",
+        "riverName": "Columbia",
+        "riverMile": "291",
+        "bank": "OR",
+        "season": "year round",
+        "camping": "Yes",
+        "contact": "Port of Umatilla",
+        "phone": "(541) 922-3939",
+        "website": "http://tinyurl.com/2zs4dz",
+        "restrooms-src": "1",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "1",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "1",
+        "handCarried-src": "1",
+        "marina-src": "0",
+        "adaAccess-src": "0"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -119.33,
+          45.925
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639846277-197",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=12",
+        "riverSegment": "Lower Granite Lake",
+        "riverName": "Clearwater",
+        "riverMile": "3",
+        "bank": "ID",
+        "season": "",
+        "camping": "",
+        "contact": "",
+        "phone": "",
+        "website": "",
+        "restrooms-src": "0",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "0",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "1",
+        "handCarried-src": "1",
+        "marina-src": "0",
+        "adaAccess-src": "0"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -116.983513,
+          46.430046
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639845869-18",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=196",
+        "riverSegment": "Lake Bonneville",
+        "riverName": "Columbia",
+        "riverMile": "184",
+        "bank": "",
+        "season": "year round",
+        "camping": "None",
+        "contact": "Washington State Parks",
+        "phone": "(509)767-1159",
+        "website": "http://tinyurl.com/3odc8s",
+        "restrooms-src": "1",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "1",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "0",
+        "handCarried-src": "1",
+        "marina-src": "0",
+        "adaAccess-src": "0"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -121.238766,
+          45.67917
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639846123-130",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=81",
+        "riverSegment": "Lake Sacajawea",
+        "riverName": "Snake",
+        "riverMile": "13",
+        "bank": "N - WA",
+        "season": "May 1 through September 30",
+        "camping": "None",
+        "contact": "Ice Harbor Lock and Dam",
+        "phone": "509-547-2048",
+        "website": "http://tinyurl.com/2zavpy",
+        "restrooms-src": "1",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "1",
+        "picnicShelters-src": "1",
+        "boatRamp-src": "1",
+        "handCarried-src": "0",
+        "marina-src": "0",
+        "adaAccess-src": "0"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -118.833809,
+          46.279252
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639845995-72",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=139",
+        "riverSegment": "Lake Celilo",
+        "riverName": "Columbia",
+        "riverMile": "210",
+        "bank": "WA",
+        "season": "year round",
+        "camping": "Yes",
+        "contact": "Washington State Parks, Maryhill State Park",
+        "phone": "(509)-773-5007",
+        "website": "http://tinyurl.com/23nmkd",
+        "restrooms-src": "1",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "1",
+        "picnicShelters-src": "1",
+        "boatRamp-src": "1",
+        "handCarried-src": "0",
+        "marina-src": "0",
+        "adaAccess-src": "0"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -120.83,
+          45.683
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639846063-103",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=108",
+        "riverSegment": "Lake Wallula",
+        "riverName": "Columbia",
+        "riverMile": "299",
+        "bank": "OR",
+        "season": "Gate closed from dusk to dawn between Memorial Day and Labor Day Weekend.",
+        "camping": "None",
+        "contact": "McNary Lock and Dam",
+        "phone": "(541)-922-2268",
+        "website": "http://tinyurl.com/2ygpml",
+        "restrooms-src": "1",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "1",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "0",
+        "handCarried-src": "0",
+        "marina-src": "0",
+        "adaAccess-src": "0"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -119.165082,
+          45.920055
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639846096-118",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=93",
+        "riverSegment": "Lake Wallula",
+        "riverName": "Columbia",
+        "riverMile": "335",
+        "bank": "WA",
+        "season": "Year round",
+        "camping": "developed",
+        "contact": "",
+        "phone": "",
+        "website": "",
+        "restrooms-src": "0",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "0",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "0",
+        "handCarried-src": "0",
+        "marina-src": "0",
+        "adaAccess-src": "0"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -119.220216,
+          46.239865
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639846158-146",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=65",
+        "riverSegment": "Lake West",
+        "riverName": "Snake",
+        "riverMile": "62.2",
+        "bank": "",
+        "season": "",
+        "camping": "",
+        "contact": "",
+        "phone": "",
+        "website": "",
+        "restrooms-src": "0",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "0",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "0",
+        "handCarried-src": "0",
+        "marina-src": "0",
+        "adaAccess-src": "0"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -118.192998,
+          46.569759
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639846108-123",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=88",
+        "riverSegment": "Lake Wallula",
+        "riverName": "Snake",
+        "riverMile": "2.5",
+        "bank": "S - WA",
+        "season": "April 1 - September 30",
+        "camping": "Yes",
+        "contact": "Ice Harbor Lock and Dam",
+        "phone": "Contact Ice Harbor at 509-547-2048",
+        "website": "http://tinyurl.com/yuuqq6",
+        "restrooms-src": "1",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "1",
+        "picnicShelters-src": "1",
+        "boatRamp-src": "1",
+        "handCarried-src": "1",
+        "marina-src": "0",
+        "adaAccess-src": "1"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -119.0131,
+          46.211833
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639846236-181",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=30",
+        "riverSegment": "Clearwater",
+        "riverName": "Clearwater",
+        "riverMile": "38",
+        "bank": "South",
+        "season": "",
+        "camping": "None",
+        "contact": "Idaho Fish & Game",
+        "phone": "",
+        "website": "",
+        "restrooms-src": "0",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "0",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "0",
+        "handCarried-src": "1",
+        "marina-src": "0",
+        "adaAccess-src": "0"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -116.37216,
+          46.49924
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639846250-185",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=24",
+        "riverSegment": "Clearwater",
+        "riverName": "Clearwater",
+        "riverMile": "8",
+        "bank": "ID",
+        "season": "",
+        "camping": "None",
+        "contact": "Idaho Fish & Game",
+        "phone": "",
+        "website": "",
+        "restrooms-src": "1",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "0",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "0",
+        "handCarried-src": "1",
+        "marina-src": "0",
+        "adaAccess-src": "0"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -116.88727,
+          46.44472
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639846077-109",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=102",
+        "riverSegment": "Lake Wallula",
+        "riverName": "Columbia",
+        "riverMile": "319",
+        "bank": "WA",
+        "season": "Gates closed from Dusk to Dawn between Memorial Day and Labor Day weekend.",
+        "camping": "None",
+        "contact": "US Fish and Wildlife Service",
+        "phone": "(509)-371-9212",
+        "website": "http://tinyurl.com/yptolj",
+        "restrooms-src": "1",
+        "potableWater-src": "1",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "1",
+        "picnicShelters-src": "1",
+        "boatRamp-src": "0",
+        "handCarried-src": "1",
+        "marina-src": "0",
+        "adaAccess-src": "0"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -118.939945,
+          46.148646
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "﻿web-scraper-order": "1639846299-207",
+        "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=2",
+        "riverSegment": "Clearwater",
+        "riverName": "Clearwater",
+        "riverMile": "39",
+        "bank": "South",
+        "season": "year round",
+        "camping": "Yes",
+        "contact": "BLM Cottonwood Field Office",
+        "phone": "(208) 962-3245",
+        "website": "http://tinyurl.com/ypxb7b",
+        "restrooms-src": "1",
+        "potableWater-src": "0",
+        "marineDumpStation-src": "0",
+        "dayUseOnly-src": "0",
+        "picnicShelters-src": "0",
+        "boatRamp-src": "1",
+        "handCarried-src": "0",
+        "marina-src": "0",
+        "adaAccess-src": "0"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -116.334937,
+          46.50304
+        ]
+      }
+    }
+  ]
+}
