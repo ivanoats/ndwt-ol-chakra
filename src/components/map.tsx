@@ -5,7 +5,7 @@ import VectorLayer from 'ol/layer/Vector';
 import { fromLonLat } from 'ol/proj';
 import OSM from 'ol/source/OSM';
 import VectorSource from 'ol/source/Vector';
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 
 import '../style.css';
 
