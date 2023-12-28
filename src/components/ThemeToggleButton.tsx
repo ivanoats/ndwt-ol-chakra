@@ -10,8 +10,11 @@ type ThemeToggleButtonProps = Omit<IconButtonProps, 'aria-label'>;
 // CONSTS and LETS
 const iconSize = 20;
 
-// @ts-expect-error Expression produces a union type that is too complex to represent
-const RoundButton = styled(IconButton, transientOptions)`
+type RoundButtonProps = {
+  $colorMode: 'light' | 'dark';
+} & IconButtonProps;
+
+const RoundButton = styled(IconButton, transientOptions)<RoundButtonProps>`
   box-shadow: 0 0 100px 20px
     ${({ $colorMode }) => ($colorMode === 'light' ? 'black' : 'white')};
   & svg {
