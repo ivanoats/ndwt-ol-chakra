@@ -6,6 +6,7 @@
     "email": "ivan@ivanstorck.com",
     "url": "https://github.com/ivanoats"
   },
+  "type": "module",
   "private": true,
   "license": "MIT",
   "scripts": {
