@@ -60,7 +60,7 @@
     "rollup": "^4.22.4",
     "ts-jest": "^29.1.2",
     "typescript": "^5.3.3",
-    "vite": "^5.0.13"
+    "vite": "^5.4.8"
   },
   "config": {
     "commitizen": {
