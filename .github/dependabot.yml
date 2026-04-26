@@ -1,0 +1,53 @@
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    groups:
+      react-ecosystem:
+        patterns:
+          - "react"
+          - "react-dom"
+          - "@types/react"
+          - "@types/react-dom"
+      chakra-ui:
+        patterns:
+          - "@chakra-ui/*"
+          - "@emotion/*"
+          - "framer-motion"
+      eslint:
+        patterns:
+          - "eslint"
+          - "eslint-*"
+          - "@typescript-eslint/*"
+      testing:
+        patterns:
+          - "jest"
+          - "ts-jest"
+          - "@types/jest"
+          - "@testing-library/*"
+      build-tools:
+        patterns:
+          - "vite"
+          - "@vitejs/*"
+          - "rollup"
+          - "typescript"
+          - "@babel/*"
+      dev-tooling:
+        patterns:
+          - "husky"
+          - "prettier"
+          - "eslint-config-prettier"
+          - "eslint-plugin-prettier"
+          - "commitizen"
+          - "cz-conventional-changelog"
+
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    groups:
+      github-actions:
+        patterns:
+          - "*"
