@@ -8,4 +8,9 @@ The Northwest Discovery Water Trail connects you to nearly 150 sites to launch y
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/d3ab47fd-5352-4d1a-8f93-35687d3ed6e4/deploy-status)](https://app.netlify.com/sites/ndwt-ol-chakra/deploys)
 
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=ivanoats_ndwt-ol-chakra&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=ivanoats_ndwt-ol-chakra)
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=ivanoats_ndwt-ol-chakra&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=ivanoats_ndwt-ol-chakra)
+[![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=ivanoats_ndwt-ol-chakra&metric=reliability_rating)](https://sonarcloud.io/summary/new_code?id=ivanoats_ndwt-ol-chakra)
+[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=ivanoats_ndwt-ol-chakra&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=ivanoats_ndwt-ol-chakra)
+
 This is a rebuild of the site from ASP.Net to ReactJS and OpenLayers. In progress.

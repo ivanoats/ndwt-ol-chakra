@@ -1,6 +1,6 @@
 {
   "name": "northwest_discovery_water_trail_map",
-  "version": "1.0.1 ",
+  "version": "1.0.1",
   "author": {
     "name": "Ivan Storck",
     "email": "ivan@ivanstorck.com",
@@ -15,12 +15,13 @@
     "build": "tsc && vite build",
     "serve": "vite preview",
     "lint": "eslint src --ext .tsx --ext .ts",
-    "lint:fix": "npm run lint --fix",
-    "format": "prettier --config ./.prettierrc -w 'src/**/*.{tsx,ts}' && git update-index --again",
-    "pretest": "npm run lint:fix",
-    "test": "jest --colors --passWithNoTests",
-    "posttest": "npx http-server coverage/lcov-report",
-    "test:watch": "npm run test --collectCoverage=false --watch",
+    "lint:fix": "npm run lint -- --fix",
+    "lint:md": "markdownlint-cli2 \"**/*.md\" \"#node_modules\"",
+    "lint:md:fix": "markdownlint-cli2 --fix \"**/*.md\" \"#node_modules\"",
+    "format": "prettier --config ./.prettierrc -w 'src/**/*.{tsx,ts}'",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --coverage",
+    "test:watch": "vitest",
     "prepare": "husky install"
   },
   "dependencies": {
@@ -35,15 +36,14 @@
     "react-dom": "^18.3.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.25.7",
     "@testing-library/jest-dom": "^6.5.0",
     "@testing-library/react": "^14.2.1",
-    "@types/jest": "^29.5.12",
     "@types/react": "^18.3.11",
     "@types/react-dom": "^18.3.0",
     "@typescript-eslint/eslint-plugin": "^6.21.0",
     "@typescript-eslint/parser": "^6.21.0",
     "@vitejs/plugin-react": "^4.3.2",
+    "@vitest/coverage-v8": "^2.1.9",
     "cz-conventional-changelog": "^3.3.0",
     "eslint": "^8.56.0",
     "eslint-config-prettier": "^9.1.0",
@@ -54,13 +54,14 @@
     "eslint-plugin-react-hooks": "^4.6.2",
     "eslint-plugin-simple-import-sort": "^10.0.0",
     "husky": "^8.0.3",
-    "identity-obj-proxy": "^3.0.0",
-    "jest": "^29.7.0",
+    "jsdom": "^25.0.1",
+    "lint-staged": "^15.2.10",
+    "markdownlint-cli2": "^0.14.0",
     "prettier": "^3.3.3",
     "rollup": "^4.24.0",
-    "ts-jest": "^29.2.5",
     "typescript": "^5.6.2",
-    "vite": "^5.4.15"
+    "vite": "^5.4.15",
+    "vitest": "^2.1.9"
   },
   "config": {
     "commitizen": {

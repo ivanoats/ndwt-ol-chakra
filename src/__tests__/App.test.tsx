@@ -1,15 +1,20 @@
-/**
- * @jest-environment jsdom
- */
+import { describe, it, vi } from 'vitest';
 
-import { render, screen } from '@testing-library/react';
-
-import '@testing-library/jest-dom';
+import { ChakraProvider } from '@chakra-ui/react';
+import { render } from '@testing-library/react';
 
 import App from '../App';
 
+vi.mock('../components/map', () => ({
+  default: () => null,
+}));
+
 describe('<App />', () => {
   it('renders without errors', () => {
-    render(<App />);
+    render(
+      <ChakraProvider>
+        <App />
+      </ChakraProvider>
+    );
   });
 });

@@ -17,7 +17,7 @@ export default function MapComponent() {
     });
 
     const hoodRiver = fromLonLat([-121.5281, 45.7068]);
-    const olMap = new Map({
+    new Map({
       target: 'map',
       layers: [
         new TileLayer({
