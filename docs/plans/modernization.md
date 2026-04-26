@@ -5,8 +5,9 @@
 | Phase | Description                                     | State         |
 | ----- | ----------------------------------------------- | ------------- |
 | 1     | Tooling baseline                                | Done (PR #22) |
-| 2     | Hexagonal skeleton inside current Vite app      | In progress   |
-| 3     | Info panel on Chakra (pre-Next/Panda)           | Pending       |
+| 2     | Hexagonal skeleton inside current Vite app      | Done (PR #23) |
+| 2.5   | Playwright e2e harness                          | Done (PR #24) |
+| 3     | Info panel on Chakra (pre-Next/Panda)           | In progress   |
 | 4     | Migrate to Next.js 16 App Router (still Chakra) | Pending       |
 | 5     | Swap Chakra for PandaCSS + Ark UI + Park UI     | Pending       |
 | 6     | Layout & content polish                         | Pending       |
@@ -63,7 +64,8 @@ be merged incrementally without leaving the tree broken.
 | Styled preset         | Park UI                                                                                                                      | Pre-styled component recipes on top of Panda + Ark — gives us Chakra-level ergonomics without Emotion's runtime.                                                                                                                            |
 | Map                   | Keep OpenLayers (`ol@10`)                                                                                                    | No reason to swap; it works and the GeoJSON pipeline is already in place.                                                                                                                                                                   |
 | State / data fetching | React 19 server components for build-time GeoJSON load; lightweight client store (Zustand) only for "selected site" UI state | Data is static, ~145 KB GeoJSON. Doesn't justify TanStack Query.                                                                                                                                                                            |
-| Tests                 | Vitest + React Testing Library                                                                                               | Vitest plays better with the Panda toolchain than Jest; replaces Jest config.                                                                                                                                                               |
+| Tests (unit)          | Vitest + React Testing Library                                                                                               | Vitest plays better with the Panda toolchain than Jest; replaces Jest config.                                                                                                                                                               |
+| Tests (e2e)           | Playwright (Chromium only)                                                                                                   | Catches the "all markers render" / "panel opens" regression class that the unit suite can't see. Runs against the production build via `vite preview`.                                                                                      |
 | Markdown lint         | markdownlint-cli2 + lint-staged + husky                                                                                      | Same husky we already have.                                                                                                                                                                                                                 |
 | Hosting               | Netlify, unchanged                                                                                                           | `next build` produces `out/`; `netlify.toml` points at it.                                                                                                                                                                                  |
 | Node                  | 24 (current LTS)                                                                                                             | Pinned in `package.json` engines, GitHub Actions, and `netlify.toml`.                                                                                                                                                                       |
@@ -249,10 +251,21 @@ real diff that has to make sense in the context of this codebase.
 
 ### Phase 3 — Info panel on Chakra (still pre-Next/Panda)
 
-- Add OpenLayers click handler → emits `SiteId`.
-- Add Zustand `selected-site` store.
-- Build `SiteInfoPanel` first against current Chakra Drawer so the
-  UX and content shape are settled before swapping styling stacks.
+- Add a `getSite(id)` use case + composition-root export.
+- Add a Zustand `selected-site` store holding the full `Site | null`
+  so the panel is a pure render and the click handler does the
+  (cached) lookup.
+- Style the OL vector layer so markers are visible (filled circle +
+  stroke), and add a click handler with hit tolerance that resolves
+  the clicked feature → `Site` → store dispatch.
+- Build `SiteInfoPanel` against the current Chakra Drawer (river
+  segment + mile, bank, FacilityBadges, season, camping, contact +
+  phone, website link). Defer the Park UI swap to Phase 5.
+- Test coverage:
+  - Vitest: store reducer (select / close), `FacilityBadges` render.
+  - Playwright: programmatic click on a known marker via a
+    test-only `window.__ndwtMap` debug hook → drawer opens with the
+    expected text.
 - Verify in browser: click each marker, panel opens with correct
   data, ESC and backdrop close it, mobile layout works.
 
