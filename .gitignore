@@ -13,3 +13,9 @@ build
 .claude/
 .agents/
 skills-lock.json
+
+# Playwright
+/playwright-report/
+/test-results/
+/blob-report/
+/playwright/.cache/
