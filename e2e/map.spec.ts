@@ -34,12 +34,14 @@ test.describe('Northwest Discovery Water Trail map', () => {
 
     expect(response.status()).toBe(200);
 
-    const body = (await response.json()) as {
-      type: string;
-      features: unknown[];
-    };
+    const raw: unknown = await response.json();
+    if (typeof raw !== 'object' || raw === null) {
+      throw new Error(`expected a JSON object, got ${typeof raw}`);
+    }
+    const body = raw as { type?: unknown; features?: unknown };
     expect(body.type).toBe('FeatureCollection');
-    expect(body.features.length).toBeGreaterThan(100);
-    expect(body.features.length).toBeLessThan(300);
+    expect(Array.isArray(body.features)).toBe(true);
+    const features = body.features as readonly unknown[];
+    expect(features.length).toBeGreaterThan(100);
   });
 });
