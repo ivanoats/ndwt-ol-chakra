@@ -82,27 +82,26 @@ export class GeoJsonSiteRepository implements SiteRepository {
     if (this.cache !== null) return this.cache;
     if (this.inflight !== null) return this.inflight;
 
-    const request = (async () => {
-      const res = await fetch(this.url);
-      if (!res.ok) {
-        throw new Error(
-          `Failed to fetch ${this.url}: ${res.status} ${res.statusText}`
+    this.inflight = (async () => {
+      try {
+        const res = await fetch(this.url);
+        if (!res.ok) {
+          throw new Error(
+            `Failed to fetch ${this.url}: ${res.status} ${res.statusText}`
+          );
+        }
+        const body = (await res.json()) as RawFeatureCollection;
+        const sites = body.features.map((feature, index) =>
+          toSite(feature, index)
         );
+        this.cache = sites;
+        return sites;
+      } finally {
+        this.inflight = null;
       }
-      const body = (await res.json()) as RawFeatureCollection;
-      const sites = body.features.map((feature, index) =>
-        toSite(feature, index)
-      );
-      this.cache = sites;
-      return sites;
     })();
 
-    this.inflight = request;
-    request.finally(() => {
-      if (this.inflight === request) this.inflight = null;
-    });
-
-    return request;
+    return this.inflight;
   }
 
   async findById(id: SiteId): Promise<Site | null> {
