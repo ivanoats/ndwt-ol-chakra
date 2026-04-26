@@ -1,0 +1,83 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: lint, typecheck, test, build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: '24'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint (eslint)
+        run: npm run lint
+
+      - name: Lint (markdown)
+        run: npm run lint:md
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Test (vitest + coverage)
+        run: npm test
+
+      - name: Build
+        run: npm run build
+
+      - name: Upload coverage artifact
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: coverage
+          path: coverage/
+          if-no-files-found: error
+          retention-days: 7
+
+  sonarcloud:
+    name: SonarCloud scan
+    needs: build
+    runs-on: ubuntu-latest
+    env:
+      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+    steps:
+      - name: Skip if SONAR_TOKEN is not configured
+        if: ${{ env.SONAR_TOKEN == '' }}
+        run: |
+          echo "SONAR_TOKEN secret is not set; skipping Action-based scan."
+          echo "Sonar's free server-side automatic analysis still runs."
+          echo "To enable coverage upload via this Action, add SONAR_TOKEN at:"
+          echo "  https://github.com/${{ github.repository }}/settings/secrets/actions"
+
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+        if: ${{ env.SONAR_TOKEN != '' }}
+        with:
+          fetch-depth: 0
+
+      - name: Download coverage artifact
+        if: ${{ env.SONAR_TOKEN != '' }}
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: coverage
+          path: coverage
+
+      - name: SonarCloud scan
+        if: ${{ env.SONAR_TOKEN != '' }}
+        uses: SonarSource/sonarcloud-github-action@383f7e52eae3ab0510c3cb0e7d9d150bbaeab838 # v3
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

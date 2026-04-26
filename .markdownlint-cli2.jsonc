@@ -1,0 +1,11 @@
+{
+  "config": {
+    "default": true,
+    "MD013": false,
+    "MD033": { "allowed_elements": ["br", "details", "summary", "img", "a"] },
+    "MD041": false,
+    "MD024": { "siblings_only": true },
+  },
+  "globs": ["**/*.md"],
+  "ignores": ["node_modules", "coverage", "build", "dist", "out", ".next"],
+}

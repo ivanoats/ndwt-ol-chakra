@@ -8,3 +8,6 @@ coverage
 build
 # Local Netlify folder
 .netlify
+
+# Claude Code local state
+.claude/

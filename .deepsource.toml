@@ -1,0 +1,31 @@
+version = 1
+
+test_patterns = [
+  "src/**/__tests__/**",
+  "src/**/*.test.{ts,tsx}",
+  "src/**/*.spec.{ts,tsx}",
+]
+
+exclude_patterns = [
+  "node_modules/**",
+  "build/**",
+  "coverage/**",
+  "dist/**",
+  "out/**",
+  ".next/**",
+  "public/data/**",
+]
+
+[[analyzers]]
+name = "javascript"
+
+  [analyzers.meta]
+  plugins = ["react"]
+  environment = ["browser", "nodejs", "vitest"]
+  dialect = "typescript"
+
+[[analyzers]]
+name = "secrets"
+
+[[transformers]]
+name = "prettier"
