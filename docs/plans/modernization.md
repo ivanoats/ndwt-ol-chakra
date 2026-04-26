@@ -2,15 +2,15 @@
 
 ## Status
 
-| Phase | Description                                     | State              |
-| ----- | ----------------------------------------------- | ------------------ |
-| 1     | Tooling baseline                                | Done (PR #22)      |
-| 2     | Hexagonal skeleton inside current Vite app      | In progress        |
-| 3     | Info panel on Chakra (pre-Next/Panda)           | Pending            |
-| 4     | Migrate to Next.js 16 App Router (still Chakra) | Pending            |
-| 5     | Swap Chakra for PandaCSS + Ark UI + Park UI     | Pending            |
-| 6     | Layout & content polish                         | Pending            |
-| 7     | Docs & memory files                             | Pending            |
+| Phase | Description                                     | State         |
+| ----- | ----------------------------------------------- | ------------- |
+| 1     | Tooling baseline                                | Done (PR #22) |
+| 2     | Hexagonal skeleton inside current Vite app      | In progress   |
+| 3     | Info panel on Chakra (pre-Next/Panda)           | Pending       |
+| 4     | Migrate to Next.js 16 App Router (still Chakra) | Pending       |
+| 5     | Swap Chakra for PandaCSS + Ark UI + Park UI     | Pending       |
+| 6     | Layout & content polish                         | Pending       |
+| 7     | Docs & memory files                             | Pending       |
 
 ## Context
 
