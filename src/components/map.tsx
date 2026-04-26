@@ -14,10 +14,11 @@ export default function MapComponent() {
   const mapRef = useRef<Map | null>(null);
 
   useEffect(() => {
-    if (!containerRef.current) return;
+    const container = containerRef.current;
+    if (!container) return undefined;
 
     const map = new Map({
-      target: containerRef.current,
+      target: container,
       layers: [
         new TileLayer({ source: new OSM() }),
         new VectorLayer({
@@ -36,7 +37,7 @@ export default function MapComponent() {
     mapRef.current = map;
 
     return () => {
-      map.setTarget(undefined);
+      map.setTarget();
       mapRef.current = null;
     };
   }, []);
