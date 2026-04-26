@@ -15,9 +15,9 @@ test.describe('Northwest Discovery Water Trail map', () => {
     await expect(canvas).toBeVisible();
 
     const box = await canvas.boundingBox();
-    expect(box, 'OL canvas should have a bounding box').not.toBeNull();
-    expect(box!.width).toBeGreaterThan(0);
-    expect(box!.height).toBeGreaterThan(0);
+    if (box === null) throw new Error('OL canvas should have a bounding box');
+    expect(box.width).toBeGreaterThan(0);
+    expect(box.height).toBeGreaterThan(0);
   });
 
   test('fetches the GeoJSON dataset and the response holds many features', async ({
