@@ -4,10 +4,10 @@
 
 | Phase | Description                                     | State              |
 | ----- | ----------------------------------------------- | ------------------ |
-| 1     | Tooling baseline                                | In review (PR #22) |
-| 2     | Hexagonal skeleton inside current Vite app      | Pending            |
+| 1     | Tooling baseline                                | Done (PR #22)      |
+| 2     | Hexagonal skeleton inside current Vite app      | In progress        |
 | 3     | Info panel on Chakra (pre-Next/Panda)           | Pending            |
-| 4     | Migrate to Next.js 15 App Router (still Chakra) | Pending            |
+| 4     | Migrate to Next.js 16 App Router (still Chakra) | Pending            |
 | 5     | Swap Chakra for PandaCSS + Ark UI + Park UI     | Pending            |
 | 6     | Layout & content polish                         | Pending            |
 | 7     | Docs & memory files                             | Pending            |
@@ -24,7 +24,7 @@ Goal of this change: bring the site to a modern, maintainable baseline
 without changing what makes it valuable (the geographic data, the
 Netlify deploy, the OpenLayers map). Specifically:
 
-- Move from Vite SPA to **Next.js 15 (App Router)** with static export so
+- Move from Vite SPA to **Next.js 16 (App Router)** with static export so
   it keeps deploying to Netlify with the same build artifact shape.
 - Replace **Chakra UI 2** (Emotion runtime CSS-in-JS) with **PandaCSS**
   (build-time atomic CSS) + **Ark UI** (headless primitives) + **Park UI**
@@ -57,7 +57,7 @@ be merged incrementally without leaving the tree broken.
 
 | Concern               | Choice                                                                                                                       | Why                                                                                                                                                                                                                                         |
 | --------------------- | ---------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Framework             | Next.js 15, App Router, `output: 'export'`                                                                                   | Keeps the Netlify static deploy model; gives App Router conventions, server components for build-time data, and a clean Vite-replacement story.                                                                                             |
+| Framework             | Next.js 16, App Router, `output: 'export'`                                                                                   | Keeps the Netlify static deploy model; gives App Router conventions, server components for build-time data, and a clean Vite-replacement story.                                                                                             |
 | Styling               | PandaCSS                                                                                                                     | Build-time atomic CSS, zero runtime, type-safe tokens. Same authors as Chakra. Explicitly NOT Tailwind.                                                                                                                                     |
 | Headless primitives   | Ark UI (`@ark-ui/react`)                                                                                                     | Accessible, framework-agnostic primitives (Dialog, Popover, Tooltip). Powers the Drawer used by the info panel.                                                                                                                             |
 | Styled preset         | Park UI                                                                                                                      | Pre-styled component recipes on top of Panda + Ark — gives us Chakra-level ergonomics without Emotion's runtime.                                                                                                                            |
@@ -256,7 +256,7 @@ real diff that has to make sense in the context of this codebase.
 - Verify in browser: click each marker, panel opens with correct
   data, ESC and backdrop close it, mobile layout works.
 
-### Phase 4 — Migrate to Next.js 15 App Router (still Chakra)
+### Phase 4 — Migrate to Next.js 16 App Router (still Chakra)
 
 - `next.config.mjs` with `output: 'export'`, `images.unoptimized: true`.
 - Move `src/App.tsx` content into `app/page.tsx`; create `app/layout.tsx`.
