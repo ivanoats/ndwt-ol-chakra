@@ -53,19 +53,31 @@ jobs:
     name: SonarCloud scan
     needs: build
     runs-on: ubuntu-latest
+    env:
+      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
     steps:
+      - name: Skip if SONAR_TOKEN is not configured
+        if: ${{ env.SONAR_TOKEN == '' }}
+        run: |
+          echo "SONAR_TOKEN secret is not set; skipping Action-based scan."
+          echo "Sonar's free server-side automatic analysis still runs."
+          echo "To enable coverage upload via this Action, add SONAR_TOKEN at:"
+          echo "  https://github.com/${{ github.repository }}/settings/secrets/actions"
+
       - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+        if: ${{ env.SONAR_TOKEN != '' }}
         with:
           fetch-depth: 0
 
       - name: Download coverage artifact
+        if: ${{ env.SONAR_TOKEN != '' }}
         uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
         with:
           name: coverage
           path: coverage
 
       - name: SonarCloud scan
+        if: ${{ env.SONAR_TOKEN != '' }}
         uses: SonarSource/sonarcloud-github-action@383f7e52eae3ab0510c3cb0e7d9d150bbaeab838 # v3
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
