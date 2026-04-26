@@ -7,5 +7,14 @@
     "MD024": { "siblings_only": true },
   },
   "globs": ["**/*.md"],
-  "ignores": ["node_modules", "coverage", "build", "dist", "out", ".next"],
+  "ignores": [
+    "node_modules",
+    "coverage",
+    "build",
+    "dist",
+    "out",
+    ".next",
+    ".agents",
+    ".claude",
+  ],
 }
