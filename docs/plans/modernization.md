@@ -2,15 +2,15 @@
 
 ## Status
 
-| Phase | Description | State |
-|-------|-------------|-------|
-| 1 | Tooling baseline | In review (PR #22) |
-| 2 | Hexagonal skeleton inside current Vite app | Pending |
-| 3 | Info panel on Chakra (pre-Next/Panda) | Pending |
-| 4 | Migrate to Next.js 15 App Router (still Chakra) | Pending |
-| 5 | Swap Chakra for PandaCSS + Ark UI + Park UI | Pending |
-| 6 | Layout & content polish | Pending |
-| 7 | Docs & memory files | Pending |
+| Phase | Description                                     | State              |
+| ----- | ----------------------------------------------- | ------------------ |
+| 1     | Tooling baseline                                | In review (PR #22) |
+| 2     | Hexagonal skeleton inside current Vite app      | Pending            |
+| 3     | Info panel on Chakra (pre-Next/Panda)           | Pending            |
+| 4     | Migrate to Next.js 15 App Router (still Chakra) | Pending            |
+| 5     | Swap Chakra for PandaCSS + Ark UI + Park UI     | Pending            |
+| 6     | Layout & content polish                         | Pending            |
+| 7     | Docs & memory files                             | Pending            |
 
 ## Context
 
@@ -55,23 +55,23 @@ be merged incrementally without leaving the tree broken.
 
 ## Tech-stack decisions
 
-| Concern | Choice | Why |
-|---|---|---|
-| Framework | Next.js 15, App Router, `output: 'export'` | Keeps the Netlify static deploy model; gives App Router conventions, server components for build-time data, and a clean Vite-replacement story. |
-| Styling | PandaCSS | Build-time atomic CSS, zero runtime, type-safe tokens. Same authors as Chakra. Explicitly NOT Tailwind. |
-| Headless primitives | Ark UI (`@ark-ui/react`) | Accessible, framework-agnostic primitives (Dialog, Popover, Tooltip). Powers the Drawer used by the info panel. |
-| Styled preset | Park UI | Pre-styled component recipes on top of Panda + Ark — gives us Chakra-level ergonomics without Emotion's runtime. |
-| Map | Keep OpenLayers (`ol@10`) | No reason to swap; it works and the GeoJSON pipeline is already in place. |
-| State / data fetching | React 19 server components for build-time GeoJSON load; lightweight client store (Zustand) only for "selected site" UI state | Data is static, ~145 KB GeoJSON. Doesn't justify TanStack Query. |
-| Tests | Vitest + React Testing Library | Vitest plays better with the Panda toolchain than Jest; replaces Jest config. |
-| Markdown lint | markdownlint-cli2 + lint-staged + husky | Same husky we already have. |
-| Hosting | Netlify, unchanged | `next build` produces `out/`; `netlify.toml` points at it. |
-| Node | 24 (current LTS) | Pinned in `package.json` engines, GitHub Actions, and `netlify.toml`. |
-| Package manager | npm | Existing `package-lock.json`; no reason to switch. |
-| CI | GitHub Actions | Free, native to the repo, runs lint/typecheck/test/build/markdownlint on PRs and pushes to `main`. Third-party actions pinned to commit SHAs. |
-| Static analysis #1 | DeepSource | JS/TS analyzer + secrets scan + transformer auto-fixes; posts inline PR comments. |
-| Static analysis #2 | SonarCloud | Wider rule set (bugs, code smells, security hotspots, duplication, coverage gates). Free for public repos. Complements DeepSource rather than duplicating — Sonar focuses on quality/coverage gates, DeepSource on actionable inline fixes. |
-| Bot review triage | Manual sweep + `gh pr view --comments` | After CI is green, read every bot's comments (Gemini Code Assist, Copilot, DeepSource, Sonar), classify as fix/defer/dismiss, and leave a one-line reason on each dismissed thread. |
+| Concern               | Choice                                                                                                                       | Why                                                                                                                                                                                                                                         |
+| --------------------- | ---------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Framework             | Next.js 15, App Router, `output: 'export'`                                                                                   | Keeps the Netlify static deploy model; gives App Router conventions, server components for build-time data, and a clean Vite-replacement story.                                                                                             |
+| Styling               | PandaCSS                                                                                                                     | Build-time atomic CSS, zero runtime, type-safe tokens. Same authors as Chakra. Explicitly NOT Tailwind.                                                                                                                                     |
+| Headless primitives   | Ark UI (`@ark-ui/react`)                                                                                                     | Accessible, framework-agnostic primitives (Dialog, Popover, Tooltip). Powers the Drawer used by the info panel.                                                                                                                             |
+| Styled preset         | Park UI                                                                                                                      | Pre-styled component recipes on top of Panda + Ark — gives us Chakra-level ergonomics without Emotion's runtime.                                                                                                                            |
+| Map                   | Keep OpenLayers (`ol@10`)                                                                                                    | No reason to swap; it works and the GeoJSON pipeline is already in place.                                                                                                                                                                   |
+| State / data fetching | React 19 server components for build-time GeoJSON load; lightweight client store (Zustand) only for "selected site" UI state | Data is static, ~145 KB GeoJSON. Doesn't justify TanStack Query.                                                                                                                                                                            |
+| Tests                 | Vitest + React Testing Library                                                                                               | Vitest plays better with the Panda toolchain than Jest; replaces Jest config.                                                                                                                                                               |
+| Markdown lint         | markdownlint-cli2 + lint-staged + husky                                                                                      | Same husky we already have.                                                                                                                                                                                                                 |
+| Hosting               | Netlify, unchanged                                                                                                           | `next build` produces `out/`; `netlify.toml` points at it.                                                                                                                                                                                  |
+| Node                  | 24 (current LTS)                                                                                                             | Pinned in `package.json` engines, GitHub Actions, and `netlify.toml`.                                                                                                                                                                       |
+| Package manager       | npm                                                                                                                          | Existing `package-lock.json`; no reason to switch.                                                                                                                                                                                          |
+| CI                    | GitHub Actions                                                                                                               | Free, native to the repo, runs lint/typecheck/test/build/markdownlint on PRs and pushes to `main`. Third-party actions pinned to commit SHAs.                                                                                               |
+| Static analysis #1    | DeepSource                                                                                                                   | JS/TS analyzer + secrets scan + transformer auto-fixes; posts inline PR comments.                                                                                                                                                           |
+| Static analysis #2    | SonarCloud                                                                                                                   | Wider rule set (bugs, code smells, security hotspots, duplication, coverage gates). Free for public repos. Complements DeepSource rather than duplicating — Sonar focuses on quality/coverage gates, DeepSource on actionable inline fixes. |
+| Bot review triage     | Manual sweep + `gh pr view --comments`                                                                                       | After CI is green, read every bot's comments (Gemini Code Assist, Copilot, DeepSource, Sonar), classify as fix/defer/dismiss, and leave a one-line reason on each dismissed thread.                                                         |
 
 ## Target folder layout
 
@@ -156,11 +156,11 @@ small `composition-root.ts`).
 export type SiteId = string & { readonly __brand: 'SiteId' };
 
 export interface Site {
-  readonly id: SiteId;              // derived from web-scraper-order
-  readonly riverSegment: string;    // e.g. "Lake Umatilla"
-  readonly riverName: string;       // e.g. "Columbia"
+  readonly id: SiteId; // derived from web-scraper-order
+  readonly riverSegment: string; // e.g. "Lake Umatilla"
+  readonly riverName: string; // e.g. "Columbia"
   readonly riverMile: number;
-  readonly bank: Bank;              // OR | WA | ID | North | South | ...
+  readonly bank: Bank; // OR | WA | ID | North | South | ...
   readonly coordinates: Coordinates;
   readonly season?: string;
   readonly camping?: string;
