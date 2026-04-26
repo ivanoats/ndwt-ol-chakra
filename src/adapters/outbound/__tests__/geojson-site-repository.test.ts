@@ -81,6 +81,20 @@ describe('GeoJsonSiteRepository.list()', () => {
     const repo = new GeoJsonSiteRepository('/data/ndwt.geojson');
     await expect(repo.list()).rejects.toThrow(/500/);
   });
+
+  it('retries after a failed fetch (does not pin a rejected inflight promise)', async () => {
+    const fetchMock = vi
+      .fn()
+      .mockResolvedValueOnce(new Response('boom', { status: 503 }))
+      .mockResolvedValueOnce(new Response(geojsonText, { status: 200 }));
+    vi.stubGlobal('fetch', fetchMock);
+
+    const repo = new GeoJsonSiteRepository('/data/ndwt.geojson');
+    await expect(repo.list()).rejects.toThrow(/503/);
+    const sites = await repo.list();
+    expect(sites.length).toBeGreaterThan(100);
+    expect(fetchMock).toHaveBeenCalledTimes(2);
+  });
 });
 
 describe('toSite mapper', () => {

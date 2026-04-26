@@ -79,10 +79,10 @@ export class GeoJsonSiteRepository implements SiteRepository {
   constructor(private readonly url: string) {}
 
   async list(): Promise<readonly Site[]> {
-    if (this.cache) return this.cache;
-    if (this.inflight) return this.inflight;
+    if (this.cache !== null) return this.cache;
+    if (this.inflight !== null) return this.inflight;
 
-    this.inflight = (async () => {
+    const request = (async () => {
       const res = await fetch(this.url);
       if (!res.ok) {
         throw new Error(
@@ -90,13 +90,19 @@ export class GeoJsonSiteRepository implements SiteRepository {
         );
       }
       const body = (await res.json()) as RawFeatureCollection;
-      const sites = body.features.map(toSite);
+      const sites = body.features.map((feature, index) =>
+        toSite(feature, index)
+      );
       this.cache = sites;
-      this.inflight = null;
       return sites;
     })();
 
-    return this.inflight;
+    this.inflight = request;
+    request.finally(() => {
+      if (this.inflight === request) this.inflight = null;
+    });
+
+    return request;
   }
 
   async findById(id: SiteId): Promise<Site | null> {
