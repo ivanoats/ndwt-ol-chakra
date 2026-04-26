@@ -34,41 +34,41 @@ const readProp = (
   props: RawProps,
   ...keys: readonly string[]
 ): string | undefined => {
-  for (const k of keys) {
-    const v = props[k];
-    if (v !== undefined && v !== '') return v;
+  for (const key of keys) {
+    const value = props[key];
+    if (value !== undefined && value !== '') return value;
   }
   return undefined;
 };
 
 const facilityFlags = (props: RawProps): Partial<Record<Facility, boolean>> => {
   const flags: Partial<Record<Facility, boolean>> = {};
-  for (const f of FACILITIES) {
-    flags[f] = props[`${f}-src`] === '1';
+  for (const facility of FACILITIES) {
+    flags[facility] = props[`${facility}-src`] === '1';
   }
   return flags;
 };
 
 const toSite = (feature: RawFeature, index: number): Site => {
-  const p = feature.properties;
+  const props = feature.properties;
   const [lng, lat] = feature.geometry.coordinates;
-  const idRaw = readProp(p, ...ID_KEY_CANDIDATES) ?? `site-${index}`;
-  const mile = Number(readProp(p, 'riverMile') ?? '');
+  const idRaw = readProp(props, ...ID_KEY_CANDIDATES) ?? `site-${index}`;
+  const mile = Number(readProp(props, 'riverMile') ?? '');
 
   return {
     id: siteId(idRaw),
-    riverSegment: readProp(p, 'riverSegment') ?? '',
-    riverName: readProp(p, 'riverName') ?? '',
+    riverSegment: readProp(props, 'riverSegment') ?? '',
+    riverName: readProp(props, 'riverName') ?? '',
     riverMile: Number.isFinite(mile) ? mile : 0,
-    bank: readProp(p, 'bank') ?? '',
+    bank: readProp(props, 'bank') ?? '',
     coordinates: coordinates(lng, lat),
-    season: readProp(p, 'season'),
-    camping: readProp(p, 'camping'),
-    contact: readProp(p, 'contact'),
-    phone: readProp(p, 'phone'),
-    website: readProp(p, 'website'),
-    facilities: FacilitySet.fromFlags(facilityFlags(p)),
-    sourceUrl: readProp(p, ...SOURCE_URL_KEYS),
+    season: readProp(props, 'season'),
+    camping: readProp(props, 'camping'),
+    contact: readProp(props, 'contact'),
+    phone: readProp(props, 'phone'),
+    website: readProp(props, 'website'),
+    facilities: FacilitySet.fromFlags(facilityFlags(props)),
+    sourceUrl: readProp(props, ...SOURCE_URL_KEYS),
   };
 };
 
@@ -78,35 +78,36 @@ export class GeoJsonSiteRepository implements SiteRepository {
 
   constructor(private readonly url: string) {}
 
-  async list(): Promise<readonly Site[]> {
-    if (this.cache !== null) return this.cache;
+  list(): Promise<readonly Site[]> {
+    if (this.cache !== null) return Promise.resolve(this.cache);
     if (this.inflight !== null) return this.inflight;
 
-    this.inflight = (async () => {
-      try {
-        const res = await fetch(this.url);
-        if (!res.ok) {
-          throw new Error(
-            `Failed to fetch ${this.url}: ${res.status} ${res.statusText}`
-          );
-        }
-        const body = (await res.json()) as RawFeatureCollection;
-        const sites = body.features.map((feature, index) =>
-          toSite(feature, index)
-        );
-        this.cache = sites;
-        return sites;
-      } finally {
-        this.inflight = null;
-      }
-    })();
-
+    this.inflight = this.fetchAndParse();
     return this.inflight;
   }
 
   async findById(id: SiteId): Promise<Site | null> {
     const all = await this.list();
-    return all.find((s) => s.id === id) ?? null;
+    return all.find((site) => site.id === id) ?? null;
+  }
+
+  private async fetchAndParse(): Promise<readonly Site[]> {
+    try {
+      const res = await fetch(this.url);
+      if (!res.ok) {
+        throw new Error(
+          `Failed to fetch ${this.url}: ${res.status} ${res.statusText}`
+        );
+      }
+      const body = (await res.json()) as RawFeatureCollection;
+      const sites = body.features.map((feature, index) =>
+        toSite(feature, index)
+      );
+      this.cache = sites;
+      return sites;
+    } finally {
+      this.inflight = null;
+    }
   }
 }
 

@@ -20,12 +20,17 @@ afterEach(() => {
   vi.restoreAllMocks();
 });
 
+const okResponse = (): Response => new Response(geojsonText, { status: 200 });
+
+const stubFetchOk = (): ReturnType<typeof vi.fn> => {
+  const mock = vi.fn().mockResolvedValue(okResponse());
+  vi.stubGlobal('fetch', mock);
+  return mock;
+};
+
 describe('GeoJsonSiteRepository.list()', () => {
   it('parses every feature in the real dataset', async () => {
-    vi.stubGlobal(
-      'fetch',
-      vi.fn(async () => new Response(geojsonText, { status: 200 }))
-    );
+    stubFetchOk();
     const repo = new GeoJsonSiteRepository('/data/ndwt.geojson');
     const sites = await repo.list();
 
@@ -43,24 +48,16 @@ describe('GeoJsonSiteRepository.list()', () => {
   });
 
   it('caches the result so repeated list() calls do not refetch', async () => {
-    const fetchMock = vi.fn(
-      async () => new Response(geojsonText, { status: 200 })
-    );
-    vi.stubGlobal('fetch', fetchMock);
-
+    const fetchMock = stubFetchOk();
     const repo = new GeoJsonSiteRepository('/data/ndwt.geojson');
     await repo.list();
     await repo.list();
     await repo.list();
-
     expect(fetchMock).toHaveBeenCalledTimes(1);
   });
 
   it('findById returns the site when present and null otherwise', async () => {
-    vi.stubGlobal(
-      'fetch',
-      vi.fn(async () => new Response(geojsonText, { status: 200 }))
-    );
+    stubFetchOk();
     const repo = new GeoJsonSiteRepository('/data/ndwt.geojson');
     const all = await repo.list();
     const first = all[0];
@@ -76,7 +73,7 @@ describe('GeoJsonSiteRepository.list()', () => {
   it('throws on non-OK fetch response', async () => {
     vi.stubGlobal(
       'fetch',
-      vi.fn(async () => new Response('nope', { status: 500 }))
+      vi.fn().mockResolvedValue(new Response('nope', { status: 500 }))
     );
     const repo = new GeoJsonSiteRepository('/data/ndwt.geojson');
     await expect(repo.list()).rejects.toThrow(/500/);
@@ -86,7 +83,7 @@ describe('GeoJsonSiteRepository.list()', () => {
     const fetchMock = vi
       .fn()
       .mockResolvedValueOnce(new Response('boom', { status: 503 }))
-      .mockResolvedValueOnce(new Response(geojsonText, { status: 200 }));
+      .mockResolvedValueOnce(okResponse());
     vi.stubGlobal('fetch', fetchMock);
 
     const repo = new GeoJsonSiteRepository('/data/ndwt.geojson');
