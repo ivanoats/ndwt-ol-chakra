@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test';
+import { expect, type Page, test } from '@playwright/test';
 
 test.describe('Northwest Discovery Water Trail map', () => {
   test('renders the OpenLayers canvas at non-zero size', async ({ page }) => {
@@ -44,4 +44,84 @@ test.describe('Northwest Discovery Water Trail map', () => {
     const features = body.features as readonly unknown[];
     expect(features.length).toBeGreaterThan(100);
   });
+
+  test('clicking a marker opens the info panel with site data', async ({
+    page,
+  }) => {
+    await page.goto('/');
+    await clickFirstMarker(page);
+
+    const panel = page.getByTestId('site-info-panel');
+    await expect(panel).toBeVisible();
+    // Every site renders "<river> River — Mile <n>" into the header.
+    await expect(panel.getByRole('heading')).toContainText(/Mile/);
+  });
+
+  test('closing the panel hides it again', async ({ page }) => {
+    await page.goto('/');
+    await clickFirstMarker(page);
+
+    const panel = page.getByTestId('site-info-panel');
+    await expect(panel).toBeVisible();
+
+    await page.keyboard.press('Escape');
+    await expect(panel).toBeHidden();
+  });
 });
+
+/**
+ * Centers the map on the first vector feature and zooms in so the
+ * marker fills a known viewport position, then clicks the canvas
+ * center. This avoids cross-platform mouse-coordinate flakiness and
+ * any hit-tolerance ambiguity at low zoom levels. The click goes
+ * through the real OL event pipeline (canvas mouseup -> click), so
+ * it exercises the production click handler end to end.
+ */
+async function clickFirstMarker(page: Page): Promise<void> {
+  await page.waitForFunction(
+    () => {
+      const map = (window as unknown as { __ndwtMap?: unknown }).__ndwtMap as
+        | {
+            getLayers: () => { getArray: () => unknown[] };
+            getView: () => {
+              setCenter: (c: number[]) => void;
+              setZoom: (z: number) => void;
+            };
+          }
+        | undefined;
+      if (!map) return false;
+
+      const layers = map.getLayers().getArray() as Array<{
+        getSource?: () =>
+          | {
+              getFeatures?: () => Array<{
+                getGeometry: () => { getCoordinates: () => number[] };
+              }>;
+            }
+          | undefined;
+      }>;
+
+      for (const layer of layers) {
+        const features = layer.getSource?.()?.getFeatures?.();
+        const first = features && features.length > 0 ? features[0] : undefined;
+        if (first === undefined) continue;
+        map.getView().setCenter(first.getGeometry().getCoordinates());
+        map.getView().setZoom(15);
+        return true;
+      }
+      return false;
+    },
+    undefined,
+    { timeout: 10_000 }
+  );
+
+  // Give OL one tick to finish the recenter render before we click.
+  await page.waitForTimeout(150);
+
+  const mapBox = await page.locator('#map').boundingBox();
+  if (mapBox === null) throw new Error('#map should have a bounding box');
+  await page.mouse.click(
+    mapBox.x + mapBox.width / 2,
+    mapBox.y + mapBox.height / 2
+  );
+}
