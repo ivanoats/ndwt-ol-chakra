@@ -55,6 +55,9 @@ test.describe('Northwest Discovery Water Trail map', () => {
     await expect(panel).toBeVisible();
     // Every site renders "<river> River — Mile <n>" into the header.
     await expect(panel.getByRole('heading')).toContainText(/Mile/);
+    // Coordinates row + GPX download button are part of the panel.
+    await expect(panel.getByText(/Coordinates/i)).toBeVisible();
+    await expect(panel.getByTestId('download-gpx-button')).toBeVisible();
   });
 
   test('closing the panel hides it again', async ({ page }) => {

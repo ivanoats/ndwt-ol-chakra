@@ -81,4 +81,18 @@ describe('<SiteInfoPanel />', () => {
     expect(screen.getByText('OR')).toBeInTheDocument();
     expect(screen.queryByText(/^· /)).not.toBeInTheDocument();
   });
+
+  it('renders the formatted lat/long coordinates', () => {
+    renderPanel();
+    select(baseSite);
+    expect(screen.getByText('45.69500, -120.37000')).toBeInTheDocument();
+  });
+
+  it('exposes a Download GPX waypoint button', () => {
+    renderPanel();
+    select(baseSite);
+    const button = screen.getByTestId('download-gpx-button');
+    expect(button).toBeInTheDocument();
+    expect(button).toHaveTextContent(/Download GPX/);
+  });
 });

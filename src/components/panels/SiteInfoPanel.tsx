@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 
 import {
   Box,
+  Button,
   Drawer,
   DrawerBody,
   DrawerCloseButton,
@@ -14,6 +15,7 @@ import {
   Text,
 } from '@chakra-ui/react';
 
+import { gpxFilename, siteToGpx } from '../../adapters/outbound/site-to-gpx';
 import type { Site } from '../../domain';
 import { useSelectedSite } from '../../store/selected-site';
 
@@ -26,6 +28,12 @@ const formatSubheading = (site: Site): string =>
   [site.riverSegment, site.bank]
     .filter((part): part is string => part !== undefined && part !== '')
     .join(' · ');
+
+const formatCoordinates = ({
+  latitude,
+  longitude,
+}: Site['coordinates']): string =>
+  `${latitude.toFixed(5)}, ${longitude.toFixed(5)}`;
 
 interface DetailProps {
   readonly label: string;
@@ -42,6 +50,20 @@ const Detail = ({ label, value }: DetailProps): JSX.Element | null => {
       <Text>{value}</Text>
     </Box>
   );
+};
+
+const downloadGpx = (site: Site): void => {
+  const blob = new Blob([siteToGpx(site)], {
+    type: 'application/gpx+xml',
+  });
+  const url = URL.createObjectURL(blob);
+  const anchor = document.createElement('a');
+  anchor.href = url;
+  anchor.download = gpxFilename(site);
+  document.body.appendChild(anchor);
+  anchor.click();
+  document.body.removeChild(anchor);
+  URL.revokeObjectURL(url);
 };
 
 export default function SiteInfoPanel(): JSX.Element {
@@ -79,6 +101,10 @@ export default function SiteInfoPanel(): JSX.Element {
             <DrawerBody>
               <Stack spacing={4} mt={2}>
                 <FacilityBadges facilities={displaySite.facilities} />
+                <Detail
+                  label="Coordinates"
+                  value={formatCoordinates(displaySite.coordinates)}
+                />
                 <Detail label="Season" value={displaySite.season} />
                 <Detail label="Camping" value={displaySite.camping} />
                 <Detail label="Contact" value={displaySite.contact} />
@@ -102,6 +128,16 @@ export default function SiteInfoPanel(): JSX.Element {
                     </Link>
                   </Box>
                 ) : null}
+                <Box pt={2}>
+                  <Button
+                    colorScheme="green"
+                    size="sm"
+                    onClick={() => downloadGpx(displaySite)}
+                    data-testid="download-gpx-button"
+                  >
+                    Download GPX waypoint
+                  </Button>
+                </Box>
               </Stack>
             </DrawerBody>
           </>
