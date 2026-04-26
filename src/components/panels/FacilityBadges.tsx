@@ -3,7 +3,7 @@ import { Badge, Wrap, WrapItem } from '@chakra-ui/react';
 import { type Facility, type FacilitySet } from '../../domain';
 
 interface FacilityBadgesProps {
-  facilities: FacilitySet;
+  readonly facilities: FacilitySet;
 }
 
 const FACILITY_LABELS: Record<Facility, string> = {

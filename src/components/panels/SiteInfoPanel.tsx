@@ -1,3 +1,5 @@
+import { useEffect, useState } from 'react';
+
 import {
   Box,
   Drawer,
@@ -20,13 +22,17 @@ import FacilityBadges from './FacilityBadges';
 const formatTitle = (site: Site): string =>
   `${site.riverName} River — Mile ${site.riverMile}`;
 
-const Detail = ({
-  label,
-  value,
-}: {
-  label: string;
-  value: string | undefined;
-}): JSX.Element | null => {
+const formatSubheading = (site: Site): string =>
+  [site.riverSegment, site.bank]
+    .filter((part): part is string => part !== undefined && part !== '')
+    .join(' · ');
+
+interface DetailProps {
+  readonly label: string;
+  readonly value: string | undefined;
+}
+
+const Detail = ({ label, value }: DetailProps): JSX.Element | null => {
   if (value === undefined || value === '') return null;
   return (
     <Box>
@@ -43,34 +49,42 @@ export default function SiteInfoPanel(): JSX.Element {
   const close = useSelectedSite((state) => state.close);
   const isOpen = selectedSite !== null;
 
+  // Buffer the site so the drawer keeps rendering its content during
+  // the close animation; we clear `displaySite` only after the
+  // transition finishes via onCloseComplete.
+  const [displaySite, setDisplaySite] = useState<Site | null>(selectedSite);
+  useEffect(() => {
+    if (selectedSite !== null) setDisplaySite(selectedSite);
+  }, [selectedSite]);
+
   return (
     <Drawer
       isOpen={isOpen}
       placement="right"
       onClose={close}
+      onCloseComplete={() => setDisplaySite(null)}
       size={{ base: 'full', md: 'md' }}
     >
       <DrawerOverlay />
       <DrawerContent data-testid="site-info-panel">
         <DrawerCloseButton />
-        {selectedSite !== null && (
+        {displaySite === null ? null : (
           <>
             <DrawerHeader borderBottomWidth="1px">
-              <Heading size="md">{formatTitle(selectedSite)}</Heading>
+              <Heading size="md">{formatTitle(displaySite)}</Heading>
               <Text fontSize="sm" color="gray.500" mt={1}>
-                {selectedSite.riverSegment}
-                {selectedSite.bank !== '' ? ` · ${selectedSite.bank}` : null}
+                {formatSubheading(displaySite)}
               </Text>
             </DrawerHeader>
             <DrawerBody>
               <Stack spacing={4} mt={2}>
-                <FacilityBadges facilities={selectedSite.facilities} />
-                <Detail label="Season" value={selectedSite.season} />
-                <Detail label="Camping" value={selectedSite.camping} />
-                <Detail label="Contact" value={selectedSite.contact} />
-                <Detail label="Phone" value={selectedSite.phone} />
-                {selectedSite.website !== undefined &&
-                selectedSite.website !== '' ? (
+                <FacilityBadges facilities={displaySite.facilities} />
+                <Detail label="Season" value={displaySite.season} />
+                <Detail label="Camping" value={displaySite.camping} />
+                <Detail label="Contact" value={displaySite.contact} />
+                <Detail label="Phone" value={displaySite.phone} />
+                {displaySite.website !== undefined &&
+                displaySite.website !== '' ? (
                   <Box>
                     <Text
                       fontSize="sm"
@@ -80,11 +94,11 @@ export default function SiteInfoPanel(): JSX.Element {
                       Website
                     </Text>
                     <Link
-                      href={selectedSite.website}
+                      href={displaySite.website}
                       isExternal
                       color="green.600"
                     >
-                      {selectedSite.website}
+                      {displaySite.website}
                     </Link>
                   </Box>
                 ) : null}

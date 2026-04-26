@@ -71,52 +71,68 @@ test.describe('Northwest Discovery Water Trail map', () => {
 
 /**
  * Centers the map on the first vector feature and zooms in so the
- * marker fills a known viewport position, then clicks the canvas
- * center. This avoids cross-platform mouse-coordinate flakiness and
- * any hit-tolerance ambiguity at low zoom levels. The click goes
- * through the real OL event pipeline (canvas mouseup -> click), so
- * it exercises the production click handler end to end.
+ * marker fills a known viewport position, waits for the OL
+ * `rendercomplete` event, then clicks the canvas center. This
+ * avoids cross-platform mouse-coordinate flakiness and any
+ * hit-tolerance ambiguity at low zoom levels. The click goes through
+ * the real OL event pipeline (canvas mouseup -> click), so it
+ * exercises the production click handler end to end.
  */
 async function clickFirstMarker(page: Page): Promise<void> {
-  await page.waitForFunction(
-    () => {
-      const map = (window as unknown as { __ndwtMap?: unknown }).__ndwtMap as
-        | {
-            getLayers: () => { getArray: () => unknown[] };
-            getView: () => {
-              setCenter: (c: number[]) => void;
-              setZoom: (z: number) => void;
-            };
-          }
-        | undefined;
-      if (!map) return false;
-
-      const layers = map.getLayers().getArray() as Array<{
-        getSource?: () =>
+  await page.evaluate(
+    () =>
+      new Promise<void>((resolve, reject) => {
+        const map = (globalThis as unknown as { __ndwtMap?: unknown })
+          .__ndwtMap as
           | {
-              getFeatures?: () => Array<{
-                getGeometry: () => { getCoordinates: () => number[] };
-              }>;
+              once: (event: string, cb: () => void) => void;
+              getLayers: () => { getArray: () => unknown[] };
+              getView: () => {
+                setCenter: (c: number[]) => void;
+                setZoom: (z: number) => void;
+              };
             }
           | undefined;
-      }>;
+        if (map === undefined) {
+          reject(new Error('window.__ndwtMap is not set'));
+          return;
+        }
 
-      for (const layer of layers) {
-        const features = layer.getSource?.()?.getFeatures?.();
-        const first = features && features.length > 0 ? features[0] : undefined;
-        if (first === undefined) continue;
-        map.getView().setCenter(first.getGeometry().getCoordinates());
-        map.getView().setZoom(15);
-        return true;
-      }
-      return false;
-    },
-    undefined,
-    { timeout: 10_000 }
+        const tryRecenter = (): boolean => {
+          const layers = map.getLayers().getArray() as Array<{
+            getSource?: () =>
+              | {
+                  getFeatures?: () => Array<{
+                    getGeometry: () => { getCoordinates: () => number[] };
+                  }>;
+                }
+              | undefined;
+          }>;
+          for (const layer of layers) {
+            const features = layer.getSource?.()?.getFeatures?.();
+            const first =
+              features && features.length > 0 ? features[0] : undefined;
+            if (first === undefined) continue;
+            map.once('rendercomplete', () => resolve());
+            map.getView().setCenter(first.getGeometry().getCoordinates());
+            map.getView().setZoom(15);
+            return true;
+          }
+          return false;
+        };
+
+        if (tryRecenter()) return;
+
+        // Vector layer not added yet — poll until it is.
+        const interval = globalThis.setInterval(() => {
+          if (tryRecenter()) globalThis.clearInterval(interval);
+        }, 100);
+        globalThis.setTimeout(() => {
+          globalThis.clearInterval(interval);
+          reject(new Error('vector layer never appeared'));
+        }, 10_000);
+      })
   );
-
-  // Give OL one tick to finish the recenter render before we click.
-  await page.waitForTimeout(150);
 
   const mapBox = await page.locator('#map').boundingBox();
   if (mapBox === null) throw new Error('#map should have a bounding box');

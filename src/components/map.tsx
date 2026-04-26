@@ -10,10 +10,12 @@ import { Circle, Fill, Stroke, Style } from 'ol/style';
 import { useEffect, useRef } from 'react';
 
 import { getSite, listSites } from '../composition-root';
-import type { Site, SiteId } from '../domain';
+import { type Site, siteId } from '../domain';
 import { useSelectedSite } from '../store/selected-site';
 
 import '../style.css';
+
+type GlobalWithMap = typeof globalThis & { __ndwtMap?: Map };
 
 const MARKER_STYLE = new Style({
   image: new Circle({
@@ -38,13 +40,13 @@ const siteToFeature = (site: Site): Feature<Point> => {
 const handleMapClick =
   (map: Map) =>
   (event: MapBrowserEvent<UIEvent>): void => {
-    let pickedId: SiteId | null = null;
+    let pickedId: string | null = null;
     map.forEachFeatureAtPixel(
       event.pixel,
       (feature) => {
         const id = feature.getId();
         if (typeof id === 'string') {
-          pickedId = id as SiteId;
+          pickedId = id;
           return true;
         }
         return false;
@@ -53,14 +55,18 @@ const handleMapClick =
     );
     if (pickedId === null) return;
 
-    void getSite(pickedId).then((site) => {
-      if (site) useSelectedSite.getState().select(site);
-    });
+    getSite(siteId(pickedId))
+      .then((site) => {
+        if (site) useSelectedSite.getState().select(site);
+      })
+      .catch((err: unknown) => {
+        // eslint-disable-next-line no-console
+        console.error('Failed to load site', err);
+      });
   };
 
 export default function MapComponent() {
   const containerRef = useRef<HTMLDivElement | null>(null);
-  const mapRef = useRef<Map | null>(null);
 
   useEffect(() => {
     const container = containerRef.current;
@@ -76,13 +82,13 @@ export default function MapComponent() {
         zoom: 7,
       }),
     });
-    mapRef.current = map;
     map.on('click', handleMapClick(map));
 
-    // Test-only hook so Playwright can dispatch deterministic clicks
-    // on known features. Safe to expose: it's the same Map a real
-    // user already has via the DOM.
-    (window as Window & { __ndwtMap?: Map }).__ndwtMap = map;
+    // Always-exposed handle on globalThis so Playwright can drive
+    // deterministic interactions in the e2e suite. Safe to ship in
+    // production: it's the same Map a real user already has via the
+    // DOM, and the surface area is one read-only reference.
+    (globalThis as GlobalWithMap).__ndwtMap = map;
 
     listSites()
       .then((sites) => {
@@ -105,8 +111,7 @@ export default function MapComponent() {
     return () => {
       cancelled = true;
       map.setTarget();
-      mapRef.current = null;
-      delete (window as Window & { __ndwtMap?: Map }).__ndwtMap;
+      delete (globalThis as GlobalWithMap).__ndwtMap;
     };
   }, []);
 
