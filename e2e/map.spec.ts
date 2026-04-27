@@ -20,18 +20,12 @@ test.describe('Northwest Discovery Water Trail map', () => {
     expect(box.height).toBeGreaterThan(0);
   });
 
-  test('fetches the GeoJSON dataset and the response holds many features', async ({
-    page,
-  }) => {
-    const responsePromise = page.waitForResponse(
-      (res) =>
-        res.url().includes('/data/ndwt.geojson') &&
-        res.request().method() === 'GET'
-    );
-
-    await page.goto('/');
-    const response = await responsePromise;
-
+  test('serves the GeoJSON dataset as a static asset', async ({ request }) => {
+    // Phase 4 inlines the parsed sites into the page tree at build
+    // time, so the map no longer fetches /data/ndwt.geojson at
+    // runtime — but the file is still served (kept under public/)
+    // for external GIS consumers.
+    const response = await request.get('/data/ndwt.geojson');
     expect(response.status()).toBe(200);
 
     const raw: unknown = await response.json();
@@ -100,15 +94,6 @@ test.describe('Northwest Discovery Water Trail map', () => {
   });
 });
 
-/**
- * Centers the map on the first vector feature and zooms in so the
- * marker fills a known viewport position, waits for the OL
- * `rendercomplete` event, then clicks the canvas center. This
- * avoids cross-platform mouse-coordinate flakiness and any
- * hit-tolerance ambiguity at low zoom levels. The click goes through
- * the real OL event pipeline (canvas mouseup -> click), so it
- * exercises the production click handler end to end.
- */
 async function clickFirstMarker(page: Page): Promise<void> {
   await recenterOnFirstMarker(page);
   const mapBox = await page.locator('#map').boundingBox();
@@ -119,25 +104,34 @@ async function clickFirstMarker(page: Page): Promise<void> {
   );
 }
 
+/**
+ * Wait for the test-only window.__ndwtMap to appear (Next
+ * dynamic-imports the OL component after page hydration), then
+ * recenter on the first vector feature, zoom in, and resolve when
+ * OL fires `rendercomplete`. This avoids cross-platform
+ * mouse-coordinate flakiness and any hit-tolerance ambiguity at low
+ * zoom levels — clicks then go through the real OL event pipeline
+ * at the canvas center.
+ */
 async function recenterOnFirstMarker(page: Page): Promise<void> {
+  await page.waitForFunction(
+    () => Boolean((globalThis as unknown as { __ndwtMap?: unknown }).__ndwtMap),
+    undefined,
+    { timeout: 15_000 }
+  );
+
   await page.evaluate(
     () =>
       new Promise<void>((resolve, reject) => {
         const map = (globalThis as unknown as { __ndwtMap?: unknown })
-          .__ndwtMap as
-          | {
-              once: (event: string, cb: () => void) => void;
-              getLayers: () => { getArray: () => unknown[] };
-              getView: () => {
-                setCenter: (c: number[]) => void;
-                setZoom: (z: number) => void;
-              };
-            }
-          | undefined;
-        if (map === undefined) {
-          reject(new Error('window.__ndwtMap is not set'));
-          return;
-        }
+          .__ndwtMap as {
+          once: (event: string, cb: () => void) => void;
+          getLayers: () => { getArray: () => unknown[] };
+          getView: () => {
+            setCenter: (c: number[]) => void;
+            setZoom: (z: number) => void;
+          };
+        };
 
         const tryRecenter = (): boolean => {
           const layers = map.getLayers().getArray() as Array<{

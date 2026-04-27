@@ -113,8 +113,8 @@ describe('toSite mapper', () => {
     };
     const site = __test.toSite(feature, 0);
     expect(site.coordinates).toEqual({ longitude: -120.37, latitude: 45.695 });
-    expect(site.facilities.has('restrooms')).toBe(false);
-    expect(site.facilities.has('boatRamp')).toBe(true);
+    expect(site.facilities).not.toContain('restrooms');
+    expect(site.facilities).toContain('boatRamp');
     expect(site.season).toBeUndefined();
     expect(site.contact).toBeUndefined();
     expect(site.riverMile).toBe(234);

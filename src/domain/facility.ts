@@ -12,34 +12,24 @@ export const FACILITIES = [
 
 export type Facility = (typeof FACILITIES)[number];
 
-export class FacilitySet {
-  private readonly set: ReadonlySet<Facility>;
+/**
+ * Plain readonly array of present facilities. Stored on Site as an
+ * array (not a class) so server components can pass Site values to
+ * client components — Next 16 only serializes plain JSON across the
+ * RSC boundary.
+ */
+export type FacilitySet = readonly Facility[];
 
-  private constructor(set: ReadonlySet<Facility>) {
-    this.set = set;
-  }
+// Static helpers — colocated under the type name for ergonomic
+// callsite usage like `FacilitySet.empty()` and
+// `FacilitySet.fromFlags({ ... })`.
+//
+// eslint-disable-next-line @typescript-eslint/no-redeclare
+export const FacilitySet = {
+  empty: (): FacilitySet => [],
+  fromFlags: (flags: Partial<Record<Facility, boolean>>): FacilitySet =>
+    FACILITIES.filter((facility) => flags[facility]),
+} as const;
 
-  static empty(): FacilitySet {
-    return new FacilitySet(new Set());
-  }
-
-  static fromFlags(flags: Partial<Record<Facility, boolean>>): FacilitySet {
-    const present = new Set<Facility>();
-    for (const f of FACILITIES) {
-      if (flags[f]) present.add(f);
-    }
-    return new FacilitySet(present);
-  }
-
-  has(f: Facility): boolean {
-    return this.set.has(f);
-  }
-
-  toArray(): readonly Facility[] {
-    return FACILITIES.filter((f) => this.set.has(f));
-  }
-
-  get size(): number {
-    return this.set.size;
-  }
-}
+export const hasFacility = (set: FacilitySet, facility: Facility): boolean =>
+  set.includes(facility);

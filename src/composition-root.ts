@@ -1,13 +1,25 @@
-import { GeoJsonSiteRepository } from './adapters/outbound/geojson-site-repository';
+import { InMemorySiteRepository } from './adapters/outbound/in-memory-site-repository';
 import { type GetSite, makeGetSite } from './application/use-cases/get-site';
 import {
   type ListSites,
   makeListSites,
 } from './application/use-cases/list-sites';
+import type { Site } from './domain';
 
-const SITES_GEOJSON_URL = 'data/ndwt.geojson';
+export interface Composition {
+  readonly listSites: ListSites;
+  readonly getSite: GetSite;
+}
 
-const siteRepository = new GeoJsonSiteRepository(SITES_GEOJSON_URL);
-
-export const listSites: ListSites = makeListSites(siteRepository);
-export const getSite: GetSite = makeGetSite(siteRepository);
+/**
+ * Builds the client-side composition once per page from the Site[]
+ * the Next server component handed in. Pure function — no globals,
+ * no module-level mutation, safe for React concurrent renders.
+ */
+export const createComposition = (sites: readonly Site[]): Composition => {
+  const repository = new InMemorySiteRepository(sites);
+  return {
+    listSites: makeListSites(repository),
+    getSite: makeGetSite(repository),
+  };
+};

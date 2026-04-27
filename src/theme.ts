@@ -1,10 +1,15 @@
-import { extendTheme, ThemeConfig } from '@chakra-ui/react';
+import { extendTheme, type ThemeConfig } from '@chakra-ui/react';
 
-const config: ThemeConfig = {
+const themeConfig: ThemeConfig = {
   initialColorMode: 'light',
   useSystemColorMode: true,
 };
 
-const theme = extendTheme({ config });
+/**
+ * Single source of truth for Chakra theme. Imported by
+ * `app/providers.tsx`. When Phase 5 swaps Chakra for PandaCSS + Park
+ * UI, this file becomes the Panda token preset.
+ */
+export const theme = extendTheme({ config: themeConfig });
 
 export default theme;

@@ -35,9 +35,9 @@ const waypointDescription = (site: Site): string => {
     parts.push(`Contact: ${site.contact}`);
   if (site.phone !== undefined && site.phone !== '')
     parts.push(`Phone: ${site.phone}`);
-  const facilities = site.facilities
-    .toArray()
-    .map((facility) => FACILITY_LABELS[facility]);
+  const facilities = site.facilities.map(
+    (facility) => FACILITY_LABELS[facility]
+  );
   if (facilities.length > 0) parts.push(`Facilities: ${facilities.join(', ')}`);
   return parts.join('\n');
 };
