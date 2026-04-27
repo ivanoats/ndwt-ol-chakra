@@ -1,4 +1,3 @@
-import type { MapBrowserEvent } from 'ol';
 import { Feature, Map, View } from 'ol';
 import Point from 'ol/geom/Point';
 import TileLayer from 'ol/layer/Tile';
@@ -10,8 +9,9 @@ import { Circle, Fill, Stroke, Style } from 'ol/style';
 import { useEffect, useRef } from 'react';
 
 import { getSite, listSites } from '../composition-root';
-import { type Site, siteId } from '../domain';
-import { useSelectedSite } from '../store/selected-site';
+import type { Site } from '../domain';
+
+import { makeHandleClick, makeHandlePointerMove } from './map-handlers';
 
 import '../style.css';
 
@@ -25,8 +25,6 @@ const MARKER_STYLE = new Style({
   }),
 });
 
-const HIT_TOLERANCE_PX = 6;
-
 const siteToFeature = (site: Site): Feature<Point> => {
   const feature = new Feature({
     geometry: new Point(
@@ -36,46 +34,6 @@ const siteToFeature = (site: Site): Feature<Point> => {
   feature.setId(site.id);
   return feature;
 };
-
-const handleMapClick =
-  (map: Map) =>
-  (event: MapBrowserEvent<UIEvent>): void => {
-    let pickedId: string | null = null;
-    map.forEachFeatureAtPixel(
-      event.pixel,
-      (feature) => {
-        const id = feature.getId();
-        if (typeof id === 'string') {
-          pickedId = id;
-          return true;
-        }
-        return false;
-      },
-      { hitTolerance: HIT_TOLERANCE_PX }
-    );
-    if (pickedId === null) return;
-
-    getSite(siteId(pickedId))
-      .then((site) => {
-        if (site) useSelectedSite.getState().select(site);
-      })
-      .catch((err: unknown) => {
-        // eslint-disable-next-line no-console
-        console.error('Failed to load site', err);
-      });
-  };
-
-const handlePointerMove =
-  (map: Map) =>
-  (event: MapBrowserEvent<UIEvent>): void => {
-    if (event.dragging) return;
-    const target = map.getTargetElement();
-    if (target === null) return;
-    const hit = map.hasFeatureAtPixel(event.pixel, {
-      hitTolerance: HIT_TOLERANCE_PX,
-    });
-    target.style.cursor = hit ? 'pointer' : '';
-  };
 
 export default function MapComponent() {
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -94,8 +52,8 @@ export default function MapComponent() {
         zoom: 7,
       }),
     });
-    map.on('click', handleMapClick(map));
-    map.on('pointermove', handlePointerMove(map));
+    map.on('click', makeHandleClick(map, getSite));
+    map.on('pointermove', makeHandlePointerMove(map));
 
     // Always-exposed handle on globalThis so Playwright can drive
     // deterministic interactions in the e2e suite. Safe to ship in
