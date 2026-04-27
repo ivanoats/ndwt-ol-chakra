@@ -64,11 +64,14 @@ export const siteToGpx = (site: Site): string => {
 };
 
 export const gpxFilename = (site: Site): string => {
-  const slug = site.riverName
-    .toLowerCase()
-    .replaceAll(/[^a-z0-9]+/g, '-')
-    .replace(/^-+/, '')
-    .replace(/-+$/, '');
-  const namePart = slug === '' ? 'waypoint' : slug;
+  // After this replaceAll, runs of non-alphanumerics have collapsed
+  // to single dashes, so the only place a dash can lead or trail is
+  // a single character — slice it off without a regex (avoids
+  // Sonar's S5852 ReDoS heuristic on anchored quantifiers).
+  const collapsed = site.riverName.toLowerCase().replaceAll(/[^a-z0-9]+/g, '-');
+  const start = collapsed.startsWith('-') ? 1 : 0;
+  const end = collapsed.length - (collapsed.endsWith('-') ? 1 : 0);
+  const trimmed = collapsed.slice(start, end);
+  const namePart = trimmed === '' ? 'waypoint' : trimmed;
   return `${namePart}-mile-${site.riverMile}.gpx`;
 };
