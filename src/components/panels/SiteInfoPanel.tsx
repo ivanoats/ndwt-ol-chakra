@@ -88,6 +88,19 @@ interface PanelBodyProps {
   readonly site: Site;
 }
 
+const DownloadGpxButton = ({ site }: PanelBodyProps): JSX.Element => (
+  <Box pt={2}>
+    <Button
+      colorScheme="green"
+      size="sm"
+      onClick={() => downloadGpx(site)}
+      data-testid="download-gpx-button"
+    >
+      Download GPX waypoint
+    </Button>
+  </Box>
+);
+
 const PanelBody = ({ site }: PanelBodyProps): JSX.Element => (
   <>
     <DrawerHeader borderBottomWidth="1px">
@@ -108,16 +121,7 @@ const PanelBody = ({ site }: PanelBodyProps): JSX.Element => (
         <Detail label="Contact" value={site.contact} />
         <Detail label="Phone" value={site.phone} />
         <WebsiteRow url={site.website} />
-        <Box pt={2}>
-          <Button
-            colorScheme="green"
-            size="sm"
-            onClick={() => downloadGpx(site)}
-            data-testid="download-gpx-button"
-          >
-            Download GPX waypoint
-          </Button>
-        </Box>
+        <DownloadGpxButton site={site} />
       </Stack>
     </DrawerBody>
   </>

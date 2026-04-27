@@ -8,7 +8,7 @@ import {
   makeHandlePointerMove,
 } from '../map-handlers';
 
-const fakeFeature = (id: string | undefined): { getId: () => unknown } => ({
+const fakeFeature = (id?: string): { getId: () => unknown } => ({
   getId: () => id,
 });
 
@@ -91,7 +91,7 @@ describe('makeHandleClick', () => {
     const map = fakeMap();
     map.forEachFeatureAtPixel.mockImplementation(
       (_pixel, callback: (f: { getId: () => unknown }) => boolean) => {
-        callback(fakeFeature(undefined));
+        callback(fakeFeature());
         callback(fakeFeature(42 as unknown as string));
       }
     );
