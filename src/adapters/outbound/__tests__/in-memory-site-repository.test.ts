@@ -21,10 +21,10 @@ describe('InMemorySiteRepository', () => {
   });
 
   it('findById() returns the matching site', async () => {
-    const a = makeSite('a', 'Columbia');
-    const b = makeSite('b', 'Snake');
-    const repo = new InMemorySiteRepository([a, b]);
-    await expect(repo.findById(siteId('b'))).resolves.toBe(b);
+    const first = makeSite('a', 'Columbia');
+    const second = makeSite('b', 'Snake');
+    const repo = new InMemorySiteRepository([first, second]);
+    await expect(repo.findById(siteId('b'))).resolves.toBe(second);
   });
 
   it('findById() returns null for an unknown id', async () => {

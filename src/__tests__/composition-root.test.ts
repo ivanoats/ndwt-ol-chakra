@@ -22,9 +22,9 @@ describe('createComposition', () => {
   });
 
   it('returns isolated compositions per call (no shared state)', async () => {
-    const a = createComposition([baseSite]);
-    const b = createComposition([]);
-    await expect(a.listSites()).resolves.toEqual([baseSite]);
-    await expect(b.listSites()).resolves.toEqual([]);
+    const populated = createComposition([baseSite]);
+    const empty = createComposition([]);
+    await expect(populated.listSites()).resolves.toEqual([baseSite]);
+    await expect(empty.listSites()).resolves.toEqual([]);
   });
 });
