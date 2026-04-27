@@ -65,6 +65,18 @@ const handleMapClick =
       });
   };
 
+const handlePointerMove =
+  (map: Map) =>
+  (event: MapBrowserEvent<UIEvent>): void => {
+    if (event.dragging) return;
+    const target = map.getTargetElement();
+    if (target === null) return;
+    const hit = map.hasFeatureAtPixel(event.pixel, {
+      hitTolerance: HIT_TOLERANCE_PX,
+    });
+    target.style.cursor = hit ? 'pointer' : '';
+  };
+
 export default function MapComponent() {
   const containerRef = useRef<HTMLDivElement | null>(null);
 
@@ -83,6 +95,7 @@ export default function MapComponent() {
       }),
     });
     map.on('click', handleMapClick(map));
+    map.on('pointermove', handlePointerMove(map));
 
     // Always-exposed handle on globalThis so Playwright can drive
     // deterministic interactions in the e2e suite. Safe to ship in

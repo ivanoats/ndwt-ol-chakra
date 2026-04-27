@@ -60,6 +60,34 @@ test.describe('Northwest Discovery Water Trail map', () => {
     await expect(panel.getByTestId('download-gpx-button')).toBeVisible();
   });
 
+  test('hovering over a marker switches the cursor to pointer', async ({
+    page,
+  }) => {
+    await page.goto('/');
+    await recenterOnFirstMarker(page);
+
+    const mapBox = await page.locator('#map').boundingBox();
+    if (mapBox === null) throw new Error('#map should have a bounding box');
+
+    // Empty viewport hover -> default cursor.
+    await page.mouse.move(mapBox.x + 5, mapBox.y + 5);
+    const cursorOff = await page
+      .locator('#map')
+      .evaluate((el) => (el as HTMLElement).style.cursor);
+    expect(cursorOff).not.toBe('pointer');
+
+    // Centered on a marker -> cursor goes to pointer.
+    await page.mouse.move(
+      mapBox.x + mapBox.width / 2,
+      mapBox.y + mapBox.height / 2
+    );
+    await expect
+      .poll(() =>
+        page.locator('#map').evaluate((el) => (el as HTMLElement).style.cursor)
+      )
+      .toBe('pointer');
+  });
+
   test('closing the panel hides it again', async ({ page }) => {
     await page.goto('/');
     await clickFirstMarker(page);
@@ -82,6 +110,16 @@ test.describe('Northwest Discovery Water Trail map', () => {
  * exercises the production click handler end to end.
  */
 async function clickFirstMarker(page: Page): Promise<void> {
+  await recenterOnFirstMarker(page);
+  const mapBox = await page.locator('#map').boundingBox();
+  if (mapBox === null) throw new Error('#map should have a bounding box');
+  await page.mouse.click(
+    mapBox.x + mapBox.width / 2,
+    mapBox.y + mapBox.height / 2
+  );
+}
+
+async function recenterOnFirstMarker(page: Page): Promise<void> {
   await page.evaluate(
     () =>
       new Promise<void>((resolve, reject) => {
@@ -135,12 +173,5 @@ async function clickFirstMarker(page: Page): Promise<void> {
           reject(new Error('vector layer never appeared'));
         }, 10_000);
       })
-  );
-
-  const mapBox = await page.locator('#map').boundingBox();
-  if (mapBox === null) throw new Error('#map should have a bounding box');
-  await page.mouse.click(
-    mapBox.x + mapBox.width / 2,
-    mapBox.y + mapBox.height / 2
   );
 }
