@@ -3,6 +3,17 @@ import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
   plugins: [react()],
+  resolve: {
+    alias: {
+      // Next's `server-only` package is a build-time guard with no
+      // runtime export. Vitest doesn't ship Next's resolver, so
+      // alias it to an empty stub for the unit suite.
+      'server-only': new URL(
+        './src/__tests__/server-only-stub.ts',
+        import.meta.url
+      ).pathname,
+    },
+  },
   test: {
     environment: 'jsdom',
     globals: true,
