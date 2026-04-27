@@ -7,14 +7,6 @@ import type { SystemStyleObject } from 'styled-system/types';
 
 import { Dialog, Portal } from '@ark-ui/react';
 
-const backdrop: SystemStyleObject = {
-  position: 'fixed',
-  inset: 0,
-  backgroundColor: 'black',
-  opacity: 0.4,
-  zIndex: 'overlay',
-};
-
 const content: SystemStyleObject = {
   position: 'fixed',
   top: 0,
@@ -46,18 +38,33 @@ export function Drawer({
   return (
     <Dialog.Root
       open={open}
+      // Non-modal: no backdrop, no focus trap, no outside-click
+      // dismiss. Lets the user keep panning the map and clicking
+      // other markers while the info panel is open. ESC and the
+      // close button still dismiss it.
+      modal={false}
       onOpenChange={(details) => {
         if (!details.open) onClose();
       }}
     >
       <Portal>
-        <Dialog.Backdrop className={css(backdrop)} />
-        <Dialog.Positioner className={css({ position: 'fixed', inset: 0 })}>
+        <Dialog.Positioner
+          className={css({
+            position: 'fixed',
+            top: 0,
+            bottom: 0,
+            // The positioner shouldn't cover the map either; it
+            // wraps the panel only.
+            ...(placement === 'right' ? rightPlacement : leftPlacement),
+            pointerEvents: 'none',
+          })}
+        >
           <Dialog.Content
             data-testid="site-info-panel"
             className={css({
               ...content,
               ...(placement === 'right' ? rightPlacement : leftPlacement),
+              pointerEvents: 'auto',
             })}
           >
             {children}
