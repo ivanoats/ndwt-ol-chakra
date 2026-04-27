@@ -2,10 +2,12 @@ import { type ButtonHTMLAttributes, type ReactNode, type Ref } from 'react';
 import { css, cx } from 'styled-system/css';
 import type { SystemStyleObject } from 'styled-system/types';
 
-interface IconButtonProps extends Omit<
+type ButtonHTMLAttributesWithoutLabel = Omit<
   ButtonHTMLAttributes<HTMLButtonElement>,
   'aria-label'
-> {
+>;
+
+interface IconButtonProps extends ButtonHTMLAttributesWithoutLabel {
   readonly 'aria-label': string;
   readonly icon: ReactNode;
   readonly size?: 'sm' | 'md' | 'lg';
