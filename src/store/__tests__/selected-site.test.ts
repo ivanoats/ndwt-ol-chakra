@@ -35,10 +35,10 @@ describe('useSelectedSite store', () => {
   });
 
   it('select() replaces a previous selection', () => {
-    const a = fakeSite('a');
-    const b = fakeSite('b');
-    useSelectedSite.getState().select(a);
-    useSelectedSite.getState().select(b);
-    expect(useSelectedSite.getState().selectedSite).toBe(b);
+    const first = fakeSite('a');
+    const second = fakeSite('b');
+    useSelectedSite.getState().select(first);
+    useSelectedSite.getState().select(second);
+    expect(useSelectedSite.getState().selectedSite).toBe(second);
   });
 });

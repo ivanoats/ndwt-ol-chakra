@@ -52,7 +52,7 @@ describe('<SiteInfoPanel />', () => {
     select(baseSite);
 
     expect(
-      screen.getByRole('heading', { name: /Columbia River — Mile 234/ })
+      screen.getByRole('heading', { name: /Columbia River — Mile 234/u })
     ).toBeInTheDocument();
     expect(screen.getByText('Lake Umatilla · OR')).toBeInTheDocument();
     expect(screen.getByText('US Army Corps of Engineers')).toBeInTheDocument();
