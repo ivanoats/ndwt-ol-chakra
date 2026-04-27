@@ -14,11 +14,11 @@ const FACILITY_LABELS: Record<Facility, string> = {
 
 const escapeXml = (raw: string): string =>
   raw
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&apos;');
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+    .replaceAll('"', '&quot;')
+    .replaceAll("'", '&apos;');
 
 const waypointName = (site: Site): string =>
   `${site.riverName} River — Mile ${site.riverMile}`;
@@ -66,8 +66,9 @@ export const siteToGpx = (site: Site): string => {
 export const gpxFilename = (site: Site): string => {
   const slug = site.riverName
     .toLowerCase()
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-+|-+$/g, '');
+    .replaceAll(/[^a-z0-9]+/g, '-')
+    .replace(/^-+/, '')
+    .replace(/-+$/, '');
   const namePart = slug === '' ? 'waypoint' : slug;
   return `${namePart}-mile-${site.riverMile}.gpx`;
 };

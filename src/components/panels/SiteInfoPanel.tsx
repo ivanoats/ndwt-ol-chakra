@@ -62,7 +62,7 @@ const downloadGpx = (site: Site): void => {
   anchor.download = gpxFilename(site);
   document.body.appendChild(anchor);
   anchor.click();
-  document.body.removeChild(anchor);
+  anchor.remove();
   URL.revokeObjectURL(url);
 };
 

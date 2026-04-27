@@ -1,7 +1,7 @@
-import { afterEach, describe, expect, it } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 
 import { ChakraProvider } from '@chakra-ui/react';
-import { act, render, screen } from '@testing-library/react';
+import { act, fireEvent, render, screen } from '@testing-library/react';
 
 import { coordinates, FacilitySet, type Site, siteId } from '../../../domain';
 import { useSelectedSite } from '../../../store/selected-site';
@@ -94,5 +94,32 @@ describe('<SiteInfoPanel />', () => {
     const button = screen.getByTestId('download-gpx-button');
     expect(button).toBeInTheDocument();
     expect(button).toHaveTextContent(/Download GPX/);
+  });
+
+  it('clicking Download GPX writes a .gpx file via a temporary anchor', () => {
+    const createObjectURL = vi.fn(() => 'blob:test-url');
+    const revokeObjectURL = vi.fn();
+    vi.stubGlobal('URL', {
+      ...URL,
+      createObjectURL,
+      revokeObjectURL,
+    });
+    const clicks: HTMLAnchorElement[] = [];
+    const originalClick = HTMLAnchorElement.prototype.click;
+    HTMLAnchorElement.prototype.click = function () {
+      clicks.push(this);
+    };
+
+    renderPanel();
+    select(baseSite);
+    fireEvent.click(screen.getByTestId('download-gpx-button'));
+
+    expect(createObjectURL).toHaveBeenCalledTimes(1);
+    expect(revokeObjectURL).toHaveBeenCalledWith('blob:test-url');
+    expect(clicks).toHaveLength(1);
+    expect(clicks[0]?.download).toBe('columbia-mile-234.gpx');
+    expect(clicks[0]?.href).toContain('blob:test-url');
+
+    HTMLAnchorElement.prototype.click = originalClick;
   });
 });
