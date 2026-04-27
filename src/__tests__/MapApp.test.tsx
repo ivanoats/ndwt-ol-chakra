@@ -1,6 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
 
-import { ChakraProvider } from '@chakra-ui/react';
 import { render, screen } from '@testing-library/react';
 
 import { coordinates, FacilitySet, type Site, siteId } from '../domain';
@@ -28,12 +27,8 @@ const fakeSites: readonly Site[] = [
 ];
 
 describe('<MapApp />', () => {
-  it('renders the page title and the panel mount point', () => {
-    render(
-      <ChakraProvider>
-        <MapApp sites={fakeSites} />
-      </ChakraProvider>
-    );
+  it('renders the page title', () => {
+    render(<MapApp sites={fakeSites} />);
     expect(
       screen.getByText('Northwest Discovery Water Trail')
     ).toBeInTheDocument();

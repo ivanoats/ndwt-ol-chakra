@@ -2,8 +2,7 @@
 
 import dynamic from 'next/dynamic';
 import { useMemo } from 'react';
-
-import { Box, Flex, Text } from '@chakra-ui/react';
+import { css } from 'styled-system/css';
 
 import { createComposition } from '../composition-root';
 import type { Site } from '../domain';
@@ -16,33 +15,38 @@ import ThemeToggleButton from './ThemeToggleButton';
 // shell and the map mounts on the client.
 const MapComponent = dynamic(() => import('./map'), { ssr: false });
 
-const textFontSizes = [14, 18, 24, 30];
-
 interface MapAppProps {
   readonly sites: readonly Site[];
 }
 
 export default function MapApp({ sites }: MapAppProps) {
-  // Build the composition synchronously from props — no global
-  // mutation, no concurrent-render races. Re-runs only if the sites
-  // array identity changes (it shouldn't in production; HMR-friendly).
   const composition = useMemo(() => createComposition(sites), [sites]);
 
   return (
-    <Box>
-      <Flex
-        as="header"
-        direction="column"
-        alignItems="center"
-        justifyContent="center"
-        h="100vh"
-        fontSize="3xl"
+    <div>
+      <header
+        className={css({
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          height: '100vh',
+          fontSize: '3xl',
+        })}
       >
-        <Text fontSize={textFontSizes}>Northwest Discovery Water Trail</Text>
+        <p
+          className={css({
+            fontSize: { base: '14px', sm: '18px', md: '24px', lg: '30px' },
+            margin: 0,
+            color: 'fg.default',
+          })}
+        >
+          Northwest Discovery Water Trail
+        </p>
         <MapComponent sites={sites} getSite={composition.getSite} />
-      </Flex>
+      </header>
       <SiteInfoPanel />
-      <ThemeToggleButton pos="fixed" bottom="2" right="2" />
-    </Box>
+      <ThemeToggleButton />
+    </div>
   );
 }

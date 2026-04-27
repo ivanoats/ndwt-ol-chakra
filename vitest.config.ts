@@ -12,6 +12,10 @@ export default defineConfig({
         './src/__tests__/server-only-stub.ts',
         import.meta.url
       ).pathname,
+      // PandaCSS generates the styled-system folder at the repo
+      // root; Vitest's bundler can't follow tsconfig paths, so alias
+      // the bare specifier here too.
+      'styled-system': new URL('./styled-system', import.meta.url).pathname,
     },
   },
   test: {

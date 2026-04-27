@@ -1,6 +1,5 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
-import { ChakraProvider } from '@chakra-ui/react';
 import { act, fireEvent, render, screen } from '@testing-library/react';
 
 import { coordinates, FacilitySet, type Site, siteId } from '../../../domain';
@@ -22,12 +21,7 @@ const baseSite: Site = {
   facilities: FacilitySet.fromFlags({ boatRamp: true, restrooms: true }),
 };
 
-const renderPanel = () =>
-  render(
-    <ChakraProvider>
-      <SiteInfoPanel />
-    </ChakraProvider>
-  );
+const renderPanel = () => render(<SiteInfoPanel />);
 
 const select = (site: Site): void => {
   act(() => {
@@ -42,17 +36,24 @@ afterEach(() => {
 });
 
 describe('<SiteInfoPanel />', () => {
-  it('renders no panel content when no site is selected', () => {
+  it('keeps the panel hidden when no site is selected', () => {
     renderPanel();
-    expect(screen.queryByTestId('site-info-panel')).not.toBeInTheDocument();
+    // Ark UI Dialog stays in the DOM with data-state="closed" and
+    // a `hidden` attribute when not open; we just confirm it's not
+    // visible to a real user.
+    const panel = screen.queryByTestId('site-info-panel');
+    expect(panel).toHaveAttribute('data-state', 'closed');
+    expect(panel).not.toBeVisible();
   });
 
-  it('renders the title, subheading, and details when a site is selected', () => {
+  it('renders the title, subheading, and details when a site is selected', async () => {
     renderPanel();
     select(baseSite);
 
     expect(
-      screen.getByRole('heading', { name: /Columbia River — Mile 234/u })
+      await screen.findByRole('heading', {
+        name: /Columbia River — Mile 234/u,
+      })
     ).toBeInTheDocument();
     expect(screen.getByText('Lake Umatilla · OR')).toBeInTheDocument();
     expect(screen.getByText('US Army Corps of Engineers')).toBeInTheDocument();

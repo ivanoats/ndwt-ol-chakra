@@ -1,45 +1,49 @@
 'use client';
 
-import type { JSX } from 'react';
+import { Moon, Sun } from 'lucide-react';
+import { useTheme } from 'next-themes';
+import { useEffect, useState } from 'react';
 
-import { MoonIcon, SunIcon } from '@chakra-ui/icons';
-import { IconButton, IconButtonProps, useColorMode } from '@chakra-ui/react';
-import styled from '@emotion/styled';
+import { IconButton } from './ui/icon-button';
 
-import transientOptions from '../utils/general';
+const ICON_SIZE = 20;
 
-// PROP TYPES
-type ThemeToggleButtonProps = Omit<IconButtonProps, 'aria-label'>;
+interface ThemeToggleButtonProps {
+  readonly className?: string;
+  readonly position?: 'fixed' | 'absolute' | 'static';
+  readonly bottom?: string;
+  readonly right?: string;
+}
 
-// CONSTS and LETS
-const iconSize = 20;
+export default function ThemeToggleButton({
+  className,
+  position = 'fixed',
+  bottom = '2',
+  right = '2',
+}: ThemeToggleButtonProps) {
+  const { resolvedTheme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
 
-type RoundButtonProps = {
-  $colorMode: 'light' | 'dark';
-} & IconButtonProps;
-
-const RoundButton = styled(IconButton, transientOptions)<RoundButtonProps>`
-  box-shadow: 0 0 100px 20px
-    ${({ $colorMode }) => ($colorMode === 'light' ? 'black' : 'white')};
-  & svg {
-    width: ${iconSize}px;
-    height: ${iconSize}px;
-  }
-`;
-
-const ThemeToggleButton = (props: ThemeToggleButtonProps): JSX.Element => {
-  const { colorMode, toggleColorMode } = useColorMode();
+  // Avoid SSR/CSR mismatch on initial render — the chosen theme is
+  // only known on the client after `next-themes` reads localStorage
+  // / system preference.
+  const isDark = mounted && resolvedTheme === 'dark';
+  const next = isDark ? 'light' : 'dark';
 
   return (
-    <RoundButton
-      $colorMode={colorMode}
-      onClick={toggleColorMode}
-      icon={colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
-      aria-label={`Activate ${colorMode === 'light' ? 'dark' : 'light'} mode`}
-      isRound
-      {...props}
+    <IconButton
+      aria-label={`Activate ${next} mode`}
+      onClick={() => setTheme(next)}
+      icon={
+        mounted && isDark ? <Sun size={ICON_SIZE} /> : <Moon size={ICON_SIZE} />
+      }
+      css={{
+        position,
+        bottom,
+        right,
+      }}
+      className={className}
     />
   );
-};
-
-export default ThemeToggleButton;
+}
