@@ -7,6 +7,29 @@ import type { SystemStyleObject } from 'styled-system/types';
 
 import { Dialog, Portal } from '@ark-ui/react';
 
+const backdrop: SystemStyleObject = {
+  position: 'fixed',
+  inset: 0,
+  backgroundColor: 'black',
+  opacity: 0.4,
+  zIndex: 'overlay',
+};
+
+const content: SystemStyleObject = {
+  position: 'fixed',
+  top: 0,
+  bottom: 0,
+  display: 'flex',
+  flexDirection: 'column',
+  width: { base: '100%', md: 'md' },
+  backgroundColor: 'bg.default',
+  boxShadow: 'lg',
+  zIndex: 'modal',
+};
+
+const rightPlacement: SystemStyleObject = { right: 0 };
+const leftPlacement: SystemStyleObject = { left: 0 };
+
 interface DrawerProps {
   readonly open: boolean;
   readonly onClose: () => void;
@@ -97,26 +120,3 @@ export function DrawerBody({ children }: { readonly children: ReactNode }) {
     </div>
   );
 }
-
-const backdrop: SystemStyleObject = {
-  position: 'fixed',
-  inset: 0,
-  backgroundColor: 'black',
-  opacity: 0.4,
-  zIndex: 'overlay',
-};
-
-const content: SystemStyleObject = {
-  position: 'fixed',
-  top: 0,
-  bottom: 0,
-  display: 'flex',
-  flexDirection: 'column',
-  width: { base: '100%', md: 'md' },
-  backgroundColor: 'bg.default',
-  boxShadow: 'lg',
-  zIndex: 'modal',
-};
-
-const rightPlacement: SystemStyleObject = { right: 0 };
-const leftPlacement: SystemStyleObject = { left: 0 };

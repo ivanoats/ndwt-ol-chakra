@@ -54,6 +54,20 @@ const Detail = ({ label, value }: DetailProps) => {
   );
 };
 
+const downloadGpx = (site: Site): void => {
+  const blob = new Blob([siteToGpx(site)], {
+    type: 'application/gpx+xml',
+  });
+  const url = URL.createObjectURL(blob);
+  const anchor = document.createElement('a');
+  anchor.href = url;
+  anchor.download = gpxFilename(site);
+  document.body.appendChild(anchor);
+  anchor.click();
+  anchor.remove();
+  URL.revokeObjectURL(url);
+};
+
 interface PanelBodyProps {
   readonly site: Site;
 }
@@ -84,20 +98,6 @@ const WebsiteRow = ({ url }: WebsiteRowProps) => {
       </Link>
     </Box>
   );
-};
-
-const downloadGpx = (site: Site): void => {
-  const blob = new Blob([siteToGpx(site)], {
-    type: 'application/gpx+xml',
-  });
-  const url = URL.createObjectURL(blob);
-  const anchor = document.createElement('a');
-  anchor.href = url;
-  anchor.download = gpxFilename(site);
-  document.body.appendChild(anchor);
-  anchor.click();
-  anchor.remove();
-  URL.revokeObjectURL(url);
 };
 
 const PanelBody = ({ site }: PanelBodyProps) => (
