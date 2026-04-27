@@ -24,9 +24,8 @@ export function Badge({
           textTransform: 'uppercase',
           borderRadius: 'sm',
           letterSpacing: 'wider',
-          color: colorScheme === 'green' ? 'colorPalette.11' : 'gray.11',
-          backgroundColor:
-            colorScheme === 'green' ? 'colorPalette.3' : 'gray.3',
+          color: 'colorPalette.11',
+          backgroundColor: 'colorPalette.3',
           colorPalette: colorScheme === 'green' ? 'green' : 'sage',
         }),
         className

@@ -47,10 +47,9 @@ export function Drawer({
 
 interface DrawerHeaderProps {
   readonly children: ReactNode;
-  readonly onClose: () => void;
 }
 
-export function DrawerHeader({ children, onClose }: DrawerHeaderProps) {
+export function DrawerHeader({ children }: DrawerHeaderProps) {
   return (
     <div
       className={css({
@@ -67,7 +66,6 @@ export function DrawerHeader({ children, onClose }: DrawerHeaderProps) {
       <div className={css({ flex: 1 })}>{children}</div>
       <Dialog.CloseTrigger
         aria-label="Close"
-        onClick={onClose}
         className={css({
           appearance: 'none',
           background: 'transparent',

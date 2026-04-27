@@ -102,7 +102,7 @@ const downloadGpx = (site: Site): void => {
 
 const PanelBody = ({ site }: PanelBodyProps) => (
   <>
-    <DrawerHeader onClose={() => useSelectedSite.getState().close()}>
+    <DrawerHeader>
       <Heading size="md">{formatTitle(site)}</Heading>
       <Text as="p" css={{ fontSize: 'sm', color: 'fg.muted', marginTop: '1' }}>
         {formatSubheading(site)}

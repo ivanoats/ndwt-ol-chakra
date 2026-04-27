@@ -13,6 +13,19 @@ export function Link({
   css: cssProp,
   ...rest
 }: LinkProps) {
+  // Compute final target/rel from `external` AFTER spreading the
+  // caller's rest props. Callers that pass `target` explicitly can
+  // still use it, but `external` always wins on the safety side: if
+  // we end up with target="_blank", we force `rel="noopener noreferrer"`.
+  const target = external ? '_blank' : rest.target;
+  const baseRel = rest.rel;
+  const rel =
+    target === '_blank'
+      ? [baseRel, 'noopener', 'noreferrer']
+          .filter((part): part is string => Boolean(part))
+          .join(' ')
+      : baseRel;
+
   return (
     <a
       className={cx(
@@ -28,9 +41,9 @@ export function Link({
         }),
         className
       )}
-      target={external ? '_blank' : undefined}
-      rel={external ? 'noopener noreferrer' : undefined}
       {...rest}
+      target={target}
+      rel={rel}
     />
   );
 }

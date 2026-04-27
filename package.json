@@ -27,7 +27,7 @@
     "lint:md": "markdownlint-cli2 \"**/*.md\" \"#node_modules\"",
     "lint:md:fix": "markdownlint-cli2 --fix \"**/*.md\" \"#node_modules\"",
     "format": "prettier --config ./.prettierrc -w '{src,e2e,app}/**/*.{tsx,ts}' playwright.config.ts",
-    "typecheck": "tsc --noEmit && tsc --noEmit -p tsconfig.e2e.json",
+    "typecheck": "panda codegen --silent && tsc --noEmit && tsc --noEmit -p tsconfig.e2e.json",
     "test": "panda codegen --silent && vitest run --coverage",
     "test:watch": "vitest",
     "prepare": "husky install"

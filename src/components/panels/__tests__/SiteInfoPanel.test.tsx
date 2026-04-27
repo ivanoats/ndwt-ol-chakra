@@ -41,7 +41,7 @@ describe('<SiteInfoPanel />', () => {
     // Ark UI Dialog stays in the DOM with data-state="closed" and
     // a `hidden` attribute when not open; we just confirm it's not
     // visible to a real user.
-    const panel = screen.queryByTestId('site-info-panel');
+    const panel = screen.getByTestId('site-info-panel');
     expect(panel).toHaveAttribute('data-state', 'closed');
     expect(panel).not.toBeVisible();
   });
