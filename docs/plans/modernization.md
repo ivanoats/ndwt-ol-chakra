@@ -9,8 +9,8 @@
 | 2.5   | Playwright e2e harness                          | Done (PR #24) |
 | 3     | Info panel on Chakra (pre-Next/Panda)           | Done (PR #30) |
 | 4     | Migrate to Next.js 16 App Router (still Chakra) | Done (PR #31) |
-| 5     | Swap Chakra for PandaCSS + Ark UI + Park UI     | In progress   |
-| 6     | Layout & content polish                         | Pending       |
+| 5     | Swap Chakra for PandaCSS + Ark UI + Park UI     | Done (PR #34) |
+| 6     | Layout & content polish                         | In progress   |
 | 7     | Docs & memory files                             | Pending       |
 
 ## Context

@@ -27,10 +27,14 @@ const fakeSites: readonly Site[] = [
 ];
 
 describe('<MapApp />', () => {
-  it('renders the page title', () => {
+  it('renders the panel mount point and theme toggle without throwing', () => {
     render(<MapApp sites={fakeSites} />);
+    // The site info panel is always mounted (Ark UI semantics) so we
+    // can use it as a smoke marker that the component tree rendered.
+    expect(screen.getByTestId('site-info-panel')).toBeInTheDocument();
+    // Theme toggle button is in the tree too.
     expect(
-      screen.getByText('Northwest Discovery Water Trail')
+      screen.getByRole('button', { name: /Activate (light|dark) mode/ })
     ).toBeInTheDocument();
   });
 });

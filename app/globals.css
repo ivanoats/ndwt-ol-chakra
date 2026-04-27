@@ -9,9 +9,7 @@ body {
 }
 
 #map {
-  min-width: 600px;
-  min-height: 500px;
-  margin: 50px;
-  height: 500px;
+  flex: 1;
   width: 100%;
+  min-height: 0;
 }

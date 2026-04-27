@@ -23,28 +23,15 @@ export default function MapApp({ sites }: MapAppProps) {
   const composition = useMemo(() => createComposition(sites), [sites]);
 
   return (
-    <div>
-      <header
-        className={css({
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-          height: '100vh',
-          fontSize: '3xl',
-        })}
-      >
-        <p
-          className={css({
-            fontSize: { base: '14px', sm: '18px', md: '24px', lg: '30px' },
-            margin: 0,
-            color: 'fg.default',
-          })}
-        >
-          Northwest Discovery Water Trail
-        </p>
-        <MapComponent sites={sites} getSite={composition.getSite} />
-      </header>
+    <div
+      className={css({
+        flex: 1,
+        position: 'relative',
+        display: 'flex',
+        minHeight: '60vh',
+      })}
+    >
+      <MapComponent sites={sites} getSite={composition.getSite} />
       <SiteInfoPanel />
       <ThemeToggleButton />
     </div>

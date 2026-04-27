@@ -1,5 +1,9 @@
 import type { Metadata } from 'next';
 import type { ReactNode } from 'react';
+import { css } from 'styled-system/css';
+
+import Footer from '../src/components/layout/Footer';
+import Header from '../src/components/layout/Header';
 
 import { Providers } from './providers';
 
@@ -19,14 +23,30 @@ export default function RootLayout({
   readonly children: ReactNode;
 }) {
   return (
-    // suppressHydrationWarning is the canonical fix for the
-    // next-themes mismatch: the library injects a script that sets
-    // the theme class on <html> before React hydrates (kills FOUC),
-    // so the server-rendered html and the post-script html always
-    // differ. The mismatch is intentional and limited to <html>.
     <html lang="en" suppressHydrationWarning>
-      <body>
-        <Providers>{children}</Providers>
+      <body
+        className={css({
+          minHeight: '100vh',
+          display: 'flex',
+          flexDirection: 'column',
+          color: 'fg.default',
+          backgroundColor: 'bg.default',
+        })}
+      >
+        <Providers>
+          <Header />
+          <main
+            className={css({
+              flex: 1,
+              display: 'flex',
+              flexDirection: 'column',
+              minHeight: 0,
+            })}
+          >
+            {children}
+          </main>
+          <Footer />
+        </Providers>
       </body>
     </html>
   );
