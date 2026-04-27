@@ -5,12 +5,25 @@ import VectorLayer from 'ol/layer/Vector';
 import { fromLonLat } from 'ol/proj';
 import OSM from 'ol/source/OSM';
 import VectorSource from 'ol/source/Vector';
+import { Circle, Fill, Stroke, Style } from 'ol/style';
 import { useEffect, useRef } from 'react';
 
-import { listSites } from '../composition-root';
+import { getSite, listSites } from '../composition-root';
 import type { Site } from '../domain';
 
+import { makeHandleClick, makeHandlePointerMove } from './map-handlers';
+
 import '../style.css';
+
+type GlobalWithMap = typeof globalThis & { __ndwtMap?: Map };
+
+const MARKER_STYLE = new Style({
+  image: new Circle({
+    radius: 6,
+    fill: new Fill({ color: 'rgba(56, 161, 105, 0.85)' }),
+    stroke: new Stroke({ color: '#1a202c', width: 1.5 }),
+  }),
+});
 
 const siteToFeature = (site: Site): Feature<Point> => {
   const feature = new Feature({
@@ -24,11 +37,10 @@ const siteToFeature = (site: Site): Feature<Point> => {
 
 export default function MapComponent() {
   const containerRef = useRef<HTMLDivElement | null>(null);
-  const mapRef = useRef<Map | null>(null);
 
   useEffect(() => {
     const container = containerRef.current;
-    if (!container) return undefined;
+    if (container === null) return undefined;
 
     let cancelled = false;
 
@@ -40,14 +52,24 @@ export default function MapComponent() {
         zoom: 7,
       }),
     });
-    mapRef.current = map;
+    map.on('click', makeHandleClick(map, getSite));
+    map.on('pointermove', makeHandlePointerMove(map));
+
+    // Always-exposed handle on globalThis so Playwright can drive
+    // deterministic interactions in the e2e suite. Safe to ship in
+    // production: it's the same Map a real user already has via the
+    // DOM, and the surface area is one read-only reference.
+    (globalThis as GlobalWithMap).__ndwtMap = map;
 
     listSites()
       .then((sites) => {
         if (cancelled) return;
         const features = sites.map(siteToFeature);
         map.addLayer(
-          new VectorLayer({ source: new VectorSource({ features }) })
+          new VectorLayer({
+            source: new VectorSource({ features }),
+            style: MARKER_STYLE,
+          })
         );
       })
       .catch((err: unknown) => {
@@ -60,7 +82,7 @@ export default function MapComponent() {
     return () => {
       cancelled = true;
       map.setTarget();
-      mapRef.current = null;
+      delete (globalThis as GlobalWithMap).__ndwtMap;
     };
   }, []);
 

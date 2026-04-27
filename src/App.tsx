@@ -1,6 +1,7 @@
 import { Box, Flex, Text } from '@chakra-ui/react';
 
 import MapComponent from './components/map';
+import SiteInfoPanel from './components/panels/SiteInfoPanel';
 import ThemeToggleButton from './components/ThemeToggleButton';
 
 const textFontSizes = [14, 18, 24, 30];
@@ -19,6 +20,7 @@ const App = (): JSX.Element => {
         <Text fontSize={textFontSizes}>Northwest Discovery Water Trail</Text>
         <MapComponent />
       </Flex>
+      <SiteInfoPanel />
       <ThemeToggleButton pos="fixed" bottom="2" right="2" />
     </Box>
   );
