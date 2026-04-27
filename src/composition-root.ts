@@ -1,22 +1,25 @@
 import { InMemorySiteRepository } from './adapters/outbound/in-memory-site-repository';
-import type { SiteRepository } from './application/ports/site-repository';
-import type { GetSite } from './application/use-cases/get-site';
-import type { ListSites } from './application/use-cases/list-sites';
-import type { Site, SiteId } from './domain';
+import { type GetSite, makeGetSite } from './application/use-cases/get-site';
+import {
+  type ListSites,
+  makeListSites,
+} from './application/use-cases/list-sites';
+import type { Site } from './domain';
 
-let repository: SiteRepository = new InMemorySiteRepository([]);
+export interface Composition {
+  readonly listSites: ListSites;
+  readonly getSite: GetSite;
+}
 
 /**
- * Phase 4 hydration entry point. The Next server component loads the
- * full Site[] at build time, then MapApp ('use client') calls this
- * once before any handler reads the repo.
+ * Builds the client-side composition once per page from the Site[]
+ * the Next server component handed in. Pure function — no globals,
+ * no module-level mutation, safe for React concurrent renders.
  */
-export const hydrateSites = (sites: readonly Site[]): void => {
-  repository = new InMemorySiteRepository(sites);
+export const createComposition = (sites: readonly Site[]): Composition => {
+  const repository = new InMemorySiteRepository(sites);
+  return {
+    listSites: makeListSites(repository),
+    getSite: makeGetSite(repository),
+  };
 };
-
-export const listSites: ListSites = (): Promise<readonly Site[]> =>
-  repository.list();
-
-export const getSite: GetSite = (id: SiteId): Promise<Site | null> =>
-  repository.findById(id);

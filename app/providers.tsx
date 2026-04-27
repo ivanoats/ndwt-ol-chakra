@@ -2,19 +2,9 @@
 
 import type { ReactNode } from 'react';
 
-import {
-  ChakraProvider,
-  ColorModeScript,
-  extendTheme,
-  type ThemeConfig,
-} from '@chakra-ui/react';
+import { ChakraProvider, ColorModeScript } from '@chakra-ui/react';
 
-const themeConfig: ThemeConfig = {
-  initialColorMode: 'light',
-  useSystemColorMode: true,
-};
-
-const theme = extendTheme({ config: themeConfig });
+import theme from '../src/theme';
 
 export function Providers({ children }: { readonly children: ReactNode }) {
   return (

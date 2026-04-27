@@ -10,7 +10,7 @@ import VectorSource from 'ol/source/Vector';
 import { Circle, Fill, Stroke, Style } from 'ol/style';
 import { useEffect, useRef } from 'react';
 
-import { getSite, listSites } from '../composition-root';
+import type { GetSite } from '../application/use-cases/get-site';
 import type { Site } from '../domain';
 
 import { makeHandleClick, makeHandlePointerMove } from './map-handlers';
@@ -35,18 +35,27 @@ const siteToFeature = (site: Site): Feature<Point> => {
   return feature;
 };
 
-export default function MapComponent() {
+interface MapComponentProps {
+  readonly sites: readonly Site[];
+  readonly getSite: GetSite;
+}
+
+export default function MapComponent({ sites, getSite }: MapComponentProps) {
   const containerRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     const container = containerRef.current;
     if (container === null) return undefined;
 
-    let cancelled = false;
-
     const map = new Map({
       target: container,
-      layers: [new TileLayer({ source: new OSM() })],
+      layers: [
+        new TileLayer({ source: new OSM() }),
+        new VectorLayer({
+          source: new VectorSource({ features: sites.map(siteToFeature) }),
+          style: MARKER_STYLE,
+        }),
+      ],
       view: new View({
         center: fromLonLat([-121.5281, 45.7068]),
         zoom: 7,
@@ -61,30 +70,11 @@ export default function MapComponent() {
     // DOM, and the surface area is one read-only reference.
     (globalThis as GlobalWithMap).__ndwtMap = map;
 
-    listSites()
-      .then((sites) => {
-        if (cancelled) return;
-        const features = sites.map(siteToFeature);
-        map.addLayer(
-          new VectorLayer({
-            source: new VectorSource({ features }),
-            style: MARKER_STYLE,
-          })
-        );
-      })
-      .catch((err: unknown) => {
-        if (!cancelled) {
-          // eslint-disable-next-line no-console
-          console.error('Failed to load sites', err);
-        }
-      });
-
     return () => {
-      cancelled = true;
       map.setTarget();
       delete (globalThis as GlobalWithMap).__ndwtMap;
     };
-  }, []);
+  }, [sites, getSite]);
 
   return <div id="map" ref={containerRef} />;
 }
