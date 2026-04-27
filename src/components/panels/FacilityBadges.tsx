@@ -1,8 +1,6 @@
-import type { JSX } from 'react';
-
-import { Badge, Wrap, WrapItem } from '@chakra-ui/react';
-
 import { type Facility, type FacilitySet } from '../../domain';
+import { Badge } from '../ui/badge';
+import { Stack } from '../ui/stack';
 
 interface FacilityBadgesProps {
   readonly facilities: FacilitySet;
@@ -20,20 +18,21 @@ const FACILITY_LABELS: Record<Facility, string> = {
   adaAccess: 'ADA access',
 };
 
-export default function FacilityBadges({
-  facilities,
-}: FacilityBadgesProps): JSX.Element | null {
+export default function FacilityBadges({ facilities }: FacilityBadgesProps) {
   if (facilities.length === 0) return null;
 
   return (
-    <Wrap spacing={2} aria-label="Facilities at this site">
+    <Stack
+      direction="row"
+      gap="2"
+      wrap="wrap"
+      aria-label="Facilities at this site"
+    >
       {facilities.map((facility) => (
-        <WrapItem key={facility}>
-          <Badge colorScheme="green" variant="subtle">
-            {FACILITY_LABELS[facility]}
-          </Badge>
-        </WrapItem>
+        <Badge key={facility} colorScheme="green">
+          {FACILITY_LABELS[facility]}
+        </Badge>
       ))}
-    </Wrap>
+    </Stack>
   );
 }

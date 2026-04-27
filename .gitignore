@@ -15,6 +15,9 @@ build
 *.tsbuildinfo
 next-env.d.ts
 
+# PandaCSS codegen output (regenerated on every build)
+/styled-system/
+
 # Claude Code local state
 .claude/
 .agents/
