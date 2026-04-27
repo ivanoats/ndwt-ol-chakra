@@ -19,7 +19,12 @@ export default function RootLayout({
   readonly children: ReactNode;
 }) {
   return (
-    <html lang="en">
+    // suppressHydrationWarning is the canonical fix for the
+    // next-themes mismatch: the library injects a script that sets
+    // the theme class on <html> before React hydrates (kills FOUC),
+    // so the server-rendered html and the post-script html always
+    // differ. The mismatch is intentional and limited to <html>.
+    <html lang="en" suppressHydrationWarning>
       <body>
         <Providers>{children}</Providers>
       </body>
