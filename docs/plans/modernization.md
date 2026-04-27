@@ -7,8 +7,8 @@
 | 1     | Tooling baseline                                | Done (PR #22) |
 | 2     | Hexagonal skeleton inside current Vite app      | Done (PR #23) |
 | 2.5   | Playwright e2e harness                          | Done (PR #24) |
-| 3     | Info panel on Chakra (pre-Next/Panda)           | In progress   |
-| 4     | Migrate to Next.js 16 App Router (still Chakra) | Pending       |
+| 3     | Info panel on Chakra (pre-Next/Panda)           | Done (PR #30) |
+| 4     | Migrate to Next.js 16 App Router (still Chakra) | In progress   |
 | 5     | Swap Chakra for PandaCSS + Ark UI + Park UI     | Pending       |
 | 6     | Layout & content polish                         | Pending       |
 | 7     | Docs & memory files                             | Pending       |

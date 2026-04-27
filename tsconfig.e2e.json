@@ -2,7 +2,9 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "types": ["node"],
-    "jsx": "preserve"
+    "jsx": "preserve",
+    "plugins": []
   },
-  "include": ["e2e/**/*", "playwright.config.ts"]
+  "include": ["e2e/**/*", "playwright.config.ts"],
+  "exclude": ["node_modules", "out", ".next"]
 }

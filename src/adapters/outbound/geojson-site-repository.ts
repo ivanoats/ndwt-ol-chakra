@@ -22,10 +22,20 @@ interface RawFeature {
   };
 }
 
-interface RawFeatureCollection {
+export interface RawFeatureCollection {
   readonly type: 'FeatureCollection';
   readonly features: readonly RawFeature[];
 }
+
+/**
+ * Pure mapper from a parsed GeoJSON FeatureCollection to a Site[].
+ * Used by both the runtime fetch path (this file's class) and the
+ * build-time fs path (src/adapters/inbound/next/load-sites.ts).
+ */
+export const parseSitesFromGeoJson = (
+  body: RawFeatureCollection
+): readonly Site[] =>
+  body.features.map((feature, index) => toSite(feature, index));
 
 const ID_KEY_CANDIDATES = ['web-scraper-order', '﻿web-scraper-order'] as const;
 const SOURCE_URL_KEYS = ['web-scraper-start-url'] as const;
@@ -100,9 +110,7 @@ export class GeoJsonSiteRepository implements SiteRepository {
         );
       }
       const body = (await res.json()) as RawFeatureCollection;
-      const sites = body.features.map((feature, index) =>
-        toSite(feature, index)
-      );
+      const sites = parseSitesFromGeoJson(body);
       this.cache = sites;
       return sites;
     } finally {

@@ -1,3 +1,5 @@
+import type { JSX } from 'react';
+
 import { Badge, Wrap, WrapItem } from '@chakra-ui/react';
 
 import { type Facility, type FacilitySet } from '../../domain';
@@ -21,12 +23,11 @@ const FACILITY_LABELS: Record<Facility, string> = {
 export default function FacilityBadges({
   facilities,
 }: FacilityBadgesProps): JSX.Element | null {
-  const present = facilities.toArray();
-  if (present.length === 0) return null;
+  if (facilities.length === 0) return null;
 
   return (
     <Wrap spacing={2} aria-label="Facilities at this site">
-      {present.map((facility) => (
+      {facilities.map((facility) => (
         <WrapItem key={facility}>
           <Badge colorScheme="green" variant="subtle">
             {FACILITY_LABELS[facility]}

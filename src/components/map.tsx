@@ -1,3 +1,5 @@
+'use client';
+
 import { Feature, Map, View } from 'ol';
 import Point from 'ol/geom/Point';
 import TileLayer from 'ol/layer/Tile';
@@ -12,8 +14,6 @@ import { getSite, listSites } from '../composition-root';
 import type { Site } from '../domain';
 
 import { makeHandleClick, makeHandlePointerMove } from './map-handlers';
-
-import '../style.css';
 
 type GlobalWithMap = typeof globalThis & { __ndwtMap?: Map };
 

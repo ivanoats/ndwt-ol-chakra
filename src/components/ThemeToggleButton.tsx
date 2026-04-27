@@ -1,3 +1,7 @@
+'use client';
+
+import type { JSX } from 'react';
+
 import { MoonIcon, SunIcon } from '@chakra-ui/icons';
 import { IconButton, IconButtonProps, useColorMode } from '@chakra-ui/react';
 import styled from '@emotion/styled';

@@ -25,7 +25,9 @@ export default defineConfig({
   ],
 
   webServer: {
-    command: `npm run preview -- --port ${PORT} --strictPort`,
+    // Static export: build to ./out, then serve it. Mirrors what
+    // Netlify ships at deploy_url, so e2e exercises the same bytes.
+    command: `npm run preview -- --listen ${PORT} --no-clipboard --single`,
     url: baseURL,
     reuseExistingServer: !process.env.CI,
     timeout: 60_000,

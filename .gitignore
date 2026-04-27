@@ -9,6 +9,12 @@ build
 # Local Netlify folder
 .netlify
 
+# Next.js
+/.next/
+/out/
+*.tsbuildinfo
+next-env.d.ts
+
 # Claude Code local state
 .claude/
 .agents/
