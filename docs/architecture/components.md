@@ -63,6 +63,7 @@ graph TB
     LoadSites["inbound/next/<br/>load-sites.ts<br/>'server-only'"]
     InMem["outbound/<br/>in-memory-site-repository.ts"]
     Geo["outbound/<br/>geojson-site-repository.ts"]
+    Parser["outbound/<br/>parseSitesFromGeoJson<br/>(shared parser)"]
     Gpx["outbound/<br/>site-to-gpx.ts"]
   end
 
@@ -111,7 +112,8 @@ graph TB
   InMem -.implements.-> Port
   Geo -.implements.-> Port
 
-  LoadSites --> Geo
+  LoadSites --> Parser
+  Geo --> Parser
   Site --> Coords
   Site --> Fac
   Idx --> Site
@@ -127,7 +129,7 @@ graph TB
   class Header,Hero,Footer,Box,Stack,Text,Heading,Badge,Link,Button,IconButton,Drawer,Panel,Facilities,MapApp,MapTSX,Theme ui
   class Site,Coords,Fac,Idx domain
   class Port,ListUC,GetUC app
-  class LoadSites,InMem,Geo,Gpx adapter
+  class LoadSites,InMem,Geo,Parser,Gpx adapter
   class Comp,Store,Handlers glue
 ```
 
@@ -195,8 +197,20 @@ the repository port.
 
 ### `src/composition-root.ts`
 
-The single `createComposition(sites)` factory. UI imports from
-here, never directly from adapters.
+The single `createComposition(sites)` factory. **Client UI**
+imports from here, never directly from adapters. **Server UI**
+(route handlers in `app/`) imports inbound adapters directly —
+that's the canonical hex-arch shape, where the route handler is
+the framework's adapter driving the application from outside.
+`app/page.tsx` awaiting `loadSites()` is by design, not a rule
+break.
+
+The "shared parser" node in the diagram (`parseSitesFromGeoJson`)
+is currently a named export from `geojson-site-repository.ts`
+that `load-sites.ts` reuses. It's adapter-internal infrastructure
+shared across two adapters; if the parser ever grows real logic
+beyond mapping GeoJSON properties to `Site` fields, extracting
+it to its own module would be a clean refactor.
 
 ### `src/store/`
 

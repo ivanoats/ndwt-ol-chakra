@@ -15,7 +15,7 @@ sequenceDiagram
   participant Loader as load-sites.ts<br/>(server-only)
   participant FS as public/data/<br/>ndwt.geojson
   participant Parser as parseSitesFromGeoJson
-  participant MapApp as <MapApp sites>
+  participant MapApp as MapApp (sites prop)
   participant Out as out/index.html
 
   CI->>Next: npm run build
@@ -26,7 +26,7 @@ sequenceDiagram
   Loader->>Parser: parseSitesFromGeoJson(body)
   Parser-->>Loader: readonly Site[]
   Loader-->>Page: Site[]
-  Page->>MapApp: <MapApp sites={sites} />
+  Page->>MapApp: render MapApp with sites prop
   Note over Page,MapApp: sites embedded as JSON<br/>in the React tree
   MapApp-->>Next: rendered HTML + RSC payload
   Next->>Out: writes static index.html<br/>with sites inline

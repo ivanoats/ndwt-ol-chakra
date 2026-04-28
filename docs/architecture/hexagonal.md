@@ -75,19 +75,31 @@ graph TB
 
   class Site,Coords,Facility domain
   class ListPort,ListUC,GetUC app
-  class Comp,InMem,GeoJSON,Parser,Gpx adapter
-  class MapApp,Map,Panel,Store,Layout,Page,Loader ui
+  class Comp,InMem,GeoJSON,Parser,Gpx,Loader adapter
+  class MapApp,Map,Panel,Store,Layout,Page ui
   class FS ext
 ```
 
 ## Dependency rule
 
 ```text
-  domain   ←   nothing
-  application  ←   domain
-  adapters  ←   application + domain
-  ui   ←   application + domain  (via composition root)
+  domain        ←   nothing
+  application   ←   domain
+  adapters      ←   application + domain
+  client UI     ←   application + domain   (via composition root)
+  server UI     ←   inbound adapters       (the route-handler shape)
 ```
+
+UI is split:
+
+- **Client UI** — anything `'use client'`: `MapApp`, `map.tsx`,
+  `SiteInfoPanel`, `Header`, etc. Consumes the application via
+  the composition root; never imports `src/adapters/*` directly.
+- **Server UI** — route handlers in `app/` (server components by
+  default). MAY import **inbound** adapters directly. That's the
+  canonical hex-arch shape: the route handler is the framework's
+  adapter driving the application from outside, so
+  `app/page.tsx` awaiting `loadSites()` is by design.
 
 Concrete enforcement points:
 

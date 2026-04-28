@@ -39,9 +39,19 @@ Hexagonal (ports and adapters):
   panels, map glue.
 
 **Dependency rule** — domain depends on nothing; application on
-domain; adapters on application + domain; UI on application +
-domain _via the composition root_. UI never imports adapters
-directly.
+domain; adapters on application + domain. UI is split:
+
+- **Client UI** (anything `'use client'` — `MapApp`, `map.tsx`,
+  panels, layout components): consumes the application via the
+  composition root; never imports `src/adapters/*` directly.
+- **Server UI** (route handlers in `app/`, e.g. `page.tsx`): MAY
+  import **inbound** adapters directly. That's the canonical
+  hex-arch shape — the route handler is the framework's adapter
+  driving the application from outside, so `app/page.tsx`
+  awaiting `loadSites()` is by design, not a rule break.
+
+The composition root is the choke point for the client side; for
+the server side it's the inbound adapter itself.
 
 ## Hard rules (corrections that have already happened)
 
@@ -115,11 +125,15 @@ TS/TSX, markdownlint on staged MD). Don't skip it with
 Every PR runs:
 
 - GitHub Actions: lint, lint:md, typecheck, vitest with coverage,
-  next build, Playwright e2e (Chromium), SonarCloud scan with
-  coverage upload
+  next build, Playwright e2e (Chromium), and the SonarCloud scan
+  with `lcov` coverage upload via the CI Action (backed by the
+  `SONAR_TOKEN` repo secret)
 - Netlify deploy preview
 - DeepSource JavaScript + Secrets + Code Formatters
-- SonarCloud Quality Gate (Action + automatic analysis)
+- SonarCloud Quality Gate, gated by the CI Action's scan above —
+  the project's SonarCloud "Automatic Analysis" mode is **off** in
+  the project settings (Administration → Analysis Method) because
+  it conflicts with the Action and would block coverage upload
 - GitGuardian secret scan
 - Inline reviews from Gemini Code Assist and GitHub Copilot
 
