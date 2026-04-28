@@ -33,25 +33,13 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body
         className={css({
-          minHeight: '100vh',
-          display: 'flex',
-          flexDirection: 'column',
           color: 'fg.default',
           backgroundColor: 'bg.default',
         })}
       >
         <Providers>
           <Header />
-          <main
-            className={css({
-              flex: 1,
-              display: 'flex',
-              flexDirection: 'column',
-              minHeight: 0,
-            })}
-          >
-            {children}
-          </main>
+          <main>{children}</main>
           <Footer />
         </Providers>
       </body>

@@ -23,12 +23,18 @@ export default function MapApp({ sites }: MapAppProps) {
   const composition = useMemo(() => createComposition(sites), [sites]);
 
   return (
+    // Map fills the viewport remainder below the sticky header
+    // and the hero strip. Hero is roughly 80–120px depending on
+    // breakpoint; subtracting 220px from 100dvh leaves a generous
+    // map area without consuming all scroll on tall screens, and
+    // the min-height guards short windows.
     <div
       className={css({
-        flex: 1,
         position: 'relative',
         display: 'flex',
-        minHeight: '60vh',
+        width: '100%',
+        height: 'calc(100dvh - var(--header-height) - 140px)',
+        minHeight: '480px',
       })}
     >
       <MapComponent sites={sites} getSite={composition.getSite} />

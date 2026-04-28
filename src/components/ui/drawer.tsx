@@ -9,7 +9,10 @@ import { Dialog, Portal } from '@ark-ui/react';
 
 const content: SystemStyleObject = {
   position: 'fixed',
-  top: 0,
+  // Slot the drawer below the sticky <Header> rather than under it.
+  // The CSS variable is set in app/globals.css and tracks the
+  // breakpoint-dependent header height.
+  top: 'var(--header-height, 56px)',
   bottom: 0,
   display: 'flex',
   flexDirection: 'column',
@@ -51,7 +54,7 @@ export function Drawer({
         <Dialog.Positioner
           className={css({
             position: 'fixed',
-            top: 0,
+            top: 'var(--header-height, 56px)',
             bottom: 0,
             // The positioner shouldn't cover the map either; it
             // wraps the panel only.
