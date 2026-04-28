@@ -17,7 +17,7 @@ to Netlify. By the end of Phase 3 we had:
 - E2E coverage with Playwright
 
 The plan called for a Next.js migration in Phase 4. The question
-was *which* Next.js shape to ship: SPA-style with a client-side
+was _which_ Next.js shape to ship: SPA-style with a client-side
 data fetch, App Router with server components, full SSR with a
 running Node server, or static export.
 
@@ -66,7 +66,7 @@ real `<img>` tags via `next/image` with no edge optimizer.
   example; `MapApp.tsx` does this for `map.tsx`. Easy to forget
   and the build error message is awkward.
 - Static export and the Sonar Action's automatic-analysis mode
-  collide; you have to pick CI-Action *or* automatic. We chose
+  collide; you have to pick CI-Action _or_ automatic. We chose
   the Action so we get coverage upload, and disabled automatic
   analysis in the SonarCloud project settings.
 - The new-code coverage gate (Sonar's 80% threshold) doesn't

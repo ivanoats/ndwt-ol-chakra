@@ -1,10 +1,10 @@
 # Hexagonal architecture
 
 The source is organized as a hexagonal (ports + adapters) system.
-The *domain* is pure types with no framework dependencies; an
-*application* layer exposes use cases against a port interface;
-*adapters* implement the port for the build-time fs read and the
-runtime in-memory lookup; the *UI* talks to the application via a
+The _domain_ is pure types with no framework dependencies; an
+_application_ layer exposes use cases against a port interface;
+_adapters_ implement the port for the build-time fs read and the
+runtime in-memory lookup; the _UI_ talks to the application via a
 thin composition root.
 
 ## The diagram

@@ -40,7 +40,7 @@ Hexagonal (ports and adapters):
 
 **Dependency rule** — domain depends on nothing; application on
 domain; adapters on application + domain; UI on application +
-domain *via the composition root*. UI never imports adapters
+domain _via the composition root_. UI never imports adapters
 directly.
 
 ## Hard rules (corrections that have already happened)
@@ -136,7 +136,7 @@ human review:
 4. Tick the "bot triage" checkbox in the PR template before
    requesting human review.
 
-For the full triage drill see the *Per-PR bot review triage*
+For the full triage drill see the _Per-PR bot review triage_
 section in `docs/plans/modernization.md`.
 
 ## Useful gotchas

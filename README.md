@@ -39,20 +39,20 @@ npm run preview      # serve ./out at http://localhost:4173
 
 ## Scripts
 
-| Command | What it does |
-|---|---|
-| `npm run dev` | Next.js dev server with Panda codegen |
-| `npm run build` | `panda codegen` then `next build` (static export) |
-| `npm run preview` | Serves `./out` via the `serve` package on port 4173 |
-| `npm run typecheck` | `panda codegen` then `tsc --noEmit` (root + e2e tsconfigs) |
-| `npm run test` | Vitest with v8 coverage |
-| `npm run test:watch` | Vitest in watch mode |
-| `npm run e2e` | Playwright tests (boots `npm run preview` automatically) |
-| `npm run e2e:ui` | Playwright UI mode |
-| `npm run e2e:install` | Install Chromium + system deps for Playwright |
-| `npm run lint` | ESLint over `src`, `e2e`, `app`, `playwright.config.ts` |
-| `npm run lint:md` | markdownlint-cli2 over every `.md` |
-| `npm run format` | Prettier over `src`, `e2e`, `app` |
+| Command               | What it does                                               |
+| --------------------- | ---------------------------------------------------------- |
+| `npm run dev`         | Next.js dev server with Panda codegen                      |
+| `npm run build`       | `panda codegen` then `next build` (static export)          |
+| `npm run preview`     | Serves `./out` via the `serve` package on port 4173        |
+| `npm run typecheck`   | `panda codegen` then `tsc --noEmit` (root + e2e tsconfigs) |
+| `npm run test`        | Vitest with v8 coverage                                    |
+| `npm run test:watch`  | Vitest in watch mode                                       |
+| `npm run e2e`         | Playwright tests (boots `npm run preview` automatically)   |
+| `npm run e2e:ui`      | Playwright UI mode                                         |
+| `npm run e2e:install` | Install Chromium + system deps for Playwright              |
+| `npm run lint`        | ESLint over `src`, `e2e`, `app`, `playwright.config.ts`    |
+| `npm run lint:md`     | markdownlint-cli2 over every `.md`                         |
+| `npm run format`      | Prettier over `src`, `e2e`, `app`                          |
 
 ## Project layout
 
