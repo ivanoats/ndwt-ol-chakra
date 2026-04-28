@@ -23,6 +23,13 @@ export default function RootLayout({
   readonly children: ReactNode;
 }) {
   return (
+    // suppressHydrationWarning: next-themes injects an inline script
+    // in <head> that sets the theme class on <html> before React
+    // hydrates (kills FOUC). The server renders <html lang="en">; the
+    // post-script HTML is <html lang="en" class="light"|"dark">.
+    // React's hydration check would log a mismatch — the divergence
+    // is intentional and confined to <html>. This opt-out is one
+    // element deep; child elements still get full validation.
     <html lang="en" suppressHydrationWarning>
       <body
         className={css({
