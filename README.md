@@ -1,16 +1,136 @@
-# Northwest Discovery Water Trail
+# Northwest Discovery Water Trail map
 
-The Northwest Discovery Water Trail is a 367-mile recreational boating route on the region’s defining waterways. It begins at Canoe Camp on the Clearwater River in Idaho, follows the Snake River down to the Columbia River and ends at Bonneville Dam in the Columbia River Gorge.
-
-The Northwest Discovery Water Trail connects you to nearly 150 sites to launch your boat, picnic, or camp along these rivers when you travel by motorboat, canoe, sailboat, or kayak. Whether you take a day trip or an overnight excursion, the Water Trail can link you to small riverside communities, wildlife refuges and parks, riverside trails, museums and visitor centers, as well as campgrounds and lodging. Following the paddle strokes of tribal cultures and explorers like Lewis & Clark, the Water Trail will guide you through a cross-section of the region’s natural and cultural wonders.
-
-## Website project
+An interactive map of the [Northwest Discovery Water
+Trail](https://www.wwta.org) — a 367-mile recreational boating
+route from Canoe Camp on the Clearwater River to Bonneville Dam in
+the Columbia River Gorge. Each of ~150 launch sites, campgrounds,
+and day-use areas is plotted with facility info and a downloadable
+GPX waypoint.
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/d3ab47fd-5352-4d1a-8f93-35687d3ed6e4/deploy-status)](https://app.netlify.com/sites/ndwt-ol-chakra/deploys)
+[![Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=ivanoats_ndwt-ol-chakra&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=ivanoats_ndwt-ol-chakra)
+[![Maintainability](https://sonarcloud.io/api/project_badges/measure?project=ivanoats_ndwt-ol-chakra&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=ivanoats_ndwt-ol-chakra)
+[![Reliability](https://sonarcloud.io/api/project_badges/measure?project=ivanoats_ndwt-ol-chakra&metric=reliability_rating)](https://sonarcloud.io/summary/new_code?id=ivanoats_ndwt-ol-chakra)
+[![DeepSource](https://app.deepsource.com/gh/ivanoats/ndwt-ol-chakra.svg/?label=active+issues&show_trend=true)](https://app.deepsource.com/gh/ivanoats/ndwt-ol-chakra/)
 
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=ivanoats_ndwt-ol-chakra&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=ivanoats_ndwt-ol-chakra)
-[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=ivanoats_ndwt-ol-chakra&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=ivanoats_ndwt-ol-chakra)
-[![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=ivanoats_ndwt-ol-chakra&metric=reliability_rating)](https://sonarcloud.io/summary/new_code?id=ivanoats_ndwt-ol-chakra)
-[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=ivanoats_ndwt-ol-chakra&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=ivanoats_ndwt-ol-chakra)
+## Stack
 
-This is a rebuild of the site from ASP.Net to ReactJS and OpenLayers. In progress.
+- **Next.js 16** App Router, static export to `out/`
+- **React 19** + **TypeScript** (strict; `noUncheckedIndexedAccess`)
+- **PandaCSS** + **Park UI preset** + **Ark UI** primitives —
+  build-time atomic CSS, no Emotion runtime
+- **OpenLayers 10** for the map; GeoJSON dataset baked into the
+  page tree at build time
+- **Zustand** for the selected-site UI state
+- **Vitest** + **React Testing Library** for unit tests;
+  **Playwright** for e2e (Chromium only)
+- **Netlify** static hosting; **GitHub Actions** CI
+
+## Quickstart
+
+Requires **Node 24** (`engines.node` enforces it).
+
+```sh
+npm install
+npm run dev          # http://localhost:3000
+npm run build        # static export to ./out
+npm run preview      # serve ./out at http://localhost:4173
+```
+
+## Scripts
+
+| Command | What it does |
+|---|---|
+| `npm run dev` | Next.js dev server with Panda codegen |
+| `npm run build` | `panda codegen` then `next build` (static export) |
+| `npm run preview` | Serves `./out` via the `serve` package on port 4173 |
+| `npm run typecheck` | `panda codegen` then `tsc --noEmit` (root + e2e tsconfigs) |
+| `npm run test` | Vitest with v8 coverage |
+| `npm run test:watch` | Vitest in watch mode |
+| `npm run e2e` | Playwright tests (boots `npm run preview` automatically) |
+| `npm run e2e:ui` | Playwright UI mode |
+| `npm run e2e:install` | Install Chromium + system deps for Playwright |
+| `npm run lint` | ESLint over `src`, `e2e`, `app`, `playwright.config.ts` |
+| `npm run lint:md` | markdownlint-cli2 over every `.md` |
+| `npm run format` | Prettier over `src`, `e2e`, `app` |
+
+## Project layout
+
+```text
+app/                     # Next.js App Router
+  layout.tsx             # html/body shell, Header + main + Footer
+  page.tsx               # home: Hero + MapApp (server component)
+  about/page.tsx
+  trip-planning/page.tsx
+  providers.tsx          # 'use client' next-themes provider
+  globals.css            # cascade layers + OL stylesheet + #map sizing
+src/
+  domain/                # Pure types: Site, Coordinates, Facility
+  application/
+    ports/               # SiteRepository interface
+    use-cases/           # listSites, getSite factories
+  adapters/
+    inbound/next/        # Server-side site loader
+    outbound/            # GeoJsonSiteRepository, InMemorySiteRepository, site-to-gpx
+  components/
+    layout/              # Header, Footer, Hero
+    ui/                  # Park UI-style primitives over Ark UI + Panda
+    panels/              # SiteInfoPanel, FacilityBadges
+    map.tsx              # OL Map wrapper
+    map-handlers.ts      # Pure click + pointermove handlers
+    MapApp.tsx           # 'use client' wrapper around the map + panel
+  composition-root.ts    # createComposition(sites) factory
+  store/selected-site.ts # Zustand UI state
+public/data/             # ndwt.geojson + sites.csv (source dataset)
+docs/
+  plans/                 # Multi-phase implementation plans
+  architecture/          # C4, hexagonal, data-flow, components diagrams
+  decisions/             # ADRs
+e2e/                     # Playwright tests
+styled-system/           # Generated by `panda codegen` (gitignored)
+```
+
+The dependency rule: `domain → nothing`. `application → domain`.
+`adapters → application + domain`. `ui → application + domain` via
+the composition root; UI never imports adapters directly.
+
+## Architecture docs
+
+- [`docs/architecture/overview.md`](./docs/architecture/overview.md) —
+  C4 context + container view
+- [`docs/architecture/hexagonal.md`](./docs/architecture/hexagonal.md) —
+  ports and adapters layout
+- [`docs/architecture/data-flow.md`](./docs/architecture/data-flow.md) —
+  build-time load + runtime click-to-panel sequence
+- [`docs/architecture/components.md`](./docs/architecture/components.md) —
+  module-level component diagram
+- [`docs/decisions/`](./docs/decisions/) — ADRs for the load-bearing
+  choices (Next.js + static export, PandaCSS over Chakra,
+  hexagonal architecture)
+- [`docs/plans/modernization.md`](./docs/plans/modernization.md) —
+  the 7-phase plan that produced the current shape
+- [`docs/gap-analysis.md`](./docs/gap-analysis.md) — capability /
+  copy comparison against the original ndwt.org
+
+## Contributing
+
+Pull requests welcome — small, focused diffs preferred. Local
+checks before pushing:
+
+```sh
+npm run lint && npm run lint:md && npm run typecheck && npm test && npm run build
+npx playwright test --workers=1
+```
+
+CI runs the same matrix on every PR plus SonarCloud, DeepSource,
+and GitGuardian. The PR template includes a "bot triage" checklist;
+take a sweep through every reviewer's comments before requesting
+human review.
+
+## License
+
+[MIT](./LICENSE) — Ivan Storck.
+
+The trail itself is managed by the
+[Washington Water Trails Association](https://www.wwta.org); this
+site is an independent open-source map.
