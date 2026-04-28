@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { css } from 'styled-system/css';
@@ -40,7 +41,7 @@ export default function Header() {
           _hover: { color: 'colorPalette.11', colorPalette: 'green' },
         })}
       >
-        <img src="/logo.svg" alt="" width={28} height={28} />
+        <Image src="/logo.svg" alt="" width={28} height={28} priority />
         <span
           className={css({
             fontSize: { base: 'md', md: 'lg' },

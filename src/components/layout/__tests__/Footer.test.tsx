@@ -5,9 +5,9 @@ import { render, screen } from '@testing-library/react';
 import Footer from '../Footer';
 
 describe('<Footer />', () => {
-  it('renders the data attribution + GitHub + license links', () => {
+  it('renders the official site attribution + GitHub + license links', () => {
     render(<Footer />);
-    expect(screen.getByText(/data scraped from/i)).toBeInTheDocument();
+    expect(screen.getByText(/official site at/i)).toBeInTheDocument();
     expect(screen.getByRole('link', { name: 'ndwt.org' })).toHaveAttribute(
       'href',
       'http://www.ndwt.org'

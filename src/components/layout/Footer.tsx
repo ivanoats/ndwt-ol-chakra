@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import { css } from 'styled-system/css';
 
 import { Link } from '../ui/link';
@@ -8,6 +9,7 @@ const NETLIFY_DEPLOYS_URL =
   'https://app.netlify.com/sites/ndwt-ol-chakra/deploys';
 const REPO_URL = 'https://github.com/ivanoats/ndwt-ol-chakra';
 const LICENSE_URL = `${REPO_URL}/blob/main/LICENSE`;
+const NDWT_URL = 'http://www.ndwt.org';
 
 export default function Footer() {
   return (
@@ -28,8 +30,8 @@ export default function Footer() {
       })}
     >
       <p className={css({ margin: 0 })}>
-        Northwest Discovery Water Trail · data scraped from{' '}
-        <Link href="http://www.ndwt.org" external>
+        Northwest Discovery Water Trail · official site at{' '}
+        <Link href={NDWT_URL} external>
           ndwt.org
         </Link>
       </p>
@@ -55,7 +57,7 @@ export default function Footer() {
           aria-label="Netlify deploy status"
           className={css({ display: 'inline-flex' })}
         >
-          <img
+          <Image
             src={NETLIFY_BADGE_SRC}
             alt="Netlify deploy status"
             width={114}

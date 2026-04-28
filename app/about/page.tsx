@@ -61,16 +61,18 @@ export default function AboutPage() {
       <h2 className={subheadingStyle}>About this site</h2>
       <p className={paragraphStyle}>
         This is an open-source rebuild of the original site (originally ASP.NET)
-        using React, OpenLayers, Next.js, and PandaCSS. Source data was scraped
-        from{' '}
+        using React, OpenLayers, Next.js, and PandaCSS. The official site lives
+        at{' '}
         <Link href="http://www.ndwt.org" external>
           ndwt.org
-        </Link>{' '}
-        and is published as static GeoJSON alongside the app at{' '}
+        </Link>
+        ; trail data on this site is published as static GeoJSON at{' '}
         <Link href="/data/ndwt.geojson" external>
           /data/ndwt.geojson
         </Link>{' '}
-        for anyone who wants to build their own map or trip planner.
+        for anyone who wants to build their own map or trip planner. A future
+        phase will integrate directly with WWTA&rsquo;s database and ArcGIS
+        layers.
       </p>
       <p className={paragraphStyle}>
         Code lives at{' '}
