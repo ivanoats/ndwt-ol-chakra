@@ -107,4 +107,4 @@ sequenceDiagram
   in
 - ADR [0001](../decisions/0001-nextjs-app-router.md) (static
   export) and [0003](../decisions/0003-hexagonal-architecture.md)
-  (hex-arch) underpin the choice to baking data at build time
+  (hex-arch) underpin the choice to bake data at build time
