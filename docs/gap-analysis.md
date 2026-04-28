@@ -62,25 +62,25 @@ recreating ndwt.org's ASP.NET artifacts as-is.
 
 ### Top-level nav gap
 
-| ndwt.org section | Status here | Notes |
-|---|---|---|
-| Home | ✅ Have | Map page is the home. |
-| Explore the Water Trail / Site Information | ⚠️ Partial | Have the interactive map; missing one-page-per-site URLs and the printable site sheet. |
-| Explore / Links | ❌ Missing | Curated outbound links (river gauges, regs). |
-| Explore / Leave No Trace | ❌ Missing | Short content page. |
-| Water Safety (entire section) | ❌ Missing | 6 sub-pages of safety content. |
-| River Navigation (Lock & Dam, Portage) | ❌ Missing | Operational content boaters actually need. |
-| Natural World | ❌ Missing | 3 short content pages. |
-| Past and Present | ❌ Missing | 3 short content pages, culturally important. |
-| About / Partners | ❌ Missing | Funding + WWTA + USACE + tribal partners. |
-| About / Contact | ❌ Missing | Contact form / mailto. |
-| About / History | ❌ Missing | Project history. |
-| About / Press Coverage | ❌ Missing | Probably the lowest-value port. |
-| About / Photo Gallery | ❌ Missing | Could be a real differentiator. |
-| Get Involved / Volunteer | ❌ Missing | Volunteer signup / link to WWTA. |
-| Get Involved / Donate | ❌ Missing | Probably link out to WWTA donation page. |
-| Get Involved / Trip Reports | ❌ Missing | User-generated content; community feature. |
-| Traveler's Forum | ❌ Missing | Community forum, almost certainly an integration with whatever WWTA runs. |
+| ndwt.org section                           | Status here | Notes                                                                                  |
+| ------------------------------------------ | ----------- | -------------------------------------------------------------------------------------- |
+| Home                                       | ✅ Have     | Map page is the home.                                                                  |
+| Explore the Water Trail / Site Information | ⚠️ Partial  | Have the interactive map; missing one-page-per-site URLs and the printable site sheet. |
+| Explore / Links                            | ❌ Missing  | Curated outbound links (river gauges, regs).                                           |
+| Explore / Leave No Trace                   | ❌ Missing  | Short content page.                                                                    |
+| Water Safety (entire section)              | ❌ Missing  | 6 sub-pages of safety content.                                                         |
+| River Navigation (Lock & Dam, Portage)     | ❌ Missing  | Operational content boaters actually need.                                             |
+| Natural World                              | ❌ Missing  | 3 short content pages.                                                                 |
+| Past and Present                           | ❌ Missing  | 3 short content pages, culturally important.                                           |
+| About / Partners                           | ❌ Missing  | Funding + WWTA + USACE + tribal partners.                                              |
+| About / Contact                            | ❌ Missing  | Contact form / mailto.                                                                 |
+| About / History                            | ❌ Missing  | Project history.                                                                       |
+| About / Press Coverage                     | ❌ Missing  | Probably the lowest-value port.                                                        |
+| About / Photo Gallery                      | ❌ Missing  | Could be a real differentiator.                                                        |
+| Get Involved / Volunteer                   | ❌ Missing  | Volunteer signup / link to WWTA.                                                       |
+| Get Involved / Donate                      | ❌ Missing  | Probably link out to WWTA donation page.                                               |
+| Get Involved / Trip Reports                | ❌ Missing  | User-generated content; community feature.                                             |
+| Traveler's Forum                           | ❌ Missing  | Community forum, almost certainly an integration with whatever WWTA runs.              |
 
 ## Site-detail field parity
 
@@ -88,35 +88,35 @@ The original site's per-site detail page (e.g.
 `http://www.ndwt.org/ndwt/explore/site.asp?site=130` for Blalock
 Canyon) shows:
 
-| Field | ndwt.org | This site (panel) |
-|---|---|---|
-| Site name | ✅ "Blalock Canyon" | ❌ Sites have no display name yet — header reads "Columbia River — Mile 234" |
-| River segment | ✅ | ✅ |
-| River name | ✅ | ✅ |
-| River mile | ✅ | ✅ |
-| Bank | ✅ "OR" | ✅ |
-| Latitude / Longitude | ✅ | ✅ |
-| State | ✅ (often blank in the source) | ❌ |
-| County | ✅ (often blank in the source) | ❌ |
-| Season | ✅ | ✅ |
-| Restrooms | ✅ | ✅ |
-| Potable Water | ✅ | ✅ |
-| Marine Dump Station | ✅ | ✅ |
-| Day Use Only | ✅ | ✅ |
-| Picnic Shelters | ✅ | ✅ |
-| Boat Ramp | ✅ | ✅ |
-| Hand-Carried Launch | ✅ | ✅ |
-| Marina | ✅ | ✅ |
-| ADA Access | ✅ | ✅ |
-| Camping yes/no | ✅ | ✅ |
-| Camping Fee | ✅ | ❌ |
-| Contact | ✅ | ✅ |
-| Phone | ✅ | ✅ |
-| Website | ✅ | ✅ |
-| Notes | ✅ | ❌ |
-| Free-form description | ❌ | ❌ |
-| Photo(s) | ❌ on most sites | ❌ |
-| GPX waypoint download | ❌ | ✅ |
+| Field                 | ndwt.org                       | This site (panel)                                                            |
+| --------------------- | ------------------------------ | ---------------------------------------------------------------------------- |
+| Site name             | ✅ "Blalock Canyon"            | ❌ Sites have no display name yet — header reads "Columbia River — Mile 234" |
+| River segment         | ✅                             | ✅                                                                           |
+| River name            | ✅                             | ✅                                                                           |
+| River mile            | ✅                             | ✅                                                                           |
+| Bank                  | ✅ "OR"                        | ✅                                                                           |
+| Latitude / Longitude  | ✅                             | ✅                                                                           |
+| State                 | ✅ (often blank in the source) | ❌                                                                           |
+| County                | ✅ (often blank in the source) | ❌                                                                           |
+| Season                | ✅                             | ✅                                                                           |
+| Restrooms             | ✅                             | ✅                                                                           |
+| Potable Water         | ✅                             | ✅                                                                           |
+| Marine Dump Station   | ✅                             | ✅                                                                           |
+| Day Use Only          | ✅                             | ✅                                                                           |
+| Picnic Shelters       | ✅                             | ✅                                                                           |
+| Boat Ramp             | ✅                             | ✅                                                                           |
+| Hand-Carried Launch   | ✅                             | ✅                                                                           |
+| Marina                | ✅                             | ✅                                                                           |
+| ADA Access            | ✅                             | ✅                                                                           |
+| Camping yes/no        | ✅                             | ✅                                                                           |
+| Camping Fee           | ✅                             | ❌                                                                           |
+| Contact               | ✅                             | ✅                                                                           |
+| Phone                 | ✅                             | ✅                                                                           |
+| Website               | ✅                             | ✅                                                                           |
+| Notes                 | ✅                             | ❌                                                                           |
+| Free-form description | ❌                             | ❌                                                                           |
+| Photo(s)              | ❌ on most sites               | ❌                                                                           |
+| GPX waypoint download | ❌                             | ✅                                                                           |
 
 We're missing **Site name**, **State**, **County**, **Camping Fee**,
 **Notes** from the source data. They're in the GeoJSON properties
