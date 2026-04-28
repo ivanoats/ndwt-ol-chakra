@@ -58,7 +58,7 @@ directly.
   badge is the only current case).
 - **No `<html>` hydration mismatches**: `app/layout.tsx` keeps
   `suppressHydrationWarning` on `<html>` because next-themes
-  intentionally divergees the class on `<html>` between server and
+  intentionally diverges the class on `<html>` between server and
   client. The opt-out is one element deep; children still get
   full validation.
 - **OL touches `window` at import time** — keep the map
