@@ -15,13 +15,12 @@ import { Text } from '../ui/text';
 
 import FacilityBadges from './FacilityBadges';
 
-const formatTitle = (site: Site): string =>
-  `${site.riverName} River — Mile ${site.riverMile}`;
-
-const formatSubheading = (site: Site): string =>
-  [site.riverSegment, site.bank]
+const formatSubheading = (site: Site): string => {
+  const riverPart = `${site.riverName} River · Mile ${site.riverMile}`;
+  return [riverPart, site.riverSegment, site.bank]
     .filter((part): part is string => part !== undefined && part !== '')
     .join(' · ');
+};
 
 const formatCoordinates = ({
   latitude,
@@ -100,10 +99,17 @@ const WebsiteRow = ({ url }: WebsiteRowProps) => {
   );
 };
 
+const formatLocation = (site: Site): string | undefined => {
+  const parts = [site.county, site.state].filter(
+    (part): part is string => part !== undefined && part !== ''
+  );
+  return parts.length === 0 ? undefined : parts.join(', ');
+};
+
 const PanelBody = ({ site }: PanelBodyProps) => (
   <>
     <DrawerHeader>
-      <Heading size="md">{formatTitle(site)}</Heading>
+      <Heading size="md">{site.name}</Heading>
       <Text as="p" css={{ fontSize: 'sm', color: 'fg.muted', marginTop: '1' }}>
         {formatSubheading(site)}
       </Text>
@@ -111,15 +117,18 @@ const PanelBody = ({ site }: PanelBodyProps) => (
     <DrawerBody>
       <Stack gap="4" css={{ marginTop: '2' }}>
         <FacilityBadges facilities={site.facilities} />
+        <Detail label="Location" value={formatLocation(site)} />
         <Detail
           label="Coordinates"
           value={formatCoordinates(site.coordinates)}
         />
         <Detail label="Season" value={site.season} />
         <Detail label="Camping" value={site.camping} />
+        <Detail label="Camping fee" value={site.campingFee} />
         <Detail label="Contact" value={site.contact} />
         <Detail label="Phone" value={site.phone} />
         <WebsiteRow url={site.website} />
+        <Detail label="Notes" value={site.notes} />
         <DownloadGpxButton site={site} />
       </Stack>
     </DrawerBody>

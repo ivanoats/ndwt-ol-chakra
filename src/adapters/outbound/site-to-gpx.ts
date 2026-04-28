@@ -20,17 +20,18 @@ const escapeXml = (raw: string): string =>
     .replaceAll('"', '&quot;')
     .replaceAll("'", '&apos;');
 
-const waypointName = (site: Site): string =>
-  `${site.riverName} River — Mile ${site.riverMile}`;
+const waypointName = (site: Site): string => site.name;
 
 const waypointDescription = (site: Site): string => {
-  const parts: string[] = [];
+  const parts: string[] = [`${site.riverName} River — Mile ${site.riverMile}`];
   if (site.riverSegment !== '') parts.push(site.riverSegment);
   if (site.bank !== '') parts.push(`Bank: ${site.bank}`);
   if (site.season !== undefined && site.season !== '')
     parts.push(`Season: ${site.season}`);
   if (site.camping !== undefined && site.camping !== '')
     parts.push(`Camping: ${site.camping}`);
+  if (site.campingFee !== undefined && site.campingFee !== '')
+    parts.push(`Camping fee: ${site.campingFee}`);
   if (site.contact !== undefined && site.contact !== '')
     parts.push(`Contact: ${site.contact}`);
   if (site.phone !== undefined && site.phone !== '')
@@ -39,6 +40,8 @@ const waypointDescription = (site: Site): string => {
     (facility) => FACILITY_LABELS[facility]
   );
   if (facilities.length > 0) parts.push(`Facilities: ${facilities.join(', ')}`);
+  if (site.notes !== undefined && site.notes !== '')
+    parts.push(`Notes: ${site.notes}`);
   return parts.join('\n');
 };
 
@@ -68,10 +71,10 @@ export const gpxFilename = (site: Site): string => {
   // to single dashes, so the only place a dash can lead or trail is
   // a single character — slice it off without a regex (avoids
   // Sonar's S5852 ReDoS heuristic on anchored quantifiers).
-  const collapsed = site.riverName.toLowerCase().replaceAll(/[^a-z0-9]+/g, '-');
+  const collapsed = site.name.toLowerCase().replaceAll(/[^a-z0-9]+/g, '-');
   const start = collapsed.startsWith('-') ? 1 : 0;
   const end = collapsed.length - (collapsed.endsWith('-') ? 1 : 0);
   const trimmed = collapsed.slice(start, end);
   const namePart = trimmed === '' ? 'waypoint' : trimmed;
-  return `${namePart}-mile-${site.riverMile}.gpx`;
+  return `${namePart}.gpx`;
 };

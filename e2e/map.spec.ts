@@ -47,8 +47,13 @@ test.describe('Northwest Discovery Water Trail map', () => {
 
     const panel = page.getByTestId('site-info-panel');
     await expect(panel).toBeVisible();
-    // Every site renders "<river> River — Mile <n>" into the header.
-    await expect(panel.getByRole('heading')).toContainText(/Mile/);
+    // Every site has a non-empty canonical name in the header (post
+    // Phase 8 enrichment).
+    const heading = panel.getByRole('heading').first();
+    await expect(heading).toBeVisible();
+    await expect(heading).not.toBeEmpty();
+    // Subheading carries the river-and-mile context.
+    await expect(panel.getByText(/Mile \d/)).toBeVisible();
     // Coordinates row + GPX download button are part of the panel.
     await expect(panel.getByText(/Coordinates/i)).toBeVisible();
     await expect(panel.getByTestId('download-gpx-button')).toBeVisible();

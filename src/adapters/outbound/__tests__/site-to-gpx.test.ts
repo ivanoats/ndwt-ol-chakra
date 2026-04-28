@@ -5,6 +5,7 @@ import { gpxFilename, siteToGpx } from '../site-to-gpx';
 
 const baseSite: Site = {
   id: siteId('x'),
+  name: 'Blalock Canyon',
   riverSegment: 'Lake Umatilla',
   riverName: 'Columbia',
   riverMile: 234,
@@ -25,14 +26,13 @@ describe('siteToGpx', () => {
     expect(gpx).toContain('lon="-120.37"');
   });
 
-  it('uses the river-and-mile string as the waypoint name', () => {
-    expect(siteToGpx(baseSite)).toContain(
-      '<name>Columbia River — Mile 234</name>'
-    );
+  it('uses the canonical site name as the waypoint name', () => {
+    expect(siteToGpx(baseSite)).toContain('<name>Blalock Canyon</name>');
   });
 
-  it('packs segment, bank, season, contact, and facilities into desc', () => {
+  it('puts the river-and-mile context, segment, bank, season, contact, and facilities in desc', () => {
     const gpx = siteToGpx(baseSite);
+    expect(gpx).toContain('Columbia River — Mile 234');
     expect(gpx).toContain('Lake Umatilla');
     expect(gpx).toContain('Bank: OR');
     expect(gpx).toContain('Season: year round');
@@ -40,13 +40,23 @@ describe('siteToGpx', () => {
     expect(gpx).toContain('Facilities: Restrooms, Boat ramp');
   });
 
+  it('includes camping fee and notes when present', () => {
+    const gpx = siteToGpx({
+      ...baseSite,
+      campingFee: '$10/night',
+      notes: 'Popular salmon fishing.',
+    });
+    expect(gpx).toContain('Camping fee: $10/night');
+    expect(gpx).toContain('Notes: Popular salmon fishing.');
+  });
+
   it('escapes XML special characters in name and description', () => {
     const gpx = siteToGpx({
       ...baseSite,
-      riverName: 'Snake & Co',
+      name: 'Snake & Co',
       contact: 'Fish <Wildlife>',
     });
-    expect(gpx).toContain('Snake &amp; Co River');
+    expect(gpx).toContain('<name>Snake &amp; Co</name>');
     expect(gpx).toContain('Contact: Fish &lt;Wildlife&gt;');
   });
 
@@ -66,13 +76,14 @@ describe('siteToGpx', () => {
 });
 
 describe('gpxFilename', () => {
-  it('builds a slugified filename from river + mile', () => {
-    expect(gpxFilename(baseSite)).toBe('columbia-mile-234.gpx');
+  it('slugifies the canonical site name', () => {
+    expect(gpxFilename(baseSite)).toBe('blalock-canyon.gpx');
+    expect(gpxFilename({ ...baseSite, name: "Harper's Bend" })).toBe(
+      'harper-s-bend.gpx'
+    );
   });
 
-  it('falls back to "waypoint" when riverName has no slug-friendly chars', () => {
-    expect(gpxFilename({ ...baseSite, riverName: '???', riverMile: 0 })).toBe(
-      'waypoint-mile-0.gpx'
-    );
+  it('falls back to "waypoint" when name has no slug-friendly chars', () => {
+    expect(gpxFilename({ ...baseSite, name: '???' })).toBe('waypoint.gpx');
   });
 });

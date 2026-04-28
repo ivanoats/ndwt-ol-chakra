@@ -3,10 +3,11 @@ import { describe, expect, it } from 'vitest';
 import { coordinates, FacilitySet, type Site, siteId } from '../../../domain';
 import { InMemorySiteRepository } from '../in-memory-site-repository';
 
-const makeSite = (id: string, name = 'Columbia'): Site => ({
+const makeSite = (id: string, riverName = 'Columbia'): Site => ({
   id: siteId(id),
+  name: `${riverName} River — Mile 0`,
   riverSegment: '',
-  riverName: name,
+  riverName,
   riverMile: 0,
   bank: '',
   coordinates: coordinates(0, 0),

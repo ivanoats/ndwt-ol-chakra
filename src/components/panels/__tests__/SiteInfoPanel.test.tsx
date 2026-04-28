@@ -8,16 +8,21 @@ import SiteInfoPanel from '../SiteInfoPanel';
 
 const baseSite: Site = {
   id: siteId('test-1'),
+  name: 'Blalock Canyon',
   riverSegment: 'Lake Umatilla',
   riverName: 'Columbia',
   riverMile: 234,
   bank: 'OR',
   coordinates: coordinates(-120.37, 45.695),
+  state: 'OR',
+  county: 'Gilliam',
   season: 'year round',
   camping: 'None',
+  campingFee: '$10/night',
   contact: 'US Army Corps of Engineers',
   phone: '(555) 555-5555',
   website: 'https://example.org/site',
+  notes: 'Popular salmon fishing in autumn.',
   facilities: FacilitySet.fromFlags({ boatRamp: true, restrooms: true }),
 };
 
@@ -51,16 +56,40 @@ describe('<SiteInfoPanel />', () => {
     select(baseSite);
 
     expect(
-      await screen.findByRole('heading', {
-        name: /Columbia River — Mile 234/u,
-      })
+      await screen.findByRole('heading', { name: /Blalock Canyon/u })
     ).toBeInTheDocument();
-    expect(screen.getByText('Lake Umatilla · OR')).toBeInTheDocument();
+    expect(
+      screen.getByText('Columbia River · Mile 234 · Lake Umatilla · OR')
+    ).toBeInTheDocument();
     expect(screen.getByText('US Army Corps of Engineers')).toBeInTheDocument();
     expect(screen.getByText('(555) 555-5555')).toBeInTheDocument();
     expect(
       screen.getByRole('link', { name: 'https://example.org/site' })
     ).toHaveAttribute('href', 'https://example.org/site');
+  });
+
+  it('renders the new state/county/campingFee/notes rows when present', () => {
+    renderPanel();
+    select(baseSite);
+    expect(screen.getByText('Gilliam, OR')).toBeInTheDocument();
+    expect(screen.getByText('$10/night')).toBeInTheDocument();
+    expect(
+      screen.getByText('Popular salmon fishing in autumn.')
+    ).toBeInTheDocument();
+  });
+
+  it('omits state/county/campingFee/notes rows when absent', () => {
+    renderPanel();
+    select({
+      ...baseSite,
+      state: undefined,
+      county: undefined,
+      campingFee: undefined,
+      notes: undefined,
+    });
+    expect(screen.queryByText('Location')).not.toBeInTheDocument();
+    expect(screen.queryByText('Camping fee')).not.toBeInTheDocument();
+    expect(screen.queryByText('Notes')).not.toBeInTheDocument();
   });
 
   it('renders facility badges from the site', () => {
@@ -76,11 +105,13 @@ describe('<SiteInfoPanel />', () => {
     expect(screen.queryByText(/example\.org/)).not.toBeInTheDocument();
   });
 
-  it('omits empty subheading parts (no leading separator)', () => {
+  it('omits empty subheading parts (no leading or doubled separator)', () => {
     renderPanel();
     select({ ...baseSite, riverSegment: '' });
-    expect(screen.getByText('OR')).toBeInTheDocument();
-    expect(screen.queryByText(/^· /)).not.toBeInTheDocument();
+    expect(
+      screen.getByText('Columbia River · Mile 234 · OR')
+    ).toBeInTheDocument();
+    expect(screen.queryByText(/· ·/)).not.toBeInTheDocument();
   });
 
   it('renders the formatted lat/long coordinates', () => {
@@ -118,7 +149,7 @@ describe('<SiteInfoPanel />', () => {
     expect(createObjectURL).toHaveBeenCalledTimes(1);
     expect(revokeObjectURL).toHaveBeenCalledWith('blob:test-url');
     expect(clicks).toHaveLength(1);
-    expect(clicks[0]?.download).toBe('columbia-mile-234.gpx');
+    expect(clicks[0]?.download).toBe('blalock-canyon.gpx');
     expect(clicks[0]?.href).toContain('blob:test-url');
 
     HTMLAnchorElement.prototype.click = originalClick;

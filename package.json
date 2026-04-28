@@ -30,6 +30,7 @@
     "typecheck": "panda codegen --silent && tsc --noEmit && tsc --noEmit -p tsconfig.e2e.json",
     "test": "panda codegen --silent && vitest run --coverage",
     "test:watch": "vitest",
+    "scrape:sites": "node --experimental-strip-types scripts/scrape-ndwt-sites.ts",
     "prepare": "husky install"
   },
   "dependencies": {
@@ -49,6 +50,7 @@
     "@playwright/test": "^1.59.1",
     "@testing-library/jest-dom": "^6.5.0",
     "@testing-library/react": "^16.3.2",
+    "@types/jsdom": "^28.0.1",
     "@types/node": "^25.6.0",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
