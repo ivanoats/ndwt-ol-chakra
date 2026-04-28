@@ -23,12 +23,17 @@ export default function MapApp({ sites }: MapAppProps) {
   const composition = useMemo(() => createComposition(sites), [sites]);
 
   return (
+    // The root layout's <main> is a flex column; this container
+    // takes whatever space is left after the Hero strip via
+    // `flex: 1`, with a min-height so short viewports still get a
+    // usable map area. No magic numbers.
     <div
       className={css({
         flex: 1,
         position: 'relative',
         display: 'flex',
-        minHeight: '60vh',
+        width: '100%',
+        minHeight: '480px',
       })}
     >
       <MapComponent sites={sites} getSite={composition.getSite} />

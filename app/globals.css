@@ -2,14 +2,33 @@
 
 @import 'ol/ol.css';
 
+:root {
+  --header-height: 56px;
+}
+@media (min-width: 768px) {
+  :root {
+    --header-height: 64px;
+  }
+}
+
 html,
 body {
   margin: 0;
-  height: 100%;
+}
+
+body {
+  /* Natural document flow — content pages scroll when they exceed
+     the viewport. The home page's map gets its own viewport-aware
+     height inside MapApp instead of leaning on a flex layout that
+     would clip the About / Trip Planning pages. */
+  min-height: 100dvh;
 }
 
 #map {
+  /* Parent (MapApp wrapper) is `display: flex`. flex: 1 fills the
+     cross-axis without depending on the percentage-height chain
+     resolving (which it doesn't, reliably, when the chain mixes
+     min-height with explicit height). */
   flex: 1;
   width: 100%;
-  min-height: 0;
 }

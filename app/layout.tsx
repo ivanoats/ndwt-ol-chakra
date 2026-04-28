@@ -33,7 +33,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body
         className={css({
-          minHeight: '100vh',
+          minHeight: '100dvh',
           display: 'flex',
           flexDirection: 'column',
           color: 'fg.default',
@@ -47,7 +47,14 @@ export default function RootLayout({
               flex: 1,
               display: 'flex',
               flexDirection: 'column',
-              minHeight: 0,
+              // Note: no `min-height: 0`. With it, main can shrink
+              // below its content's natural size and clip the bottom
+              // of /about + /trip-planning. Without it, main grows
+              // to fit content (so tall pages scroll) AND still
+              // gets `flex: 1`'s share of the body's 100dvh on short
+              // pages (so the footer stays at the bottom of the
+              // viewport, and the home page's map can flex-grow to
+              // fill the gap below the Hero).
             })}
           >
             {children}
