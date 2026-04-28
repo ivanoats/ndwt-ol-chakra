@@ -39,13 +39,14 @@ const enoent = (): NodeJS.ErrnoException => {
 };
 
 const stubReads = (geojson: string, enriched: string | Error): void => {
-  mockReadFile.mockImplementation(async (path: string) => {
-    if (path.endsWith('ndwt.geojson')) return geojson;
+  mockReadFile.mockImplementation((path: string): Promise<string> => {
+    if (path.endsWith('ndwt.geojson')) return Promise.resolve(geojson);
     if (path.endsWith('ndwt-enriched.json')) {
-      if (enriched instanceof Error) throw enriched;
-      return enriched;
+      return enriched instanceof Error
+        ? Promise.reject(enriched)
+        : Promise.resolve(enriched);
     }
-    throw new Error(`unexpected read: ${path}`);
+    return Promise.reject(new Error(`unexpected read: ${path}`));
   });
 };
 
@@ -83,7 +84,9 @@ describe('loadSites', () => {
   });
 
   it('falls back to "RiverName River — Mile NN" when the enriched file is missing', async () => {
-    const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
+    const warnSpy = vi
+      .spyOn(console, 'warn')
+      .mockImplementation(() => undefined);
     stubReads(validGeoJson, enoent());
     const sites = await loadSites();
     expect(sites[0]?.name).toBe('Columbia River — Mile 234');
@@ -117,9 +120,9 @@ describe('loadSites', () => {
 
   it('propagates fs errors as-is on the GeoJSON read', async () => {
     const err = new Error('boom');
-    mockReadFile.mockImplementation(async (path: string) => {
-      if (path.endsWith('ndwt.geojson')) throw err;
-      return validEnriched;
+    mockReadFile.mockImplementation((path: string): Promise<string> => {
+      if (path.endsWith('ndwt.geojson')) return Promise.reject(err);
+      return Promise.resolve(validEnriched);
     });
     await expect(loadSites()).rejects.toBe(err);
   });

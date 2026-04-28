@@ -74,8 +74,8 @@ const dropIfPlaceholder = (value: string | undefined): string | undefined => {
 
 const readId = (props: RawFeature['properties']): string | null => {
   for (const key of ID_KEYS) {
-    const v = props[key];
-    if (v !== undefined && v !== '') return v;
+    const value = props[key];
+    if (value !== undefined && value !== '') return value;
   }
   return null;
 };
@@ -216,18 +216,23 @@ const main = async (): Promise<void> => {
   }
 
   process.stdout.write('\n');
-  await writeFile(OUTPUT_PATH, JSON.stringify(enriched, null, 2) + '\n');
+  await writeFile(OUTPUT_PATH, `${JSON.stringify(enriched, null, 2)}\n`);
   console.log(
     `Wrote ${OUTPUT_PATH}: ${succeeded}/${attempted} sites enriched.`
   );
   if (failures.length > 0) {
     console.log(`${failures.length} failures:`);
     for (const f of failures) console.log(`  ${f.id}\t${f.url}\t${f.error}`);
-    process.exit(1);
+    throw new Error(
+      `${failures.length} of ${attempted} sites failed to scrape; see log above.`
+    );
   }
 };
 
 main().catch((err: unknown) => {
   console.error(err);
-  process.exit(1);
+  // Set exitCode rather than calling process.exit() so the
+  // event loop drains naturally — DeepSource flags the abrupt
+  // exit and the loop is empty here anyway.
+  process.exitCode = 1;
 });
