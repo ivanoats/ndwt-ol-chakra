@@ -10,7 +10,7 @@ that the site is moving to the
 [Washington Water Trails Association](https://www.wwta.org)
 (WWTA) main site. Several gaps below should be planned against
 WWTA's eventual hosting / database / ArcGIS layers rather than
-recreating ndwt.org's ASP.NET artifacts as-is.
+recreating ndwt.org's legacy site artifacts as-is.
 
 ## Sitemap comparison
 
@@ -143,9 +143,9 @@ but aren't surfaced in the panel.
 
 ## Capabilities this site has that the original doesn't
 
-1. **Modern, mobile-friendly, accessible UI.** Original is a 2008-
-   era ASP.NET layout with ~600px-min map, fixed widths, no mobile
-   handling.
+1. **Modern, mobile-friendly, accessible UI.** Original uses a
+   legacy fixed-width layout with ~600px-min map, fixed widths, no
+   mobile handling.
 2. **Interactive map with hover / click affordances.** Original
    uses a static map image and per-site links; ours pans, zooms,
    and surfaces info inline.
