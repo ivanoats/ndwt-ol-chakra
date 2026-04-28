@@ -49,7 +49,7 @@ key for the redirect map (Phase 14) but isn't user-visible.
 
 | Item                                      | Decision                                                                                                                                                                                                                            |
 | ----------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Per-site URL shape                        | `/sites/<slug>` — kebab-case from canonical name. The legacy `web-scraper-order` ID stays as `Site.id` and is reused for the Phase 14 redirect map.                                                                                  |
+| Per-site URL shape                        | `/sites/<slug>` — kebab-case from canonical name. The legacy `web-scraper-order` ID stays as `Site.id` and is reused for the Phase 14 redirect map.                                                                                 |
 | Content authoring format                  | MDX under `content/`; rendered via per-route `page.tsx` that imports the MDX. Lets us embed PandaCSS-styled callouts without giving up static export.                                                                               |
 | Site name source                          | One-time scrape of ndwt.org's per-site pages (`site.asp?site=<id>`) to populate name, state, county, camping fee, notes. Saved as a separate `public/data/ndwt-enriched.json` with the GeoJSON kept as the spatial source of truth. |
 | Editorial content source                  | One-time scrape of ndwt.org's static pages, converted to MDX, hand-edited for voice + accuracy + accessibility. Each page footer cites "Originally published on ndwt.org; reused with permission from WWTA."                        |
@@ -121,6 +121,7 @@ shareable, bookmarkable, indexable, and printable.
      URL, but only the duplicate site bears it.
 
   Slug computed once at parse time and stored on `Site.slug`.
+
 - New route: `app/sites/[slug]/page.tsx` (server component) using
   `generateStaticParams` to enumerate all slugs. Static export
   emits one HTML file per site.
