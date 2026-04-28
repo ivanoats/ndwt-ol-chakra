@@ -149,7 +149,7 @@ describe('<SiteInfoPanel />', () => {
     expect(createObjectURL).toHaveBeenCalledTimes(1);
     expect(revokeObjectURL).toHaveBeenCalledWith('blob:test-url');
     expect(clicks).toHaveLength(1);
-    expect(clicks[0]?.download).toBe('blalock-canyon.gpx');
+    expect(clicks[0]?.download).toBe('blalock-canyon-mile-234.gpx');
     expect(clicks[0]?.href).toContain('blob:test-url');
 
     HTMLAnchorElement.prototype.click = originalClick;

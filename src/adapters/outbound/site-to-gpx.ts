@@ -76,5 +76,12 @@ export const gpxFilename = (site: Site): string => {
   const end = collapsed.length - (collapsed.endsWith('-') ? 1 : 0);
   const trimmed = collapsed.slice(start, end);
   const namePart = trimmed === '' ? 'waypoint' : trimmed;
-  return `${namePart}.gpx`;
+  // Append river mile for collision avoidance — three site names
+  // appear twice in the dataset (Hood Park, Fishhook Park,
+  // Granite Point). River mile disambiguates two of them; the
+  // remaining Granite Point pair sits at the same mile and is
+  // only resolved when Phase 9's slug logic adds a final id-based
+  // tiebreaker. Decimal miles (e.g. 2.5) become "2-5".
+  const milePart = `${site.riverMile}`.replaceAll('.', '-');
+  return `${namePart}-mile-${milePart}.gpx`;
 };

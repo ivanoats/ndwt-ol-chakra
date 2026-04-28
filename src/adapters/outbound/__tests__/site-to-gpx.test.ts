@@ -76,14 +76,22 @@ describe('siteToGpx', () => {
 });
 
 describe('gpxFilename', () => {
-  it('slugifies the canonical site name', () => {
-    expect(gpxFilename(baseSite)).toBe('blalock-canyon.gpx');
+  it('slugifies the canonical site name and appends the river mile', () => {
+    expect(gpxFilename(baseSite)).toBe('blalock-canyon-mile-234.gpx');
     expect(gpxFilename({ ...baseSite, name: "Harper's Bend" })).toBe(
-      'harper-s-bend.gpx'
+      'harper-s-bend-mile-234.gpx'
     );
   });
 
+  it('encodes decimal miles with a dash so the filename stays portable', () => {
+    expect(
+      gpxFilename({ ...baseSite, name: 'Hood Park', riverMile: 2.5 })
+    ).toBe('hood-park-mile-2-5.gpx');
+  });
+
   it('falls back to "waypoint" when name has no slug-friendly chars', () => {
-    expect(gpxFilename({ ...baseSite, name: '???' })).toBe('waypoint.gpx');
+    expect(gpxFilename({ ...baseSite, name: '???', riverMile: 0 })).toBe(
+      'waypoint-mile-0.gpx'
+    );
   });
 });

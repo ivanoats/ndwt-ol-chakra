@@ -49,7 +49,7 @@ key for the redirect map (Phase 14) but isn't user-visible.
 
 | Item                                      | Decision                                                                                                                                                                                                                            |
 | ----------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Per-site URL shape                        | `/sites/<slug>` — kebab-case from canonical name. Numeric ID kept in domain as `legacyId` for redirects only.                                                                                                                       |
+| Per-site URL shape                        | `/sites/<slug>` — kebab-case from canonical name. The legacy `web-scraper-order` ID stays as `Site.id` and is reused for the Phase 14 redirect map.                                                                                  |
 | Content authoring format                  | MDX under `content/`; rendered via per-route `page.tsx` that imports the MDX. Lets us embed PandaCSS-styled callouts without giving up static export.                                                                               |
 | Site name source                          | One-time scrape of ndwt.org's per-site pages (`site.asp?site=<id>`) to populate name, state, county, camping fee, notes. Saved as a separate `public/data/ndwt-enriched.json` with the GeoJSON kept as the spatial source of truth. |
 | Editorial content source                  | One-time scrape of ndwt.org's static pages, converted to MDX, hand-edited for voice + accuracy + accessibility. Each page footer cites "Originally published on ndwt.org; reused with permission from WWTA."                        |
@@ -83,10 +83,12 @@ camping fee, and notes when ndwt.org has them.
   and content provenance. Linked from About and Footer.
 - Domain model updates:
   - `Site.name: string` (required after enrichment)
-  - `Site.legacyId: string` (the `web-scraper-order` value;
-    kept for redirects)
   - `Site.state?: string`, `Site.county?: string`,
     `Site.campingFee?: string`, `Site.notes?: string`
+  - `Site.id` already carries the `web-scraper-order` value
+    (the legacy ndwt.org primary key) — that's the join key
+    against `ndwt-enriched.json` and the source of truth for the
+    Phase 14 redirect map. No separate `legacyId` field needed.
 - Parser merges `ndwt.geojson` + `ndwt-enriched.json` at build time
   via the existing inbound adapter. If the enriched record is
   missing, fall back to a generated placeholder name like
@@ -105,9 +107,20 @@ camping fee, and notes when ndwt.org has them.
 shareable, bookmarkable, indexable, and printable.
 
 - Slug derivation: `slugify(site.name)` →
-  `"Blalock Canyon"` → `"blalock-canyon"`. Collision handling:
-  append `-<state>` then `-<legacyId>` if needed. Slug computed
-  once at parse time and stored on `Site`.
+  `"Blalock Canyon"` → `"blalock-canyon"`. Collision handling
+  (3 known cases — Hood Park, Fishhook Park, Granite Point):
+  1. If `slugify(name)` is unique → use it.
+  2. Otherwise try `slugify(name)-mile-<N>` (river mile).
+     This resolves Hood Park (mile 2 vs 2.5 → `hood-park-mile-2`
+     vs `hood-park-mile-2-5`) and Fishhook Park (different
+     rivers, same mile-suffix idea).
+  3. If still colliding (Granite Point: both records sit at
+     Snake mile 113 — apparently a true source-data duplicate),
+     fall back to `slugify(name)-<site.id>` (the
+     `web-scraper-order` value) for guaranteed uniqueness. Ugly
+     URL, but only the duplicate site bears it.
+
+  Slug computed once at parse time and stored on `Site.slug`.
 - New route: `app/sites/[slug]/page.tsx` (server component) using
   `generateStaticParams` to enumerate all slugs. Static export
   emits one HTML file per site.
@@ -272,8 +285,9 @@ Created:
 
 Modified:
 
-- `src/domain/site.ts` — add `name`, `legacyId`, `state`,
-  `county`, `campingFee`, `notes`, `slug`
+- `src/domain/site.ts` — add `name`, `state`, `county`,
+  `campingFee`, `notes`, `slug` (slug lands in Phase 9; `Site.id`
+  already carries the legacy ndwt.org ID for redirects)
 - `src/adapters/inbound/next/load-sites.ts` — merge enriched
   record at parse time
 - `src/components/panels/SiteInfoPanel.tsx` — name in header,

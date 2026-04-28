@@ -52,6 +52,26 @@ export interface EnrichedSite {
 
 const ID_KEYS = ['web-scraper-order', '﻿web-scraper-order'] as const;
 
+/**
+ * Manual fix-ups for known typos in ndwt.org's source data. The
+ * upstream site is being retired and the typos won't be corrected
+ * there, so we patch them at scrape time.
+ */
+const COUNTY_CORRECTIONS: Readonly<Record<string, string>> = {
+  'Nez Perice': 'Nez Perce',
+};
+
+/**
+ * Bare placeholder values that should be dropped, not displayed.
+ * Anything else (including "Free", "None", "No fee") is meaningful.
+ */
+const PLACEHOLDER_VALUES: ReadonlySet<string> = new Set(['X', 'x']);
+
+const dropIfPlaceholder = (value: string | undefined): string | undefined => {
+  if (value === undefined) return undefined;
+  return PLACEHOLDER_VALUES.has(value) ? undefined : value;
+};
+
 const readId = (props: RawFeature['properties']): string | null => {
   for (const key of ID_KEYS) {
     const v = props[key];
@@ -122,9 +142,11 @@ const parseSitePage = (html: string, sourceUrl: string): EnrichedSite => {
   };
   const state = labels.get('State');
   if (state !== undefined) out.state = state;
-  const county = labels.get('County');
-  if (county !== undefined) out.county = county;
-  const fee = labels.get('Camping Fee');
+  const rawCounty = labels.get('County');
+  if (rawCounty !== undefined) {
+    out.county = COUNTY_CORRECTIONS[rawCounty] ?? rawCounty;
+  }
+  const fee = dropIfPlaceholder(labels.get('Camping Fee'));
   if (fee !== undefined) out.campingFee = fee;
   if (notes !== undefined) out.notes = notes;
   return out as EnrichedSite;
@@ -133,6 +155,14 @@ const parseSitePage = (html: string, sourceUrl: string): EnrichedSite => {
 const sleep = (ms: number) =>
   new Promise<void>((resolve) => setTimeout(resolve, ms));
 
+/**
+ * ndwt.org declares `charset=iso-8859-1` in its `<meta>`. `res.text()`
+ * defaults to UTF-8, which mangles bytes 0x80–0xFF (e.g. the é in
+ * "café" becomes a replacement character). We decode as windows-1252
+ * — a strict superset of ISO-8859-1 that also handles smart quotes,
+ * em-dashes, and the rest of the Western typography legacy ASP sites
+ * tend to leak in.
+ */
 const fetchHtml = async (url: string): Promise<string> => {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
@@ -144,7 +174,8 @@ const fetchHtml = async (url: string): Promise<string> => {
     if (!res.ok) {
       throw new Error(`HTTP ${res.status} ${res.statusText} for ${url}`);
     }
-    return await res.text();
+    const buffer = await res.arrayBuffer();
+    return new TextDecoder('windows-1252').decode(buffer);
   } finally {
     clearTimeout(timer);
   }
