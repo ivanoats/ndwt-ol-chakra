@@ -9,7 +9,7 @@ const NETLIFY_DEPLOYS_URL =
   'https://app.netlify.com/sites/ndwt-ol-chakra/deploys';
 const REPO_URL = 'https://github.com/ivanoats/ndwt-ol-chakra';
 const LICENSE_URL = `${REPO_URL}/blob/main/LICENSE`;
-const NDWT_URL = 'http://www.ndwt.org';
+const WWTA_URL = 'https://www.wwta.org';
 
 export default function Footer() {
   return (
@@ -30,9 +30,9 @@ export default function Footer() {
       })}
     >
       <p className={css({ margin: 0 })}>
-        Northwest Discovery Water Trail · official site at{' '}
-        <Link href={NDWT_URL} external>
-          ndwt.org
+        Northwest Discovery Water Trail · managed by the{' '}
+        <Link href={WWTA_URL} external>
+          Washington Water Trails Association
         </Link>
       </p>
       <div

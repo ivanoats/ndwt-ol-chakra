@@ -9,7 +9,7 @@ test.describe('Site navigation', () => {
       page.getByRole('navigation', { name: 'Primary' })
     ).toBeVisible();
     await expect(
-      page.getByRole('contentinfo').getByText(/official site at/i)
+      page.getByRole('contentinfo').getByText(/managed by/i)
     ).toBeVisible();
   });
 

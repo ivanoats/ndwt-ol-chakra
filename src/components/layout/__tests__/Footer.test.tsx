@@ -5,13 +5,12 @@ import { render, screen } from '@testing-library/react';
 import Footer from '../Footer';
 
 describe('<Footer />', () => {
-  it('renders the official site attribution + GitHub + license links', () => {
+  it('renders the WWTA attribution + GitHub + license links', () => {
     render(<Footer />);
-    expect(screen.getByText(/official site at/i)).toBeInTheDocument();
-    expect(screen.getByRole('link', { name: 'ndwt.org' })).toHaveAttribute(
-      'href',
-      'http://www.ndwt.org'
-    );
+    expect(screen.getByText(/managed by/i)).toBeInTheDocument();
+    expect(
+      screen.getByRole('link', { name: 'Washington Water Trails Association' })
+    ).toHaveAttribute('href', 'https://www.wwta.org');
     expect(screen.getByRole('link', { name: 'GitHub' })).toHaveAttribute(
       'href',
       'https://github.com/ivanoats/ndwt-ol-chakra'
