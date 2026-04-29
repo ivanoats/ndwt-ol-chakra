@@ -80,6 +80,31 @@ export default function AboutPage() {
         </Link>{' '}
         under the MIT license. Issues and pull requests welcome.
       </p>
+
+      <h2 className={subheadingStyle}>Read more</h2>
+      <ul
+        className={css({
+          marginTop: '3',
+          paddingLeft: '6',
+          listStyle: 'disc',
+          '& li': { marginBottom: '2' },
+        })}
+      >
+        <li>
+          <Link href="/about/partners/">Partners</Link> — funder, manager, and
+          original partner organizations
+        </li>
+        <li>
+          <Link href="/about/history/">History</Link> — 2005 designation events
+        </li>
+        <li>
+          <Link href="/about/photo-gallery/">Photo Gallery</Link> — photos of
+          the trail
+        </li>
+        <li>
+          <Link href="/about/contact/">Contact</Link> — get in touch with WWTA
+        </li>
+      </ul>
     </article>
   );
 }
