@@ -1,3 +1,5 @@
+import createMDX from '@next/mdx';
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   allowedDevOrigins: process.env.ALLOWED_DEV_ORIGINS?.split(',') ?? [
@@ -20,4 +22,14 @@ const nextConfig = {
   trailingSlash: true,
 };
 
-export default nextConfig;
+// MDX is wired up so editorial content under `content/` can be
+// imported as React components from any TSX route. We don't add
+// `.mdx` to `pageExtensions` because pages stay in `app/` as TSX
+// route handlers; the MDX is the body, not the route.
+const withMDX = createMDX({
+  // Default remark/rehype plugins are fine for now. Add MDX-specific
+  // plugins (e.g. remark-gfm for tables) here if a content page
+  // needs them.
+});
+
+export default withMDX(nextConfig);

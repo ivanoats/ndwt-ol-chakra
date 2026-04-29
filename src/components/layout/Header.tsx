@@ -8,8 +8,11 @@ import { css } from 'styled-system/css';
 const NAV_ITEMS = [
   { href: '/', label: 'Map' },
   { href: '/sites/', label: 'Sites' },
-  { href: '/about/', label: 'About' },
+  { href: '/water-safety/', label: 'Safety' },
+  { href: '/river-navigation/', label: 'Navigation' },
+  { href: '/leave-no-trace/', label: 'Leave No Trace' },
   { href: '/trip-planning/', label: 'Trip Planning' },
+  { href: '/about/', label: 'About' },
 ] as const;
 
 export default function Header() {
@@ -57,7 +60,10 @@ export default function Header() {
         className={css({
           display: 'flex',
           alignItems: 'center',
-          gap: { base: '3', md: '5' },
+          flexWrap: 'wrap',
+          justifyContent: 'flex-end',
+          gap: { base: '2', md: '4' },
+          rowGap: '1',
         })}
       >
         {NAV_ITEMS.map((item) => {
