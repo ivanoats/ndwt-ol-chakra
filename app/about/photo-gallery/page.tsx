@@ -42,10 +42,7 @@ export default function PhotoGalleryPage() {
       <Text as="p" css={{ marginTop: '6', fontSize: 'sm', color: 'fg.muted' }}>
         Want to contribute a photo? Email a high-resolution image and any
         photographer credit to{' '}
-        <Link href="mailto:info@wwta.org" external>
-          info@wwta.org
-        </Link>
-        .
+        <Link href="mailto:info@wwta.org">info@wwta.org</Link>.
       </Text>
     </ArticleLayout>
   );

@@ -30,14 +30,12 @@ export default function ContactPage() {
         trail&rsquo;s managing organization.
       </Text>
       <Text as="p" css={{ marginTop: '4' }}>
-        Email:{' '}
-        <Link href="mailto:info@wwta.org" external>
-          info@wwta.org
-        </Link>
+        Email: <Link href="mailto:info@wwta.org">info@wwta.org</Link>
       </Text>
       <Text as="p" css={{ marginTop: '4' }}>
         For information about Water Trail development and planning, the WWTA
-        office can be reached at <strong>(206) 545-9161</strong> or via{' '}
+        office can be reached at{' '}
+        <Link href="tel:+12065459161">(206) 545-9161</Link> or via{' '}
         <Link href="https://www.wwta.org" external>
           wwta.org
         </Link>
