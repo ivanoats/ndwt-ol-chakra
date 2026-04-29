@@ -1,6 +1,6 @@
 {
   "name": "Northwest Discovery Water Trail",
-  "short_name": "NW Discovery WT",
+  "short_name": "NW Discovery",
   "description": "A 367-mile recreational boating route on the Snake, Columbia, and Clearwater rivers.",
   "icons": [
     {
@@ -16,6 +16,11 @@
     {
       "src": "/apple-touch-icon.png",
       "sizes": "180x180",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
       "type": "image/png"
     },
     {

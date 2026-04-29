@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import type { ReactNode } from 'react';
 import { css } from 'styled-system/css';
 
@@ -15,15 +15,27 @@ export const metadata: Metadata = {
     'A 367-mile recreational boating route on the Snake, Columbia, and ' +
     'Clearwater rivers — Canoe Camp to Bonneville Dam.',
   icons: {
+    // 192/512 stay in the manifest only — they're for PWA install
+    // surfaces, not for the browser-tab icon that <link rel="icon">
+    // implies. Including them here would make browsers fetch a
+    // large file just for the favicon.
     icon: [
       { url: '/favicon.ico', sizes: 'any', type: 'image/x-icon' },
       { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
       { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
-      { url: '/icon-512.png', sizes: '512x512', type: 'image/png' },
     ],
     apple: { url: '/apple-touch-icon.png', sizes: '180x180' },
   },
   manifest: '/site.webmanifest',
+};
+
+// Lives on the viewport export, not metadata, since Next 16
+// deprecated metadata.themeColor. The manifest's theme_color is
+// loaded later; this <meta name="theme-color"> shows up before
+// the manifest fetch completes so the mobile address bar tints
+// to the brand navy on first paint.
+export const viewport: Viewport = {
+  themeColor: '#050e73',
 };
 
 export default function RootLayout({

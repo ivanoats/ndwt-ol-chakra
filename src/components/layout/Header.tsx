@@ -149,14 +149,7 @@ export default function Header() {
             in the corners is part of the original brand asset.
             Decorative — site title text follows for screen
             readers. */}
-        <Image
-          src="/logo.png"
-          alt=""
-          width={36}
-          height={46}
-          priority
-          unoptimized
-        />
+        <Image src="/logo.png" alt="" width={36} height={46} priority />
         <span
           className={css({
             fontSize: { base: 'md', md: 'lg' },
