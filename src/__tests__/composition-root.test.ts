@@ -5,6 +5,7 @@ import { coordinates, FacilitySet, type Site, siteId } from '../domain';
 
 const baseSite: Site = {
   id: siteId('a'),
+  name: 'Site A',
   riverSegment: '',
   riverName: 'Columbia',
   riverMile: 0,

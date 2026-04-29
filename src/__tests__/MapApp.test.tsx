@@ -17,6 +17,7 @@ import MapApp from '../components/MapApp';
 const fakeSites: readonly Site[] = [
   {
     id: siteId('test'),
+    name: 'Test Site',
     riverSegment: '',
     riverName: 'Columbia',
     riverMile: 0,

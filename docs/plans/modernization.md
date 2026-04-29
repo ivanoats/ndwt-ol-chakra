@@ -11,7 +11,11 @@
 | 4     | Migrate to Next.js 16 App Router (still Chakra) | Done (PR #31) |
 | 5     | Swap Chakra for PandaCSS + Ark UI + Park UI     | Done (PR #34) |
 | 6     | Layout & content polish                         | Done (PR #35) |
-| 7     | Docs & memory files                             | In progress   |
+| 7     | Docs & memory files                             | Done (PR #38) |
+
+Phases 8–14 continue in
+[`feature-parity.md`](./feature-parity.md) — closing the gap to
+ndwt.org and replacing it as the public site for the trail.
 
 ## Context
 
