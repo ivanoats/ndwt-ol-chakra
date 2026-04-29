@@ -5,56 +5,33 @@ import 'server-only';
 
 import type { Site } from '../../../domain';
 import {
-  type EnrichedSiteIndex,
   parseSitesFromGeoJson,
   type RawFeatureCollection,
 } from '../../outbound/geojson-site-repository';
 
 const GEOJSON_PATH = ['public', 'data', 'ndwt.geojson'] as const;
-const ENRICHED_PATH = ['public', 'data', 'ndwt-enriched.json'] as const;
-
-const readEnriched = async (path: string): Promise<EnrichedSiteIndex> => {
-  try {
-    const text = await readFile(path, 'utf-8');
-    return JSON.parse(text) as EnrichedSiteIndex;
-  } catch (cause) {
-    if (
-      typeof cause === 'object' &&
-      cause !== null &&
-      'code' in cause &&
-      (cause as { code?: string }).code === 'ENOENT'
-    ) {
-      console.warn(
-        `[load-sites] No enriched data at ${path}; site names will fall back to "RiverName River — Mile NN".`
-      );
-      return {};
-    }
-    throw new Error(`Failed to parse enriched site data at ${path}`, {
-      cause,
-    });
-  }
-};
 
 /**
- * Build-time site loader for App Router server components. Reads the
- * GeoJSON straight off disk via fs/promises (so it's pre-rendered
- * into the static page bundle, no runtime fetch) and merges in the
- * scraped name / state / county / camping fee / notes data from
- * `public/data/ndwt-enriched.json`. JSON.parse errors are wrapped
- * so a corrupted file fails the build with a useful path.
+ * Build-time site loader for App Router server components. Reads
+ * the merged GeoJSON straight off disk via fs/promises (so it's
+ * pre-rendered into the static page bundle, no runtime fetch) and
+ * runs it through the same parser the client uses for the fetch
+ * path. JSON.parse errors are wrapped so a corrupted file fails the
+ * build with a useful path.
+ *
+ * Site name + state/county/campingFee/notes used to live in a
+ * sidecar `ndwt-enriched.json`; they were merged into the GeoJSON
+ * properties to keep the loader and the published `/data/` asset
+ * symmetric. See `public/data/README.md` for the schema.
  */
 export async function loadSites(): Promise<readonly Site[]> {
-  const geojsonPath = join(process.cwd(), ...GEOJSON_PATH);
-  const enrichedPath = join(process.cwd(), ...ENRICHED_PATH);
-  const [text, enriched] = await Promise.all([
-    readFile(geojsonPath, 'utf-8'),
-    readEnriched(enrichedPath),
-  ]);
+  const path = join(process.cwd(), ...GEOJSON_PATH);
+  const text = await readFile(path, 'utf-8');
   let body: RawFeatureCollection;
   try {
     body = JSON.parse(text) as RawFeatureCollection;
   } catch (cause) {
-    throw new Error(`Failed to parse GeoJSON at ${geojsonPath}`, { cause });
+    throw new Error(`Failed to parse GeoJSON at ${path}`, { cause });
   }
-  return parseSitesFromGeoJson(body, enriched);
+  return parseSitesFromGeoJson(body);
 }

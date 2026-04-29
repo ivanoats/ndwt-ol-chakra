@@ -23,7 +23,8 @@
         "boatRamp-src": "0",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Blalock Canyon"
       },
       "geometry": {
         "type": "Point",
@@ -55,7 +56,11 @@
         "boatRamp-src": "1",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Harper's Bend",
+        "state": "ID",
+        "county": "Nez Perce",
+        "notes": "Popular site for fishing salmon and steelhead."
       },
       "geometry": {
         "type": "Point",
@@ -87,7 +92,10 @@
         "boatRamp-src": "1",
         "handCarried-src": "1",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Paterson Boat Ramp",
+        "state": "WA",
+        "notes": "Gently sloping rock into water, no real ramp."
       },
       "geometry": {
         "type": "Point",
@@ -119,7 +127,11 @@
         "boatRamp-src": "1",
         "handCarried-src": "0",
         "marina-src": "1",
-        "adaAccess-src": "1"
+        "adaAccess-src": "1",
+        "name": "Hood River Marina",
+        "state": "OR",
+        "county": "Hood River",
+        "notes": "Closes at dusk, no overnight camping or parking. A group shelter can be reserved for a fee. Marina slips are for monthly and annual tenants.The guest dock has a 3 day maximum, and a fee."
       },
       "geometry": {
         "type": "Point",
@@ -151,7 +163,11 @@
         "boatRamp-src": "0",
         "handCarried-src": "1",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "The Hook",
+        "state": "OR",
+        "county": "Hood River",
+        "notes": "Fishing, windsurfing, kiteboarding (from designated points)."
       },
       "geometry": {
         "type": "Point",
@@ -183,7 +199,11 @@
         "boatRamp-src": "0",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Bingen Marina",
+        "state": "WA",
+        "county": "Klickitat",
+        "notes": "No Alcohol, no commercial fishing"
       },
       "geometry": {
         "type": "Point",
@@ -215,7 +235,10 @@
         "boatRamp-src": "0",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Hollebeke",
+        "state": "WA",
+        "county": "Walla Walla"
       },
       "geometry": {
         "type": "Point",
@@ -247,7 +270,11 @@
         "boatRamp-src": "0",
         "handCarried-src": "1",
         "marina-src": "0",
-        "adaAccess-src": "1"
+        "adaAccess-src": "1",
+        "name": "Home Valley",
+        "state": "WA",
+        "county": "Skamania",
+        "notes": "Baseball fields, playground equipment, windsurfing, horseshoe pits, beach, wetlands to observe."
       },
       "geometry": {
         "type": "Point",
@@ -279,7 +306,8 @@
         "boatRamp-src": "0",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Yakima River"
       },
       "geometry": {
         "type": "Point",
@@ -311,7 +339,10 @@
         "boatRamp-src": "1",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Bonneville Portage Downstream/Hamilton Island Boat Ramp",
+        "state": "WA",
+        "county": "Skamania"
       },
       "geometry": {
         "type": "Point",
@@ -343,7 +374,10 @@
         "boatRamp-src": "0",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Hanford Reach NM Visitor Center",
+        "state": "WA",
+        "county": "Benton"
       },
       "geometry": {
         "type": "Point",
@@ -375,7 +409,10 @@
         "boatRamp-src": "0",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Inn Beach(Hood River Inn)",
+        "state": "OR",
+        "county": "Hood River"
       },
       "geometry": {
         "type": "Point",
@@ -407,7 +444,8 @@
         "boatRamp-src": "0",
         "handCarried-src": "1",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Rufus"
       },
       "geometry": {
         "type": "Point",
@@ -439,7 +477,10 @@
         "boatRamp-src": "0",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Bingen Ramp (Sailboard Park at Point)",
+        "state": "WA",
+        "county": "Klickitat"
       },
       "geometry": {
         "type": "Point",
@@ -471,7 +512,8 @@
         "boatRamp-src": "1",
         "handCarried-src": "1",
         "marina-src": "0",
-        "adaAccess-src": "1"
+        "adaAccess-src": "1",
+        "name": "Howard Amon Park"
       },
       "geometry": {
         "type": "Point",
@@ -503,7 +545,11 @@
         "boatRamp-src": "1",
         "handCarried-src": "1",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Nugent Park",
+        "state": "OR",
+        "county": "Umatilla",
+        "notes": "Nugent Park is on the Umatilla River, one mile up from the confluence with the Columbia River."
       },
       "geometry": {
         "type": "Point",
@@ -535,7 +581,12 @@
         "boatRamp-src": "1",
         "handCarried-src": "1",
         "marina-src": "0",
-        "adaAccess-src": "1"
+        "adaAccess-src": "1",
+        "name": "Windust",
+        "state": "WA",
+        "county": "Franklin",
+        "campingFee": "No fee",
+        "notes": "No wake area around swimming area. Pets must be kept on a leash."
       },
       "geometry": {
         "type": "Point",
@@ -567,7 +618,12 @@
         "boatRamp-src": "1",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Le Page Park",
+        "state": "OR",
+        "county": "Hood River",
+        "campingFee": "$12 per tent per night",
+        "notes": "Reservations need to be made 4 days in advance. On weekdays, minimum stay length is 2 days, and on weekends and holidays you must stay for at least 3 days. No off road vehicles."
       },
       "geometry": {
         "type": "Point",
@@ -599,7 +655,10 @@
         "boatRamp-src": "0",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Clover Island Inn Boat Dock",
+        "state": "WA",
+        "county": "Benton"
       },
       "geometry": {
         "type": "Point",
@@ -631,7 +690,10 @@
         "boatRamp-src": "1",
         "handCarried-src": "1",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Patterson Ferry Road Ramp",
+        "state": "OR",
+        "county": "Morrow"
       },
       "geometry": {
         "type": "Point",
@@ -663,7 +725,10 @@
         "boatRamp-src": "1",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Lower Goose Pasture",
+        "state": "ID",
+        "county": "Nez Perce"
       },
       "geometry": {
         "type": "Point",
@@ -695,7 +760,11 @@
         "boatRamp-src": "1",
         "handCarried-src": "1",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Cherry Lane Sports Access",
+        "state": "ID",
+        "county": "Nez Perce",
+        "notes": "http://fishandgame.idaho.gov/"
       },
       "geometry": {
         "type": "Point",
@@ -727,7 +796,12 @@
         "boatRamp-src": "1",
         "handCarried-src": "1",
         "marina-src": "1",
-        "adaAccess-src": "1"
+        "adaAccess-src": "1",
+        "name": "Lyons Ferry Marina",
+        "state": "WA",
+        "county": "Columbia",
+        "campingFee": "$10.75 per tent site",
+        "notes": "Pets must be kept on a leash. Horses and hunting are prohibited."
       },
       "geometry": {
         "type": "Point",
@@ -759,7 +833,8 @@
         "boatRamp-src": "0",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Washington/Oregon State Line"
       },
       "geometry": {
         "type": "Point",
@@ -791,7 +866,12 @@
         "boatRamp-src": "1",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "1"
+        "adaAccess-src": "1",
+        "name": "Crow Butte Park",
+        "state": "WA",
+        "county": "Benton",
+        "campingFee": "15$ per site per day.",
+        "notes": "Pets must be kept on a leash"
       },
       "geometry": {
         "type": "Point",
@@ -823,7 +903,10 @@
         "boatRamp-src": "1",
         "handCarried-src": "1",
         "marina-src": "0",
-        "adaAccess-src": "1"
+        "adaAccess-src": "1",
+        "name": "Wye Park",
+        "county": "Franklin",
+        "notes": "Pets must be kept on a leash. Horses and hunting are prohibited."
       },
       "geometry": {
         "type": "Point",
@@ -855,7 +938,11 @@
         "boatRamp-src": "1",
         "handCarried-src": "1",
         "marina-src": "1",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Columbia Park",
+        "state": "WA",
+        "county": "Benton",
+        "notes": "Campgrounds are closed until further notice (May 16, 2008)"
       },
       "geometry": {
         "type": "Point",
@@ -887,7 +974,9 @@
         "boatRamp-src": "0",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Nez Perce National Historic Park",
+        "state": "ID"
       },
       "geometry": {
         "type": "Point",
@@ -919,7 +1008,8 @@
         "boatRamp-src": "0",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Alderdale"
       },
       "geometry": {
         "type": "Point",
@@ -951,7 +1041,11 @@
         "boatRamp-src": "0",
         "handCarried-src": "1",
         "marina-src": "0",
-        "adaAccess-src": "1"
+        "adaAccess-src": "1",
+        "name": "McNary Beach Park",
+        "state": "OR",
+        "county": "Umatilla",
+        "notes": "Take a stroll on the Lewis & Clark Commemorative Trail"
       },
       "geometry": {
         "type": "Point",
@@ -983,7 +1077,11 @@
         "boatRamp-src": "0",
         "handCarried-src": "1",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Myrtle Recreation Site",
+        "state": "ID",
+        "county": "Nez Perce",
+        "campingFee": "$8 per tent or RV"
       },
       "geometry": {
         "type": "Point",
@@ -1015,7 +1113,10 @@
         "boatRamp-src": "1",
         "handCarried-src": "1",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Roosevelt Park",
+        "state": "WA",
+        "notes": "Popular spot for windsurfing, kiteboarding, and swimming."
       },
       "geometry": {
         "type": "Point",
@@ -1047,7 +1148,10 @@
         "boatRamp-src": "0",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "1"
+        "adaAccess-src": "1",
+        "name": "Boat Ramp( Port Dock)Stevensen Landing",
+        "state": "WA",
+        "county": "Skamania"
       },
       "geometry": {
         "type": "Point",
@@ -1079,7 +1183,12 @@
         "boatRamp-src": "0",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "1"
+        "adaAccess-src": "1",
+        "name": "Viento State Park",
+        "state": "OR",
+        "county": "Hood River",
+        "campingFee": "$10-14 per site (Price varies with season).",
+        "notes": "$3 for day use."
       },
       "geometry": {
         "type": "Point",
@@ -1111,7 +1220,10 @@
         "boatRamp-src": "0",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "1"
+        "adaAccess-src": "1",
+        "name": "Kiwanis Park at Kildits Cove",
+        "state": "OR",
+        "county": "Wasco"
       },
       "geometry": {
         "type": "Point",
@@ -1143,7 +1255,11 @@
         "boatRamp-src": "0",
         "handCarried-src": "1",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Riparia",
+        "state": "WA",
+        "county": "Whitman",
+        "notes": "Pets must be kept on a leash. Horses and hunting are prohibited. No open fires allowed from June 10 through October 10."
       },
       "geometry": {
         "type": "Point",
@@ -1175,7 +1291,9 @@
         "boatRamp-src": "0",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Ankeny",
+        "state": "OR"
       },
       "geometry": {
         "type": "Point",
@@ -1207,7 +1325,11 @@
         "boatRamp-src": "1",
         "handCarried-src": "1",
         "marina-src": "0",
-        "adaAccess-src": "1"
+        "adaAccess-src": "1",
+        "name": "Cascade Boat Launch & Pebble Beach",
+        "state": "WA",
+        "county": "Skamania",
+        "notes": "The Cascade Boat Launch and Pebble Beach are separate sites. However, they are within walking distance on each other. Dog must be on a leash."
       },
       "geometry": {
         "type": "Point",
@@ -1239,7 +1361,11 @@
         "boatRamp-src": "1",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "1"
+        "adaAccess-src": "1",
+        "name": "Wawawai Landing",
+        "state": "WA",
+        "county": "Whitman",
+        "notes": "Pets must be kept on a leash. Horses and hunting are prohibited. No open fires allowed from June 10 through October 10. Charcoal and propane fires are acceptable."
       },
       "geometry": {
         "type": "Point",
@@ -1271,7 +1397,11 @@
         "boatRamp-src": "1",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "1"
+        "adaAccess-src": "1",
+        "name": "Greenbelt Ramp",
+        "state": "WA",
+        "county": "Asotin",
+        "notes": "Pets must be kept on a leash. Horses and hunting are prohibited. No open fires allowed. Charcoal and propane fires are acceptable. Public telephone available."
       },
       "geometry": {
         "type": "Point",
@@ -1303,7 +1433,12 @@
         "boatRamp-src": "1",
         "handCarried-src": "1",
         "marina-src": "1",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Charbonneau Park",
+        "state": "WA",
+        "county": "Walla Walla",
+        "campingFee": "18$ for a regular site, and $8 for overflow sites.",
+        "notes": "Pets must be kept on a leash. Hunting is prohibited inside the developed park. Fire pits, grills, and hot showers available, along with a trailer dump station."
       },
       "geometry": {
         "type": "Point",
@@ -1335,7 +1470,12 @@
         "boatRamp-src": "1",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "1"
+        "adaAccess-src": "1",
+        "name": "Chief Timothy Park",
+        "state": "WA",
+        "county": "Asotin",
+        "campingFee": "$20 for a standard campsite",
+        "notes": "Pets must be kept on a leash. Horses and hunting are prohibited. Golden Age and Access Passports will not be accepted. No open fires allowed from June 10 through October 10."
       },
       "geometry": {
         "type": "Point",
@@ -1367,7 +1507,11 @@
         "boatRamp-src": "1",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "1"
+        "adaAccess-src": "1",
+        "name": "Nisqually John Landing",
+        "state": "WA",
+        "county": "Whitman",
+        "notes": "Pets must be kept on a leash. Horses and hunting are prohibited. No open fires allowed from June 10 through October 10. Charcoal and propane fires are acceptable."
       },
       "geometry": {
         "type": "Point",
@@ -1399,7 +1543,11 @@
         "boatRamp-src": "1",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Big Flat",
+        "state": "WA",
+        "county": "Franklin",
+        "notes": "Hunting is allowed for waterfowl, upland game birds and deer with shotgun only. Hunting seasons and hours are set by WDFW."
       },
       "geometry": {
         "type": "Point",
@@ -1431,7 +1579,10 @@
         "boatRamp-src": "1",
         "handCarried-src": "1",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Walla Walla Yacht Club",
+        "state": "WA",
+        "notes": "Pets must be kept on a leash. The marina is private and open only to club members. A sani-can is available at the boat ramp."
       },
       "geometry": {
         "type": "Point",
@@ -1463,7 +1614,9 @@
         "boatRamp-src": "0",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Granite Point",
+        "state": "WA"
       },
       "geometry": {
         "type": "Point",
@@ -1495,7 +1648,10 @@
         "boatRamp-src": "0",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Lower Monumental Dam",
+        "state": "WA",
+        "county": "Franklin"
       },
       "geometry": {
         "type": "Point",
@@ -1527,7 +1683,11 @@
         "boatRamp-src": "1",
         "handCarried-src": "1",
         "marina-src": "0",
-        "adaAccess-src": "1"
+        "adaAccess-src": "1",
+        "name": "Walker",
+        "state": "WA",
+        "county": "Walla Walla",
+        "notes": "Camping space is somewhat limited and there are no designated spots."
       },
       "geometry": {
         "type": "Point",
@@ -1559,7 +1719,10 @@
         "boatRamp-src": "0",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Granite Point",
+        "state": "WA",
+        "campingFee": "none"
       },
       "geometry": {
         "type": "Point",
@@ -1591,7 +1754,8 @@
         "boatRamp-src": "0",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Port of Wallula"
       },
       "geometry": {
         "type": "Point",
@@ -1623,7 +1787,12 @@
         "boatRamp-src": "1",
         "handCarried-src": "1",
         "marina-src": "0",
-        "adaAccess-src": "1"
+        "adaAccess-src": "1",
+        "name": "Sacajawea State Park",
+        "state": "WA",
+        "county": "Franklin",
+        "campingFee": "Free",
+        "notes": "Pets must be kept on a leash. Restrooms closed Oct-Mar. Campsite accomodates 8 on first come first serve basis. Parties larger than 8 call: (506) 545-2361"
       },
       "geometry": {
         "type": "Point",
@@ -1655,7 +1824,12 @@
         "boatRamp-src": "1",
         "handCarried-src": "1",
         "marina-src": "1",
-        "adaAccess-src": "1"
+        "adaAccess-src": "1",
+        "name": "Port of Cascade Locks Marine Park",
+        "state": "OR",
+        "county": "Hood River",
+        "campingFee": "$15/night",
+        "notes": "No campfires in the campground. Enjoy a playground, museum, and visitor center. Sternwheelers depart from this park."
       },
       "geometry": {
         "type": "Point",
@@ -1687,7 +1861,11 @@
         "boatRamp-src": "0",
         "handCarried-src": "1",
         "marina-src": "0",
-        "adaAccess-src": "1"
+        "adaAccess-src": "1",
+        "name": "East Clearwater Park",
+        "state": "ID",
+        "county": "Nez Perce",
+        "notes": "Pets must be kept on a leash. Horses and hunting are prohibited."
       },
       "geometry": {
         "type": "Point",
@@ -1719,7 +1897,10 @@
         "boatRamp-src": "0",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Washington Boat Ramp",
+        "state": "WA",
+        "county": "Benton"
       },
       "geometry": {
         "type": "Point",
@@ -1751,7 +1932,12 @@
         "boatRamp-src": "1",
         "handCarried-src": "0",
         "marina-src": "1",
-        "adaAccess-src": "1"
+        "adaAccess-src": "1",
+        "name": "Lyons Ferry Park",
+        "state": "WA",
+        "county": "Franklin",
+        "campingFee": "$10.75 per tent site",
+        "notes": "Pets must be kept on a leash. Horses and hunting are prohibited. A snack bar is available May 25th through Labor Day."
       },
       "geometry": {
         "type": "Point",
@@ -1783,7 +1969,10 @@
         "boatRamp-src": "1",
         "handCarried-src": "1",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Oregon Boat Ramp",
+        "state": "OR",
+        "county": "Umatilla"
       },
       "geometry": {
         "type": "Point",
@@ -1815,7 +2004,10 @@
         "boatRamp-src": "0",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Hover Park",
+        "state": "WA",
+        "county": "Benton"
       },
       "geometry": {
         "type": "Point",
@@ -1847,7 +2039,11 @@
         "boatRamp-src": "1",
         "handCarried-src": "1",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Two Rivers Park",
+        "state": "WA",
+        "county": "Benton",
+        "notes": "Pets must be kept on a leash. Hunting is prohibited. Public phones are available."
       },
       "geometry": {
         "type": "Point",
@@ -1879,7 +2075,8 @@
         "boatRamp-src": "0",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Rice Bar Habitat Unit"
       },
       "geometry": {
         "type": "Point",
@@ -1911,7 +2108,10 @@
         "boatRamp-src": "0",
         "handCarried-src": "0",
         "marina-src": "1",
-        "adaAccess-src": "1"
+        "adaAccess-src": "1",
+        "name": "Event Site( Hood River)(Marina)",
+        "state": "OR",
+        "county": "Hood River"
       },
       "geometry": {
         "type": "Point",
@@ -1943,7 +2143,11 @@
         "boatRamp-src": "1",
         "handCarried-src": "1",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Texas Rapids",
+        "state": "WA",
+        "county": "Columbia",
+        "notes": "Pets must be kept on a leash. Horses and hunting are prohibited. No open fires allowed from June 10 through October 10. Charcoal and propane fires are acceptable."
       },
       "geometry": {
         "type": "Point",
@@ -1975,7 +2179,11 @@
         "boatRamp-src": "0",
         "handCarried-src": "1",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Swell City",
+        "state": "WA",
+        "county": "Klickitat",
+        "notes": "Windsurfing and kiteboarding area. Day use fee of $4 per person."
       },
       "geometry": {
         "type": "Point",
@@ -2007,7 +2215,10 @@
         "boatRamp-src": "0",
         "handCarried-src": "1",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Peach Beach",
+        "state": "WA",
+        "notes": "Landing only for hand-carried boats, other boats use Maryhill State Park boat ramp. Privately owned RV Park."
       },
       "geometry": {
         "type": "Point",
@@ -2039,7 +2250,10 @@
         "boatRamp-src": "0",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Earl Snell Memorial Park",
+        "state": "OR",
+        "county": "Gilliam"
       },
       "geometry": {
         "type": "Point",
@@ -2071,7 +2285,11 @@
         "boatRamp-src": "1",
         "handCarried-src": "1",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Swallows Park",
+        "state": "WA",
+        "county": "Asotin",
+        "notes": "Walking trails available"
       },
       "geometry": {
         "type": "Point",
@@ -2103,7 +2321,10 @@
         "boatRamp-src": "0",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Lower Granite Portage Upstream",
+        "state": "WA",
+        "county": "Garfield"
       },
       "geometry": {
         "type": "Point",
@@ -2135,7 +2356,11 @@
         "boatRamp-src": "0",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Koberg Beach",
+        "state": "OR",
+        "county": "Hood River",
+        "notes": "Adjacent tribal in lieu fishing site with boat launch and picnic area not open to the public."
       },
       "geometry": {
         "type": "Point",
@@ -2167,7 +2392,10 @@
         "boatRamp-src": "0",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Ice Harbor Portage Upstream",
+        "state": "WA",
+        "county": "Walla Walla"
       },
       "geometry": {
         "type": "Point",
@@ -2199,7 +2427,10 @@
         "boatRamp-src": "0",
         "handCarried-src": "1",
         "marina-src": "0",
-        "adaAccess-src": "1"
+        "adaAccess-src": "1",
+        "name": "Chief Looking Glass Park",
+        "state": "WA",
+        "county": "Asotin"
       },
       "geometry": {
         "type": "Point",
@@ -2231,7 +2462,8 @@
         "boatRamp-src": "0",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "ACOE Clarkston Resource Management Office"
       },
       "geometry": {
         "type": "Point",
@@ -2263,7 +2495,10 @@
         "boatRamp-src": "1",
         "handCarried-src": "1",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Celilo Park",
+        "state": "OR",
+        "county": "Wasco"
       },
       "geometry": {
         "type": "Point",
@@ -2295,7 +2530,8 @@
         "boatRamp-src": "0",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Ridpath Wildlife Habitat Unit"
       },
       "geometry": {
         "type": "Point",
@@ -2327,7 +2563,11 @@
         "boatRamp-src": "0",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Rock Creek",
+        "state": "OR",
+        "county": "Wasco",
+        "notes": "Very primitive area, windsurfing, entrance fee, gravel entrance road and parking lot, blind turn into parking lot under bridge. Only one lane available."
       },
       "geometry": {
         "type": "Point",
@@ -2359,7 +2599,10 @@
         "boatRamp-src": "1",
         "handCarried-src": "1",
         "marina-src": "0",
-        "adaAccess-src": "1"
+        "adaAccess-src": "1",
+        "name": "North Lewiston Ramp",
+        "state": "ID",
+        "county": "Nez Perce"
       },
       "geometry": {
         "type": "Point",
@@ -2391,7 +2634,11 @@
         "boatRamp-src": "1",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "1"
+        "adaAccess-src": "1",
+        "name": "Little Goose Landing",
+        "state": "WA",
+        "county": "Columbia",
+        "notes": "Hunting is prohibited. No open fires allowed from June 10 to October 10. Charcoal and propane fires allowed year round."
       },
       "geometry": {
         "type": "Point",
@@ -2423,7 +2670,12 @@
         "boatRamp-src": "1",
         "handCarried-src": "1",
         "marina-src": "1",
-        "adaAccess-src": "1"
+        "adaAccess-src": "1",
+        "name": "Boyer Park and Marina",
+        "state": "WA",
+        "county": "Whitman",
+        "campingFee": "$7.00",
+        "notes": "Pets must be kept on a leash. Aircraft landing field located adjacent to park."
       },
       "geometry": {
         "type": "Point",
@@ -2455,7 +2707,11 @@
         "boatRamp-src": "0",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "1"
+        "adaAccess-src": "1",
+        "name": "Spring Creek Fish Hatchery Recreation Area",
+        "state": "WA",
+        "county": "Skamania",
+        "notes": "Windsurfing and kiteboarding spot. No overnight camping nor parking. Day use fee. Visitor center at the fish hatchery. Beach launch only, kayaks possible."
       },
       "geometry": {
         "type": "Point",
@@ -2487,7 +2743,10 @@
         "boatRamp-src": "1",
         "handCarried-src": "1",
         "marina-src": "1",
-        "adaAccess-src": "1"
+        "adaAccess-src": "1",
+        "name": "Irrigon Marina Park",
+        "state": "OR",
+        "notes": "Pets must be kept on a leash."
       },
       "geometry": {
         "type": "Point",
@@ -2519,7 +2778,11 @@
         "boatRamp-src": "1",
         "handCarried-src": "1",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Matthews",
+        "state": "WA",
+        "county": "Walla Walla",
+        "notes": "Pets must be kept on a leash. Hunting is prohibited."
       },
       "geometry": {
         "type": "Point",
@@ -2551,7 +2814,11 @@
         "boatRamp-src": "1",
         "handCarried-src": "0",
         "marina-src": "1",
-        "adaAccess-src": "1"
+        "adaAccess-src": "1",
+        "name": "Hells Canyon Marina",
+        "state": "WA",
+        "county": "Asotin",
+        "notes": "Pets must be kept on a leash. Horses and hunting are prohibited. No open fires allowed. Charcoal and propane fires are acceptable."
       },
       "geometry": {
         "type": "Point",
@@ -2583,7 +2850,10 @@
         "boatRamp-src": "1",
         "handCarried-src": "1",
         "marina-src": "0",
-        "adaAccess-src": "1"
+        "adaAccess-src": "1",
+        "name": "Hells Gate State Park",
+        "state": "ID",
+        "county": "Nez Perce"
       },
       "geometry": {
         "type": "Point",
@@ -2615,7 +2885,9 @@
         "boatRamp-src": "1",
         "handCarried-src": "1",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Avery Park",
+        "notes": "Avery Park is a shared use"
       },
       "geometry": {
         "type": "Point",
@@ -2647,7 +2919,10 @@
         "boatRamp-src": "1",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "1"
+        "adaAccess-src": "1",
+        "name": "Bonneville(Washington Shore)",
+        "state": "WA",
+        "county": "Skamania"
       },
       "geometry": {
         "type": "Point",
@@ -2679,7 +2954,11 @@
         "boatRamp-src": "1",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "1"
+        "adaAccess-src": "1",
+        "name": "Offield Landing",
+        "state": "WA",
+        "county": "Garfield",
+        "notes": "Pets must be kept on a leash. Horses and hunting are prohibited. No open fires allowed from June 10 through October 10. Charcoal and propane fires are acceptable Boat launch is free of charge."
       },
       "geometry": {
         "type": "Point",
@@ -2711,7 +2990,12 @@
         "boatRamp-src": "1",
         "handCarried-src": "1",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Madame Dorian",
+        "state": "WA",
+        "county": "Walla Walla",
+        "campingFee": "None",
+        "notes": "Madame Dorian sits at the confluence of the Walla Walla River and the Columbia. Paddlers and shallow draft boats will enjoy exploring the wetlands of the Walla Walla delta."
       },
       "geometry": {
         "type": "Point",
@@ -2743,7 +3027,10 @@
         "boatRamp-src": "0",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Illia Dunes",
+        "state": "WA",
+        "county": "Garfield"
       },
       "geometry": {
         "type": "Point",
@@ -2775,7 +3062,11 @@
         "boatRamp-src": "1",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Willow Landing",
+        "state": "WA",
+        "county": "Garfield",
+        "notes": "Pets must be kept on a leash. Hunting is prohibited."
       },
       "geometry": {
         "type": "Point",
@@ -2807,7 +3098,10 @@
         "boatRamp-src": "1",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "1"
+        "adaAccess-src": "1",
+        "name": "Riverfront Park",
+        "state": "OR",
+        "county": "Wasco"
       },
       "geometry": {
         "type": "Point",
@@ -2839,7 +3133,10 @@
         "boatRamp-src": "0",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Hood Park",
+        "state": "WA",
+        "county": "Walla Walla"
       },
       "geometry": {
         "type": "Point",
@@ -2871,7 +3168,8 @@
         "boatRamp-src": "0",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Sam Hill Bridge"
       },
       "geometry": {
         "type": "Point",
@@ -2903,7 +3201,11 @@
         "boatRamp-src": "0",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "1"
+        "adaAccess-src": "1",
+        "name": "Mayer State Park",
+        "state": "OR",
+        "county": "Wasco",
+        "notes": "Migratory bird hunting when in season. Day use fee of $3."
       },
       "geometry": {
         "type": "Point",
@@ -2935,7 +3237,10 @@
         "boatRamp-src": "0",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "1"
+        "adaAccess-src": "1",
+        "name": "Canoe Camp",
+        "state": "ID",
+        "county": "Clearwater"
       },
       "geometry": {
         "type": "Point",
@@ -2967,7 +3272,9 @@
         "boatRamp-src": "0",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Arrow Bridge",
+        "state": "ID"
       },
       "geometry": {
         "type": "Point",
@@ -2999,7 +3306,10 @@
         "boatRamp-src": "1",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "1"
+        "adaAccess-src": "1",
+        "name": "Port of Hood River",
+        "state": "OR",
+        "county": "Hood River"
       },
       "geometry": {
         "type": "Point",
@@ -3031,7 +3341,11 @@
         "boatRamp-src": "1",
         "handCarried-src": "1",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Ayer Boat Basin",
+        "state": "WA",
+        "county": "Walla Walla",
+        "notes": "Pets must be kept on a leash. Hunting is prohibited. Undesignated camping sites can accommodate approximately 20 tents or RV's."
       },
       "geometry": {
         "type": "Point",
@@ -3063,7 +3377,11 @@
         "boatRamp-src": "1",
         "handCarried-src": "1",
         "marina-src": "0",
-        "adaAccess-src": "1"
+        "adaAccess-src": "1",
+        "name": "Boardman Marine Park",
+        "state": "OR",
+        "county": "Morrow",
+        "notes": "Pets must be on a leash."
       },
       "geometry": {
         "type": "Point",
@@ -3095,7 +3413,11 @@
         "boatRamp-src": "1",
         "handCarried-src": "1",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Clover Island Boat Ramp",
+        "state": "WA",
+        "county": "Benton",
+        "notes": "Adjacent to the Clover Island Inn."
       },
       "geometry": {
         "type": "Point",
@@ -3127,7 +3449,10 @@
         "boatRamp-src": "1",
         "handCarried-src": "1",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Port of Garfield",
+        "state": "WA",
+        "county": "Garfield"
       },
       "geometry": {
         "type": "Point",
@@ -3159,7 +3484,12 @@
         "boatRamp-src": "1",
         "handCarried-src": "1",
         "marina-src": "0",
-        "adaAccess-src": "1"
+        "adaAccess-src": "1",
+        "name": "Plymouth Park",
+        "state": "OR",
+        "county": "Umatilla",
+        "campingFee": "12$ per tent sight",
+        "notes": "Fire pits and grills and hot showers."
       },
       "geometry": {
         "type": "Point",
@@ -3191,7 +3521,11 @@
         "boatRamp-src": "1",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "1"
+        "adaAccess-src": "1",
+        "name": "Blyton Landing",
+        "state": "WA",
+        "county": "Whitman",
+        "notes": "Pets must be kept on a leash. Horses and hunting are prohibited. No open fires allowed from June 10 through October 10. Charcoal and propane fires are acceptable."
       },
       "geometry": {
         "type": "Point",
@@ -3223,7 +3557,10 @@
         "boatRamp-src": "0",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Bozo Beach",
+        "state": "WA",
+        "county": "Klickitat"
       },
       "geometry": {
         "type": "Point",
@@ -3255,7 +3592,11 @@
         "boatRamp-src": "1",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Giles French Park",
+        "state": "OR",
+        "county": "Sherman",
+        "notes": "Popular fishing spot."
       },
       "geometry": {
         "type": "Point",
@@ -3287,7 +3628,10 @@
         "boatRamp-src": "0",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Irrigon Fish Hatchery",
+        "state": "OR",
+        "county": "Morrow"
       },
       "geometry": {
         "type": "Point",
@@ -3319,7 +3663,11 @@
         "boatRamp-src": "1",
         "handCarried-src": "1",
         "marina-src": "1",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Illia Landing",
+        "state": "WA",
+        "county": "Garfield",
+        "notes": "Pets must be kept on a leash. Hunting is prohibited."
       },
       "geometry": {
         "type": "Point",
@@ -3351,7 +3699,11 @@
         "boatRamp-src": "1",
         "handCarried-src": "1",
         "marina-src": "0",
-        "adaAccess-src": "1"
+        "adaAccess-src": "1",
+        "name": "Hat Rock State Park",
+        "state": "OR",
+        "county": "Umatilla",
+        "notes": "Pets must be kept on a leash. Private campground, store, and café nearby, for information visit www.hatrockcampground.com"
       },
       "geometry": {
         "type": "Point",
@@ -3383,7 +3735,10 @@
         "boatRamp-src": "0",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Chief Timothy Habitat Management Unit",
+        "state": "WA",
+        "county": "Asotin"
       },
       "geometry": {
         "type": "Point",
@@ -3415,7 +3770,8 @@
         "boatRamp-src": "1",
         "handCarried-src": "1",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Fishhook Park"
       },
       "geometry": {
         "type": "Point",
@@ -3447,7 +3803,8 @@
         "boatRamp-src": "0",
         "handCarried-src": "1",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Pepsi Park"
       },
       "geometry": {
         "type": "Point",
@@ -3479,7 +3836,10 @@
         "boatRamp-src": "1",
         "handCarried-src": "1",
         "marina-src": "0",
-        "adaAccess-src": "1"
+        "adaAccess-src": "1",
+        "name": "Ice Harbor Dam",
+        "state": "WA",
+        "county": "Franklin and Walla Walla"
       },
       "geometry": {
         "type": "Point",
@@ -3511,7 +3871,11 @@
         "boatRamp-src": "1",
         "handCarried-src": "1",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Devils Bench",
+        "state": "WA",
+        "county": "Franklin",
+        "notes": "Pets must be kept on a leash. Horses and hunting are prohibited."
       },
       "geometry": {
         "type": "Point",
@@ -3543,7 +3907,10 @@
         "boatRamp-src": "1",
         "handCarried-src": "1",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Quesnell Park",
+        "state": "OR",
+        "county": "Gilliam"
       },
       "geometry": {
         "type": "Point",
@@ -3575,7 +3942,8 @@
         "boatRamp-src": "0",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Rock Creek Ramp"
       },
       "geometry": {
         "type": "Point",
@@ -3607,7 +3975,11 @@
         "boatRamp-src": "1",
         "handCarried-src": "1",
         "marina-src": "0",
-        "adaAccess-src": "1"
+        "adaAccess-src": "1",
+        "name": "Chiawana Park",
+        "state": "WA",
+        "county": "Franklin",
+        "notes": "Pets must be kept on a leash."
       },
       "geometry": {
         "type": "Point",
@@ -3639,7 +4011,12 @@
         "boatRamp-src": "1",
         "handCarried-src": "1",
         "marina-src": "0",
-        "adaAccess-src": "1"
+        "adaAccess-src": "1",
+        "name": "Central Ferry Park",
+        "state": "WA",
+        "county": "Whitman",
+        "campingFee": "$17 per standard campsite",
+        "notes": "Pets must be kept on a leash. Golden Age and Access Passports will not be accepted. Hot shower available."
       },
       "geometry": {
         "type": "Point",
@@ -3671,7 +4048,9 @@
         "boatRamp-src": "0",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Area adjacent to railroad bridge just upstream from Spalding on old highway",
+        "state": "ID"
       },
       "geometry": {
         "type": "Point",
@@ -3703,7 +4082,11 @@
         "boatRamp-src": "1",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Columbia Hills State Park",
+        "state": "WA",
+        "campingFee": "$17 per standard campsite",
+        "notes": "Pay phone is available."
       },
       "geometry": {
         "type": "Point",
@@ -3735,7 +4118,10 @@
         "boatRamp-src": "0",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Lower Granite Portage Downstream",
+        "state": "WA",
+        "county": "Garfield"
       },
       "geometry": {
         "type": "Point",
@@ -3767,7 +4153,11 @@
         "boatRamp-src": "0",
         "handCarried-src": "1",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Rock Creek Natural Preserve and Beach",
+        "state": "OR",
+        "county": "Wasco",
+        "notes": "Park only in the gravel area between I-84 and the Railroad Tracks. Overflow parking is East of the Mosier sewage treatment plant parallel to the Railroad Tracks. Parking fees are $5 a day."
       },
       "geometry": {
         "type": "Point",
@@ -3799,7 +4189,10 @@
         "boatRamp-src": "0",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "1"
+        "adaAccess-src": "1",
+        "name": "Bonneville(Oregon )",
+        "state": "OR",
+        "county": "Multnomah"
       },
       "geometry": {
         "type": "Point",
@@ -3831,7 +4224,10 @@
         "boatRamp-src": "0",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "1"
+        "adaAccess-src": "1",
+        "name": "Lower Granite Dam",
+        "state": "WA",
+        "county": "Garfield"
       },
       "geometry": {
         "type": "Point",
@@ -3863,7 +4259,12 @@
         "boatRamp-src": "0",
         "handCarried-src": "1",
         "marina-src": "0",
-        "adaAccess-src": "1"
+        "adaAccess-src": "1",
+        "name": "Wawawai County Park",
+        "state": "WA",
+        "county": "Whitman",
+        "campingFee": "$15 per night",
+        "notes": "Pets must be kept on a leash. Horses and hunting are prohibited. No open fires allowed from June 10 through October 10. Water available April 15 to October 15."
       },
       "geometry": {
         "type": "Point",
@@ -3895,7 +4296,12 @@
         "boatRamp-src": "0",
         "handCarried-src": "1",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Lambi Creek",
+        "state": "WA",
+        "county": "Garfield",
+        "campingFee": "None",
+        "notes": "This is the last launching/landing spot for hand-carried boats before Central Ferry, nearly twenty miles downstream."
       },
       "geometry": {
         "type": "Point",
@@ -3927,7 +4333,10 @@
         "boatRamp-src": "0",
         "handCarried-src": "1",
         "marina-src": "0",
-        "adaAccess-src": "1"
+        "adaAccess-src": "1",
+        "name": "Leslie R. Groves Park",
+        "state": "OR",
+        "county": "Benton"
       },
       "geometry": {
         "type": "Point",
@@ -3959,7 +4368,10 @@
         "boatRamp-src": "1",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "1"
+        "adaAccess-src": "1",
+        "name": "Marina Park( Cascade Locks Boat Ramp)",
+        "state": "OR",
+        "county": "Hood River"
       },
       "geometry": {
         "type": "Point",
@@ -3991,7 +4403,11 @@
         "boatRamp-src": "1",
         "handCarried-src": "1",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Steelhead Park",
+        "state": "ID",
+        "county": "Nez Perce/Clearwater",
+        "notes": "Also see: North Lewiston Ramp"
       },
       "geometry": {
         "type": "Point",
@@ -4023,7 +4439,9 @@
         "boatRamp-src": "0",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Lenore",
+        "state": "ID"
       },
       "geometry": {
         "type": "Point",
@@ -4055,7 +4473,11 @@
         "boatRamp-src": "0",
         "handCarried-src": "1",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Lake Emma",
+        "state": "WA",
+        "campingFee": "No fee",
+        "notes": "No designated camping spots."
       },
       "geometry": {
         "type": "Point",
@@ -4087,7 +4509,10 @@
         "boatRamp-src": "1",
         "handCarried-src": "1",
         "marina-src": "0",
-        "adaAccess-src": "1"
+        "adaAccess-src": "1",
+        "name": "Gibbs Eddy",
+        "state": "ID",
+        "notes": "Parking available"
       },
       "geometry": {
         "type": "Point",
@@ -4119,7 +4544,11 @@
         "boatRamp-src": "1",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Drano Lake",
+        "state": "WA",
+        "county": "Skamania",
+        "notes": "Boat launch and parking lot only. Day use fee. No overnight camping nor parking."
       },
       "geometry": {
         "type": "Point",
@@ -4151,7 +4580,10 @@
         "boatRamp-src": "0",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Railroad Island",
+        "state": "WA",
+        "county": "Klickitat"
       },
       "geometry": {
         "type": "Point",
@@ -4183,7 +4615,11 @@
         "boatRamp-src": "0",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "1"
+        "adaAccess-src": "1",
+        "name": "Bob's Beach",
+        "state": "WA",
+        "county": "Skamania",
+        "notes": "Changing rooms available. Adjacent to Columbia Gorge Riverside Lodge."
       },
       "geometry": {
         "type": "Point",
@@ -4215,7 +4651,10 @@
         "boatRamp-src": "0",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "1"
+        "adaAccess-src": "1",
+        "name": "Little Goose Dam",
+        "state": "WA",
+        "county": "Columbia"
       },
       "geometry": {
         "type": "Point",
@@ -4247,7 +4686,11 @@
         "boatRamp-src": "1",
         "handCarried-src": "1",
         "marina-src": "1",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Pasco Boat Basin",
+        "state": "WA",
+        "county": "Franklin",
+        "notes": "Pets must be kept on a leash."
       },
       "geometry": {
         "type": "Point",
@@ -4279,7 +4722,10 @@
         "boatRamp-src": "0",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "1"
+        "adaAccess-src": "1",
+        "name": "Lewiston Levee Parkway",
+        "state": "ID",
+        "county": "Nez Perce"
       },
       "geometry": {
         "type": "Point",
@@ -4311,7 +4757,10 @@
         "boatRamp-src": "0",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Lost Island (Votaw)",
+        "state": "WA",
+        "county": "Franklin"
       },
       "geometry": {
         "type": "Point",
@@ -4343,7 +4792,12 @@
         "boatRamp-src": "1",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Heritage Landing State Park",
+        "state": "OR",
+        "county": "Wasco",
+        "campingFee": "*Boater Pass Fee",
+        "notes": "Caution: access from Columbia River means boating upstream on the Deshutes River. Deschutes Boater Pass may be required, call 800-551-6949. Camping across river at Deschutes State Recreation Area."
       },
       "geometry": {
         "type": "Point",
@@ -4375,7 +4829,10 @@
         "boatRamp-src": "0",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Ramp @ Ice Harbor Dam",
+        "state": "WA",
+        "county": "Walla Walla"
       },
       "geometry": {
         "type": "Point",
@@ -4407,7 +4864,10 @@
         "boatRamp-src": "1",
         "handCarried-src": "0",
         "marina-src": "1",
-        "adaAccess-src": "1"
+        "adaAccess-src": "1",
+        "name": "Port of the Dalles Marina",
+        "state": "OR",
+        "county": "Wasco"
       },
       "geometry": {
         "type": "Point",
@@ -4439,7 +4899,10 @@
         "boatRamp-src": "1",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "1"
+        "adaAccess-src": "1",
+        "name": "Southway Ramp",
+        "state": "ID",
+        "county": "Nez Perce"
       },
       "geometry": {
         "type": "Point",
@@ -4471,7 +4934,10 @@
         "boatRamp-src": "0",
         "handCarried-src": "1",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Sand Station Recreation",
+        "state": "OR",
+        "county": "Umatilla"
       },
       "geometry": {
         "type": "Point",
@@ -4503,7 +4969,12 @@
         "boatRamp-src": "1",
         "handCarried-src": "1",
         "marina-src": "0",
-        "adaAccess-src": "1"
+        "adaAccess-src": "1",
+        "name": "Fishhook Park",
+        "state": "WA",
+        "county": "Walla Walla",
+        "campingFee": "$22.00 Tents Sites, $8.00 Boat Camping",
+        "notes": "No wake area around swimming area. Reservations are accepted for group shelter by calling 509-547-2048."
       },
       "geometry": {
         "type": "Point",
@@ -4535,7 +5006,10 @@
         "boatRamp-src": "1",
         "handCarried-src": "1",
         "marina-src": "0",
-        "adaAccess-src": "1"
+        "adaAccess-src": "1",
+        "name": "Upper Hog Island",
+        "state": "ID",
+        "county": "Nez Perce/Clearwater"
       },
       "geometry": {
         "type": "Point",
@@ -4567,7 +5041,9 @@
         "boatRamp-src": "0",
         "handCarried-src": "1",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Beardy Gulch Fishing Access",
+        "county": "Nez Perce"
       },
       "geometry": {
         "type": "Point",
@@ -4599,7 +5075,11 @@
         "boatRamp-src": "1",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "1"
+        "adaAccess-src": "1",
+        "name": "LenoreAccess",
+        "state": "ID",
+        "county": "Nez Perce",
+        "notes": "Today the site is covered by highly maintained lawns and trees, but was once a Nez Perce village. An archeological excavation revealed continuous habitation at this site for over 8,000 years."
       },
       "geometry": {
         "type": "Point",
@@ -4631,7 +5111,10 @@
         "boatRamp-src": "1",
         "handCarried-src": "1",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Upper Goose Pasture",
+        "county": "Nez Perce",
+        "notes": "No parking available"
       },
       "geometry": {
         "type": "Point",
@@ -4663,7 +5146,11 @@
         "boatRamp-src": "1",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "1"
+        "adaAccess-src": "1",
+        "name": "Port of Arlington Marina",
+        "state": "OR",
+        "county": "Gilliam",
+        "notes": "Payment is $15/night for RVs and $7/night otherwise. Only 2 tent sites available."
       },
       "geometry": {
         "type": "Point",
@@ -4695,7 +5182,11 @@
         "boatRamp-src": "1",
         "handCarried-src": "1",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Umatilla Marina Park",
+        "county": "Umatilla",
+        "campingFee": "15$ per tent site",
+        "notes": "Pets must be kept on a leash. Horses and hunting are prohibited."
       },
       "geometry": {
         "type": "Point",
@@ -4727,7 +5218,10 @@
         "boatRamp-src": "1",
         "handCarried-src": "1",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Clearwater Ramp",
+        "state": "ID",
+        "county": "Nez Perce"
       },
       "geometry": {
         "type": "Point",
@@ -4759,7 +5253,10 @@
         "boatRamp-src": "0",
         "handCarried-src": "1",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Dougs Beach State Park",
+        "state": "WA",
+        "county": "Klickitat"
       },
       "geometry": {
         "type": "Point",
@@ -4791,7 +5288,11 @@
         "boatRamp-src": "1",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Levey Park",
+        "state": "WA",
+        "county": "Franklin",
+        "notes": "Reservations are accepted for group shelter by calling 509-547-2048 during weekday business hours, but not more than 3 months in advance. A $55.00 reservation fee is required."
       },
       "geometry": {
         "type": "Point",
@@ -4823,7 +5324,12 @@
         "boatRamp-src": "1",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Maryhill State Park",
+        "state": "WA",
+        "county": "Klickitat County",
+        "campingFee": "$17 for a standard campsite.",
+        "notes": "Maximum of 8 people per campsite."
       },
       "geometry": {
         "type": "Point",
@@ -4855,7 +5361,10 @@
         "boatRamp-src": "0",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Warehouse Beach",
+        "state": "OR",
+        "county": "Umatilla"
       },
       "geometry": {
         "type": "Point",
@@ -4887,7 +5396,8 @@
         "boatRamp-src": "0",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Bateman Island"
       },
       "geometry": {
         "type": "Point",
@@ -4919,7 +5429,8 @@
         "boatRamp-src": "0",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Tucannon WLF Habitat Unit"
       },
       "geometry": {
         "type": "Point",
@@ -4951,7 +5462,12 @@
         "boatRamp-src": "1",
         "handCarried-src": "1",
         "marina-src": "0",
-        "adaAccess-src": "1"
+        "adaAccess-src": "1",
+        "name": "Hood Park",
+        "state": "WA",
+        "county": "Walla Walla",
+        "campingFee": "$18 per site",
+        "notes": "Pets must be on leash, and horses/hunting are prohibited. Reservations accepted for group shelters by calling (509)-547-2048, but cannot be made more than 3 months in advance."
       },
       "geometry": {
         "type": "Point",
@@ -4983,7 +5499,9 @@
         "boatRamp-src": "0",
         "handCarried-src": "1",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "McGill Hole",
+        "state": "ID"
       },
       "geometry": {
         "type": "Point",
@@ -5015,7 +5533,10 @@
         "boatRamp-src": "0",
         "handCarried-src": "1",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Lower Hog Island",
+        "state": "ID",
+        "county": "Nez Perce"
       },
       "geometry": {
         "type": "Point",
@@ -5047,7 +5568,10 @@
         "boatRamp-src": "0",
         "handCarried-src": "1",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "McNary National Wildlife Refuge",
+        "state": "WA",
+        "county": "Umatilla"
       },
       "geometry": {
         "type": "Point",
@@ -5079,7 +5603,11 @@
         "boatRamp-src": "1",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Pink House",
+        "state": "ID",
+        "campingFee": "$10/night for campsite.",
+        "notes": "Maximum of a 14 day stay. Handicap accessible."
       },
       "geometry": {
         "type": "Point",

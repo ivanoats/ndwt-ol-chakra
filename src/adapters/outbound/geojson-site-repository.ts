@@ -30,17 +30,6 @@ export interface RawFeatureCollection {
 const ID_KEY_CANDIDATES = ['web-scraper-order', '﻿web-scraper-order'] as const;
 const SOURCE_URL_KEYS = ['web-scraper-start-url'] as const;
 
-export interface EnrichedSiteRecord {
-  readonly name: string;
-  readonly state?: string;
-  readonly county?: string;
-  readonly campingFee?: string;
-  readonly notes?: string;
-  readonly sourceUrl?: string;
-}
-
-export type EnrichedSiteIndex = Readonly<Record<string, EnrichedSiteRecord>>;
-
 const readProp = (
   props: RawProps,
   ...keys: readonly string[]
@@ -63,19 +52,14 @@ const facilityFlags = (props: RawProps): Partial<Record<Facility, boolean>> => {
 const fallbackName = (riverName: string, riverMile: number): string =>
   `${riverName} River — Mile ${riverMile}`;
 
-const toSite = (
-  feature: RawFeature,
-  index: number,
-  enriched?: EnrichedSiteIndex
-): Site => {
+const toSite = (feature: RawFeature, index: number): Site => {
   const props = feature.properties;
   const [lng, lat] = feature.geometry.coordinates;
   const idRaw = readProp(props, ...ID_KEY_CANDIDATES) ?? `site-${index}`;
   const mile = Number(readProp(props, 'riverMile') ?? '');
   const riverName = readProp(props, 'riverName') ?? '';
   const riverMile = Number.isFinite(mile) ? mile : 0;
-  const enrichedRecord = enriched?.[idRaw];
-  const name = enrichedRecord?.name ?? fallbackName(riverName, riverMile);
+  const name = readProp(props, 'name') ?? fallbackName(riverName, riverMile);
 
   return {
     id: siteId(idRaw),
@@ -85,15 +69,15 @@ const toSite = (
     riverMile,
     bank: readProp(props, 'bank') ?? '',
     coordinates: coordinates(lng, lat),
-    state: enrichedRecord?.state,
-    county: enrichedRecord?.county,
+    state: readProp(props, 'state'),
+    county: readProp(props, 'county'),
     season: readProp(props, 'season'),
     camping: readProp(props, 'camping'),
-    campingFee: enrichedRecord?.campingFee,
+    campingFee: readProp(props, 'campingFee'),
     contact: readProp(props, 'contact'),
     phone: readProp(props, 'phone'),
     website: readProp(props, 'website'),
-    notes: enrichedRecord?.notes,
+    notes: readProp(props, 'notes'),
     facilities: FacilitySet.fromFlags(facilityFlags(props)),
     sourceUrl: readProp(props, ...SOURCE_URL_KEYS),
   };
@@ -104,17 +88,17 @@ const toSite = (
  * Used by both the runtime fetch path (this file's class) and the
  * build-time fs path (src/adapters/inbound/next/load-sites.ts).
  *
- * The optional `enriched` lookup (keyed by the raw web-scraper-order
- * id) supplies the canonical site name plus state, county, camping
- * fee, and notes — fields that aren't in the GeoJSON. When a
- * feature has no enriched record, the parser falls back to a
- * "RiverName River — Mile NN" placeholder for `name`.
+ * Every feature's `properties` carries the full Site shape: spatial
+ * fields (`riverName`, `riverMile`, ...), facility -src flags, and
+ * the canonical `name` / `state` / `county` / `campingFee` / `notes`
+ * that were merged in from ndwt.org during Phase 8. If `name` is
+ * somehow missing, the parser falls back to "RiverName River — Mile
+ * NN" so the build doesn't crash on a broken record.
  */
 export const parseSitesFromGeoJson = (
-  body: RawFeatureCollection,
-  enriched?: EnrichedSiteIndex
+  body: RawFeatureCollection
 ): readonly Site[] =>
-  body.features.map((feature, index) => toSite(feature, index, enriched));
+  body.features.map((feature, index) => toSite(feature, index));
 
 export class GeoJsonSiteRepository implements SiteRepository {
   private cache: readonly Site[] | null = null;
