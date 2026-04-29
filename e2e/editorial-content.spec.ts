@@ -46,4 +46,36 @@ test.describe('Editorial content (Phase 11)', () => {
       page.getByRole('link', { name: 'Leave No Trace' })
     ).toBeVisible();
   });
+
+  test('mobile viewport shows hamburger menu that toggles the nav', async ({
+    page,
+  }) => {
+    await page.setViewportSize({ width: 375, height: 700 });
+    await page.goto('/');
+
+    // Desktop nav links are hidden behind the hamburger on narrow
+    // viewports.
+    const safetyLink = page.getByRole('link', { name: 'Safety' });
+    await expect(safetyLink).not.toBeVisible();
+
+    const toggle = page.getByRole('button', { name: 'Open menu' });
+    await expect(toggle).toBeVisible();
+    await toggle.click();
+
+    // After toggling open, the mobile nav is rendered and links
+    // become reachable.
+    await expect(
+      page.getByRole('navigation', { name: 'Primary (mobile)' })
+    ).toBeVisible();
+    await expect(
+      page
+        .getByRole('navigation', { name: 'Primary (mobile)' })
+        .getByRole('link', { name: 'Safety' })
+    ).toBeVisible();
+
+    // Close button replaces the hamburger.
+    await expect(
+      page.getByRole('button', { name: 'Close menu' })
+    ).toBeVisible();
+  });
 });

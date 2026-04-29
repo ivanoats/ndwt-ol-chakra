@@ -27,9 +27,14 @@ const nextConfig = {
 // `.mdx` to `pageExtensions` because pages stay in `app/` as TSX
 // route handlers; the MDX is the body, not the route.
 const withMDX = createMDX({
-  // Default remark/rehype plugins are fine for now. Add MDX-specific
-  // plugins (e.g. remark-gfm for tables) here if a content page
-  // needs them.
+  options: {
+    // rehype-slug adds `id` attributes to every heading so in-page
+    // table-of-contents anchors (see content/river-navigation/
+    // portage-guide.mdx) actually resolve. Turbopack requires the
+    // plugin specifier to be a string (serializable), not an
+    // imported function reference.
+    rehypePlugins: [['rehype-slug', {}]],
+  },
 });
 
 export default withMDX(nextConfig);

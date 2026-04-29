@@ -98,7 +98,7 @@ export async function generateMetadata({
   const entry = PAGES[sub];
   if (entry === undefined) return {};
   return {
-    title: `${entry.title} — ${SECTION_TITLE}`,
+    title: `${entry.title} — ${SECTION_TITLE} — Northwest Discovery Water Trail`,
     description: entry.summary,
   };
 }
