@@ -7,7 +7,7 @@
 | 8     | Data enrichment — names, notes, fees, state/county    | Done (PR #39) |
 | 9     | Per-site canonical URLs (`/sites/<slug>`)             | In review     |
 | 10    | Site index / browse-by-list                           | In review     |
-| 11    | Water Safety + River Navigation + Leave No Trace      | Planned       |
+| 11    | Water Safety + River Navigation + Leave No Trace      | In review     |
 | 12    | Natural World + Past & Present                        | Planned       |
 | 13    | About expansion + Get Involved + Photo Gallery        | Planned       |
 | 14    | Cutover — redirects, sitemap, SEO, custom-domain swap | Planned       |
