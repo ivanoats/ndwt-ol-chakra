@@ -19,6 +19,7 @@ export const NAV_ITEMS = [
   { href: '/natural-world/', label: 'Natural World' },
   { href: '/past-and-present/', label: 'Past & Present' },
   { href: '/trip-planning/', label: 'Trip Planning' },
+  { href: '/get-involved/', label: 'Get Involved' },
   { href: '/about/', label: 'About' },
 ] as const;
 

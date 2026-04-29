@@ -9,7 +9,7 @@
 | 10    | Site index / browse-by-list                           | In review     |
 | 11    | Water Safety + River Navigation + Leave No Trace      | In review     |
 | 12    | Natural World + Past & Present                        | In review     |
-| 13    | About expansion + Get Involved + Photo Gallery        | Planned       |
+| 13    | About expansion + Get Involved + Photo Gallery        | In review     |
 | 14    | Cutover — redirects, sitemap, SEO, custom-domain swap | Planned       |
 
 This plan picks up where
