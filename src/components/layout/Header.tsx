@@ -83,9 +83,12 @@ export default function Header() {
     setMobileOpen(false);
   }, [pathname]);
 
-  // Click-outside + ESC to dismiss the mobile panel.
+  // Click-outside + ESC to dismiss the mobile panel. Explicit
+  // `return undefined` on the early-bail satisfies DeepSource's
+  // consistent-return rule (JS-0045) since the success path
+  // returns a cleanup function.
   useEffect(() => {
-    if (!mobileOpen) return;
+    if (!mobileOpen) return undefined;
     const handlePointer = (event: PointerEvent) => {
       if (!headerRef.current?.contains(event.target as Node)) {
         setMobileOpen(false);
