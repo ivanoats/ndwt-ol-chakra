@@ -2,15 +2,15 @@
 
 ## Status
 
-| Phase | Description                                           | State                                                 |
-| ----- | ----------------------------------------------------- | ----------------------------------------------------- |
-| 8     | Data enrichment — names, notes, fees, state/county    | Done (PR #39, merged into ndwt.geojson in PR pending) |
-| 9     | Per-site canonical URLs (`/sites/<slug>`)             | Planned                                               |
-| 10    | Site index / browse-by-list                           | Planned                                               |
-| 11    | Water Safety + River Navigation + Leave No Trace      | Planned                                               |
-| 12    | Natural World + Past & Present                        | Planned                                               |
-| 13    | About expansion + Get Involved + Photo Gallery        | Planned                                               |
-| 14    | Cutover — redirects, sitemap, SEO, custom-domain swap | Planned                                               |
+| Phase | Description                                           | State         |
+| ----- | ----------------------------------------------------- | ------------- |
+| 8     | Data enrichment — names, notes, fees, state/county    | Done (PR #39) |
+| 9     | Per-site canonical URLs (`/sites/<slug>`)             | Planned       |
+| 10    | Site index / browse-by-list                           | Planned       |
+| 11    | Water Safety + River Navigation + Leave No Trace      | Planned       |
+| 12    | Natural World + Past & Present                        | Planned       |
+| 13    | About expansion + Get Involved + Photo Gallery        | Planned       |
+| 14    | Cutover — redirects, sitemap, SEO, custom-domain swap | Planned       |
 
 This plan picks up where
 [`modernization.md`](./modernization.md) left off (phases 1–7).

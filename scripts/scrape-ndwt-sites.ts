@@ -60,7 +60,7 @@ const ENRICHMENT_KEYS = [
   'notes',
 ] as const satisfies readonly (keyof ScrapedSite)[];
 
-const ID_KEYS = ['web-scraper-order', '﻿web-scraper-order'] as const;
+const ID_KEYS = ['web-scraper-order'] as const;
 
 /**
  * Manual fix-ups for known typos in ndwt.org's source data. The

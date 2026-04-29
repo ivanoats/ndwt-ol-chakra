@@ -27,7 +27,7 @@ export interface RawFeatureCollection {
   readonly features: readonly RawFeature[];
 }
 
-const ID_KEY_CANDIDATES = ['web-scraper-order', '﻿web-scraper-order'] as const;
+const ID_KEY_CANDIDATES = ['web-scraper-order'] as const;
 const SOURCE_URL_KEYS = ['web-scraper-start-url'] as const;
 
 const readProp = (
