@@ -2,7 +2,7 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 
 import { fireEvent, render, screen, within } from '@testing-library/react';
 
-import Header from '../Header';
+import Header, { NAV_ITEMS } from '../Header';
 
 let pathnameMock = '/';
 vi.mock('next/navigation', () => ({
@@ -98,16 +98,13 @@ describe('<Header />', () => {
         name: 'Primary (mobile)',
       });
       expect(mobileNav).toBeInTheDocument();
-      // Mobile nav surfaces every NAV_ITEMS entry.
-      expect(
-        within(mobileNav).getByRole('link', { name: 'Map' })
-      ).toBeVisible();
-      expect(
-        within(mobileNav).getByRole('link', { name: 'Safety' })
-      ).toBeVisible();
-      expect(
-        within(mobileNav).getByRole('link', { name: 'Leave No Trace' })
-      ).toBeVisible();
+      // Iterate the canonical NAV_ITEMS list so this assertion
+      // doesn't drift when later phases add or rename entries.
+      for (const item of NAV_ITEMS) {
+        expect(
+          within(mobileNav).getByRole('link', { name: item.label })
+        ).toBeVisible();
+      }
       // Toggle flips to "Close menu".
       expect(
         screen.getByRole('button', { name: 'Close menu' })

@@ -7,12 +7,17 @@ import { usePathname } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 import { css } from 'styled-system/css';
 
-const NAV_ITEMS = [
+// Exported so tests can iterate over the canonical list rather
+// than hand-maintaining a parallel one. Keeping it `as const`
+// preserves the literal-tuple types for the labels.
+export const NAV_ITEMS = [
   { href: '/', label: 'Map' },
   { href: '/sites/', label: 'Sites' },
   { href: '/water-safety/', label: 'Safety' },
   { href: '/river-navigation/', label: 'Navigation' },
   { href: '/leave-no-trace/', label: 'Leave No Trace' },
+  { href: '/natural-world/', label: 'Natural World' },
+  { href: '/past-and-present/', label: 'Past & Present' },
   { href: '/trip-planning/', label: 'Trip Planning' },
   { href: '/about/', label: 'About' },
 ] as const;
@@ -37,14 +42,18 @@ const linkStyle = css({
   },
 });
 
+// Switch to the inline desktop nav at `xl` (1280px) rather than
+// `md` (768px). With 9 nav items the bar gets crowded below
+// ~1095px; bumping the cutoff to xl keeps the hamburger in play
+// for tablet viewports too.
 const desktopNavStyle = css({
-  display: { base: 'none', md: 'flex' },
+  display: { base: 'none', xl: 'flex' },
   alignItems: 'center',
   gap: '4',
 });
 
 const mobileToggleStyle = css({
-  display: { base: 'inline-flex', md: 'none' },
+  display: { base: 'inline-flex', xl: 'none' },
   alignItems: 'center',
   justifyContent: 'center',
   width: '10',
@@ -58,7 +67,7 @@ const mobileToggleStyle = css({
 });
 
 const mobilePanelStyle = css({
-  display: { base: 'flex', md: 'none' },
+  display: { base: 'flex', xl: 'none' },
   position: 'absolute',
   top: 'var(--header-height, 56px)',
   right: 0,
