@@ -7,7 +7,10 @@ import { usePathname } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 import { css } from 'styled-system/css';
 
-const NAV_ITEMS = [
+// Exported so tests can iterate over the canonical list rather
+// than hand-maintaining a parallel one. Keeping it `as const`
+// preserves the literal-tuple types for the labels.
+export const NAV_ITEMS = [
   { href: '/', label: 'Map' },
   { href: '/sites/', label: 'Sites' },
   { href: '/water-safety/', label: 'Safety' },
