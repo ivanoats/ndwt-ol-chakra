@@ -37,10 +37,14 @@ describe('GeoJsonSiteRepository.list()', () => {
     expect(sites.length).toBeGreaterThan(100);
     expect(sites.length).toBeLessThan(300);
 
+    const slugs = new Set<string>();
     for (const site of sites) {
       expect(typeof site.id).toBe('string');
       expect(site.id.length).toBeGreaterThan(0);
       expect(site.name.length).toBeGreaterThan(0);
+      expect(site.slug.length).toBeGreaterThan(0);
+      expect(slugs.has(site.slug)).toBe(false);
+      slugs.add(site.slug);
       expect(site.coordinates.longitude).toBeGreaterThan(-180);
       expect(site.coordinates.longitude).toBeLessThan(180);
       expect(site.coordinates.latitude).toBeGreaterThan(-90);
@@ -95,7 +99,7 @@ describe('GeoJsonSiteRepository.list()', () => {
   });
 });
 
-describe('toSite mapper', () => {
+describe('toDraft mapper', () => {
   it('handles missing optional fields without throwing', () => {
     const feature = {
       type: 'Feature' as const,
@@ -112,7 +116,7 @@ describe('toSite mapper', () => {
         coordinates: [-120.37, 45.695] as [number, number],
       },
     };
-    const site = __test.toSite(feature, 0);
+    const site = __test.toDraft(feature, 0);
     expect(site.coordinates).toEqual({ longitude: -120.37, latitude: 45.695 });
     expect(site.facilities).not.toContain('restrooms');
     expect(site.facilities).toContain('boatRamp');
@@ -130,7 +134,7 @@ describe('toSite mapper', () => {
         coordinates: [0, 0] as [number, number],
       },
     };
-    const site = __test.toSite(feature, 42);
+    const site = __test.toDraft(feature, 42);
     expect(site.id).toBe('site-42');
     expect(site.riverMile).toBe(0);
   });
@@ -152,7 +156,7 @@ describe('toSite mapper', () => {
         coordinates: [-116.45002, 46.49144] as [number, number],
       },
     };
-    const site = __test.toSite(feature, 0);
+    const site = __test.toDraft(feature, 0);
     expect(site.name).toBe("Harper's Bend");
     expect(site.state).toBe('ID');
     expect(site.county).toBe('Nez Perce');
@@ -173,7 +177,7 @@ describe('toSite mapper', () => {
         coordinates: [-120.37, 45.695] as [number, number],
       },
     };
-    const site = __test.toSite(feature, 0);
+    const site = __test.toDraft(feature, 0);
     expect(site.name).toBe('Columbia River — Mile 234');
   });
 });

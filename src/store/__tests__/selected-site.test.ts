@@ -6,6 +6,7 @@ import { useSelectedSite } from '../selected-site';
 const fakeSite = (id: string): Site => ({
   id: siteId(id),
   name: 'Blalock Canyon',
+  slug: 'blalock-canyon',
   riverSegment: 'Lake Umatilla',
   riverName: 'Columbia',
   riverMile: 234,

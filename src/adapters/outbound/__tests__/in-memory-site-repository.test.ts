@@ -6,6 +6,7 @@ import { InMemorySiteRepository } from '../in-memory-site-repository';
 const makeSite = (id: string, riverName = 'Columbia'): Site => ({
   id: siteId(id),
   name: `${riverName} River — Mile 0`,
+  slug: `${riverName.toLowerCase()}-river-mile-0`,
   riverSegment: '',
   riverName,
   riverMile: 0,

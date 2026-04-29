@@ -27,7 +27,11 @@ export default defineConfig({
   webServer: {
     // Static export: build to ./out, then serve it. Mirrors what
     // Netlify ships at deploy_url, so e2e exercises the same bytes.
-    command: `npm run preview -- --listen ${PORT} --no-clipboard --single`,
+    // No `--single` (SPA fallback): every route under
+    // app/ generates a real index.html via static export, so we
+    // want unknown paths to surface as 404s, not silently fall
+    // back to the home page.
+    command: `npm run preview -- --listen ${PORT} --no-clipboard`,
     url: baseURL,
     reuseExistingServer: !process.env.CI,
     timeout: 60_000,

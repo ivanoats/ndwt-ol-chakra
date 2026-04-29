@@ -18,6 +18,7 @@ const fakeSites: readonly Site[] = [
   {
     id: siteId('test'),
     name: 'Test Site',
+    slug: 'test-site',
     riverSegment: '',
     riverName: 'Columbia',
     riverMile: 0,

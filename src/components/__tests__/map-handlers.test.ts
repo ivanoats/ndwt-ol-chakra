@@ -28,6 +28,7 @@ const fakeMap = (overrides: Partial<FakeMap> = {}): FakeMap => ({
 const baseSite: Site = {
   id: siteId('feat-1'),
   name: 'Blalock Canyon',
+  slug: 'blalock-canyon',
   riverSegment: 'Lake Umatilla',
   riverName: 'Columbia',
   riverMile: 234,

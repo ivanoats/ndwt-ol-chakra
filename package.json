@@ -18,7 +18,7 @@
     "build": "panda codegen --silent && next build",
     "panda": "panda codegen",
     "start": "next start",
-    "preview": "serve out --listen 4173 --no-clipboard --single",
+    "preview": "serve out --listen 4173 --no-clipboard",
     "e2e": "playwright test",
     "e2e:ui": "playwright test --ui",
     "e2e:install": "playwright install --with-deps chromium",
