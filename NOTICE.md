@@ -6,9 +6,11 @@ This site reuses content originally published on
 [ndwt.org](http://www.ndwt.org), including:
 
 - Per-site display names, state, county, camping fees, and notes,
-  scraped from individual `site.asp?site=<id>` pages and
-  committed to this repository as `public/data/ndwt-enriched.json`
-  (see [`scripts/scrape-ndwt-sites.ts`](./scripts/scrape-ndwt-sites.ts)).
+  scraped from individual `site.asp?site=<id>` pages and merged
+  into the feature properties of
+  [`public/data/ndwt.geojson`](./public/data/ndwt.geojson) (see
+  [`scripts/scrape-ndwt-sites.ts`](./scripts/scrape-ndwt-sites.ts)
+  and [`public/data/README.md`](./public/data/README.md)).
 - Editorial content for the Water Safety, River Navigation,
   Leave No Trace, Natural World, Past & Present, and About
   sections (added in later phases of the rebuild — see

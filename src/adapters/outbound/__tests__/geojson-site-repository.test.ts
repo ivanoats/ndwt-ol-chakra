@@ -135,7 +135,32 @@ describe('toSite mapper', () => {
     expect(site.riverMile).toBe(0);
   });
 
-  it('uses the river-and-mile fallback name when no enriched record exists', () => {
+  it('reads name + state + county + notes directly from properties', () => {
+    const feature = {
+      type: 'Feature' as const,
+      properties: {
+        'web-scraper-order': '1639845856-12',
+        riverName: 'Clearwater',
+        riverMile: '34',
+        name: "Harper's Bend",
+        state: 'ID',
+        county: 'Nez Perce',
+        notes: 'Popular site for fishing.',
+      },
+      geometry: {
+        type: 'Point' as const,
+        coordinates: [-116.45002, 46.49144] as [number, number],
+      },
+    };
+    const site = __test.toSite(feature, 0);
+    expect(site.name).toBe("Harper's Bend");
+    expect(site.state).toBe('ID');
+    expect(site.county).toBe('Nez Perce');
+    expect(site.notes).toBe('Popular site for fishing.');
+    expect(site.campingFee).toBeUndefined();
+  });
+
+  it('falls back to "RiverName River — Mile NN" when name is missing', () => {
     const feature = {
       type: 'Feature' as const,
       properties: {
@@ -150,36 +175,5 @@ describe('toSite mapper', () => {
     };
     const site = __test.toSite(feature, 0);
     expect(site.name).toBe('Columbia River — Mile 234');
-    expect(site.state).toBeUndefined();
-    expect(site.notes).toBeUndefined();
-  });
-
-  it('prefers the enriched record name and merges in optional fields', () => {
-    const feature = {
-      type: 'Feature' as const,
-      properties: {
-        'web-scraper-order': '1639845856-12',
-        riverName: 'Clearwater',
-        riverMile: '34',
-      },
-      geometry: {
-        type: 'Point' as const,
-        coordinates: [-116.45002, 46.49144] as [number, number],
-      },
-    };
-    const enriched = {
-      '1639845856-12': {
-        name: "Harper's Bend",
-        state: 'ID',
-        county: 'Nez Perce',
-        notes: 'Popular site for fishing.',
-      },
-    };
-    const site = __test.toSite(feature, 0, enriched);
-    expect(site.name).toBe("Harper's Bend");
-    expect(site.state).toBe('ID');
-    expect(site.county).toBe('Nez Perce');
-    expect(site.notes).toBe('Popular site for fishing.');
-    expect(site.campingFee).toBeUndefined();
   });
 });

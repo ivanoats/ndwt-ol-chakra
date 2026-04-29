@@ -1,14 +1,18 @@
 /**
  * One-shot scraper that walks every ndwt.org site detail page and
- * captures fields the GeoJSON dataset is missing: site name, state,
- * county, camping fee, notes.
+ * merges canonical name + state/county/campingFee/notes into each
+ * feature's properties in `public/data/ndwt.geojson`. Spatial fields
+ * (riverName, riverMile, coordinates, facility -src flags) are
+ * left untouched.
  *
  * Run with:
  *   npm run scrape:sites
  *
- * Re-run manually if ndwt.org changes. The output JSON is committed
- * to the repo and merged into the build at load time. See
- * docs/plans/feature-parity.md § Phase 8.
+ * Re-running is safe but unlikely — once Phase 14 lands, future
+ * dataset updates come from WWTA's Salesforce / ArcGIS systems via
+ * a new inbound adapter, not from re-scraping ndwt.org. This script
+ * stays around as historical provenance and as a fallback if
+ * ndwt.org's content changes before cutover.
  *
  * Permission to reuse ndwt.org content was granted by the
  * Washington Water Trails Association Executive Director — see
@@ -26,7 +30,6 @@ silentConsole.on('error', () => {
 
 const REPO_ROOT = process.cwd();
 const GEOJSON_PATH = join(REPO_ROOT, 'public', 'data', 'ndwt.geojson');
-const OUTPUT_PATH = join(REPO_ROOT, 'public', 'data', 'ndwt-enriched.json');
 
 const REQUEST_DELAY_MS = 250;
 const REQUEST_TIMEOUT_MS = 20_000;
@@ -35,22 +38,29 @@ const USER_AGENT =
   'authorized by WWTA - github.com/ivanoats/ndwt-ol-chakra)';
 
 interface RawFeature {
-  readonly properties: Record<string, string | undefined>;
+  properties: Record<string, string | undefined>;
 }
 interface RawFeatureCollection {
   readonly features: readonly RawFeature[];
 }
 
-export interface EnrichedSite {
+interface ScrapedSite {
   readonly name: string;
   readonly state?: string;
   readonly county?: string;
   readonly campingFee?: string;
   readonly notes?: string;
-  readonly sourceUrl: string;
 }
 
-const ID_KEYS = ['web-scraper-order', '﻿web-scraper-order'] as const;
+const ENRICHMENT_KEYS = [
+  'name',
+  'state',
+  'county',
+  'campingFee',
+  'notes',
+] as const satisfies readonly (keyof ScrapedSite)[];
+
+const ID_KEYS = ['web-scraper-order'] as const;
 
 /**
  * Manual fix-ups for known typos in ndwt.org's source data. The
@@ -125,7 +135,7 @@ const extractNotes = (doc: Document): string | undefined => {
   return undefined;
 };
 
-const parseSitePage = (html: string, sourceUrl: string): EnrichedSite => {
+const parseSitePage = (html: string, sourceUrl: string): ScrapedSite => {
   const dom = new JSDOM(html, { virtualConsole: silentConsole });
   const doc = dom.window.document;
   const h1 = doc.querySelector('h1');
@@ -136,9 +146,8 @@ const parseSitePage = (html: string, sourceUrl: string): EnrichedSite => {
   const labels = extractLabeledFields(doc);
   const notes = extractNotes(doc);
 
-  const out: { -readonly [K in keyof EnrichedSite]?: EnrichedSite[K] } = {
+  const out: { -readonly [K in keyof ScrapedSite]?: ScrapedSite[K] } = {
     name,
-    sourceUrl,
   };
   const state = labels.get('State');
   if (state !== undefined) out.state = state;
@@ -149,7 +158,24 @@ const parseSitePage = (html: string, sourceUrl: string): EnrichedSite => {
   const fee = dropIfPlaceholder(labels.get('Camping Fee'));
   if (fee !== undefined) out.campingFee = fee;
   if (notes !== undefined) out.notes = notes;
-  return out as EnrichedSite;
+  return out as ScrapedSite;
+};
+
+/**
+ * Apply the scraped enrichment to a feature's properties in-place.
+ * Present keys overwrite; absent keys are deleted, so re-running
+ * the scraper after ndwt.org has dropped a field cleans up stale
+ * data instead of leaving it stuck in the GeoJSON.
+ */
+const applyEnrichment = (feature: RawFeature, scraped: ScrapedSite): void => {
+  for (const key of ENRICHMENT_KEYS) {
+    const value = scraped[key];
+    if (value !== undefined && value !== '') {
+      feature.properties[key] = value;
+    } else {
+      delete feature.properties[key];
+    }
+  }
 };
 
 const sleep = (ms: number) =>
@@ -185,7 +211,6 @@ const main = async (): Promise<void> => {
   const text = await readFile(GEOJSON_PATH, 'utf-8');
   const body = JSON.parse(text) as RawFeatureCollection;
 
-  const enriched: Record<string, EnrichedSite> = {};
   let attempted = 0;
   let succeeded = 0;
   const failures: Array<{ id: string; url: string; error: string }> = [];
@@ -202,10 +227,11 @@ const main = async (): Promise<void> => {
     attempted++;
     try {
       const html = await fetchHtml(url);
-      enriched[id] = parseSitePage(html, url);
+      const scraped = parseSitePage(html, url);
+      applyEnrichment(feature, scraped);
       succeeded++;
       process.stdout.write(
-        `\r[${succeeded}/${body.features.length}] ${enriched[id].name.padEnd(40).slice(0, 40)}`
+        `\r[${succeeded}/${body.features.length}] ${scraped.name.padEnd(40).slice(0, 40)}`
       );
     } catch (cause) {
       const error = cause instanceof Error ? cause.message : String(cause);
@@ -216,9 +242,9 @@ const main = async (): Promise<void> => {
   }
 
   process.stdout.write('\n');
-  await writeFile(OUTPUT_PATH, `${JSON.stringify(enriched, null, 2)}\n`);
+  await writeFile(GEOJSON_PATH, `${JSON.stringify(body, null, 2)}\n`);
   console.log(
-    `Wrote ${OUTPUT_PATH}: ${succeeded}/${attempted} sites enriched.`
+    `Updated ${GEOJSON_PATH}: ${succeeded}/${attempted} features enriched.`
   );
   if (failures.length > 0) {
     console.log(`${failures.length} failures:`);

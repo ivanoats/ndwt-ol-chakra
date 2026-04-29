@@ -4,7 +4,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639846015-81",
+        "web-scraper-order": "1639846015-81",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=130",
         "riverSegment": "Lake Umatilla",
         "riverName": "Columbia",
@@ -23,7 +23,8 @@
         "boatRamp-src": "0",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Blalock Canyon"
       },
       "geometry": {
         "type": "Point",
@@ -36,7 +37,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639845856-12",
+        "web-scraper-order": "1639845856-12",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=202",
         "riverSegment": "Clearwater",
         "riverName": "Clearwater",
@@ -55,7 +56,11 @@
         "boatRamp-src": "1",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Harper's Bend",
+        "state": "ID",
+        "county": "Nez Perce",
+        "notes": "Popular site for fishing salmon and steelhead."
       },
       "geometry": {
         "type": "Point",
@@ -68,7 +73,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639846035-90",
+        "web-scraper-order": "1639846035-90",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=121",
         "riverSegment": "Lake Umatilla",
         "riverName": "Columbia",
@@ -87,7 +92,10 @@
         "boatRamp-src": "1",
         "handCarried-src": "1",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Paterson Boat Ramp",
+        "state": "WA",
+        "notes": "Gently sloping rock into water, no real ramp."
       },
       "geometry": {
         "type": "Point",
@@ -100,7 +108,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639845951-52",
+        "web-scraper-order": "1639845951-52",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=159",
         "riverSegment": "Lake Bonneville",
         "riverName": "Columbia",
@@ -119,7 +127,11 @@
         "boatRamp-src": "1",
         "handCarried-src": "0",
         "marina-src": "1",
-        "adaAccess-src": "1"
+        "adaAccess-src": "1",
+        "name": "Hood River Marina",
+        "state": "OR",
+        "county": "Hood River",
+        "notes": "Closes at dusk, no overnight camping or parking. A group shelter can be reserved for a fee. Marina slips are for monthly and annual tenants.The guest dock has a 3 day maximum, and a fee."
       },
       "geometry": {
         "type": "Point",
@@ -132,7 +144,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639845940-47",
+        "web-scraper-order": "1639845940-47",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=164",
         "riverSegment": "Lake Bonneville",
         "riverName": "Columbia",
@@ -151,7 +163,11 @@
         "boatRamp-src": "0",
         "handCarried-src": "1",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "The Hook",
+        "state": "OR",
+        "county": "Hood River",
+        "notes": "Fishing, windsurfing, kiteboarding (from designated points)."
       },
       "geometry": {
         "type": "Point",
@@ -164,7 +180,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639845957-55",
+        "web-scraper-order": "1639845957-55",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=156",
         "riverSegment": "Lake Bonneville",
         "riverName": "Columbia",
@@ -183,7 +199,11 @@
         "boatRamp-src": "0",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Bingen Marina",
+        "state": "WA",
+        "county": "Klickitat",
+        "notes": "No Alcohol, no commercial fishing"
       },
       "geometry": {
         "type": "Point",
@@ -196,7 +216,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639846134-135",
+        "web-scraper-order": "1639846134-135",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=76",
         "riverSegment": "Lake Sacajawea",
         "riverName": "Snake",
@@ -215,7 +235,10 @@
         "boatRamp-src": "0",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Hollebeke",
+        "state": "WA",
+        "county": "Walla Walla"
       },
       "geometry": {
         "type": "Point",
@@ -228,7 +251,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639845931-43",
+        "web-scraper-order": "1639845931-43",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=168",
         "riverSegment": "Lake Bonneville",
         "riverName": "Columbia",
@@ -247,7 +270,11 @@
         "boatRamp-src": "0",
         "handCarried-src": "1",
         "marina-src": "0",
-        "adaAccess-src": "1"
+        "adaAccess-src": "1",
+        "name": "Home Valley",
+        "state": "WA",
+        "county": "Skamania",
+        "notes": "Baseball fields, playground equipment, windsurfing, horseshoe pits, beach, wetlands to observe."
       },
       "geometry": {
         "type": "Point",
@@ -260,7 +287,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639846094-117",
+        "web-scraper-order": "1639846094-117",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=94",
         "riverSegment": "Lake Wallula",
         "riverName": "Columbia",
@@ -279,7 +306,8 @@
         "boatRamp-src": "0",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Yakima River"
       },
       "geometry": {
         "type": "Point",
@@ -292,7 +320,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639845911-34",
+        "web-scraper-order": "1639845911-34",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=177",
         "riverSegment": "Lower Columbia River Water Trail",
         "riverName": "Columbia",
@@ -311,7 +339,10 @@
         "boatRamp-src": "1",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Bonneville Portage Downstream/Hamilton Island Boat Ramp",
+        "state": "WA",
+        "county": "Skamania"
       },
       "geometry": {
         "type": "Point",
@@ -324,7 +355,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639846099-119",
+        "web-scraper-order": "1639846099-119",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=92",
         "riverSegment": "Lake Wallula",
         "riverName": "Columbia",
@@ -343,7 +374,10 @@
         "boatRamp-src": "0",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Hanford Reach NM Visitor Center",
+        "state": "WA",
+        "county": "Benton"
       },
       "geometry": {
         "type": "Point",
@@ -356,7 +390,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639845948-51",
+        "web-scraper-order": "1639845948-51",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=160",
         "riverSegment": "Lake Bonneville",
         "riverName": "Columbia",
@@ -375,7 +409,10 @@
         "boatRamp-src": "0",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Inn Beach(Hood River Inn)",
+        "state": "OR",
+        "county": "Hood River"
       },
       "geometry": {
         "type": "Point",
@@ -388,7 +425,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639845998-73",
+        "web-scraper-order": "1639845998-73",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=138",
         "riverSegment": "Lake Celilo",
         "riverName": "Columbia",
@@ -407,7 +444,8 @@
         "boatRamp-src": "0",
         "handCarried-src": "1",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Rufus"
       },
       "geometry": {
         "type": "Point",
@@ -420,7 +458,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639845955-54",
+        "web-scraper-order": "1639845955-54",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=157",
         "riverSegment": "Lake Bonneville",
         "riverName": "Columbia",
@@ -439,7 +477,10 @@
         "boatRamp-src": "0",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Bingen Ramp (Sailboard Park at Point)",
+        "state": "WA",
+        "county": "Klickitat"
       },
       "geometry": {
         "type": "Point",
@@ -452,7 +493,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639845834-2",
+        "web-scraper-order": "1639845834-2",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=212",
         "riverSegment": "Lake Wallula",
         "riverName": "Columbia",
@@ -471,7 +512,8 @@
         "boatRamp-src": "1",
         "handCarried-src": "1",
         "marina-src": "0",
-        "adaAccess-src": "1"
+        "adaAccess-src": "1",
+        "name": "Howard Amon Park"
       },
       "geometry": {
         "type": "Point",
@@ -484,7 +526,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639846046-95",
+        "web-scraper-order": "1639846046-95",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=116",
         "riverSegment": "Lake Umatilla",
         "riverName": "Columbia",
@@ -503,7 +545,11 @@
         "boatRamp-src": "1",
         "handCarried-src": "1",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Nugent Park",
+        "state": "OR",
+        "county": "Umatilla",
+        "notes": "Nugent Park is on the Umatilla River, one mile up from the confluence with the Columbia River."
       },
       "geometry": {
         "type": "Point",
@@ -516,7 +562,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639846139-137",
+        "web-scraper-order": "1639846139-137",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=74",
         "riverSegment": "Lake Sacajawea",
         "riverName": "Snake",
@@ -535,7 +581,12 @@
         "boatRamp-src": "1",
         "handCarried-src": "1",
         "marina-src": "0",
-        "adaAccess-src": "1"
+        "adaAccess-src": "1",
+        "name": "Windust",
+        "state": "WA",
+        "county": "Franklin",
+        "campingFee": "No fee",
+        "notes": "No wake area around swimming area. Pets must be kept on a leash."
       },
       "geometry": {
         "type": "Point",
@@ -548,7 +599,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639846011-79",
+        "web-scraper-order": "1639846011-79",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=132",
         "riverSegment": "Lake Umatilla",
         "riverName": "Columbia",
@@ -567,7 +618,12 @@
         "boatRamp-src": "1",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Le Page Park",
+        "state": "OR",
+        "county": "Hood River",
+        "campingFee": "$12 per tent per night",
+        "notes": "Reservations need to be made 4 days in advance. On weekdays, minimum stay length is 2 days, and on weekends and holidays you must stay for at least 3 days. No off road vehicles."
       },
       "geometry": {
         "type": "Point",
@@ -580,7 +636,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639846083-112",
+        "web-scraper-order": "1639846083-112",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=99",
         "riverSegment": "Lake Wallula",
         "riverName": "Columbia",
@@ -599,7 +655,10 @@
         "boatRamp-src": "0",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Clover Island Inn Boat Dock",
+        "state": "WA",
+        "county": "Benton"
       },
       "geometry": {
         "type": "Point",
@@ -612,7 +671,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639846039-92",
+        "web-scraper-order": "1639846039-92",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=119",
         "riverSegment": "Lake Umatilla",
         "riverName": "Columbia",
@@ -631,7 +690,10 @@
         "boatRamp-src": "1",
         "handCarried-src": "1",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Patterson Ferry Road Ramp",
+        "state": "OR",
+        "county": "Morrow"
       },
       "geometry": {
         "type": "Point",
@@ -644,7 +706,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639845893-28",
+        "web-scraper-order": "1639845893-28",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=185",
         "riverSegment": "",
         "riverName": "Clearwater",
@@ -663,7 +725,10 @@
         "boatRamp-src": "1",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Lower Goose Pasture",
+        "state": "ID",
+        "county": "Nez Perce"
       },
       "geometry": {
         "type": "Point",
@@ -676,7 +741,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639846257-188",
+        "web-scraper-order": "1639846257-188",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=21",
         "riverSegment": "Clearwater",
         "riverName": "Clearwater",
@@ -695,7 +760,11 @@
         "boatRamp-src": "1",
         "handCarried-src": "1",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Cherry Lane Sports Access",
+        "state": "ID",
+        "county": "Nez Perce",
+        "notes": "http://fishandgame.idaho.gov/"
       },
       "geometry": {
         "type": "Point",
@@ -708,7 +777,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639846154-144",
+        "web-scraper-order": "1639846154-144",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=67",
         "riverSegment": "Lake West",
         "riverName": "Snake",
@@ -727,7 +796,12 @@
         "boatRamp-src": "1",
         "handCarried-src": "1",
         "marina-src": "1",
-        "adaAccess-src": "1"
+        "adaAccess-src": "1",
+        "name": "Lyons Ferry Marina",
+        "state": "WA",
+        "county": "Columbia",
+        "campingFee": "$10.75 per tent site",
+        "notes": "Pets must be kept on a leash. Horses and hunting are prohibited."
       },
       "geometry": {
         "type": "Point",
@@ -740,7 +814,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639846068-105",
+        "web-scraper-order": "1639846068-105",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=106",
         "riverSegment": "Lake Wallula",
         "riverName": "Columbia",
@@ -759,7 +833,8 @@
         "boatRamp-src": "0",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Washington/Oregon State Line"
       },
       "geometry": {
         "type": "Point",
@@ -772,7 +847,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639846028-87",
+        "web-scraper-order": "1639846028-87",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=124",
         "riverSegment": "Lake Umatilla",
         "riverName": "Columbia",
@@ -791,7 +866,12 @@
         "boatRamp-src": "1",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "1"
+        "adaAccess-src": "1",
+        "name": "Crow Butte Park",
+        "state": "WA",
+        "county": "Benton",
+        "campingFee": "15$ per site per day.",
+        "notes": "Pets must be kept on a leash"
       },
       "geometry": {
         "type": "Point",
@@ -804,7 +884,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639846090-115",
+        "web-scraper-order": "1639846090-115",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=96",
         "riverSegment": "Lake Wallula",
         "riverName": "Columbia",
@@ -823,7 +903,10 @@
         "boatRamp-src": "1",
         "handCarried-src": "1",
         "marina-src": "0",
-        "adaAccess-src": "1"
+        "adaAccess-src": "1",
+        "name": "Wye Park",
+        "county": "Franklin",
+        "notes": "Pets must be kept on a leash. Horses and hunting are prohibited."
       },
       "geometry": {
         "type": "Point",
@@ -836,7 +919,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639846088-114",
+        "web-scraper-order": "1639846088-114",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=97",
         "riverSegment": "Lake Wallula",
         "riverName": "Columbia",
@@ -855,7 +938,11 @@
         "boatRamp-src": "1",
         "handCarried-src": "1",
         "marina-src": "1",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Columbia Park",
+        "state": "WA",
+        "county": "Benton",
+        "notes": "Campgrounds are closed until further notice (May 16, 2008)"
       },
       "geometry": {
         "type": "Point",
@@ -868,7 +955,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639846245-183",
+        "web-scraper-order": "1639846245-183",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=26",
         "riverSegment": "",
         "riverName": "Clearwater",
@@ -887,7 +974,9 @@
         "boatRamp-src": "0",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Nez Perce National Historic Park",
+        "state": "ID"
       },
       "geometry": {
         "type": "Point",
@@ -900,7 +989,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639846026-86",
+        "web-scraper-order": "1639846026-86",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=125",
         "riverSegment": "Lake Umatilla",
         "riverName": "Columbia",
@@ -919,7 +1008,8 @@
         "boatRamp-src": "0",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Alderdale"
       },
       "geometry": {
         "type": "Point",
@@ -932,7 +1022,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639846059-101",
+        "web-scraper-order": "1639846059-101",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=110",
         "riverSegment": "Lake Wallula",
         "riverName": "Columbia",
@@ -951,7 +1041,11 @@
         "boatRamp-src": "0",
         "handCarried-src": "1",
         "marina-src": "0",
-        "adaAccess-src": "1"
+        "adaAccess-src": "1",
+        "name": "McNary Beach Park",
+        "state": "OR",
+        "county": "Umatilla",
+        "notes": "Take a stroll on the Lewis & Clark Commemorative Trail"
       },
       "geometry": {
         "type": "Point",
@@ -964,7 +1058,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639845845-7",
+        "web-scraper-order": "1639845845-7",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=207",
         "riverSegment": "",
         "riverName": "Clearwater",
@@ -983,7 +1077,11 @@
         "boatRamp-src": "0",
         "handCarried-src": "1",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Myrtle Recreation Site",
+        "state": "ID",
+        "county": "Nez Perce",
+        "campingFee": "$8 per tent or RV"
       },
       "geometry": {
         "type": "Point",
@@ -996,7 +1094,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639846017-82",
+        "web-scraper-order": "1639846017-82",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=129",
         "riverSegment": "Lake Umatilla",
         "riverName": "Columbia",
@@ -1015,7 +1113,10 @@
         "boatRamp-src": "1",
         "handCarried-src": "1",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Roosevelt Park",
+        "state": "WA",
+        "notes": "Popular spot for windsurfing, kiteboarding, and swimming."
       },
       "geometry": {
         "type": "Point",
@@ -1028,7 +1129,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639845928-42",
+        "web-scraper-order": "1639845928-42",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=169",
         "riverSegment": "Lake Bonneville",
         "riverName": "Columbia",
@@ -1047,7 +1148,10 @@
         "boatRamp-src": "0",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "1"
+        "adaAccess-src": "1",
+        "name": "Boat Ramp( Port Dock)Stevensen Landing",
+        "state": "WA",
+        "county": "Skamania"
       },
       "geometry": {
         "type": "Point",
@@ -1060,7 +1164,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639845933-44",
+        "web-scraper-order": "1639845933-44",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=167",
         "riverSegment": "Lake Bonneville",
         "riverName": "Columbia",
@@ -1079,7 +1183,12 @@
         "boatRamp-src": "0",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "1"
+        "adaAccess-src": "1",
+        "name": "Viento State Park",
+        "state": "OR",
+        "county": "Hood River",
+        "campingFee": "$10-14 per site (Price varies with season).",
+        "notes": "$3 for day use."
       },
       "geometry": {
         "type": "Point",
@@ -1092,7 +1201,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639845973-62",
+        "web-scraper-order": "1639845973-62",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=149",
         "riverSegment": "Lake Bonneville",
         "riverName": "Columbia",
@@ -1111,7 +1220,10 @@
         "boatRamp-src": "0",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "1"
+        "adaAccess-src": "1",
+        "name": "Kiwanis Park at Kildits Cove",
+        "state": "OR",
+        "county": "Wasco"
       },
       "geometry": {
         "type": "Point",
@@ -1124,7 +1236,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639846163-148",
+        "web-scraper-order": "1639846163-148",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=63",
         "riverSegment": "Lake West",
         "riverName": "Snake",
@@ -1143,7 +1255,11 @@
         "boatRamp-src": "0",
         "handCarried-src": "1",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Riparia",
+        "state": "WA",
+        "county": "Whitman",
+        "notes": "Pets must be kept on a leash. Horses and hunting are prohibited. No open fires allowed from June 10 through October 10."
       },
       "geometry": {
         "type": "Point",
@@ -1156,7 +1272,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639845847-8",
+        "web-scraper-order": "1639845847-8",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=206",
         "riverSegment": "Clearwater",
         "riverName": "Clearwater",
@@ -1175,7 +1291,9 @@
         "boatRamp-src": "0",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Ankeny",
+        "state": "OR"
       },
       "geometry": {
         "type": "Point",
@@ -1188,7 +1306,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639845924-40",
+        "web-scraper-order": "1639845924-40",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=171",
         "riverSegment": "Lake Bonneville",
         "riverName": "Columbia",
@@ -1207,7 +1325,11 @@
         "boatRamp-src": "1",
         "handCarried-src": "1",
         "marina-src": "0",
-        "adaAccess-src": "1"
+        "adaAccess-src": "1",
+        "name": "Cascade Boat Launch & Pebble Beach",
+        "state": "WA",
+        "county": "Skamania",
+        "notes": "The Cascade Boat Launch and Pebble Beach are separate sites. However, they are within walking distance on each other. Dog must be on a leash."
       },
       "geometry": {
         "type": "Point",
@@ -1220,7 +1342,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639846202-166",
+        "web-scraper-order": "1639846202-166",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=45",
         "riverSegment": "Lower Granite Lake",
         "riverName": "Snake",
@@ -1239,7 +1361,11 @@
         "boatRamp-src": "1",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "1"
+        "adaAccess-src": "1",
+        "name": "Wawawai Landing",
+        "state": "WA",
+        "county": "Whitman",
+        "notes": "Pets must be kept on a leash. Horses and hunting are prohibited. No open fires allowed from June 10 through October 10. Charcoal and propane fires are acceptable."
       },
       "geometry": {
         "type": "Point",
@@ -1252,7 +1378,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639846218-173",
+        "web-scraper-order": "1639846218-173",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=38",
         "riverSegment": "Lower Granite Lake",
         "riverName": "Snake",
@@ -1271,7 +1397,11 @@
         "boatRamp-src": "1",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "1"
+        "adaAccess-src": "1",
+        "name": "Greenbelt Ramp",
+        "state": "WA",
+        "county": "Asotin",
+        "notes": "Pets must be kept on a leash. Horses and hunting are prohibited. No open fires allowed. Charcoal and propane fires are acceptable. Public telephone available."
       },
       "geometry": {
         "type": "Point",
@@ -1284,7 +1414,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639846121-129",
+        "web-scraper-order": "1639846121-129",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=82",
         "riverSegment": "Lake Sacajawea",
         "riverName": "Snake",
@@ -1303,7 +1433,12 @@
         "boatRamp-src": "1",
         "handCarried-src": "1",
         "marina-src": "1",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Charbonneau Park",
+        "state": "WA",
+        "county": "Walla Walla",
+        "campingFee": "18$ for a regular site, and $8 for overflow sites.",
+        "notes": "Pets must be kept on a leash. Hunting is prohibited inside the developed park. Fire pits, grills, and hot showers available, along with a trailer dump station."
       },
       "geometry": {
         "type": "Point",
@@ -1316,7 +1451,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639846209-169",
+        "web-scraper-order": "1639846209-169",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=42",
         "riverSegment": "Lower Granite Lake",
         "riverName": "Snake",
@@ -1335,7 +1470,12 @@
         "boatRamp-src": "1",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "1"
+        "adaAccess-src": "1",
+        "name": "Chief Timothy Park",
+        "state": "WA",
+        "county": "Asotin",
+        "campingFee": "$20 for a standard campsite",
+        "notes": "Pets must be kept on a leash. Horses and hunting are prohibited. Golden Age and Access Passports will not be accepted. No open fires allowed from June 10 through October 10."
       },
       "geometry": {
         "type": "Point",
@@ -1348,7 +1488,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639846207-168",
+        "web-scraper-order": "1639846207-168",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=43",
         "riverSegment": "Lower Granite Lake",
         "riverName": "Snake",
@@ -1367,7 +1507,11 @@
         "boatRamp-src": "1",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "1"
+        "adaAccess-src": "1",
+        "name": "Nisqually John Landing",
+        "state": "WA",
+        "county": "Whitman",
+        "notes": "Pets must be kept on a leash. Horses and hunting are prohibited. No open fires allowed from June 10 through October 10. Charcoal and propane fires are acceptable."
       },
       "geometry": {
         "type": "Point",
@@ -1380,7 +1524,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639846125-131",
+        "web-scraper-order": "1639846125-131",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=80",
         "riverSegment": "Lake Sacajawea",
         "riverName": "Snake",
@@ -1399,7 +1543,11 @@
         "boatRamp-src": "1",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Big Flat",
+        "state": "WA",
+        "county": "Franklin",
+        "notes": "Hunting is allowed for waterfowl, upland game birds and deer with shotgun only. Hunting seasons and hours are set by WDFW."
       },
       "geometry": {
         "type": "Point",
@@ -1412,7 +1560,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639846070-106",
+        "web-scraper-order": "1639846070-106",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=105",
         "riverSegment": "Lake Wallula",
         "riverName": "Columbia",
@@ -1431,7 +1579,10 @@
         "boatRamp-src": "1",
         "handCarried-src": "1",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Walla Walla Yacht Club",
+        "state": "WA",
+        "notes": "Pets must be kept on a leash. The marina is private and open only to club members. A sani-can is available at the boat ramp."
       },
       "geometry": {
         "type": "Point",
@@ -1444,7 +1595,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639845887-25",
+        "web-scraper-order": "1639845887-25",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=188",
         "riverSegment": "Lower Granite Lake",
         "riverName": "Snake",
@@ -1463,7 +1614,9 @@
         "boatRamp-src": "0",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Granite Point",
+        "state": "WA"
       },
       "geometry": {
         "type": "Point",
@@ -1476,7 +1629,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639846145-140",
+        "web-scraper-order": "1639846145-140",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=71",
         "riverSegment": "Lake West",
         "riverName": "Snake",
@@ -1495,7 +1648,10 @@
         "boatRamp-src": "0",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Lower Monumental Dam",
+        "state": "WA",
+        "county": "Franklin"
       },
       "geometry": {
         "type": "Point",
@@ -1508,7 +1664,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639846136-136",
+        "web-scraper-order": "1639846136-136",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=75",
         "riverSegment": "Lake Sacajawea",
         "riverName": "Snake",
@@ -1527,7 +1683,11 @@
         "boatRamp-src": "1",
         "handCarried-src": "1",
         "marina-src": "0",
-        "adaAccess-src": "1"
+        "adaAccess-src": "1",
+        "name": "Walker",
+        "state": "WA",
+        "county": "Walla Walla",
+        "notes": "Camping space is somewhat limited and there are no designated spots."
       },
       "geometry": {
         "type": "Point",
@@ -1540,7 +1700,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639845900-30",
+        "web-scraper-order": "1639845900-30",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=182",
         "riverSegment": "Lower Granite Lake",
         "riverName": "Snake",
@@ -1559,7 +1719,10 @@
         "boatRamp-src": "0",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Granite Point",
+        "state": "WA",
+        "campingFee": "none"
       },
       "geometry": {
         "type": "Point",
@@ -1572,7 +1735,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639846072-107",
+        "web-scraper-order": "1639846072-107",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=104",
         "riverSegment": "Lake Wallula",
         "riverName": "Columbia",
@@ -1591,7 +1754,8 @@
         "boatRamp-src": "0",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Port of Wallula"
       },
       "geometry": {
         "type": "Point",
@@ -1604,7 +1768,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639846103-121",
+        "web-scraper-order": "1639846103-121",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=90",
         "riverSegment": "Lake Wallula",
         "riverName": "Snake",
@@ -1623,7 +1787,12 @@
         "boatRamp-src": "1",
         "handCarried-src": "1",
         "marina-src": "0",
-        "adaAccess-src": "1"
+        "adaAccess-src": "1",
+        "name": "Sacajawea State Park",
+        "state": "WA",
+        "county": "Franklin",
+        "campingFee": "Free",
+        "notes": "Pets must be kept on a leash. Restrooms closed Oct-Mar. Campsite accomodates 8 on first come first serve basis. Parties larger than 8 call: (506) 545-2361"
       },
       "geometry": {
         "type": "Point",
@@ -1636,7 +1805,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639845920-38",
+        "web-scraper-order": "1639845920-38",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=173",
         "riverSegment": "Lake Bonneville",
         "riverName": "Columbia",
@@ -1655,7 +1824,12 @@
         "boatRamp-src": "1",
         "handCarried-src": "1",
         "marina-src": "1",
-        "adaAccess-src": "1"
+        "adaAccess-src": "1",
+        "name": "Port of Cascade Locks Marine Park",
+        "state": "OR",
+        "county": "Hood River",
+        "campingFee": "$15/night",
+        "notes": "No campfires in the campground. Enjoy a playground, museum, and visitor center. Sternwheelers depart from this park."
       },
       "geometry": {
         "type": "Point",
@@ -1668,7 +1842,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639846275-196",
+        "web-scraper-order": "1639846275-196",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=13",
         "riverSegment": "Clearwater",
         "riverName": "Clearwater",
@@ -1687,7 +1861,11 @@
         "boatRamp-src": "0",
         "handCarried-src": "1",
         "marina-src": "0",
-        "adaAccess-src": "1"
+        "adaAccess-src": "1",
+        "name": "East Clearwater Park",
+        "state": "ID",
+        "county": "Nez Perce",
+        "notes": "Pets must be kept on a leash. Horses and hunting are prohibited."
       },
       "geometry": {
         "type": "Point",
@@ -1700,7 +1878,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639846055-99",
+        "web-scraper-order": "1639846055-99",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=112",
         "riverSegment": "Lake Wallula",
         "riverName": "Columbia",
@@ -1719,7 +1897,10 @@
         "boatRamp-src": "0",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Washington Boat Ramp",
+        "state": "WA",
+        "county": "Benton"
       },
       "geometry": {
         "type": "Point",
@@ -1732,7 +1913,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639846156-145",
+        "web-scraper-order": "1639846156-145",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=66",
         "riverSegment": "Lake West",
         "riverName": "Snake",
@@ -1751,7 +1932,12 @@
         "boatRamp-src": "1",
         "handCarried-src": "0",
         "marina-src": "1",
-        "adaAccess-src": "1"
+        "adaAccess-src": "1",
+        "name": "Lyons Ferry Park",
+        "state": "WA",
+        "county": "Franklin",
+        "campingFee": "$10.75 per tent site",
+        "notes": "Pets must be kept on a leash. Horses and hunting are prohibited. A snack bar is available May 25th through Labor Day."
       },
       "geometry": {
         "type": "Point",
@@ -1764,7 +1950,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639846053-98",
+        "web-scraper-order": "1639846053-98",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=113",
         "riverSegment": "Lake Wallula",
         "riverName": "Columbia",
@@ -1783,7 +1969,10 @@
         "boatRamp-src": "1",
         "handCarried-src": "1",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Oregon Boat Ramp",
+        "state": "OR",
+        "county": "Umatilla"
       },
       "geometry": {
         "type": "Point",
@@ -1796,7 +1985,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639846074-108",
+        "web-scraper-order": "1639846074-108",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=103",
         "riverSegment": "Lake Wallula",
         "riverName": "Columbia",
@@ -1815,7 +2004,10 @@
         "boatRamp-src": "0",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Hover Park",
+        "state": "WA",
+        "county": "Benton"
       },
       "geometry": {
         "type": "Point",
@@ -1828,7 +2020,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639846079-110",
+        "web-scraper-order": "1639846079-110",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=101",
         "riverSegment": "Lake Wallula",
         "riverName": "Columbia",
@@ -1847,7 +2039,11 @@
         "boatRamp-src": "1",
         "handCarried-src": "1",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Two Rivers Park",
+        "state": "WA",
+        "county": "Benton",
+        "notes": "Pets must be kept on a leash. Hunting is prohibited. Public phones are available."
       },
       "geometry": {
         "type": "Point",
@@ -1860,7 +2056,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639846183-157",
+        "web-scraper-order": "1639846183-157",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=54",
         "riverSegment": "Lake Bryan",
         "riverName": "Snake",
@@ -1879,7 +2075,8 @@
         "boatRamp-src": "0",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Rice Bar Habitat Unit"
       },
       "geometry": {
         "type": "Point",
@@ -1892,7 +2089,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639845953-53",
+        "web-scraper-order": "1639845953-53",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=158",
         "riverSegment": "Lake Bonneville",
         "riverName": "Columbia",
@@ -1911,7 +2108,10 @@
         "boatRamp-src": "0",
         "handCarried-src": "0",
         "marina-src": "1",
-        "adaAccess-src": "1"
+        "adaAccess-src": "1",
+        "name": "Event Site( Hood River)(Marina)",
+        "state": "OR",
+        "county": "Hood River"
       },
       "geometry": {
         "type": "Point",
@@ -1924,7 +2124,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639846161-147",
+        "web-scraper-order": "1639846161-147",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=64",
         "riverSegment": "Lake West",
         "riverName": "Snake",
@@ -1943,7 +2143,11 @@
         "boatRamp-src": "1",
         "handCarried-src": "1",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Texas Rapids",
+        "state": "WA",
+        "county": "Columbia",
+        "notes": "Pets must be kept on a leash. Horses and hunting are prohibited. No open fires allowed from June 10 through October 10. Charcoal and propane fires are acceptable."
       },
       "geometry": {
         "type": "Point",
@@ -1956,7 +2160,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639845960-56",
+        "web-scraper-order": "1639845960-56",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=155",
         "riverSegment": "Lake Bonneville",
         "riverName": "Columbia",
@@ -1975,7 +2179,11 @@
         "boatRamp-src": "0",
         "handCarried-src": "1",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Swell City",
+        "state": "WA",
+        "county": "Klickitat",
+        "notes": "Windsurfing and kiteboarding area. Day use fee of $4 per person."
       },
       "geometry": {
         "type": "Point",
@@ -1988,7 +2196,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639845993-71",
+        "web-scraper-order": "1639845993-71",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=140",
         "riverSegment": "Lake Celilo",
         "riverName": "Columbia",
@@ -2007,7 +2215,10 @@
         "boatRamp-src": "0",
         "handCarried-src": "1",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Peach Beach",
+        "state": "WA",
+        "notes": "Landing only for hand-carried boats, other boats use Maryhill State Park boat ramp. Privately owned RV Park."
       },
       "geometry": {
         "type": "Point",
@@ -2020,7 +2231,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639846022-84",
+        "web-scraper-order": "1639846022-84",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=127",
         "riverSegment": "Lake Umatilla",
         "riverName": "Columbia",
@@ -2039,7 +2250,10 @@
         "boatRamp-src": "0",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Earl Snell Memorial Park",
+        "state": "OR",
+        "county": "Gilliam"
       },
       "geometry": {
         "type": "Point",
@@ -2052,7 +2266,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639846222-175",
+        "web-scraper-order": "1639846222-175",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=36",
         "riverSegment": "Lower Granite Lake",
         "riverName": "Snake",
@@ -2071,7 +2285,11 @@
         "boatRamp-src": "1",
         "handCarried-src": "1",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Swallows Park",
+        "state": "WA",
+        "county": "Asotin",
+        "notes": "Walking trails available"
       },
       "geometry": {
         "type": "Point",
@@ -2084,7 +2302,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639846196-163",
+        "web-scraper-order": "1639846196-163",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=48",
         "riverSegment": "Lower Granite Lake",
         "riverName": "Snake",
@@ -2103,7 +2321,10 @@
         "boatRamp-src": "0",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Lower Granite Portage Upstream",
+        "state": "WA",
+        "county": "Garfield"
       },
       "geometry": {
         "type": "Point",
@@ -2116,7 +2337,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639845946-50",
+        "web-scraper-order": "1639845946-50",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=161",
         "riverSegment": "Lake Bonneville",
         "riverName": "Columbia",
@@ -2135,7 +2356,11 @@
         "boatRamp-src": "0",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Koberg Beach",
+        "state": "OR",
+        "county": "Hood River",
+        "notes": "Adjacent tribal in lieu fishing site with boat launch and picnic area not open to the public."
       },
       "geometry": {
         "type": "Point",
@@ -2148,7 +2373,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639846117-127",
+        "web-scraper-order": "1639846117-127",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=84",
         "riverSegment": "Lake Sacajawea",
         "riverName": "Snake",
@@ -2167,7 +2392,10 @@
         "boatRamp-src": "0",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Ice Harbor Portage Upstream",
+        "state": "WA",
+        "county": "Walla Walla"
       },
       "geometry": {
         "type": "Point",
@@ -2180,7 +2408,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639846229-178",
+        "web-scraper-order": "1639846229-178",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=33",
         "riverSegment": "Lower Granite Lake",
         "riverName": "Snake",
@@ -2199,7 +2427,10 @@
         "boatRamp-src": "0",
         "handCarried-src": "1",
         "marina-src": "0",
-        "adaAccess-src": "1"
+        "adaAccess-src": "1",
+        "name": "Chief Looking Glass Park",
+        "state": "WA",
+        "county": "Asotin"
       },
       "geometry": {
         "type": "Point",
@@ -2212,7 +2443,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639846224-176",
+        "web-scraper-order": "1639846224-176",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=35",
         "riverSegment": "Lower Granite Lake",
         "riverName": "Snake",
@@ -2231,7 +2462,8 @@
         "boatRamp-src": "0",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "ACOE Clarkston Resource Management Office"
       },
       "geometry": {
         "type": "Point",
@@ -2244,7 +2476,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639845987-68",
+        "web-scraper-order": "1639845987-68",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=143",
         "riverSegment": "Lake Celilo",
         "riverName": "Columbia",
@@ -2263,7 +2495,10 @@
         "boatRamp-src": "1",
         "handCarried-src": "1",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Celilo Park",
+        "state": "OR",
+        "county": "Wasco"
       },
       "geometry": {
         "type": "Point",
@@ -2276,7 +2511,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639846174-153",
+        "web-scraper-order": "1639846174-153",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=58",
         "riverSegment": "Lake Bryan",
         "riverName": "Snake",
@@ -2295,7 +2530,8 @@
         "boatRamp-src": "0",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Ridpath Wildlife Habitat Unit"
       },
       "geometry": {
         "type": "Point",
@@ -2308,7 +2544,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639845962-57",
+        "web-scraper-order": "1639845962-57",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=154",
         "riverSegment": "Lake Bonneville",
         "riverName": "Columbia",
@@ -2327,7 +2563,11 @@
         "boatRamp-src": "0",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Rock Creek",
+        "state": "OR",
+        "county": "Wasco",
+        "notes": "Very primitive area, windsurfing, entrance fee, gravel entrance road and parking lot, blind turn into parking lot under bridge. Only one lane available."
       },
       "geometry": {
         "type": "Point",
@@ -2340,7 +2580,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639846279-198",
+        "web-scraper-order": "1639846279-198",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=11",
         "riverSegment": "Clearwater",
         "riverName": "Clearwater",
@@ -2359,7 +2599,10 @@
         "boatRamp-src": "1",
         "handCarried-src": "1",
         "marina-src": "0",
-        "adaAccess-src": "1"
+        "adaAccess-src": "1",
+        "name": "North Lewiston Ramp",
+        "state": "ID",
+        "county": "Nez Perce"
       },
       "geometry": {
         "type": "Point",
@@ -2372,7 +2615,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639846172-152",
+        "web-scraper-order": "1639846172-152",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=59",
         "riverSegment": "Lake Bryan",
         "riverName": "Snake",
@@ -2391,7 +2634,11 @@
         "boatRamp-src": "1",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "1"
+        "adaAccess-src": "1",
+        "name": "Little Goose Landing",
+        "state": "WA",
+        "county": "Columbia",
+        "notes": "Hunting is prohibited. No open fires allowed from June 10 to October 10. Charcoal and propane fires allowed year round."
       },
       "geometry": {
         "type": "Point",
@@ -2404,7 +2651,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639846189-160",
+        "web-scraper-order": "1639846189-160",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=51",
         "riverSegment": "Lake Bryan",
         "riverName": "Snake",
@@ -2423,7 +2670,12 @@
         "boatRamp-src": "1",
         "handCarried-src": "1",
         "marina-src": "1",
-        "adaAccess-src": "1"
+        "adaAccess-src": "1",
+        "name": "Boyer Park and Marina",
+        "state": "WA",
+        "county": "Whitman",
+        "campingFee": "$7.00",
+        "notes": "Pets must be kept on a leash. Aircraft landing field located adjacent to park."
       },
       "geometry": {
         "type": "Point",
@@ -2436,7 +2688,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639845937-46",
+        "web-scraper-order": "1639845937-46",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=165",
         "riverSegment": "Lake Bonneville",
         "riverName": "Columbia",
@@ -2455,7 +2707,11 @@
         "boatRamp-src": "0",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "1"
+        "adaAccess-src": "1",
+        "name": "Spring Creek Fish Hatchery Recreation Area",
+        "state": "WA",
+        "county": "Skamania",
+        "notes": "Windsurfing and kiteboarding spot. No overnight camping nor parking. Day use fee. Visitor center at the fish hatchery. Beach launch only, kayaks possible."
       },
       "geometry": {
         "type": "Point",
@@ -2468,7 +2724,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639846042-93",
+        "web-scraper-order": "1639846042-93",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=118",
         "riverSegment": "Lake Umatilla",
         "riverName": "Columbia",
@@ -2487,7 +2743,10 @@
         "boatRamp-src": "1",
         "handCarried-src": "1",
         "marina-src": "1",
-        "adaAccess-src": "1"
+        "adaAccess-src": "1",
+        "name": "Irrigon Marina Park",
+        "state": "OR",
+        "notes": "Pets must be kept on a leash."
       },
       "geometry": {
         "type": "Point",
@@ -2500,7 +2759,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639846141-138",
+        "web-scraper-order": "1639846141-138",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=73",
         "riverSegment": "Lake Sacajawea",
         "riverName": "Snake",
@@ -2519,7 +2778,11 @@
         "boatRamp-src": "1",
         "handCarried-src": "1",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Matthews",
+        "state": "WA",
+        "county": "Walla Walla",
+        "notes": "Pets must be kept on a leash. Hunting is prohibited."
       },
       "geometry": {
         "type": "Point",
@@ -2532,7 +2795,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639846213-171",
+        "web-scraper-order": "1639846213-171",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=40",
         "riverSegment": "Lower Granite Lake",
         "riverName": "Snake",
@@ -2551,7 +2814,11 @@
         "boatRamp-src": "1",
         "handCarried-src": "0",
         "marina-src": "1",
-        "adaAccess-src": "1"
+        "adaAccess-src": "1",
+        "name": "Hells Canyon Marina",
+        "state": "WA",
+        "county": "Asotin",
+        "notes": "Pets must be kept on a leash. Horses and hunting are prohibited. No open fires allowed. Charcoal and propane fires are acceptable."
       },
       "geometry": {
         "type": "Point",
@@ -2564,7 +2831,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639846227-177",
+        "web-scraper-order": "1639846227-177",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=34",
         "riverSegment": "Lower Granite Lake",
         "riverName": "Snake",
@@ -2583,7 +2850,10 @@
         "boatRamp-src": "1",
         "handCarried-src": "1",
         "marina-src": "0",
-        "adaAccess-src": "1"
+        "adaAccess-src": "1",
+        "name": "Hells Gate State Park",
+        "state": "ID",
+        "county": "Nez Perce"
       },
       "geometry": {
         "type": "Point",
@@ -2596,7 +2866,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639845985-67",
+        "web-scraper-order": "1639845985-67",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=144",
         "riverSegment": "Lake Celilo",
         "riverName": "Columbia",
@@ -2615,7 +2885,9 @@
         "boatRamp-src": "1",
         "handCarried-src": "1",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Avery Park",
+        "notes": "Avery Park is a shared use"
       },
       "geometry": {
         "type": "Point",
@@ -2628,7 +2900,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639845915-36",
+        "web-scraper-order": "1639845915-36",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=175",
         "riverSegment": "Bonneville Dam",
         "riverName": "Columbia",
@@ -2647,7 +2919,10 @@
         "boatRamp-src": "1",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "1"
+        "adaAccess-src": "1",
+        "name": "Bonneville(Washington Shore)",
+        "state": "WA",
+        "county": "Skamania"
       },
       "geometry": {
         "type": "Point",
@@ -2660,7 +2935,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639846198-164",
+        "web-scraper-order": "1639846198-164",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=47",
         "riverSegment": "Lower Granite Lake",
         "riverName": "Snake",
@@ -2679,7 +2954,11 @@
         "boatRamp-src": "1",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "1"
+        "adaAccess-src": "1",
+        "name": "Offield Landing",
+        "state": "WA",
+        "county": "Garfield",
+        "notes": "Pets must be kept on a leash. Horses and hunting are prohibited. No open fires allowed from June 10 through October 10. Charcoal and propane fires are acceptable Boat launch is free of charge."
       },
       "geometry": {
         "type": "Point",
@@ -2692,7 +2971,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639845854-11",
+        "web-scraper-order": "1639845854-11",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=203",
         "riverSegment": "Lake Wallula",
         "riverName": "Columbia",
@@ -2711,7 +2990,12 @@
         "boatRamp-src": "1",
         "handCarried-src": "1",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Madame Dorian",
+        "state": "WA",
+        "county": "Walla Walla",
+        "campingFee": "None",
+        "notes": "Madame Dorian sits at the confluence of the Walla Walla River and the Columbia. Paddlers and shallow draft boats will enjoy exploring the wetlands of the Walla Walla delta."
       },
       "geometry": {
         "type": "Point",
@@ -2724,7 +3008,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639846185-158",
+        "web-scraper-order": "1639846185-158",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=53",
         "riverSegment": "Lake Bryan",
         "riverName": "Snake",
@@ -2743,7 +3027,10 @@
         "boatRamp-src": "0",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Illia Dunes",
+        "state": "WA",
+        "county": "Garfield"
       },
       "geometry": {
         "type": "Point",
@@ -2756,7 +3043,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639846180-156",
+        "web-scraper-order": "1639846180-156",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=55",
         "riverSegment": "Lake Bryan",
         "riverName": "Snake",
@@ -2775,7 +3062,11 @@
         "boatRamp-src": "1",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Willow Landing",
+        "state": "WA",
+        "county": "Garfield",
+        "notes": "Pets must be kept on a leash. Hunting is prohibited."
       },
       "geometry": {
         "type": "Point",
@@ -2788,7 +3079,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639845969-60",
+        "web-scraper-order": "1639845969-60",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=151",
         "riverSegment": "Lake Bonneville",
         "riverName": "Columbia",
@@ -2807,7 +3098,10 @@
         "boatRamp-src": "1",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "1"
+        "adaAccess-src": "1",
+        "name": "Riverfront Park",
+        "state": "OR",
+        "county": "Wasco"
       },
       "geometry": {
         "type": "Point",
@@ -2820,7 +3114,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639846105-122",
+        "web-scraper-order": "1639846105-122",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=89",
         "riverSegment": "Lake Wallula",
         "riverName": "Snake",
@@ -2839,7 +3133,10 @@
         "boatRamp-src": "0",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Hood Park",
+        "state": "WA",
+        "county": "Walla Walla"
       },
       "geometry": {
         "type": "Point",
@@ -2852,7 +3149,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639845991-70",
+        "web-scraper-order": "1639845991-70",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=141",
         "riverSegment": "Lake Celilo",
         "riverName": "Columbia",
@@ -2871,7 +3168,8 @@
         "boatRamp-src": "0",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Sam Hill Bridge"
       },
       "geometry": {
         "type": "Point",
@@ -2884,7 +3182,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639845966-59",
+        "web-scraper-order": "1639845966-59",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=152",
         "riverSegment": "Lake Bonneville",
         "riverName": "Columbia",
@@ -2903,7 +3201,11 @@
         "boatRamp-src": "0",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "1"
+        "adaAccess-src": "1",
+        "name": "Mayer State Park",
+        "state": "OR",
+        "county": "Wasco",
+        "notes": "Migratory bird hunting when in season. Day use fee of $3."
       },
       "geometry": {
         "type": "Point",
@@ -2916,7 +3218,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639846301-208",
+        "web-scraper-order": "1639846301-208",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=1",
         "riverSegment": "Clearwater",
         "riverName": "Clearwater",
@@ -2935,7 +3237,10 @@
         "boatRamp-src": "0",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "1"
+        "adaAccess-src": "1",
+        "name": "Canoe Camp",
+        "state": "ID",
+        "county": "Clearwater"
       },
       "geometry": {
         "type": "Point",
@@ -2948,7 +3253,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639846264-191",
+        "web-scraper-order": "1639846264-191",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=18",
         "riverSegment": "",
         "riverName": "Clearwater",
@@ -2967,7 +3272,9 @@
         "boatRamp-src": "0",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Arrow Bridge",
+        "state": "ID"
       },
       "geometry": {
         "type": "Point",
@@ -2980,7 +3287,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639845942-48",
+        "web-scraper-order": "1639845942-48",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=163",
         "riverSegment": "Lake Bonneville",
         "riverName": "Columbia",
@@ -2999,7 +3306,10 @@
         "boatRamp-src": "1",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "1"
+        "adaAccess-src": "1",
+        "name": "Port of Hood River",
+        "state": "OR",
+        "county": "Hood River"
       },
       "geometry": {
         "type": "Point",
@@ -3012,7 +3322,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639846152-143",
+        "web-scraper-order": "1639846152-143",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=68",
         "riverSegment": "Lake West",
         "riverName": "Snake",
@@ -3031,7 +3341,11 @@
         "boatRamp-src": "1",
         "handCarried-src": "1",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Ayer Boat Basin",
+        "state": "WA",
+        "county": "Walla Walla",
+        "notes": "Pets must be kept on a leash. Hunting is prohibited. Undesignated camping sites can accommodate approximately 20 tents or RV's."
       },
       "geometry": {
         "type": "Point",
@@ -3044,7 +3358,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639846033-89",
+        "web-scraper-order": "1639846033-89",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=122",
         "riverSegment": "Lake Umatilla",
         "riverName": "Columbia",
@@ -3063,7 +3377,11 @@
         "boatRamp-src": "1",
         "handCarried-src": "1",
         "marina-src": "0",
-        "adaAccess-src": "1"
+        "adaAccess-src": "1",
+        "name": "Boardman Marine Park",
+        "state": "OR",
+        "county": "Morrow",
+        "notes": "Pets must be on a leash."
       },
       "geometry": {
         "type": "Point",
@@ -3076,7 +3394,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639846085-113",
+        "web-scraper-order": "1639846085-113",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=98",
         "riverSegment": "Lake Wallula",
         "riverName": "Columbia",
@@ -3095,7 +3413,11 @@
         "boatRamp-src": "1",
         "handCarried-src": "1",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Clover Island Boat Ramp",
+        "state": "WA",
+        "county": "Benton",
+        "notes": "Adjacent to the Clover Island Inn."
       },
       "geometry": {
         "type": "Point",
@@ -3108,7 +3430,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639846176-154",
+        "web-scraper-order": "1639846176-154",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=57",
         "riverSegment": "Lake Bryan",
         "riverName": "Snake",
@@ -3127,7 +3449,10 @@
         "boatRamp-src": "1",
         "handCarried-src": "1",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Port of Garfield",
+        "state": "WA",
+        "county": "Garfield"
       },
       "geometry": {
         "type": "Point",
@@ -3140,7 +3465,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639846044-94",
+        "web-scraper-order": "1639846044-94",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=117",
         "riverSegment": "Lake Umatilla",
         "riverName": "Columbia",
@@ -3159,7 +3484,12 @@
         "boatRamp-src": "1",
         "handCarried-src": "1",
         "marina-src": "0",
-        "adaAccess-src": "1"
+        "adaAccess-src": "1",
+        "name": "Plymouth Park",
+        "state": "OR",
+        "county": "Umatilla",
+        "campingFee": "12$ per tent sight",
+        "notes": "Fire pits and grills and hot showers."
       },
       "geometry": {
         "type": "Point",
@@ -3172,7 +3502,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639846205-167",
+        "web-scraper-order": "1639846205-167",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=44",
         "riverSegment": "Lower Granite Lake",
         "riverName": "Snake",
@@ -3191,7 +3521,11 @@
         "boatRamp-src": "1",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "1"
+        "adaAccess-src": "1",
+        "name": "Blyton Landing",
+        "state": "WA",
+        "county": "Whitman",
+        "notes": "Pets must be kept on a leash. Horses and hunting are prohibited. No open fires allowed from June 10 through October 10. Charcoal and propane fires are acceptable."
       },
       "geometry": {
         "type": "Point",
@@ -3204,7 +3538,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639845944-49",
+        "web-scraper-order": "1639845944-49",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=162",
         "riverSegment": "Lake Bonneville",
         "riverName": "Columbia",
@@ -3223,7 +3557,10 @@
         "boatRamp-src": "0",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Bozo Beach",
+        "state": "WA",
+        "county": "Klickitat"
       },
       "geometry": {
         "type": "Point",
@@ -3236,7 +3573,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639846000-74",
+        "web-scraper-order": "1639846000-74",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=137",
         "riverSegment": "Lake Celilo",
         "riverName": "Columbia",
@@ -3255,7 +3592,11 @@
         "boatRamp-src": "1",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Giles French Park",
+        "state": "OR",
+        "county": "Sherman",
+        "notes": "Popular fishing spot."
       },
       "geometry": {
         "type": "Point",
@@ -3268,7 +3609,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639846037-91",
+        "web-scraper-order": "1639846037-91",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=120",
         "riverSegment": "Lake Umatilla",
         "riverName": "Columbia",
@@ -3287,7 +3628,10 @@
         "boatRamp-src": "0",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Irrigon Fish Hatchery",
+        "state": "OR",
+        "county": "Morrow"
       },
       "geometry": {
         "type": "Point",
@@ -3300,7 +3644,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639846187-159",
+        "web-scraper-order": "1639846187-159",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=52",
         "riverSegment": "Lake Bryan",
         "riverName": "Snake",
@@ -3319,7 +3663,11 @@
         "boatRamp-src": "1",
         "handCarried-src": "1",
         "marina-src": "1",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Illia Landing",
+        "state": "WA",
+        "county": "Garfield",
+        "notes": "Pets must be kept on a leash. Hunting is prohibited."
       },
       "geometry": {
         "type": "Point",
@@ -3332,7 +3680,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639846061-102",
+        "web-scraper-order": "1639846061-102",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=109",
         "riverSegment": "Lake Wallula",
         "riverName": "Columbia",
@@ -3351,7 +3699,11 @@
         "boatRamp-src": "1",
         "handCarried-src": "1",
         "marina-src": "0",
-        "adaAccess-src": "1"
+        "adaAccess-src": "1",
+        "name": "Hat Rock State Park",
+        "state": "OR",
+        "county": "Umatilla",
+        "notes": "Pets must be kept on a leash. Private campground, store, and café nearby, for information visit www.hatrockcampground.com"
       },
       "geometry": {
         "type": "Point",
@@ -3364,7 +3716,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639846211-170",
+        "web-scraper-order": "1639846211-170",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=41",
         "riverSegment": "Lower Granite Lake",
         "riverName": "Snake",
@@ -3383,7 +3735,10 @@
         "boatRamp-src": "0",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Chief Timothy Habitat Management Unit",
+        "state": "WA",
+        "county": "Asotin"
       },
       "geometry": {
         "type": "Point",
@@ -3396,7 +3751,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639846031-88",
+        "web-scraper-order": "1639846031-88",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=123",
         "riverSegment": "Lake Umatilla",
         "riverName": "Columbia",
@@ -3415,7 +3770,8 @@
         "boatRamp-src": "1",
         "handCarried-src": "1",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Fishhook Park"
       },
       "geometry": {
         "type": "Point",
@@ -3428,7 +3784,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639846270-194",
+        "web-scraper-order": "1639846270-194",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=15",
         "riverSegment": "",
         "riverName": "Clearwater",
@@ -3447,7 +3803,8 @@
         "boatRamp-src": "0",
         "handCarried-src": "1",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Pepsi Park"
       },
       "geometry": {
         "type": "Point",
@@ -3460,7 +3817,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639846114-126",
+        "web-scraper-order": "1639846114-126",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=85",
         "riverSegment": "",
         "riverName": "Snake",
@@ -3479,7 +3836,10 @@
         "boatRamp-src": "1",
         "handCarried-src": "1",
         "marina-src": "0",
-        "adaAccess-src": "1"
+        "adaAccess-src": "1",
+        "name": "Ice Harbor Dam",
+        "state": "WA",
+        "county": "Franklin and Walla Walla"
       },
       "geometry": {
         "type": "Point",
@@ -3492,7 +3852,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639846150-142",
+        "web-scraper-order": "1639846150-142",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=69",
         "riverSegment": "Lake West",
         "riverName": "Snake",
@@ -3511,7 +3871,11 @@
         "boatRamp-src": "1",
         "handCarried-src": "1",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Devils Bench",
+        "state": "WA",
+        "county": "Franklin",
+        "notes": "Pets must be kept on a leash. Horses and hunting are prohibited."
       },
       "geometry": {
         "type": "Point",
@@ -3524,7 +3888,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639846024-85",
+        "web-scraper-order": "1639846024-85",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=126",
         "riverSegment": "Lake Umatilla",
         "riverName": "Columbia",
@@ -3543,7 +3907,10 @@
         "boatRamp-src": "1",
         "handCarried-src": "1",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Quesnell Park",
+        "state": "OR",
+        "county": "Gilliam"
       },
       "geometry": {
         "type": "Point",
@@ -3556,7 +3923,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639846013-80",
+        "web-scraper-order": "1639846013-80",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=131",
         "riverSegment": "Lake Umatilla",
         "riverName": "Columbia",
@@ -3575,7 +3942,8 @@
         "boatRamp-src": "0",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Rock Creek Ramp"
       },
       "geometry": {
         "type": "Point",
@@ -3588,7 +3956,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639846092-116",
+        "web-scraper-order": "1639846092-116",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=95",
         "riverSegment": "Lake Wallula",
         "riverName": "Columbia",
@@ -3607,7 +3975,11 @@
         "boatRamp-src": "1",
         "handCarried-src": "1",
         "marina-src": "0",
-        "adaAccess-src": "1"
+        "adaAccess-src": "1",
+        "name": "Chiawana Park",
+        "state": "WA",
+        "county": "Franklin",
+        "notes": "Pets must be kept on a leash."
       },
       "geometry": {
         "type": "Point",
@@ -3620,7 +3992,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639846178-155",
+        "web-scraper-order": "1639846178-155",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=56",
         "riverSegment": "Lake Bryan",
         "riverName": "Snake",
@@ -3639,7 +4011,12 @@
         "boatRamp-src": "1",
         "handCarried-src": "1",
         "marina-src": "0",
-        "adaAccess-src": "1"
+        "adaAccess-src": "1",
+        "name": "Central Ferry Park",
+        "state": "WA",
+        "county": "Whitman",
+        "campingFee": "$17 per standard campsite",
+        "notes": "Pets must be kept on a leash. Golden Age and Access Passports will not be accepted. Hot shower available."
       },
       "geometry": {
         "type": "Point",
@@ -3652,7 +4029,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639846266-192",
+        "web-scraper-order": "1639846266-192",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=17",
         "riverSegment": "",
         "riverName": "Clearwater",
@@ -3671,7 +4048,9 @@
         "boatRamp-src": "0",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Area adjacent to railroad bridge just upstream from Spalding on old highway",
+        "state": "ID"
       },
       "geometry": {
         "type": "Point",
@@ -3684,7 +4063,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639845982-66",
+        "web-scraper-order": "1639845982-66",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=145",
         "riverSegment": "Lake Celilo",
         "riverName": "Columbia",
@@ -3703,7 +4082,11 @@
         "boatRamp-src": "1",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Columbia Hills State Park",
+        "state": "WA",
+        "campingFee": "$17 per standard campsite",
+        "notes": "Pay phone is available."
       },
       "geometry": {
         "type": "Point",
@@ -3716,7 +4099,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639846191-161",
+        "web-scraper-order": "1639846191-161",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=50",
         "riverSegment": "Lake Bryan",
         "riverName": "Snake",
@@ -3735,7 +4118,10 @@
         "boatRamp-src": "0",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Lower Granite Portage Downstream",
+        "state": "WA",
+        "county": "Garfield"
       },
       "geometry": {
         "type": "Point",
@@ -3748,7 +4134,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639845964-58",
+        "web-scraper-order": "1639845964-58",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=153",
         "riverSegment": "Lake Bonneville",
         "riverName": "Columbia",
@@ -3767,7 +4153,11 @@
         "boatRamp-src": "0",
         "handCarried-src": "1",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Rock Creek Natural Preserve and Beach",
+        "state": "OR",
+        "county": "Wasco",
+        "notes": "Park only in the gravel area between I-84 and the Railroad Tracks. Overflow parking is East of the Mosier sewage treatment plant parallel to the Railroad Tracks. Parking fees are $5 a day."
       },
       "geometry": {
         "type": "Point",
@@ -3780,7 +4170,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639845913-35",
+        "web-scraper-order": "1639845913-35",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=176",
         "riverSegment": "Bonneville Dam",
         "riverName": "Columbia",
@@ -3799,7 +4189,10 @@
         "boatRamp-src": "0",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "1"
+        "adaAccess-src": "1",
+        "name": "Bonneville(Oregon )",
+        "state": "OR",
+        "county": "Multnomah"
       },
       "geometry": {
         "type": "Point",
@@ -3812,7 +4205,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639846194-162",
+        "web-scraper-order": "1639846194-162",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=49",
         "riverSegment": "",
         "riverName": "Snake",
@@ -3831,7 +4224,10 @@
         "boatRamp-src": "0",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "1"
+        "adaAccess-src": "1",
+        "name": "Lower Granite Dam",
+        "state": "WA",
+        "county": "Garfield"
       },
       "geometry": {
         "type": "Point",
@@ -3844,7 +4240,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639846200-165",
+        "web-scraper-order": "1639846200-165",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=46",
         "riverSegment": "Lower Granite Lake",
         "riverName": "Snake",
@@ -3863,7 +4259,12 @@
         "boatRamp-src": "0",
         "handCarried-src": "1",
         "marina-src": "0",
-        "adaAccess-src": "1"
+        "adaAccess-src": "1",
+        "name": "Wawawai County Park",
+        "state": "WA",
+        "county": "Whitman",
+        "campingFee": "$15 per night",
+        "notes": "Pets must be kept on a leash. Horses and hunting are prohibited. No open fires allowed from June 10 through October 10. Water available April 15 to October 15."
       },
       "geometry": {
         "type": "Point",
@@ -3876,7 +4277,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639845898-29",
+        "web-scraper-order": "1639845898-29",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=183",
         "riverSegment": "Lake Bryan",
         "riverName": "Snake",
@@ -3895,7 +4296,12 @@
         "boatRamp-src": "0",
         "handCarried-src": "1",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Lambi Creek",
+        "state": "WA",
+        "county": "Garfield",
+        "campingFee": "None",
+        "notes": "This is the last launching/landing spot for hand-carried boats before Central Ferry, nearly twenty miles downstream."
       },
       "geometry": {
         "type": "Point",
@@ -3908,7 +4314,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639845836-3",
+        "web-scraper-order": "1639845836-3",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=211",
         "riverSegment": "Lake Wallula",
         "riverName": "Columbia",
@@ -3927,7 +4333,10 @@
         "boatRamp-src": "0",
         "handCarried-src": "1",
         "marina-src": "0",
-        "adaAccess-src": "1"
+        "adaAccess-src": "1",
+        "name": "Leslie R. Groves Park",
+        "state": "OR",
+        "county": "Benton"
       },
       "geometry": {
         "type": "Point",
@@ -3940,7 +4349,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639845922-39",
+        "web-scraper-order": "1639845922-39",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=172",
         "riverSegment": "Lake Bonneville",
         "riverName": "Columbia",
@@ -3959,7 +4368,10 @@
         "boatRamp-src": "1",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "1"
+        "adaAccess-src": "1",
+        "name": "Marina Park( Cascade Locks Boat Ramp)",
+        "state": "OR",
+        "county": "Hood River"
       },
       "geometry": {
         "type": "Point",
@@ -3972,7 +4384,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639845841-5",
+        "web-scraper-order": "1639845841-5",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=209",
         "riverSegment": "",
         "riverName": "Clearwater",
@@ -3991,7 +4403,11 @@
         "boatRamp-src": "1",
         "handCarried-src": "1",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Steelhead Park",
+        "state": "ID",
+        "county": "Nez Perce/Clearwater",
+        "notes": "Also see: North Lewiston Ramp"
       },
       "geometry": {
         "type": "Point",
@@ -4004,7 +4420,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639845850-9",
+        "web-scraper-order": "1639845850-9",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=205",
         "riverSegment": "",
         "riverName": "Clearwater",
@@ -4023,7 +4439,9 @@
         "boatRamp-src": "0",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Lenore",
+        "state": "ID"
       },
       "geometry": {
         "type": "Point",
@@ -4036,7 +4454,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639846130-133",
+        "web-scraper-order": "1639846130-133",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=78",
         "riverSegment": "Lake Sacajawea",
         "riverName": "Snake",
@@ -4055,7 +4473,11 @@
         "boatRamp-src": "0",
         "handCarried-src": "1",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Lake Emma",
+        "state": "WA",
+        "campingFee": "No fee",
+        "notes": "No designated camping spots."
       },
       "geometry": {
         "type": "Point",
@@ -4068,7 +4490,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639845883-24",
+        "web-scraper-order": "1639845883-24",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=190",
         "riverSegment": "Clearwater",
         "riverName": "Clearwater",
@@ -4087,7 +4509,10 @@
         "boatRamp-src": "1",
         "handCarried-src": "1",
         "marina-src": "0",
-        "adaAccess-src": "1"
+        "adaAccess-src": "1",
+        "name": "Gibbs Eddy",
+        "state": "ID",
+        "notes": "Parking available"
       },
       "geometry": {
         "type": "Point",
@@ -4100,7 +4525,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639845935-45",
+        "web-scraper-order": "1639845935-45",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=166",
         "riverSegment": "Lake Bonneville",
         "riverName": "Columbia",
@@ -4119,7 +4544,11 @@
         "boatRamp-src": "1",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Drano Lake",
+        "state": "WA",
+        "county": "Skamania",
+        "notes": "Boat launch and parking lot only. Day use fee. No overnight camping nor parking."
       },
       "geometry": {
         "type": "Point",
@@ -4132,7 +4561,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639846006-77",
+        "web-scraper-order": "1639846006-77",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=134",
         "riverSegment": "Lake Umatilla",
         "riverName": "Columbia",
@@ -4151,7 +4580,10 @@
         "boatRamp-src": "0",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Railroad Island",
+        "state": "WA",
+        "county": "Klickitat"
       },
       "geometry": {
         "type": "Point",
@@ -4164,7 +4596,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639845926-41",
+        "web-scraper-order": "1639845926-41",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=170",
         "riverSegment": "Lake Bonneville",
         "riverName": "Columbia",
@@ -4183,7 +4615,11 @@
         "boatRamp-src": "0",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "1"
+        "adaAccess-src": "1",
+        "name": "Bob's Beach",
+        "state": "WA",
+        "county": "Skamania",
+        "notes": "Changing rooms available. Adjacent to Columbia Gorge Riverside Lodge."
       },
       "geometry": {
         "type": "Point",
@@ -4196,7 +4632,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639846167-150",
+        "web-scraper-order": "1639846167-150",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=61",
         "riverSegment": "Lake Bryan",
         "riverName": "Snake",
@@ -4215,7 +4651,10 @@
         "boatRamp-src": "0",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "1"
+        "adaAccess-src": "1",
+        "name": "Little Goose Dam",
+        "state": "WA",
+        "county": "Columbia"
       },
       "geometry": {
         "type": "Point",
@@ -4228,7 +4667,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639846081-111",
+        "web-scraper-order": "1639846081-111",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=100",
         "riverSegment": "Lake Wallula",
         "riverName": "Columbia",
@@ -4247,7 +4686,11 @@
         "boatRamp-src": "1",
         "handCarried-src": "1",
         "marina-src": "1",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Pasco Boat Basin",
+        "state": "WA",
+        "county": "Franklin",
+        "notes": "Pets must be kept on a leash."
       },
       "geometry": {
         "type": "Point",
@@ -4260,7 +4703,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639846216-172",
+        "web-scraper-order": "1639846216-172",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=39",
         "riverSegment": "Lower Granite Lake",
         "riverName": "Snake",
@@ -4279,7 +4722,10 @@
         "boatRamp-src": "0",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "1"
+        "adaAccess-src": "1",
+        "name": "Lewiston Levee Parkway",
+        "state": "ID",
+        "county": "Nez Perce"
       },
       "geometry": {
         "type": "Point",
@@ -4292,7 +4738,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639846132-134",
+        "web-scraper-order": "1639846132-134",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=77",
         "riverSegment": "Lake Sacajawea",
         "riverName": "Snake",
@@ -4311,7 +4757,10 @@
         "boatRamp-src": "0",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Lost Island (Votaw)",
+        "state": "WA",
+        "county": "Franklin"
       },
       "geometry": {
         "type": "Point",
@@ -4324,7 +4773,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639845989-69",
+        "web-scraper-order": "1639845989-69",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=142",
         "riverSegment": "Lake Celilo",
         "riverName": "Columbia",
@@ -4343,7 +4792,12 @@
         "boatRamp-src": "1",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Heritage Landing State Park",
+        "state": "OR",
+        "county": "Wasco",
+        "campingFee": "*Boater Pass Fee",
+        "notes": "Caution: access from Columbia River means boating upstream on the Deshutes River. Deschutes Boater Pass may be required, call 800-551-6949. Camping across river at Deschutes State Recreation Area."
       },
       "geometry": {
         "type": "Point",
@@ -4356,7 +4810,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639846119-128",
+        "web-scraper-order": "1639846119-128",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=83",
         "riverSegment": "Lake Sacajawea",
         "riverName": "Snake",
@@ -4375,7 +4829,10 @@
         "boatRamp-src": "0",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Ramp @ Ice Harbor Dam",
+        "state": "WA",
+        "county": "Walla Walla"
       },
       "geometry": {
         "type": "Point",
@@ -4388,7 +4845,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639845971-61",
+        "web-scraper-order": "1639845971-61",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=150",
         "riverSegment": "Lake Bonneville",
         "riverName": "Columbia",
@@ -4407,7 +4864,10 @@
         "boatRamp-src": "1",
         "handCarried-src": "0",
         "marina-src": "1",
-        "adaAccess-src": "1"
+        "adaAccess-src": "1",
+        "name": "Port of the Dalles Marina",
+        "state": "OR",
+        "county": "Wasco"
       },
       "geometry": {
         "type": "Point",
@@ -4420,7 +4880,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639846220-174",
+        "web-scraper-order": "1639846220-174",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=37",
         "riverSegment": "Lower Granite Lake",
         "riverName": "Snake",
@@ -4439,7 +4899,10 @@
         "boatRamp-src": "1",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "1"
+        "adaAccess-src": "1",
+        "name": "Southway Ramp",
+        "state": "ID",
+        "county": "Nez Perce"
       },
       "geometry": {
         "type": "Point",
@@ -4452,7 +4915,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639845902-31",
+        "web-scraper-order": "1639845902-31",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=181",
         "riverSegment": "Lake Wallula",
         "riverName": "Columbia",
@@ -4471,7 +4934,10 @@
         "boatRamp-src": "0",
         "handCarried-src": "1",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Sand Station Recreation",
+        "state": "OR",
+        "county": "Umatilla"
       },
       "geometry": {
         "type": "Point",
@@ -4484,7 +4950,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639846128-132",
+        "web-scraper-order": "1639846128-132",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=79",
         "riverSegment": "Lake Sacajawea",
         "riverName": "Snake",
@@ -4503,7 +4969,12 @@
         "boatRamp-src": "1",
         "handCarried-src": "1",
         "marina-src": "0",
-        "adaAccess-src": "1"
+        "adaAccess-src": "1",
+        "name": "Fishhook Park",
+        "state": "WA",
+        "county": "Walla Walla",
+        "campingFee": "$22.00 Tents Sites, $8.00 Boat Camping",
+        "notes": "No wake area around swimming area. Reservations are accepted for group shelter by calling 509-547-2048."
       },
       "geometry": {
         "type": "Point",
@@ -4516,7 +4987,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639845839-4",
+        "web-scraper-order": "1639845839-4",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=210",
         "riverSegment": "Clearwater",
         "riverName": "Clearwater",
@@ -4535,7 +5006,10 @@
         "boatRamp-src": "1",
         "handCarried-src": "1",
         "marina-src": "0",
-        "adaAccess-src": "1"
+        "adaAccess-src": "1",
+        "name": "Upper Hog Island",
+        "state": "ID",
+        "county": "Nez Perce/Clearwater"
       },
       "geometry": {
         "type": "Point",
@@ -4548,7 +5022,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639845843-6",
+        "web-scraper-order": "1639845843-6",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=208",
         "riverSegment": "Clearwater",
         "riverName": "Clearwater",
@@ -4567,7 +5041,9 @@
         "boatRamp-src": "0",
         "handCarried-src": "1",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Beardy Gulch Fishing Access",
+        "county": "Nez Perce"
       },
       "geometry": {
         "type": "Point",
@@ -4580,7 +5056,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639846288-202",
+        "web-scraper-order": "1639846288-202",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=7",
         "riverSegment": "Clearwater",
         "riverName": "Clearwater",
@@ -4599,7 +5075,11 @@
         "boatRamp-src": "1",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "1"
+        "adaAccess-src": "1",
+        "name": "LenoreAccess",
+        "state": "ID",
+        "county": "Nez Perce",
+        "notes": "Today the site is covered by highly maintained lawns and trees, but was once a Nez Perce village. An archeological excavation revealed continuous habitation at this site for over 8,000 years."
       },
       "geometry": {
         "type": "Point",
@@ -4612,7 +5092,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639845891-27",
+        "web-scraper-order": "1639845891-27",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=186",
         "riverSegment": "Clearwater",
         "riverName": "Clearwater",
@@ -4631,7 +5111,10 @@
         "boatRamp-src": "1",
         "handCarried-src": "1",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Upper Goose Pasture",
+        "county": "Nez Perce",
+        "notes": "No parking available"
       },
       "geometry": {
         "type": "Point",
@@ -4644,7 +5127,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639846020-83",
+        "web-scraper-order": "1639846020-83",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=128",
         "riverSegment": "Lake Umatilla",
         "riverName": "Columbia",
@@ -4663,7 +5146,11 @@
         "boatRamp-src": "1",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "1"
+        "adaAccess-src": "1",
+        "name": "Port of Arlington Marina",
+        "state": "OR",
+        "county": "Gilliam",
+        "notes": "Payment is $15/night for RVs and $7/night otherwise. Only 2 tent sites available."
       },
       "geometry": {
         "type": "Point",
@@ -4676,7 +5163,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639846048-96",
+        "web-scraper-order": "1639846048-96",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=115",
         "riverSegment": "Lake Umatilla",
         "riverName": "Columbia",
@@ -4695,7 +5182,11 @@
         "boatRamp-src": "1",
         "handCarried-src": "1",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Umatilla Marina Park",
+        "county": "Umatilla",
+        "campingFee": "15$ per tent site",
+        "notes": "Pets must be kept on a leash. Horses and hunting are prohibited."
       },
       "geometry": {
         "type": "Point",
@@ -4708,7 +5199,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639846277-197",
+        "web-scraper-order": "1639846277-197",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=12",
         "riverSegment": "Lower Granite Lake",
         "riverName": "Clearwater",
@@ -4727,7 +5218,10 @@
         "boatRamp-src": "1",
         "handCarried-src": "1",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Clearwater Ramp",
+        "state": "ID",
+        "county": "Nez Perce"
       },
       "geometry": {
         "type": "Point",
@@ -4740,7 +5234,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639845869-18",
+        "web-scraper-order": "1639845869-18",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=196",
         "riverSegment": "Lake Bonneville",
         "riverName": "Columbia",
@@ -4759,7 +5253,10 @@
         "boatRamp-src": "0",
         "handCarried-src": "1",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Dougs Beach State Park",
+        "state": "WA",
+        "county": "Klickitat"
       },
       "geometry": {
         "type": "Point",
@@ -4772,7 +5269,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639846123-130",
+        "web-scraper-order": "1639846123-130",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=81",
         "riverSegment": "Lake Sacajawea",
         "riverName": "Snake",
@@ -4791,7 +5288,11 @@
         "boatRamp-src": "1",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Levey Park",
+        "state": "WA",
+        "county": "Franklin",
+        "notes": "Reservations are accepted for group shelter by calling 509-547-2048 during weekday business hours, but not more than 3 months in advance. A $55.00 reservation fee is required."
       },
       "geometry": {
         "type": "Point",
@@ -4804,7 +5305,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639845995-72",
+        "web-scraper-order": "1639845995-72",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=139",
         "riverSegment": "Lake Celilo",
         "riverName": "Columbia",
@@ -4823,7 +5324,12 @@
         "boatRamp-src": "1",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Maryhill State Park",
+        "state": "WA",
+        "county": "Klickitat County",
+        "campingFee": "$17 for a standard campsite.",
+        "notes": "Maximum of 8 people per campsite."
       },
       "geometry": {
         "type": "Point",
@@ -4836,7 +5342,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639846063-103",
+        "web-scraper-order": "1639846063-103",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=108",
         "riverSegment": "Lake Wallula",
         "riverName": "Columbia",
@@ -4855,7 +5361,10 @@
         "boatRamp-src": "0",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Warehouse Beach",
+        "state": "OR",
+        "county": "Umatilla"
       },
       "geometry": {
         "type": "Point",
@@ -4868,7 +5377,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639846096-118",
+        "web-scraper-order": "1639846096-118",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=93",
         "riverSegment": "Lake Wallula",
         "riverName": "Columbia",
@@ -4887,7 +5396,8 @@
         "boatRamp-src": "0",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Bateman Island"
       },
       "geometry": {
         "type": "Point",
@@ -4900,7 +5410,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639846158-146",
+        "web-scraper-order": "1639846158-146",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=65",
         "riverSegment": "Lake West",
         "riverName": "Snake",
@@ -4919,7 +5429,8 @@
         "boatRamp-src": "0",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Tucannon WLF Habitat Unit"
       },
       "geometry": {
         "type": "Point",
@@ -4932,7 +5443,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639846108-123",
+        "web-scraper-order": "1639846108-123",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=88",
         "riverSegment": "Lake Wallula",
         "riverName": "Snake",
@@ -4951,7 +5462,12 @@
         "boatRamp-src": "1",
         "handCarried-src": "1",
         "marina-src": "0",
-        "adaAccess-src": "1"
+        "adaAccess-src": "1",
+        "name": "Hood Park",
+        "state": "WA",
+        "county": "Walla Walla",
+        "campingFee": "$18 per site",
+        "notes": "Pets must be on leash, and horses/hunting are prohibited. Reservations accepted for group shelters by calling (509)-547-2048, but cannot be made more than 3 months in advance."
       },
       "geometry": {
         "type": "Point",
@@ -4964,7 +5480,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639846236-181",
+        "web-scraper-order": "1639846236-181",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=30",
         "riverSegment": "Clearwater",
         "riverName": "Clearwater",
@@ -4983,7 +5499,9 @@
         "boatRamp-src": "0",
         "handCarried-src": "1",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "McGill Hole",
+        "state": "ID"
       },
       "geometry": {
         "type": "Point",
@@ -4996,7 +5514,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639846250-185",
+        "web-scraper-order": "1639846250-185",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=24",
         "riverSegment": "Clearwater",
         "riverName": "Clearwater",
@@ -5015,7 +5533,10 @@
         "boatRamp-src": "0",
         "handCarried-src": "1",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Lower Hog Island",
+        "state": "ID",
+        "county": "Nez Perce"
       },
       "geometry": {
         "type": "Point",
@@ -5028,7 +5549,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639846077-109",
+        "web-scraper-order": "1639846077-109",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=102",
         "riverSegment": "Lake Wallula",
         "riverName": "Columbia",
@@ -5047,7 +5568,10 @@
         "boatRamp-src": "0",
         "handCarried-src": "1",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "McNary National Wildlife Refuge",
+        "state": "WA",
+        "county": "Umatilla"
       },
       "geometry": {
         "type": "Point",
@@ -5060,7 +5584,7 @@
     {
       "type": "Feature",
       "properties": {
-        "﻿web-scraper-order": "1639846299-207",
+        "web-scraper-order": "1639846299-207",
         "web-scraper-start-url": "http://www.ndwt.org/ndwt/explore/site.asp?site=2",
         "riverSegment": "Clearwater",
         "riverName": "Clearwater",
@@ -5079,7 +5603,11 @@
         "boatRamp-src": "1",
         "handCarried-src": "0",
         "marina-src": "0",
-        "adaAccess-src": "0"
+        "adaAccess-src": "0",
+        "name": "Pink House",
+        "state": "ID",
+        "campingFee": "$10/night for campsite.",
+        "notes": "Maximum of a 14 day stay. Handicap accessible."
       },
       "geometry": {
         "type": "Point",

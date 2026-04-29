@@ -2,15 +2,15 @@
 
 ## Status
 
-| Phase | Description                                           | State     |
-| ----- | ----------------------------------------------------- | --------- |
-| 8     | Data enrichment — names, notes, fees, state/county    | In review |
-| 9     | Per-site canonical URLs (`/sites/<slug>`)             | Planned   |
-| 10    | Site index / browse-by-list                           | Planned   |
-| 11    | Water Safety + River Navigation + Leave No Trace      | Planned   |
-| 12    | Natural World + Past & Present                        | Planned   |
-| 13    | About expansion + Get Involved + Photo Gallery        | Planned   |
-| 14    | Cutover — redirects, sitemap, SEO, custom-domain swap | Planned   |
+| Phase | Description                                           | State         |
+| ----- | ----------------------------------------------------- | ------------- |
+| 8     | Data enrichment — names, notes, fees, state/county    | Done (PR #39) |
+| 9     | Per-site canonical URLs (`/sites/<slug>`)             | Planned       |
+| 10    | Site index / browse-by-list                           | Planned       |
+| 11    | Water Safety + River Navigation + Leave No Trace      | Planned       |
+| 12    | Natural World + Past & Present                        | Planned       |
+| 13    | About expansion + Get Involved + Photo Gallery        | Planned       |
+| 14    | Cutover — redirects, sitemap, SEO, custom-domain swap | Planned       |
 
 This plan picks up where
 [`modernization.md`](./modernization.md) left off (phases 1–7).
@@ -47,16 +47,16 @@ key for the redirect map (Phase 14) but isn't user-visible.
 
 ## Scope decisions
 
-| Item                                      | Decision                                                                                                                                                                                                                            |
-| ----------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Per-site URL shape                        | `/sites/<slug>` — kebab-case from canonical name. The legacy `web-scraper-order` ID stays as `Site.id` and is reused for the Phase 14 redirect map.                                                                                 |
-| Content authoring format                  | MDX under `content/`; rendered via per-route `page.tsx` that imports the MDX. Lets us embed PandaCSS-styled callouts without giving up static export.                                                                               |
-| Site name source                          | One-time scrape of ndwt.org's per-site pages (`site.asp?site=<id>`) to populate name, state, county, camping fee, notes. Saved as a separate `public/data/ndwt-enriched.json` with the GeoJSON kept as the spatial source of truth. |
-| Editorial content source                  | One-time scrape of ndwt.org's static pages, converted to MDX, hand-edited for voice + accuracy + accessibility. Each page footer cites "Originally published on ndwt.org; reused with permission from WWTA."                        |
-| Forum / Trip Reports / Donate / Volunteer | Out of scope — link out to WWTA's existing flows. Phase 13 adds the links.                                                                                                                                                          |
-| Press Coverage                            | Permanently deferred — low engagement value.                                                                                                                                                                                        |
-| Photo Gallery                             | Phase 13, conditional on WWTA having a photo library to point at. Otherwise deferred.                                                                                                                                               |
-| Search                                    | Out of scope for now — site index list (Phase 10) covers most of the use case. Revisit after Phase 14 if user feedback asks for it.                                                                                                 |
+| Item                                      | Decision                                                                                                                                                                                                                   |
+| ----------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Per-site URL shape                        | `/sites/<slug>` — kebab-case from canonical name. The legacy `web-scraper-order` ID stays as `Site.id` and is reused for the Phase 14 redirect map.                                                                        |
+| Content authoring format                  | MDX under `content/`; rendered via per-route `page.tsx` that imports the MDX. Lets us embed PandaCSS-styled callouts without giving up static export.                                                                      |
+| Site name source                          | One-time scrape of ndwt.org's per-site pages (`site.asp?site=<id>`) to populate name, state, county, camping fee, notes. Merged directly into `public/data/ndwt.geojson` feature properties (see `public/data/README.md`). |
+| Editorial content source                  | One-time scrape of ndwt.org's static pages, converted to MDX, hand-edited for voice + accuracy + accessibility. Each page footer cites "Originally published on ndwt.org; reused with permission from WWTA."               |
+| Forum / Trip Reports / Donate / Volunteer | Out of scope — link out to WWTA's existing flows. Phase 13 adds the links.                                                                                                                                                 |
+| Press Coverage                            | Permanently deferred — low engagement value.                                                                                                                                                                               |
+| Photo Gallery                             | Phase 13, conditional on WWTA having a photo library to point at. Otherwise deferred.                                                                                                                                      |
+| Search                                    | Out of scope for now — site index list (Phase 10) covers most of the use case. Revisit after Phase 14 if user feedback asks for it.                                                                                        |
 
 ## Per-PR bot review triage
 
@@ -76,30 +76,39 @@ camping fee, and notes when ndwt.org has them.
   - Site name from `<title>` / `<h1>`
   - State, county, camping fee, notes from the detail table
   - Sanitizes free-text fields (strip HTML, normalize whitespace)
-- Output: `public/data/ndwt-enriched.json` keyed by legacy ID,
-  committed to the repo. The script is **one-shot** — re-run
-  manually if ndwt.org changes; not part of the build.
+- Output: scraped enrichment fields (`name`, `state`, `county`,
+  `campingFee`, `notes`) merged directly into each feature's
+  `properties` in `public/data/ndwt.geojson`. The script is
+  **one-shot** — re-run manually if ndwt.org changes; not part of
+  the build.
 - `NOTICE.md` at repo root documents the WWTA permission grant
   and content provenance. Linked from About and Footer.
+- `public/data/README.md` documents the GeoJSON schema for
+  external GIS consumers.
 - Domain model updates:
   - `Site.name: string` (required after enrichment)
   - `Site.state?: string`, `Site.county?: string`,
     `Site.campingFee?: string`, `Site.notes?: string`
   - `Site.id` already carries the `web-scraper-order` value
-    (the legacy ndwt.org primary key) — that's the join key
-    against `ndwt-enriched.json` and the source of truth for the
-    Phase 14 redirect map. No separate `legacyId` field needed.
-- Parser merges `ndwt.geojson` + `ndwt-enriched.json` at build time
-  via the existing inbound adapter. If the enriched record is
-  missing, fall back to a generated placeholder name like
-  `"Columbia River — Mile 234"` (current behavior) and log the
-  gap for follow-up.
+    (the legacy ndwt.org primary key) — kept for the Phase 14
+    redirect map. No separate `legacyId` field needed.
+- Parser reads the merged properties straight from the GeoJSON.
+  If `name` is somehow missing (broken data), fall back to a
+  generated `"Columbia River — Mile 234"` placeholder so the
+  build doesn't crash.
 - `SiteInfoPanel` header now shows the site name. Add conditional
   rows for state, county, camping fee, notes.
-- Tests: parser merge edge cases (missing enriched record,
-  partial fields); panel snapshot with all fields populated.
+- Tests: parser reads merged props; fallback when name absent;
+  panel snapshot with all fields populated.
 - Verify: every marker's panel header shows a real name; sample
   three sites against ndwt.org for accuracy.
+
+> Phase 8 originally shipped name/state/county/campingFee/notes in
+> a separate `ndwt-enriched.json` sidecar. A follow-up refactor
+> merged those fields into `ndwt.geojson` so there's a single
+> dataset on disk, a simpler loader (one fs read, no fallback
+> branch), and a richer published asset for external GIS reuse.
+> The retrospective bullets above describe the post-merge shape.
 
 ### Phase 9 — Per-site canonical URLs
 
@@ -248,7 +257,8 @@ re-index correctly; the old ASP site can be retired.
 - Per-page OpenGraph + Twitter Card metadata audited.
 - Netlify `_redirects` (or `netlify.toml [[redirects]]`):
   - `301 /ndwt/explore/site.asp?site=:id /sites/<slug>` —
-    legacy-ID-to-slug map generated from the enriched data.
+    legacy-ID-to-slug map generated from the merged GeoJSON
+    (`web-scraper-order` → `slug`).
   - `301 /ndwt/safety/* /water-safety/*` — pattern map for
     each section.
   - Catch-all `301 /ndwt/* /` for anything not explicitly
@@ -270,8 +280,9 @@ re-index correctly; the old ASP site can be retired.
 
 Created:
 
-- `scripts/scrape-ndwt-sites.ts` (one-shot enricher)
-- `public/data/ndwt-enriched.json` (keyed by legacy ID)
+- `scripts/scrape-ndwt-sites.ts` (one-shot enricher; merges into
+  `ndwt.geojson` in place)
+- `public/data/README.md` (dataset schema for external consumers)
 - `NOTICE.md` (permission attribution)
 - `app/sites/[slug]/page.tsx`
 - `app/sites/page.tsx` (index)
@@ -289,8 +300,8 @@ Modified:
 - `src/domain/site.ts` — add `name`, `state`, `county`,
   `campingFee`, `notes`, `slug` (slug lands in Phase 9; `Site.id`
   already carries the legacy ndwt.org ID for redirects)
-- `src/adapters/inbound/next/load-sites.ts` — merge enriched
-  record at parse time
+- `src/adapters/inbound/next/load-sites.ts` — single fs read of
+  the merged GeoJSON
 - `src/components/panels/SiteInfoPanel.tsx` — name in header,
   conditional rows for new fields
 - `src/components/layout/Header.tsx` — Sites + Resources nav
