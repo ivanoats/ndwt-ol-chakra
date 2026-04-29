@@ -6,6 +6,7 @@ import { gpxFilename, siteToGpx } from '../site-to-gpx';
 const baseSite: Site = {
   id: siteId('x'),
   name: 'Blalock Canyon',
+  slug: 'blalock-canyon',
   riverSegment: 'Lake Umatilla',
   riverName: 'Columbia',
   riverMile: 234,

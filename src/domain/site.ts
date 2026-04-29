@@ -8,6 +8,7 @@ export const siteId = (raw: string): SiteId => raw as SiteId;
 export interface Site {
   readonly id: SiteId;
   readonly name: string;
+  readonly slug: string;
   readonly riverSegment: string;
   readonly riverName: string;
   readonly riverMile: number;

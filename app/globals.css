@@ -32,3 +32,17 @@ body {
   flex: 1;
   width: 100%;
 }
+
+/* Print: hide site chrome so a printed site page is just the
+   article content. The /sites/<slug> page leans on this so a
+   trip-day handout doesn't waste ink on the header / footer. */
+@media print {
+  header,
+  footer {
+    display: none !important;
+  }
+  body {
+    background: white;
+    color: black;
+  }
+}

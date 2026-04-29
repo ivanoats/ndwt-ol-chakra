@@ -1,5 +1,6 @@
 import type { SiteRepository } from '../../application/ports/site-repository';
 import {
+  assignSlugs,
   coordinates,
   FACILITIES,
   type Facility,
@@ -8,6 +9,8 @@ import {
   type SiteId,
   siteId,
 } from '../../domain';
+
+type DraftSite = Omit<Site, 'slug'>;
 
 interface RawProps {
   readonly [key: string]: string | undefined;
@@ -52,7 +55,7 @@ const facilityFlags = (props: RawProps): Partial<Record<Facility, boolean>> => {
 const fallbackName = (riverName: string, riverMile: number): string =>
   `${riverName} River — Mile ${riverMile}`;
 
-const toSite = (feature: RawFeature, index: number): Site => {
+const toDraft = (feature: RawFeature, index: number): DraftSite => {
   const props = feature.properties;
   const [lng, lat] = feature.geometry.coordinates;
   const idRaw = readProp(props, ...ID_KEY_CANDIDATES) ?? `site-${index}`;
@@ -94,11 +97,20 @@ const toSite = (feature: RawFeature, index: number): Site => {
  * that were merged in from ndwt.org during Phase 8. If `name` is
  * somehow missing, the parser falls back to "RiverName River — Mile
  * NN" so the build doesn't crash on a broken record.
+ *
+ * Slug is assigned in a second pass via `assignSlugs` so it can see
+ * the whole dataset and resolve name collisions.
  */
 export const parseSitesFromGeoJson = (
   body: RawFeatureCollection
-): readonly Site[] =>
-  body.features.map((feature, index) => toSite(feature, index));
+): readonly Site[] => {
+  const drafts = body.features.map((feature, index) => toDraft(feature, index));
+  const slugs = assignSlugs(drafts);
+  return drafts.map((draft) => ({
+    ...draft,
+    slug: slugs.get(draft.id) ?? draft.id,
+  }));
+};
 
 export class GeoJsonSiteRepository implements SiteRepository {
   private cache: readonly Site[] | null = null;
@@ -137,4 +149,4 @@ export class GeoJsonSiteRepository implements SiteRepository {
   }
 }
 
-export const __test = { toSite };
+export const __test = { toDraft };

@@ -4,3 +4,4 @@ export type { Facility } from './facility';
 export { FACILITIES, FacilitySet, hasFacility } from './facility';
 export type { Site, SiteId } from './site';
 export { siteId } from './site';
+export { assignSlugs, type SluggableSite } from './slug';

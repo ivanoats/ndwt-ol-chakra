@@ -9,6 +9,7 @@ import SiteInfoPanel from '../SiteInfoPanel';
 const baseSite: Site = {
   id: siteId('test-1'),
   name: 'Blalock Canyon',
+  slug: 'blalock-canyon',
   riverSegment: 'Lake Umatilla',
   riverName: 'Columbia',
   riverMile: 234,
