@@ -144,7 +144,12 @@ export default function Header() {
           _hover: { color: 'colorPalette.11', colorPalette: 'green' },
         })}
       >
-        <Image src="/logo.svg" alt="" width={28} height={28} priority />
+        {/* Logo extracted from the legacy ndwt.org header image
+            (top-left of /ndwt/images/header.jpg). The photo bleed
+            in the corners is part of the original brand asset.
+            Decorative — site title text follows for screen
+            readers. */}
+        <Image src="/logo.png" alt="" width={36} height={46} priority />
         <span
           className={css({
             fontSize: { base: 'md', md: 'lg' },
