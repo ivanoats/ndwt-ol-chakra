@@ -60,8 +60,8 @@ export default function AboutPage() {
 
       <h2 className={subheadingStyle}>About this site</h2>
       <p className={paragraphStyle}>
-        This is an open-source rebuild of the original ASP.NET site using React,
-        OpenLayers, Next.js, and PandaCSS. The trail is managed by the{' '}
+        This is an open-source rebuild of the original classic ASP site using
+        React, OpenLayers, Next.js, and PandaCSS. The trail is managed by the{' '}
         <Link href="https://www.wwta.org" external>
           Washington Water Trails Association
         </Link>
