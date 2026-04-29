@@ -7,6 +7,7 @@ import { css } from 'styled-system/css';
 
 const NAV_ITEMS = [
   { href: '/', label: 'Map' },
+  { href: '/sites/', label: 'Sites' },
   { href: '/about/', label: 'About' },
   { href: '/trip-planning/', label: 'Trip Planning' },
 ] as const;
