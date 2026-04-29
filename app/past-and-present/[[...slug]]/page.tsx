@@ -61,7 +61,9 @@ const SECTION_TITLE = 'Past & Present';
 const SECTION_DESC =
   'Cultural and historical context for the Northwest Discovery Water ' +
   'Trail — the tribal nations, expeditions, and industries whose ' +
-  'stories are bound up with the Clearwater, Snake, and Columbia.';
+  'stories are bound up with the Clearwater, Snake, and Columbia. ' +
+  'Originally published on ndwt.org; reused with permission from the ' +
+  'Washington Water Trails Association.';
 
 export async function generateMetadata({
   params,

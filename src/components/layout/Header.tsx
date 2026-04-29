@@ -39,14 +39,18 @@ const linkStyle = css({
   },
 });
 
+// Switch to the inline desktop nav at `xl` (1280px) rather than
+// `md` (768px). With 9 nav items the bar gets crowded below
+// ~1095px; bumping the cutoff to xl keeps the hamburger in play
+// for tablet viewports too.
 const desktopNavStyle = css({
-  display: { base: 'none', md: 'flex' },
+  display: { base: 'none', xl: 'flex' },
   alignItems: 'center',
   gap: '4',
 });
 
 const mobileToggleStyle = css({
-  display: { base: 'inline-flex', md: 'none' },
+  display: { base: 'inline-flex', xl: 'none' },
   alignItems: 'center',
   justifyContent: 'center',
   width: '10',
@@ -60,7 +64,7 @@ const mobileToggleStyle = css({
 });
 
 const mobilePanelStyle = css({
-  display: { base: 'flex', md: 'none' },
+  display: { base: 'flex', xl: 'none' },
   position: 'absolute',
   top: 'var(--header-height, 56px)',
   right: 0,

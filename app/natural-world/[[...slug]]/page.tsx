@@ -58,7 +58,8 @@ const SECTION_TITLE = 'Natural World';
 const SECTION_DESC =
   'Ecological context for the Northwest Discovery Water Trail — the ' +
   'plants, animals, and geological forces that shape the Clearwater, ' +
-  'Snake, and Columbia corridor.';
+  'Snake, and Columbia corridor. Originally published on ndwt.org; ' +
+  'reused with permission from the Washington Water Trails Association.';
 
 export async function generateMetadata({
   params,
