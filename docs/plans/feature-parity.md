@@ -8,7 +8,7 @@
 | 9     | Per-site canonical URLs (`/sites/<slug>`)             | In review     |
 | 10    | Site index / browse-by-list                           | In review     |
 | 11    | Water Safety + River Navigation + Leave No Trace      | In review     |
-| 12    | Natural World + Past & Present                        | Planned       |
+| 12    | Natural World + Past & Present                        | In review     |
 | 13    | About expansion + Get Involved + Photo Gallery        | Planned       |
 | 14    | Cutover — redirects, sitemap, SEO, custom-domain swap | Planned       |
 

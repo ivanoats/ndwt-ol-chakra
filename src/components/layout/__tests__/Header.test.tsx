@@ -108,6 +108,12 @@ describe('<Header />', () => {
       expect(
         within(mobileNav).getByRole('link', { name: 'Leave No Trace' })
       ).toBeVisible();
+      expect(
+        within(mobileNav).getByRole('link', { name: 'Natural World' })
+      ).toBeVisible();
+      expect(
+        within(mobileNav).getByRole('link', { name: 'Past & Present' })
+      ).toBeVisible();
       // Toggle flips to "Close menu".
       expect(
         screen.getByRole('button', { name: 'Close menu' })

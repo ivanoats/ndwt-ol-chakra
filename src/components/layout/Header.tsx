@@ -13,6 +13,8 @@ const NAV_ITEMS = [
   { href: '/water-safety/', label: 'Safety' },
   { href: '/river-navigation/', label: 'Navigation' },
   { href: '/leave-no-trace/', label: 'Leave No Trace' },
+  { href: '/natural-world/', label: 'Natural World' },
+  { href: '/past-and-present/', label: 'Past & Present' },
   { href: '/trip-planning/', label: 'Trip Planning' },
   { href: '/about/', label: 'About' },
 ] as const;
