@@ -142,6 +142,126 @@ const resultCountStyle = css({
   marginBottom: '3',
 });
 
+interface FilterControlsProps {
+  readonly query: string;
+  readonly onQueryChange: (next: string) => void;
+  readonly river: string | null;
+  readonly onRiverChange: (next: string | null) => void;
+  readonly sortMode: SiteSortMode;
+  readonly onSortChange: (next: SiteSortMode) => void;
+  readonly rivers: readonly string[];
+}
+
+const FilterControls = ({
+  query,
+  onQueryChange,
+  river,
+  onRiverChange,
+  sortMode,
+  onSortChange,
+  rivers,
+}: FilterControlsProps) => (
+  <Box className={controlsStyle}>
+    <label>
+      <span className={controlLabelStyle}>Name</span>
+      <input
+        type="search"
+        value={query}
+        onChange={(event) => onQueryChange(event.target.value)}
+        placeholder="e.g. Blalock"
+        className={inputStyle}
+        data-testid="site-index-query"
+      />
+    </label>
+    <label>
+      <span className={controlLabelStyle}>River</span>
+      <select
+        value={river ?? ''}
+        onChange={(event) =>
+          onRiverChange(event.target.value === '' ? null : event.target.value)
+        }
+        className={inputStyle}
+        data-testid="site-index-river"
+      >
+        <option value="">All rivers</option>
+        {rivers.map((name) => (
+          <option key={name} value={name}>
+            {name}
+          </option>
+        ))}
+      </select>
+    </label>
+    <label>
+      <span className={controlLabelStyle}>Sort</span>
+      <select
+        value={sortMode}
+        onChange={(event) => onSortChange(event.target.value as SiteSortMode)}
+        className={inputStyle}
+        data-testid="site-index-sort"
+      >
+        <option value="river-mile">By river + mile</option>
+        <option value="alpha">A → Z</option>
+      </select>
+    </label>
+  </Box>
+);
+
+interface FacilityTogglesProps {
+  readonly facilities: ReadonlySet<Facility>;
+  readonly onToggle: (facility: Facility) => void;
+}
+
+const FacilityToggles = ({ facilities, onToggle }: FacilityTogglesProps) => (
+  <fieldset
+    className={css({ border: 'none', padding: 0, margin: 0 })}
+    aria-label="Filter by facility"
+  >
+    <ul className={facilityToggleListStyle}>
+      {FACILITIES.map((facility) => (
+        <li key={facility}>
+          <button
+            type="button"
+            aria-pressed={facilities.has(facility)}
+            onClick={() => onToggle(facility)}
+            className={facilityToggleStyle}
+            data-testid={`site-index-facility-${facility}`}
+          >
+            {FACILITY_LABELS[facility]}
+          </button>
+        </li>
+      ))}
+    </ul>
+  </fieldset>
+);
+
+const SiteRow = ({ site }: { readonly site: Site }) => (
+  <Link
+    href={`/sites/${site.slug}`}
+    className={resultRowStyle}
+    data-testid={`site-index-row-${site.slug}`}
+  >
+    <Text as="span" css={{ fontWeight: 'semibold', display: 'block' }}>
+      {site.name}
+    </Text>
+    <Text
+      as="span"
+      css={{
+        fontSize: 'sm',
+        color: 'fg.muted',
+        display: 'block',
+        marginTop: '1',
+      }}
+    >
+      {formatRowSubtitle(site)}
+    </Text>
+    {site.facilities.length === 0 ? null : (
+      <Box css={{ marginTop: '2' }}>
+        <FacilityBadges facilities={site.facilities} />
+      </Box>
+    )}
+  </Link>
+);
+
 export default function SiteIndex({ sites }: SiteIndexProps) {
   const [query, setQuery] = useState('');
   const [river, setRiver] = useState<string | null>(null);
@@ -179,75 +299,17 @@ export default function SiteIndex({ sites }: SiteIndexProps) {
         Filter by name, river, or facilities.
       </Text>
 
-      <Box className={controlsStyle}>
-        <label>
-          <span className={controlLabelStyle}>Name</span>
-          <input
-            type="search"
-            value={query}
-            onChange={(event) => setQuery(event.target.value)}
-            placeholder="e.g. Blalock"
-            className={inputStyle}
-            data-testid="site-index-query"
-          />
-        </label>
-        <label>
-          <span className={controlLabelStyle}>River</span>
-          <select
-            value={river ?? ''}
-            onChange={(event) =>
-              setRiver(event.target.value === '' ? null : event.target.value)
-            }
-            className={inputStyle}
-            data-testid="site-index-river"
-          >
-            <option value="">All rivers</option>
-            {rivers.map((name) => (
-              <option key={name} value={name}>
-                {name}
-              </option>
-            ))}
-          </select>
-        </label>
-        <label>
-          <span className={controlLabelStyle}>Sort</span>
-          <select
-            value={sortMode}
-            onChange={(event) =>
-              setSortMode(event.target.value as SiteSortMode)
-            }
-            className={inputStyle}
-            data-testid="site-index-sort"
-          >
-            <option value="river-mile">By river + mile</option>
-            <option value="alpha">A → Z</option>
-          </select>
-        </label>
-      </Box>
+      <FilterControls
+        query={query}
+        onQueryChange={setQuery}
+        river={river}
+        onRiverChange={setRiver}
+        sortMode={sortMode}
+        onSortChange={setSortMode}
+        rivers={rivers}
+      />
 
-      <fieldset
-        className={css({ border: 'none', padding: 0, margin: 0 })}
-        aria-label="Filter by facility"
-      >
-        <ul className={facilityToggleListStyle}>
-          {FACILITIES.map((facility) => {
-            const pressed = facilities.has(facility);
-            return (
-              <li key={facility}>
-                <button
-                  type="button"
-                  aria-pressed={pressed}
-                  onClick={() => toggleFacility(facility)}
-                  className={facilityToggleStyle}
-                  data-testid={`site-index-facility-${facility}`}
-                >
-                  {FACILITY_LABELS[facility]}
-                </button>
-              </li>
-            );
-          })}
-        </ul>
-      </fieldset>
+      <FacilityToggles facilities={facilities} onToggle={toggleFacility} />
 
       <p
         className={resultCountStyle}
@@ -264,34 +326,7 @@ export default function SiteIndex({ sites }: SiteIndexProps) {
       >
         {visible.map((site) => (
           <li key={site.id}>
-            <Link
-              href={`/sites/${site.slug}`}
-              className={resultRowStyle}
-              data-testid={`site-index-row-${site.slug}`}
-            >
-              <Text
-                as="span"
-                css={{ fontWeight: 'semibold', display: 'block' }}
-              >
-                {site.name}
-              </Text>
-              <Text
-                as="span"
-                css={{
-                  fontSize: 'sm',
-                  color: 'fg.muted',
-                  display: 'block',
-                  marginTop: '1',
-                }}
-              >
-                {formatRowSubtitle(site)}
-              </Text>
-              {site.facilities.length === 0 ? null : (
-                <Box css={{ marginTop: '2' }}>
-                  <FacilityBadges facilities={site.facilities} />
-                </Box>
-              )}
-            </Link>
+            <SiteRow site={site} />
           </li>
         ))}
       </ol>
