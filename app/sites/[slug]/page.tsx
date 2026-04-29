@@ -26,9 +26,9 @@ export async function generateMetadata({
   const sites = await loadSites();
   const site = sites.find((s) => s.slug === slug);
   if (site === undefined) return {};
-  const desc =
-    `${site.riverName} River, mile ${site.riverMile}` +
-    (site.riverSegment !== '' ? ` — ${site.riverSegment}` : '');
+  const segmentSuffix =
+    site.riverSegment !== '' ? ` — ${site.riverSegment}` : '';
+  const desc = `${site.riverName} River, mile ${site.riverMile}${segmentSuffix}`;
   return {
     title: `${site.name} — Northwest Discovery Water Trail`,
     description: desc,

@@ -17,7 +17,7 @@ test.describe('Per-site canonical URLs (Phase 9)', () => {
     ).toBeVisible();
 
     // Subheading carries the river/mile context.
-    await expect(page.getByText(/Columbia River · Mile 234/)).toBeVisible();
+    await expect(page.getByText(/Columbia River · Mile 234/u)).toBeVisible();
 
     // GPX download is part of the same SiteDetails component that
     // the drawer uses.
@@ -25,7 +25,7 @@ test.describe('Per-site canonical URLs (Phase 9)', () => {
 
     // "View on map" link points back at the home page with the
     // shareable query param.
-    const mapLink = page.getByRole('link', { name: /View on map/ });
+    const mapLink = page.getByRole('link', { name: /View on map/u });
     await expect(mapLink).toBeVisible();
     await expect(mapLink).toHaveAttribute('href', `/?site=${SAMPLE_SLUG}`);
   });
@@ -33,7 +33,7 @@ test.describe('Per-site canonical URLs (Phase 9)', () => {
   test('per-page metadata uses the canonical site name', async ({ page }) => {
     await page.goto(`/sites/${SAMPLE_SLUG}`);
     await expect(page).toHaveTitle(
-      /Blalock Canyon — Northwest Discovery Water Trail/
+      /Blalock Canyon — Northwest Discovery Water Trail/u
     );
   });
 

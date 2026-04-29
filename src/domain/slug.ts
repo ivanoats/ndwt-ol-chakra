@@ -56,9 +56,11 @@ export const assignSlugs = (
 
   for (const [base, bucket] of buckets) {
     if (bucket.length === 1) {
-      // Bucket guaranteed non-empty by Pass 1; non-null assertion
-      // satisfies tsconfig's `noUncheckedIndexedAccess`.
-      out.set(bucket[0]!.id, base);
+      // Single-iteration `for...of` reads the lone element without
+      // an indexed access — sidesteps `noUncheckedIndexedAccess`'s
+      // pessimism without a non-null assertion (DeepSource JS-0339)
+      // or a dead-branch undefined check.
+      for (const site of bucket) out.set(site.id, base);
       continue;
     }
 
@@ -75,7 +77,7 @@ export const assignSlugs = (
 
     for (const [mileSlug, inner] of byMileSlug) {
       if (inner.length === 1) {
-        out.set(inner[0]!.id, mileSlug);
+        for (const site of inner) out.set(site.id, mileSlug);
       } else {
         // Pass 3: still colliding — append the legacy id. By
         // construction these ids are unique.
