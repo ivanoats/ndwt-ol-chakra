@@ -2,15 +2,15 @@
 
 ## Status
 
-| Phase | Description                                           | State     |
-| ----- | ----------------------------------------------------- | --------- |
+| Phase | Description                                           | State                                                 |
+| ----- | ----------------------------------------------------- | ----------------------------------------------------- |
 | 8     | Data enrichment — names, notes, fees, state/county    | Done (PR #39, merged into ndwt.geojson in PR pending) |
-| 9     | Per-site canonical URLs (`/sites/<slug>`)             | Planned   |
-| 10    | Site index / browse-by-list                           | Planned   |
-| 11    | Water Safety + River Navigation + Leave No Trace      | Planned   |
-| 12    | Natural World + Past & Present                        | Planned   |
-| 13    | About expansion + Get Involved + Photo Gallery        | Planned   |
-| 14    | Cutover — redirects, sitemap, SEO, custom-domain swap | Planned   |
+| 9     | Per-site canonical URLs (`/sites/<slug>`)             | Planned                                               |
+| 10    | Site index / browse-by-list                           | Planned                                               |
+| 11    | Water Safety + River Navigation + Leave No Trace      | Planned                                               |
+| 12    | Natural World + Past & Present                        | Planned                                               |
+| 13    | About expansion + Get Involved + Photo Gallery        | Planned                                               |
+| 14    | Cutover — redirects, sitemap, SEO, custom-domain swap | Planned                                               |
 
 This plan picks up where
 [`modernization.md`](./modernization.md) left off (phases 1–7).
@@ -47,16 +47,16 @@ key for the redirect map (Phase 14) but isn't user-visible.
 
 ## Scope decisions
 
-| Item                                      | Decision                                                                                                                                                                                                                            |
-| ----------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Per-site URL shape                        | `/sites/<slug>` — kebab-case from canonical name. The legacy `web-scraper-order` ID stays as `Site.id` and is reused for the Phase 14 redirect map.                                                                                 |
-| Content authoring format                  | MDX under `content/`; rendered via per-route `page.tsx` that imports the MDX. Lets us embed PandaCSS-styled callouts without giving up static export.                                                                               |
-| Site name source                          | One-time scrape of ndwt.org's per-site pages (`site.asp?site=<id>`) to populate name, state, county, camping fee, notes. Merged directly into `public/data/ndwt.geojson` feature properties (see `public/data/README.md`).            |
-| Editorial content source                  | One-time scrape of ndwt.org's static pages, converted to MDX, hand-edited for voice + accuracy + accessibility. Each page footer cites "Originally published on ndwt.org; reused with permission from WWTA."                        |
-| Forum / Trip Reports / Donate / Volunteer | Out of scope — link out to WWTA's existing flows. Phase 13 adds the links.                                                                                                                                                          |
-| Press Coverage                            | Permanently deferred — low engagement value.                                                                                                                                                                                        |
-| Photo Gallery                             | Phase 13, conditional on WWTA having a photo library to point at. Otherwise deferred.                                                                                                                                               |
-| Search                                    | Out of scope for now — site index list (Phase 10) covers most of the use case. Revisit after Phase 14 if user feedback asks for it.                                                                                                 |
+| Item                                      | Decision                                                                                                                                                                                                                   |
+| ----------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Per-site URL shape                        | `/sites/<slug>` — kebab-case from canonical name. The legacy `web-scraper-order` ID stays as `Site.id` and is reused for the Phase 14 redirect map.                                                                        |
+| Content authoring format                  | MDX under `content/`; rendered via per-route `page.tsx` that imports the MDX. Lets us embed PandaCSS-styled callouts without giving up static export.                                                                      |
+| Site name source                          | One-time scrape of ndwt.org's per-site pages (`site.asp?site=<id>`) to populate name, state, county, camping fee, notes. Merged directly into `public/data/ndwt.geojson` feature properties (see `public/data/README.md`). |
+| Editorial content source                  | One-time scrape of ndwt.org's static pages, converted to MDX, hand-edited for voice + accuracy + accessibility. Each page footer cites "Originally published on ndwt.org; reused with permission from WWTA."               |
+| Forum / Trip Reports / Donate / Volunteer | Out of scope — link out to WWTA's existing flows. Phase 13 adds the links.                                                                                                                                                 |
+| Press Coverage                            | Permanently deferred — low engagement value.                                                                                                                                                                               |
+| Photo Gallery                             | Phase 13, conditional on WWTA having a photo library to point at. Otherwise deferred.                                                                                                                                      |
+| Search                                    | Out of scope for now — site index list (Phase 10) covers most of the use case. Revisit after Phase 14 if user feedback asks for it.                                                                                        |
 
 ## Per-PR bot review triage
 
