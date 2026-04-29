@@ -8,7 +8,7 @@ vi.mock('node:fs/promises', () => ({
   default: { readFile: mockReadFile },
 }));
 
-import { loadSites } from '../load-sites';
+import { __resetLoadSitesCacheForTesting, loadSites } from '../load-sites';
 
 const validGeoJson = JSON.stringify({
   type: 'FeatureCollection',
@@ -29,6 +29,7 @@ const validGeoJson = JSON.stringify({
 
 beforeEach(() => {
   mockReadFile.mockReset();
+  __resetLoadSitesCacheForTesting();
 });
 
 afterEach(() => {

@@ -56,8 +56,9 @@ export const assignSlugs = (
 
   for (const [base, bucket] of buckets) {
     if (bucket.length === 1) {
-      const only = bucket[0];
-      if (only !== undefined) out.set(only.id, base);
+      // Bucket guaranteed non-empty by Pass 1; non-null assertion
+      // satisfies tsconfig's `noUncheckedIndexedAccess`.
+      out.set(bucket[0]!.id, base);
       continue;
     }
 
@@ -74,8 +75,7 @@ export const assignSlugs = (
 
     for (const [mileSlug, inner] of byMileSlug) {
       if (inner.length === 1) {
-        const only = inner[0];
-        if (only !== undefined) out.set(only.id, mileSlug);
+        out.set(inner[0]!.id, mileSlug);
       } else {
         // Pass 3: still colliding — append the legacy id. By
         // construction these ids are unique.

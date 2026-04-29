@@ -106,10 +106,16 @@ export const parseSitesFromGeoJson = (
 ): readonly Site[] => {
   const drafts = body.features.map((feature, index) => toDraft(feature, index));
   const slugs = assignSlugs(drafts);
-  return drafts.map((draft) => ({
-    ...draft,
-    slug: slugs.get(draft.id) ?? draft.id,
-  }));
+  return drafts.map((draft) => {
+    const slug = slugs.get(draft.id);
+    if (slug === undefined) {
+      // assignSlugs assigns one slug per input id by construction
+      // — a miss here means the slug module has a bug. Fail the
+      // build loudly rather than ship a non-canonical URL.
+      throw new Error(`assignSlugs returned no slug for site id ${draft.id}`);
+    }
+    return { ...draft, slug };
+  });
 };
 
 export class GeoJsonSiteRepository implements SiteRepository {

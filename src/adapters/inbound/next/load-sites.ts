@@ -11,20 +11,14 @@ import {
 
 const GEOJSON_PATH = ['public', 'data', 'ndwt.geojson'] as const;
 
-/**
- * Build-time site loader for App Router server components. Reads
- * the merged GeoJSON straight off disk via fs/promises (so it's
- * pre-rendered into the static page bundle, no runtime fetch) and
- * runs it through the same parser the client uses for the fetch
- * path. JSON.parse errors are wrapped so a corrupted file fails the
- * build with a useful path.
- *
- * Site name + state/county/campingFee/notes used to live in a
- * sidecar `ndwt-enriched.json`; they were merged into the GeoJSON
- * properties to keep the loader and the published `/data/` asset
- * symmetric. See `public/data/README.md` for the schema.
- */
-export async function loadSites(): Promise<readonly Site[]> {
+// Module-level dedupe across all build-time callers. App Router
+// invokes this loader from `generateStaticParams`, `generateMetadata`
+// (159 times), and the page renderer (159 times) — without a cache
+// that's ~320 fs reads + JSON.parse passes for one `next build`.
+// Caching the parsed Site[] keeps the build under a second instead.
+let cache: Promise<readonly Site[]> | null = null;
+
+const loadAndParse = async (): Promise<readonly Site[]> => {
   const path = join(process.cwd(), ...GEOJSON_PATH);
   const text = await readFile(path, 'utf-8');
   let body: RawFeatureCollection;
@@ -34,4 +28,34 @@ export async function loadSites(): Promise<readonly Site[]> {
     throw new Error(`Failed to parse GeoJSON at ${path}`, { cause });
   }
   return parseSitesFromGeoJson(body);
+};
+
+/**
+ * Build-time site loader for App Router server components. Reads
+ * the merged GeoJSON straight off disk via fs/promises (so it's
+ * pre-rendered into the static page bundle, no runtime fetch) and
+ * runs it through the same parser the client uses for the fetch
+ * path. JSON.parse errors are wrapped so a corrupted file fails the
+ * build with a useful path.
+ *
+ * Memoized at module scope: per-page `generateStaticParams`,
+ * `generateMetadata`, and render passes share one parsed result
+ * across the entire `next build` instead of re-reading the GeoJSON
+ * for every site.
+ *
+ * Site name + state/county/campingFee/notes used to live in a
+ * sidecar `ndwt-enriched.json`; they were merged into the GeoJSON
+ * properties to keep the loader and the published `/data/` asset
+ * symmetric. See `public/data/README.md` for the schema.
+ */
+export function loadSites(): Promise<readonly Site[]> {
+  cache ??= loadAndParse();
+  return cache;
 }
+
+// Test-only escape hatch for clearing the module-level cache
+// between vitest cases. Not exported from any barrel; consumers
+// outside __tests__ should not reach for it.
+export const __resetLoadSitesCacheForTesting = (): void => {
+  cache = null;
+};
