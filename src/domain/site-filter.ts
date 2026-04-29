@@ -18,11 +18,16 @@ export interface SiteFilter {
   readonly facilities: ReadonlySet<Facility>;
 }
 
-export const emptyFilter: SiteFilter = {
+/**
+ * Returns a fresh "match everything" filter. Factory rather than a
+ * shared constant so callers (especially tests) can't accidentally
+ * mutate the `facilities` Set into each other's state.
+ */
+export const makeEmptyFilter = (): SiteFilter => ({
   query: '',
   river: null,
   facilities: new Set<Facility>(),
-};
+});
 
 const matchesQuery = (site: Site, query: string): boolean => {
   if (query === '') return true;

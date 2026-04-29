@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   description:
     'Browse every launch site, campground, and day-use area on the ' +
     '367-mile Northwest Discovery Water Trail. Filter by name, river, ' +
-    'or facility.',
+    'or facilities.',
 };
 
 const pageStyle = css({

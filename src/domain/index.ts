@@ -6,8 +6,8 @@ export type { Site, SiteId } from './site';
 export { siteId } from './site';
 export {
   collectRivers,
-  emptyFilter,
   filterSites,
+  makeEmptyFilter,
   type SiteFilter,
   type SiteSortMode,
   sortSites,

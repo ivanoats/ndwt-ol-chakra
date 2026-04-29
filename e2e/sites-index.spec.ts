@@ -11,9 +11,17 @@ test.describe('Site index — /sites/ (Phase 10)', () => {
     const count = page.getByTestId('site-index-count');
     await expect(count).toContainText(/\d+ of \d+ sites/u);
 
+    // Derive the expected row count from the rendered count text
+    // rather than hard-coding the dataset size — the test stays
+    // green when ndwt-enriched data grows or shrinks.
+    const countText = await count.textContent();
+    const totalMatch = countText?.match(/\d+ of (\d+) sites/u);
+    expect(totalMatch).not.toBeNull();
+    const totalSites = Number(totalMatch?.[1] ?? '0');
+    expect(totalSites).toBeGreaterThan(100);
+
     const results = page.getByTestId('site-index-results');
-    // 159 sites in the dataset → result list has at least 100 rows.
-    await expect(results.locator('li')).toHaveCount(159);
+    await expect(results.locator('li')).toHaveCount(totalSites);
   });
 
   test('typing into the name filter narrows results to a single match', async ({

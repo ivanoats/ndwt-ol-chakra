@@ -5,8 +5,8 @@ import { type Facility, FacilitySet } from '../facility';
 import { type Site, siteId } from '../site';
 import {
   collectRivers,
-  emptyFilter,
   filterSites,
+  makeEmptyFilter,
   sortSites,
 } from '../site-filter';
 
@@ -46,18 +46,24 @@ const fixtures: readonly Site[] = [
 ];
 
 describe('filterSites', () => {
-  it('returns the input unchanged for the empty filter', () => {
-    expect(filterSites(fixtures, emptyFilter)).toEqual(fixtures);
+  it('returns all sites for the empty filter', () => {
+    expect(filterSites(fixtures, makeEmptyFilter())).toEqual(fixtures);
   });
 
   it('matches names case-insensitively as a substring', () => {
-    const result = filterSites(fixtures, { ...emptyFilter, query: 'BLAL' });
+    const result = filterSites(fixtures, {
+      ...makeEmptyFilter(),
+      query: 'BLAL',
+    });
     expect(result).toHaveLength(1);
     expect(result[0]?.name).toBe('Blalock Canyon');
   });
 
   it('narrows by river', () => {
-    const result = filterSites(fixtures, { ...emptyFilter, river: 'Snake' });
+    const result = filterSites(fixtures, {
+      ...makeEmptyFilter(),
+      river: 'Snake',
+    });
     expect(result.map((s) => s.name)).toEqual([
       'Hood Park',
       'Hells Gate State Park',
@@ -66,7 +72,7 @@ describe('filterSites', () => {
 
   it('AND-combines facility filters (every facility must be present)', () => {
     const facilities = new Set<Facility>(['boatRamp', 'marina']);
-    const result = filterSites(fixtures, { ...emptyFilter, facilities });
+    const result = filterSites(fixtures, { ...makeEmptyFilter(), facilities });
     expect(result.map((s) => s.name)).toEqual(['Hells Gate State Park']);
   });
 
