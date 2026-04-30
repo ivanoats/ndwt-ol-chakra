@@ -15,13 +15,10 @@ export const metadata: Metadata = {
     'Association.',
 };
 
-// TODO(phase-13): confirm exact WWTA URLs with the Executive
-// Director before merge. The placeholders below point at the
-// WWTA root; if any of these have dedicated slugs
-// (e.g. /volunteer/, /donate/, /trips/), tighten them up.
-const VOLUNTEER_URL = 'https://www.wwta.org/';
-const DONATE_URL = 'https://www.wwta.org/';
-const TRIP_REPORTS_URL = 'https://www.wwta.org/';
+// WWTA hosts dedicated NDWT action pages for these CTAs.
+const VOLUNTEER_URL = 'https://www.wwta.org/ndwt-volunteer/';
+const DONATE_URL = 'https://www.wwta.org/ndwt-donate/';
+const TRIP_REPORTS_URL = 'https://www.wwta.org/ndwt-trip-reports/';
 
 const cardStyle = css({
   display: 'block',
