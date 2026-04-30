@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
-import { css } from 'styled-system/css';
 
+import ArticleLayout from '@/components/editorial/ArticleLayout';
 import { Link } from '@/components/ui/link';
 
 export const metadata: Metadata = {
@@ -8,45 +8,19 @@ export const metadata: Metadata = {
   description: 'About the Northwest Discovery Water Trail and this map site.',
 };
 
-const pageStyle = css({
-  maxWidth: '3xl',
-  marginX: 'auto',
-  paddingX: { base: '4', md: '6' },
-  paddingY: { base: '6', md: '10' },
-  fontSize: { base: 'md', md: 'lg' },
-  lineHeight: 'relaxed',
-  color: 'fg.default',
-});
-
-const headingStyle = css({
-  fontSize: { base: '2xl', md: '3xl' },
-  fontWeight: 'bold',
-  margin: 0,
-  marginBottom: '4',
-  colorPalette: 'green',
-  color: 'colorPalette.11',
-});
-
-const subheadingStyle = css({
-  fontSize: { base: 'lg', md: 'xl' },
-  fontWeight: 'semibold',
-  marginTop: '8',
-  marginBottom: '3',
-});
-
-const paragraphStyle = css({ marginY: '3' });
-
 export default function AboutPage() {
   return (
-    <article className={pageStyle}>
-      <h1 className={headingStyle}>About the Water Trail</h1>
-      <p className={paragraphStyle}>
+    <ArticleLayout
+      breadcrumbs={[{ label: 'Home', href: '/' }, { label: 'About' }]}
+    >
+      <h1>About the Water Trail</h1>
+      <p>
         The Northwest Discovery Water Trail is a 367-mile recreational boating
         route on the region&rsquo;s defining waterways. It begins at Canoe Camp
         on the Clearwater River in Idaho, follows the Snake River down to the
         Columbia River, and ends at Bonneville Dam in the Columbia River Gorge.
       </p>
-      <p className={paragraphStyle}>
+      <p>
         The Water Trail connects you to nearly 150 sites to launch your boat,
         picnic, or camp along these rivers when you travel by motorboat, canoe,
         sailboat, or kayak. Whether you take a day trip or an overnight
@@ -58,8 +32,8 @@ export default function AboutPage() {
         wonders.
       </p>
 
-      <h2 className={subheadingStyle}>About this site</h2>
-      <p className={paragraphStyle}>
+      <h2>About this site</h2>
+      <p>
         This is an open-source rebuild of the original classic ASP site using
         React, OpenLayers, Next.js, and PandaCSS. The trail is managed by the{' '}
         <Link href="https://www.wwta.org" external>
@@ -73,7 +47,7 @@ export default function AboutPage() {
         phase will integrate directly with WWTA&rsquo;s database and ArcGIS
         layers.
       </p>
-      <p className={paragraphStyle}>
+      <p>
         Code lives at{' '}
         <Link href="https://github.com/ivanoats/ndwt-ol-chakra" external>
           github.com/ivanoats/ndwt-ol-chakra
@@ -81,15 +55,8 @@ export default function AboutPage() {
         under the MIT license. Issues and pull requests welcome.
       </p>
 
-      <h2 className={subheadingStyle}>Read more</h2>
-      <ul
-        className={css({
-          marginTop: '3',
-          paddingLeft: '6',
-          listStyle: 'disc',
-          '& li': { marginBottom: '2' },
-        })}
-      >
+      <h2>Read more</h2>
+      <ul>
         <li>
           <Link href="/about/partners/">Partners</Link> — funder, manager, and
           original partner organizations
@@ -105,6 +72,6 @@ export default function AboutPage() {
           <Link href="/about/contact/">Contact</Link> — get in touch with WWTA
         </li>
       </ul>
-    </article>
+    </ArticleLayout>
   );
 }

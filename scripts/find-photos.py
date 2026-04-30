@@ -461,9 +461,8 @@ def wwta_gallery_candidates_for(
             or gallery.get("slug")
             or ""
         )
-        if _normalize_for_match(gallery_name) != site_norm and site_norm not in _normalize_for_match(
-            gallery_name
-        ):
+        gallery_norm = _normalize_for_match(gallery_name)
+        if gallery_norm not in site_norm and site_norm not in gallery_norm:
             continue
         gid = gallery.get("gid") or gallery.get("id") or gallery.get("ID")
         if gid is None:
