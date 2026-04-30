@@ -11,8 +11,10 @@ graph TB
     Layout["layout.tsx<br/>html/body shell"]
     Providers["providers.tsx<br/>'use client'<br/>next-themes"]
     HomePage["page.tsx<br/>server: Hero + MapApp"]
-    AboutPage["about/page.tsx<br/>article"]
-    TripPage["trip-planning/page.tsx<br/>article"]
+    SitesIndexRoute["sites/page.tsx<br/>SiteIndex grid"]
+    SiteDetailRoute["sites/[slug]/page.tsx<br/>SiteDetails"]
+    AboutRoutes["about/* pages<br/>about · contact · photo-gallery (TSX)<br/>history · partners (MDX)"]
+    EditorialRoutes["editorial route trees<br/>water-safety · river-navigation<br/>· leave-no-trace · natural-world<br/>· past-and-present (MDX)<br/>trip-planning · get-involved (TSX)"]
     Globals["globals.css<br/>cascade layers + #map"]
   end
 
@@ -34,16 +36,27 @@ graph TB
     Drawer["drawer.tsx<br/>Ark UI Dialog<br/>modal=false"]
   end
 
-  subgraph Map_["src/components/"]
+  subgraph Map_["src/components/ (map)"]
     MapApp["MapApp.tsx<br/>'use client'<br/>composition + dynamic map"]
-    MapTSX["map.tsx<br/>OL Map instance"]
+    MapTSX["map.tsx<br/>OL Map instance<br/>5 tile layers + vectors"]
+    LayerSwitcher_["LayerSwitcher.tsx<br/>base-map + overlay toggles"]
     Handlers["map-handlers.ts<br/>pure click + pointermove"]
     Theme["ThemeToggleButton.tsx"]
   end
 
   subgraph Panels_["src/components/panels/"]
     Panel["SiteInfoPanel.tsx<br/>drawer wrapper"]
+    SiteDetails_["SiteDetails.tsx<br/>shared body for panel + page"]
     Facilities["FacilityBadges.tsx"]
+  end
+
+  subgraph Sites_["src/components/sites/"]
+    SiteIndex["SiteIndex.tsx<br/>filterable grid of all sites"]
+  end
+
+  subgraph Editorial_["src/components/editorial/"]
+    Article["ArticleLayout.tsx<br/>MDX article shell"]
+    SectionIndex["SectionIndex.tsx<br/>per-section landing"]
   end
 
   subgraph App_["src/application/"]
@@ -56,6 +69,7 @@ graph TB
     Site["site.ts"]
     Coords["coordinates.ts"]
     Fac["facility.ts"]
+    Slug["slug.ts<br/>name → unique slug"]
     Idx["index.ts (barrel)"]
   end
 
@@ -67,6 +81,10 @@ graph TB
     Gpx["outbound/<br/>site-to-gpx.ts"]
   end
 
+  subgraph Content_["content/ (MDX)"]
+    Mdx["*.mdx files<br/>safety · navigation · history…"]
+  end
+
   Comp["composition-root.ts<br/>createComposition factory"]
   Store["store/selected-site.ts<br/>Zustand"]
 
@@ -74,12 +92,21 @@ graph TB
   Layout --> Header
   Layout --> Footer
   Layout --> Globals
+
   HomePage --> Hero
   HomePage --> MapApp
   HomePage --> LoadSites
 
-  AboutPage --> Link
-  TripPage --> Link
+  SitesIndexRoute --> SiteIndex
+  SitesIndexRoute --> LoadSites
+  SiteDetailRoute --> SiteDetails_
+  SiteDetailRoute --> LoadSites
+
+  AboutRoutes --> Article
+  EditorialRoutes --> Article
+  EditorialRoutes --> SectionIndex
+  Mdx -.MDX-backed subset.-> AboutRoutes
+  Mdx -.MDX-backed subset.-> EditorialRoutes
 
   MapApp --> MapTSX
   MapApp --> Panel
@@ -87,22 +114,34 @@ graph TB
   MapApp --> Comp
 
   MapTSX --> Handlers
+  MapTSX --> LayerSwitcher_
   Handlers --> Store
 
   Panel --> Drawer
-  Panel --> Heading
-  Panel --> Stack
-  Panel --> Box
-  Panel --> Link
-  Panel --> Button
-  Panel --> Facilities
+  Panel --> SiteDetails_
+  SiteDetails_ --> Heading
+  SiteDetails_ --> Stack
+  SiteDetails_ --> Box
+  SiteDetails_ --> Link
+  SiteDetails_ --> Button
+  SiteDetails_ --> Facilities
   Panel --> Store
-  Panel --> Gpx
+  SiteDetails_ --> Gpx
 
   Facilities --> Stack
   Facilities --> Badge
 
   Theme --> IconButton
+
+  SiteIndex --> Heading
+  SiteIndex --> Box
+  SiteIndex --> Link
+  SiteIndex --> Stack
+  SiteIndex --> Text
+  SiteIndex --> Facilities
+
+  Article --> Link
+  SectionIndex --> Link
 
   Comp --> InMem
   Comp --> ListUC
@@ -114,6 +153,7 @@ graph TB
 
   LoadSites --> Parser
   Geo --> Parser
+  Parser -.uses.-> Slug
   Site --> Coords
   Site --> Fac
   Idx --> Site
@@ -124,13 +164,15 @@ graph TB
   classDef app fill:#fef3c7,stroke:#d97706;
   classDef adapter fill:#fef3c7,stroke:#d97706;
   classDef glue fill:#fee2e2,stroke:#dc2626;
+  classDef content fill:#fae8ff,stroke:#a21caf;
 
-  class Layout,Providers,HomePage,AboutPage,TripPage,Globals route
-  class Header,Hero,Footer,Box,Stack,Text,Heading,Badge,Link,Button,IconButton,Drawer,Panel,Facilities,MapApp,MapTSX,Theme ui
-  class Site,Coords,Fac,Idx domain
+  class Layout,Providers,HomePage,SitesIndexRoute,SiteDetailRoute,AboutRoutes,EditorialRoutes,Globals route
+  class Header,Hero,Footer,Box,Stack,Text,Heading,Badge,Link,Button,IconButton,Drawer,Panel,SiteDetails_,Facilities,MapApp,MapTSX,LayerSwitcher_,Theme,SiteIndex,Article,SectionIndex ui
+  class Site,Coords,Fac,Slug,Idx domain
   class Port,ListUC,GetUC app
   class LoadSites,InMem,Geo,Parser,Gpx adapter
   class Comp,Store,Handlers glue
+  class Mdx content
 ```
 
 ## What lives where
@@ -139,10 +181,26 @@ graph TB
 
 Next.js App Router entry points only. `layout.tsx` sets the
 HTML shell and global chrome (Header / main / Footer / Providers);
-`page.tsx` per route is a thin server component that fetches the
-data it needs and renders a presentation component. The whole
-folder ships as RSC server components except `providers.tsx`
-(client) which hosts `next-themes`.
+each `page.tsx` is a thin server component that fetches the data
+it needs and renders a presentation component. The whole folder
+ships as RSC server components except `providers.tsx` (client)
+which hosts `next-themes`.
+
+Routes:
+
+- `/` — map + Hero (`HomePage`)
+- `/sites/`, `/sites/[slug]/` — index grid + per-site detail
+- `/about/`, `/about/contact/`, `/about/photo-gallery/` — TSX
+  pages that wrap `ArticleLayout` directly; no MDX import.
+- `/about/history/`, `/about/partners/` — MDX-backed (`content/about/*.mdx`)
+  rendered through `ArticleLayout`.
+- `/water-safety/[[...slug]]/`, `/river-navigation/[[...slug]]/`,
+  `/natural-world/[[...slug]]/`, `/past-and-present/[[...slug]]/`
+  — catch-all editorial sections backed by `content/*.mdx`,
+  with `SectionIndex` rendering the per-section landing pages.
+- `/leave-no-trace/` — single MDX page.
+- `/trip-planning/`, `/get-involved/` — TSX pages that wrap
+  `ArticleLayout` directly; no MDX import.
 
 ### `src/components/layout/`
 
@@ -162,9 +220,23 @@ Panda preset already carries the design tokens.
 
 The site info Drawer and its supporting badges. The Drawer is
 non-modal — clicking outside doesn't dismiss; ESC and the close
-button do.
+button do. `SiteDetails.tsx` is the shared body used by both
+the drawer and the standalone `/sites/[slug]/` page so the two
+surfaces stay visually identical.
 
-### `src/components/map.tsx` + `map-handlers.ts` + `MapApp.tsx`
+### `src/components/sites/`
+
+`SiteIndex.tsx` — the filterable grid of all sites at `/sites/`.
+Filtering is client-side using a search input + facility-flag
+checkboxes; server hands it the full `Site[]` from `loadSites()`.
+
+### `src/components/editorial/`
+
+`ArticleLayout.tsx` is the MDX article shell (h1, lead, meta).
+`SectionIndex.tsx` renders the per-section landing page — a
+list of articles inside one of the catch-all editorial routes.
+
+### `src/components/map.tsx` + `map-handlers.ts` + `MapApp.tsx` + `LayerSwitcher.tsx`
 
 The OpenLayers integration:
 
@@ -172,15 +244,42 @@ The OpenLayers integration:
   composition once per `sites` prop via `useMemo` and dynamic-
   imports the OL component with `ssr: false`.
 - `map.tsx` owns the `ol.Map` instance and its lifecycle (mount
-  on `useEffect`, set the global test handle, clean up).
+  on `useEffect`, set the global test handle, clean up). It
+  registers five tile layers (OSM / USGS / OpenTopoMap base
+  maps + OpenSeaMap / Waymarked Trails overlays) and syncs
+  their visibility from React state.
+- `LayerSwitcher.tsx` is the floating dropdown that drives the
+  base-map and overlay state. Pure presentation — `map.tsx`
+  passes the active selections and toggle callbacks in.
 - `map-handlers.ts` exports curried pure functions
   (`makeHandleClick`, `makeHandlePointerMove`) that don't import
   any UI deps — straightforward to unit test against a fake Map.
 
+### `content/`
+
+MDX source for the MDX-backed subset of editorial articles
+(`leave-no-trace.mdx`, `about/{history,partners}.mdx`, plus
+the per-section trees under `water-safety/`, `river-navigation/`,
+`natural-world/`, and `past-and-present/`). The matching route
+handlers import the MDX file at build time, wrap it in
+`ArticleLayout`, and emit static HTML. No MDX runtime ships in
+the client bundle. TSX-authored editorial pages (`/about/`,
+`/about/contact/`, `/about/photo-gallery/`, `/trip-planning/`,
+`/get-involved/`) skip `content/` entirely and write their copy
+directly in TSX.
+
 ### `src/domain/`
 
 Pure types only. Adding a non-pure dependency here is a code
-review red flag.
+review red flag. `slug.ts` is included here because it's a pure
+derivation from a site's name (with collision tie-breaking by
+river mile then site id) and has no framework deps. It declares
+its own minimal `SluggableSite` interface rather than importing
+`site.ts`, which keeps it usable from the GeoJSON parser before
+a full `Site` exists. The parser (`parseSitesFromGeoJson`) is
+the only caller — adapters use `assignSlugs` while building the
+site list, then the slug rides along on every `Site` value as a
+plain string field.
 
 ### `src/application/`
 
@@ -216,7 +315,9 @@ it to its own module would be a clean refactor.
 
 A single Zustand slice for the selected site. The split between
 "domain data" (in the composition) and "ephemeral UI state" (in
-Zustand) is intentional.
+Zustand) is intentional. The map's layer-switcher state lives
+in component-local `useState` inside `map.tsx`, not in Zustand,
+because no other component needs to read it.
 
 ## See also
 
