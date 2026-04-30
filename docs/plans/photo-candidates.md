@@ -2,17 +2,17 @@
 
 ## Status
 
-| Step                                              | State    |
-| ------------------------------------------------- | -------- |
-| Wikimedia Commons geosearch + license filter      | Done     |
-| Title/mime filter for orbital + aerial noise      | Done     |
-| Flickr CC search                                  | Planned  |
-| WWTA WordPress NextGen Gallery integration        | Planned  |
-| Mapillary street-level imagery                    | Planned  |
-| USGS / NPS public-domain libraries                | Planned  |
-| Curated `photo-candidates.json` committed to repo | Planned  |
-| Display photos on `/sites/<slug>` detail page     | Planned  |
-| Display photo gallery at `/about/photo-gallery/`  | Planned  |
+| Step                                              | State   |
+| ------------------------------------------------- | ------- |
+| Wikimedia Commons geosearch + license filter      | Done    |
+| Title/mime filter for orbital + aerial noise      | Done    |
+| Flickr CC search                                  | Planned |
+| WWTA WordPress NextGen Gallery integration        | Planned |
+| Mapillary street-level imagery                    | Planned |
+| USGS / NPS public-domain libraries                | Planned |
+| Curated `photo-candidates.json` committed to repo | Planned |
+| Display photos on `/sites/<slug>` detail page     | Planned |
+| Display photo gallery at `/about/photo-gallery/`  | Planned |
 
 ## Goal
 
@@ -66,9 +66,9 @@ Output shape (one entry per site):
       "photographer": "Jane Doe",
       "license": "CC BY-SA 4.0",
       "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
-      "dist_m": 84.4
-    }
-  ]
+      "dist_m": 84.4,
+    },
+  ],
 }
 ```
 
@@ -93,13 +93,13 @@ Results filtered to:
 
 Smoke-test results (5 sites, 5 km radius):
 
-| Site                | Candidates |
-| ------------------- | ---------- |
-| Blalock Canyon      | 0 (remote, no Commons coverage) |
-| Harper's Bend       | 1 (historic landmark in Peck, ID) |
-| Paterson Boat Ramp  | 2 (Telegraph Island petroglyphs) |
-| Hood River Marina   | 10 (waterfront walk series) |
-| The Hook            | 10 (same waterfront cluster) |
+| Site               | Candidates                        |
+| ------------------ | --------------------------------- |
+| Blalock Canyon     | 0 (remote, no Commons coverage)   |
+| Harper's Bend      | 1 (historic landmark in Peck, ID) |
+| Paterson Boat Ramp | 2 (Telegraph Island petroglyphs)  |
+| Hood River Marina  | 10 (waterfront walk series)       |
+| The Hook           | 10 (same waterfront cluster)      |
 
 ## Open TODOs
 
@@ -209,7 +209,12 @@ interface SitePhoto {
   readonly photographer?: string;
   readonly license: string;
   readonly licenseUrl?: string;
-  readonly source: 'wikimedia-commons' | 'flickr' | 'wwta-gallery' | 'mapillary' | 'other';
+  readonly source:
+    | 'wikimedia-commons'
+    | 'flickr'
+    | 'wwta-gallery'
+    | 'mapillary'
+    | 'other';
   readonly sourceUrl: string;
   readonly caption?: string;
 }
@@ -231,7 +236,7 @@ the rendered UI. Prior phases set the precedent:
 - Photos are different — each individual image has its own
   attribution, not WWTA's blanket grant. Render the
   photographer + license inline, e.g. `Photo: Jane Doe / CC
-  BY-SA 4.0 (Wikimedia Commons)`.
+BY-SA 4.0 (Wikimedia Commons)`.
 
 The license filter in the scraper guarantees we only ever
 collect images we can legally redistribute. The UI must still
