@@ -23,8 +23,6 @@ export type FacilitySet = readonly Facility[];
 // Static helpers — colocated under the type name for ergonomic
 // callsite usage like `FacilitySet.empty()` and
 // `FacilitySet.fromFlags({ ... })`.
-//
-// eslint-disable-next-line @typescript-eslint/no-redeclare
 export const FacilitySet = {
   empty: (): FacilitySet => [],
   fromFlags: (flags: Partial<Record<Facility, boolean>>): FacilitySet =>
