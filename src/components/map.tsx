@@ -72,7 +72,14 @@ export default function MapComponent({ sites, getSite }: MapComponentProps) {
     const container = containerRef.current;
     if (container === null) return undefined;
 
-    const osmLayer = new TileLayer({ source: new OSM() });
+    // Initialize each layer's visibility from current state so a
+    // map re-init (e.g. on `sites`/`getSite` change) preserves the
+    // user's selections. The two sync effects below handle later
+    // toggles without rebuilding the map.
+    const osmLayer = new TileLayer({
+      source: new OSM(),
+      visible: activeBaseMap === 'osm',
+    });
     // USGS National Map — official US government topographic basemap.
     // Service docs: https://basemap.nationalmap.gov/arcgis/rest/services/USGSTopo/MapServer
     const usgsLayer = new TileLayer({
@@ -81,7 +88,7 @@ export default function MapComponent({ sites, getSite }: MapComponentProps) {
         attributions: 'Map data: © <a href="https://www.usgs.gov/">USGS</a>',
         maxZoom: 16,
       }),
-      visible: false,
+      visible: activeBaseMap === 'usgs',
     });
     // OpenTopoMap — OSM + SRTM elevation rendering.
     // {a-c} is an OL subdomain template expanded to a/b/c for load balancing.
@@ -91,16 +98,16 @@ export default function MapComponent({ sites, getSite }: MapComponentProps) {
         attributions:
           'Map data: © OpenStreetMap contributors, SRTM | Map style: © <a href="https://opentopomap.org">OpenTopoMap</a> (CC-BY-SA)',
       }),
-      visible: false,
+      visible: activeBaseMap === 'opentopomap',
     });
     const openSeaLayer = new TileLayer({
       zIndex: 10,
       source: new XYZ({
         url: 'https://tiles.openseamap.org/seamark/{z}/{x}/{y}.png',
         attributions:
-          'Marine data: © <a href="http://www.openseamap.org">OpenSeaMap</a> contributors',
+          'Marine data: © <a href="https://www.openseamap.org">OpenSeaMap</a> contributors',
       }),
-      visible: DEFAULT_OVERLAYS.has('openseamap'),
+      visible: activeOverlays.has('openseamap'),
     });
     const hikingLayer = new TileLayer({
       zIndex: 5,
@@ -109,7 +116,7 @@ export default function MapComponent({ sites, getSite }: MapComponentProps) {
         attributions:
           'Trail data: © OpenStreetMap contributors | <a href="https://waymarkedtrails.org">Waymarked Trails</a>',
       }),
-      visible: DEFAULT_OVERLAYS.has('hiking'),
+      visible: activeOverlays.has('hiking'),
     });
 
     layerRefs.current = {
@@ -159,6 +166,11 @@ export default function MapComponent({ sites, getSite }: MapComponentProps) {
         hiking: null,
       };
     };
+    // activeBaseMap / activeOverlays are read for *initial* layer
+    // visibility only; later toggles are handled by the dedicated
+    // sync effects below. Including them here would rebuild the
+    // whole map on every toggle.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sites, getSite]);
 
   // Sync base map visibility whenever activeBaseMap changes.

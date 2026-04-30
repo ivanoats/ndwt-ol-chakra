@@ -64,7 +64,7 @@ describe('<LayerSwitcher />', () => {
     render(
       <LayerSwitcher
         activeBaseMap="usgs"
-        activeOverlays={new Set()}
+        activeOverlays={new Set<OverlayId>()}
         onBaseMapChange={vi.fn()}
         onOverlayToggle={vi.fn()}
       />
@@ -88,7 +88,7 @@ describe('<LayerSwitcher />', () => {
     render(
       <LayerSwitcher
         activeBaseMap="osm"
-        activeOverlays={new Set()}
+        activeOverlays={new Set<OverlayId>()}
         onBaseMapChange={onBaseMapChange}
         onOverlayToggle={vi.fn()}
       />
@@ -130,7 +130,7 @@ describe('<LayerSwitcher />', () => {
     render(
       <LayerSwitcher
         activeBaseMap="osm"
-        activeOverlays={new Set()}
+        activeOverlays={new Set<OverlayId>()}
         onBaseMapChange={vi.fn()}
         onOverlayToggle={onOverlayToggle}
       />
@@ -147,7 +147,7 @@ describe('<LayerSwitcher />', () => {
     render(
       <LayerSwitcher
         activeBaseMap="osm"
-        activeOverlays={new Set()}
+        activeOverlays={new Set<OverlayId>()}
         onBaseMapChange={vi.fn()}
         onOverlayToggle={vi.fn()}
       />

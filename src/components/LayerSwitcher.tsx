@@ -25,9 +25,11 @@ const OVERLAYS: Array<{ id: OverlayId; label: string }> = [
   { id: 'hiking', label: 'Hiking Trails' },
 ];
 
+// Sit below OL's default zoom control (top-left, ~60 px tall) so
+// the toggle button doesn't cover the +/− buttons.
 const panelClass = css({
   position: 'absolute',
-  top: '2',
+  top: '20',
   left: '2',
   zIndex: 100,
   display: 'flex',
