@@ -73,6 +73,8 @@ export default function MapComponent({ sites, getSite }: MapComponentProps) {
     if (container === null) return undefined;
 
     const osmLayer = new TileLayer({ source: new OSM() });
+    // USGS National Map — official US government topographic basemap.
+    // Service docs: https://basemap.nationalmap.gov/arcgis/rest/services/USGSTopo/MapServer
     const usgsLayer = new TileLayer({
       source: new XYZ({
         url: 'https://basemap.nationalmap.gov/arcgis/rest/services/USGSTopo/MapServer/tile/{z}/{y}/{x}',
@@ -81,6 +83,8 @@ export default function MapComponent({ sites, getSite }: MapComponentProps) {
       }),
       visible: false,
     });
+    // OpenTopoMap — OSM + SRTM elevation rendering.
+    // {a-c} is an OL subdomain template expanded to a/b/c for load balancing.
     const openTopoLayer = new TileLayer({
       source: new XYZ({
         url: 'https://{a-c}.tile.opentopomap.org/{z}/{x}/{y}.png',

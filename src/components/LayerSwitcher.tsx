@@ -143,7 +143,9 @@ export default function LayerSwitcher({
               onClick={() => onBaseMapChange(id)}
               className={layerBtnClass(activeBaseMap === id)}
             >
-              {activeBaseMap === id ? '● ' : '○ '}
+              <span aria-hidden="true">
+                {activeBaseMap === id ? '● ' : '○ '}
+              </span>
               {label}
             </button>
           ))}
@@ -159,7 +161,9 @@ export default function LayerSwitcher({
               onClick={() => onOverlayToggle(id)}
               className={layerBtnClass(activeOverlays.has(id))}
             >
-              {activeOverlays.has(id) ? '☑ ' : '☐ '}
+              <span aria-hidden="true">
+                {activeOverlays.has(id) ? '☑ ' : '☐ '}
+              </span>
               {label}
             </button>
           ))}
