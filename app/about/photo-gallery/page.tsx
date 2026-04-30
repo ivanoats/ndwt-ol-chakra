@@ -12,11 +12,9 @@ export const metadata: Metadata = {
     'Washington Water Trails Association.',
 };
 
-// TODO(phase-13): confirm exact WWTA photo-gallery URL with the
-// Executive Director before merge. The placeholder below points
-// at the WWTA root; if the gallery has its own slug (e.g.
-// /photos/), update.
-const GALLERY_URL = 'https://www.wwta.org/';
+// Link directly to WWTA's dedicated Northwest Discovery Water Trail
+// photo gallery page so the CTA lands on the gallery itself.
+const GALLERY_URL = 'https://www.wwta.org/ndwt-photo-gallery';
 
 export default function PhotoGalleryPage() {
   return (
