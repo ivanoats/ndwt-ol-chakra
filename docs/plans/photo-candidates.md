@@ -2,18 +2,18 @@
 
 ## Status
 
-| Step                                                     | State                              |
-| -------------------------------------------------------- | ---------------------------------- |
-| Wikimedia Commons geosearch + license filter             | Done                               |
-| Title/mime filter for orbital + aerial noise             | Done                               |
-| WWTA WordPress NextGen Gallery — stubbed (Keychain auth) | Dormant — zero NDWT galleries on WWTA |
-| WWTA blog posts (`<img>` extraction from `content.rendered`) | Done (smoke-tested)             |
-| Flickr CC search                                         | Next priority                      |
-| Mapillary street-level imagery                           | Planned                            |
-| USGS / NPS public-domain libraries                       | Planned                            |
-| Curated `photo-candidates.json` committed to repo        | Planned                            |
-| Display photos on `/sites/<slug>` detail page            | Planned                            |
-| Display photo gallery at `/about/photo-gallery/`         | Planned                            |
+| Step                                                         | State                                 |
+| ------------------------------------------------------------ | ------------------------------------- |
+| Wikimedia Commons geosearch + license filter                 | Done                                  |
+| Title/mime filter for orbital + aerial noise                 | Done                                  |
+| WWTA WordPress NextGen Gallery — stubbed (Keychain auth)     | Dormant — zero NDWT galleries on WWTA |
+| WWTA blog posts (`<img>` extraction from `content.rendered`) | Done (smoke-tested)                   |
+| Flickr CC search                                             | Next priority                         |
+| Mapillary street-level imagery                               | Planned                               |
+| USGS / NPS public-domain libraries                           | Planned                               |
+| Curated `photo-candidates.json` committed to repo            | Planned                               |
+| Display photos on `/sites/<slug>` detail page                | Planned                               |
+| Display photo gallery at `/about/photo-gallery/`             | Planned                               |
 
 ## Goal
 
@@ -192,11 +192,11 @@ Smoke-tested against the 2023 trip report
 "Paddling the Northwest Discovery Trail from Pink House to
 Little Goose Dam":
 
-| Site            | Blog candidates |
-| --------------- | --------------- |
-| Pink House      | 8 (one trip report)            |
-| Little Goose Dam | 8 (same trip report)          |
-| Canoe Camp      | 9 (trip report + 1 other post) |
+| Site             | Blog candidates                |
+| ---------------- | ------------------------------ |
+| Pink House       | 8 (one trip report)            |
+| Little Goose Dam | 8 (same trip report)           |
+| Canoe Camp       | 9 (trip report + 1 other post) |
 
 **Caveat**: a trip report covering multiple sites returns the
 same photos under each matched site. The curator picks per-site
