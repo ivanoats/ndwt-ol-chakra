@@ -695,9 +695,11 @@ def find_candidates(
     site: dict[str, Any], radius_m: int
 ) -> list[dict[str, Any]]:
     """
-    Aggregate candidates from every source. Currently just
-    Wikimedia Commons; extension hook here for Flickr / WWTA /
-    Mapillary / etc.
+    Aggregate candidates from every source. Each source returns a
+    flat list of candidate dicts; we just concatenate. Sources are
+    wired in priority order — Wikimedia (geocoded, license-clean)
+    first, then WWTA blog posts (NDWT-specific, WWTA permission),
+    then the dormant NextGen Gallery (skipped silently for NDWT).
     """
     out: list[dict[str, Any]] = []
     out.extend(commons_candidates_for(site["lat"], site["lon"], radius_m))
