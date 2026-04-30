@@ -8,7 +8,7 @@ export const HIT_TOLERANCE_PX = 6;
 
 export const makeHandleClick =
   (map: Map, getSite: GetSite) =>
-  (event: MapBrowserEvent<UIEvent>): void => {
+  (event: MapBrowserEvent<PointerEvent | KeyboardEvent | WheelEvent>): void => {
     let pickedId: string | null = null;
     map.forEachFeatureAtPixel(
       event.pixel,
@@ -36,7 +36,7 @@ export const makeHandleClick =
 
 export const makeHandlePointerMove =
   (map: Map) =>
-  (event: MapBrowserEvent<UIEvent>): void => {
+  (event: MapBrowserEvent<PointerEvent | KeyboardEvent | WheelEvent>): void => {
     if (event.dragging) return;
     const target = map.getTargetElement();
     if (target === null) return;
