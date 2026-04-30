@@ -1,69 +1,85 @@
 # System overview
 
 C4 Context (level 1) and Container (level 2) views of the
-Northwest Discovery Water Trail map site. Diagrams use
-[MermaidJS](https://mermaid.js.org) and render directly on GitHub.
+Northwest Discovery Water Trail map site. Diagrams are written
+as Mermaid `flowchart`s (the C4 plugin is unstable on GitHub's
+renderer) and render directly on GitHub.
 
 ## Context
 
 The whole product fits in one diagram: a public, browser-based
-map. Source data is a static GeoJSON file we maintain in this
-repository; the deployed site is a static export served by
-Netlify's CDN.
+map plus a small set of editorial articles. Source data is a
+static GeoJSON file we maintain in this repository plus MDX
+content under `content/`; the deployed site is a static export
+served by Netlify's CDN.
 
 ```mermaid
-C4Context
-  title System Context — NW Discovery Water Trail map
+flowchart LR
+  boater(["Boater /<br/>trip planner"])
+  maintainer(["Maintainer"])
 
-  Person(boater, "Boater / trip planner", "Plans a trip on the Snake / Columbia / Clearwater corridor")
-  Person(maintainer, "Maintainer", "Adds features, fixes bugs, edits content")
+  site["NW Discovery Water Trail map<br/>Static Next.js site<br/>159 launch sites + GPX downloads<br/>+ MDX editorial pages"]
 
-  System(site, "NW Discovery Water Trail map", "Static Next.js site<br/>~150 launch sites + GPX downloads")
+  netlify[("Netlify CDN<br/>HTTPS, deploy previews")]
+  github[("GitHub<br/>repo · CI · dependabot")]
+  tiles[("Tile providers<br/>OSM · USGS Topo · OpenTopoMap<br/>OpenSeaMap · Waymarked Trails")]
+  wwta[("Washington Water Trails Assoc.<br/>future data integration")]
 
-  System_Ext(netlify, "Netlify CDN", "Hosts the static export at deploy_url")
-  System_Ext(github, "GitHub", "Source repo, CI, PR reviews, dependabot")
-  System_Ext(osm, "OpenStreetMap tile servers", "Basemap tiles loaded by OL")
-  System_Ext(wwta, "Washington Water Trails Assoc.", "Manages the trail<br/>(future data integration)")
+  boater -->|Browses, opens site panel,<br/>downloads GPX| netlify
+  netlify -->|Serves| site
+  maintainer -->|PRs, reviews| github
+  github -->|Auto-deploys on merge to main| netlify
+  site -.->|Tile fetches in browser| tiles
+  wwta -.->|Trail-data sync<br/>planned, ArcGIS / DB| site
 
-  Rel(boater, site, "Browses map, opens site panel, downloads GPX")
-  Rel(maintainer, github, "PRs, reviews, dependency bumps")
-  Rel(github, netlify, "Auto-deploys on merge to main")
-  Rel(boater, netlify, "HTTPS")
-  Rel(site, osm, "Tile fetches in browser")
-  Rel(wwta, site, "Trail-data sync<br/>(planned, ArcGIS / DB)")
+  classDef person fill:#dbeafe,stroke:#2563eb,color:#1e3a8a;
+  classDef sys fill:#f3e8ff,stroke:#9333ea,color:#581c87;
+  classDef ext fill:#fef3c7,stroke:#d97706,color:#78350f;
+  class boater,maintainer person
+  class site sys
+  class netlify,github,tiles,wwta ext
 ```
 
 ## Container
 
 The container view zooms into the deployable units. Notice that
 **the only dynamic component is the user's browser** — Netlify
-serves pre-rendered HTML and the trail data is baked into each
-page at build time.
+serves pre-rendered HTML and the trail data + editorial articles
+are baked into each page at build time.
 
 ```mermaid
-C4Container
-  title Container — what runs where
+flowchart TB
+  boater(["Boater"])
 
-  Person(boater, "Boater")
+  subgraph deploy["Static deploy on Netlify"]
+    direction TB
+    html["Pre-rendered HTML<br/>Next.js static export<br/>map · sites index · site detail<br/>+ water-safety · river-navigation<br/>+ leave-no-trace · natural-world<br/>+ past-and-present · trip-planning<br/>+ get-involved · about · about/*"]
+    js["Hydration bundle<br/>React 19 + OpenLayers 10<br/>map · layer switcher<br/>panel · GPX download"]
+    css["Atomic CSS<br/>PandaCSS<br/>generated at build time<br/>no runtime CSS-in-JS"]
+    data[("/data/ndwt.geojson<br/>159 sites + facility flags<br/>still served for external GIS")]
+    mdx[("content/*.mdx<br/>editorial articles<br/>safety · navigation · history…")]
+  end
 
-  System_Boundary(deploy, "Static deploy on Netlify") {
-    Container(html, "Pre-rendered HTML", "Next.js static export", "/, /about/, /trip-planning/<br/>Site[] inlined into the page tree")
-    Container(js, "Hydration bundle", "React 19 + OpenLayers 10", "Mounts the map after page load<br/>handles clicks + GPX download")
-    Container(css, "Atomic CSS", "PandaCSS", "Generated at build time<br/>no runtime CSS-in-JS")
-    Container(data, "/data/ndwt.geojson", "Static asset", "147 sites + facility flags<br/>still served for external GIS consumers")
-  }
+  ci(["GitHub Actions CI<br/>lint · typecheck · Vitest<br/>Playwright · SonarCloud · DeepSource"])
+  tiles[("Tile servers<br/>OSM · USGS · OpenTopoMap<br/>OpenSeaMap · Waymarked Trails")]
+  repo[("ivanoats/ndwt-ol-chakra<br/>source of truth")]
 
-  System_Ext(github_actions, "GitHub Actions CI", "Lint / typecheck / Vitest / Playwright / SonarCloud / DeepSource on every PR")
-  System_Ext(osm_tiles, "OSM tile servers", "Fetched on demand by the OL map")
-  System_Ext(repo, "ivanoats/ndwt-ol-chakra", "Source of truth — public/data/ndwt.geojson")
+  boater -->|HTTPS| html
+  html -->|Hydrates| js
+  js -->|Tile requests| tiles
+  html -.->|Baked at build time| data
+  html -.->|Baked at build time| mdx
+  repo -->|Push triggers| ci
+  ci -->|Static export → out/| deploy
 
-  Rel(boater, html, "Loads")
-  Rel(html, js, "Hydrates")
-  Rel(js, osm_tiles, "Tile requests")
-  Rel(repo, github_actions, "Push triggers")
-  Rel(github_actions, deploy, "Static export → out/")
-
-  UpdateRelStyle(html, js, $offsetY="-10")
+  classDef container fill:#f3e8ff,stroke:#9333ea,color:#581c87;
+  classDef store fill:#fef3c7,stroke:#d97706,color:#78350f;
+  classDef ext fill:#fee2e2,stroke:#dc2626,color:#7f1d1d;
+  classDef person fill:#dbeafe,stroke:#2563eb,color:#1e3a8a;
+  class boater person
+  class html,js,css container
+  class data,mdx store
+  class ci,tiles,repo ext
 ```
 
 ## Why this shape
@@ -71,12 +87,22 @@ C4Container
 - **Static export** keeps hosting cheap and the deploy preview
   fast. No server runtime, no API routes, no cold starts.
 - **Trail data baked in at build time** kills the runtime fetch
-  hop and gives the map paint at first byte. The `/data/ndwt.geojson`
-  file is still published unchanged so anyone running their own
-  map / trip planner can ingest the dataset directly.
+  hop and gives the map paint at first byte. The
+  `/data/ndwt.geojson` file is still published unchanged so
+  anyone running their own map / trip planner can ingest the
+  dataset directly.
+- **MDX content baked in too** — editorial articles ship as
+  pre-rendered HTML; no MDX runtime in the client bundle.
+- **Multiple tile providers, all client-fetched** — the map UI
+  exposes a layer switcher so users can toggle between the
+  OSM street basemap, USGS topo, and OpenTopoMap, and overlay
+  OpenSeaMap sea marks or Waymarked Trails hiking. All tile
+  fetches are direct from the browser to the provider; the
+  static deploy never proxies them.
 - **OL is the only meaningful client-side dependency** — the
-  hydration bundle stays small because we don't ship a UI runtime
-  (Park UI components compile to plain elements + atomic CSS).
+  hydration bundle stays small because we don't ship a UI
+  runtime (Park UI components compile to plain elements +
+  atomic CSS).
 
 ## See also
 
