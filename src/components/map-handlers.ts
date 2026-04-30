@@ -29,7 +29,6 @@ export const makeHandleClick =
         if (site) useSelectedSite.getState().select(site);
       })
       .catch((err: unknown) => {
-        // eslint-disable-next-line no-console
         console.error('Failed to load site', err);
       });
   };
