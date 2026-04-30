@@ -9,6 +9,10 @@ Currently queries:
 - Wikimedia Commons (https://commons.wikimedia.org/) — explicit
   license metadata, geocoded images. The cleanest source for
   reuse since every result advertises its license terms.
+- WWTA WordPress NextGen Gallery (https://www.wwta.org/) —
+  fuzzy site-name → album-name match. Skipped when no auth is
+  configured. WP Application Passwords are stored in macOS
+  Keychain; see the WWTA section below.
 
 Reads:
   public/data/ndwt.geojson
@@ -37,11 +41,12 @@ returns a list of candidate dicts and gets called from
     https://www.flickr.com/services/api/flickr.photos.search.html
     needs a FLICKR_API_KEY env var; license=4,5,6,7,9,10 are
     Creative Commons / public domain.
-- WWTA NextGen Gallery (the maintainer has admin access):
-    expose images via the NextGen Gallery REST endpoint, then
-    correlate to sites by album name or filename. No geocoding
-    on the WordPress side, so association is by hand or by
-    fuzzy text matching against site names.
+- WWTA NextGen Gallery: now stubbed; see
+  `wwta_gallery_candidates_for`. Auth lives in macOS Keychain
+  (service `wwta-wp-app-password`, account = WP username).
+  The response shape needs confirmation against a live admin
+  call — once we see real JSON the function may need a small
+  field-name adjustment.
 - Mapillary street-level imagery:
     https://www.mapillary.com/developer/api-documentation/
     great for boat-ramp parking / road-approach shots; needs an
@@ -56,7 +61,10 @@ returns a list of candidate dicts and gets called from
 from __future__ import annotations
 
 import argparse
+import base64
 import json
+import os
+import subprocess
 import sys
 import time
 import urllib.error
@@ -294,6 +302,223 @@ def commons_candidates_for(
 
 
 # ---------------------------------------------------------------------------
+# WWTA WordPress (NextGen Gallery)
+# ---------------------------------------------------------------------------
+#
+# Authenticated via macOS Keychain or env-var fallback. Store the
+# WordPress Application Password (https://make.wordpress.org/core/
+# 2020/11/05/application-passwords-integration-guide/) once with:
+#
+#     security add-generic-password -U -a YOUR-WP-USERNAME \
+#         -s wwta-wp-app-password -w
+#
+# (omit `-w VALUE` so `security` prompts without echoing). The
+# script reads the username from `--wwta-user` or `WWTA_WP_USER`,
+# then asks Keychain for the matching password under service
+# `wwta-wp-app-password`. If Keychain isn't available (Linux CI,
+# etc.) it falls back to `WWTA_WP_APP_PASSWORD`.
+#
+# Skipped silently when no credentials are configured — the
+# Wikimedia source still runs.
+
+
+WWTA_API_BASE = "https://www.wwta.org/wp-json"
+WWTA_KEYCHAIN_SERVICE = "wwta-wp-app-password"
+
+
+def keychain_password(account: str, service: str) -> str | None:
+    """Look up a password in the macOS keychain via /usr/bin/security."""
+    if sys.platform != "darwin":
+        return None
+    try:
+        result = subprocess.run(
+            ["security", "find-generic-password", "-a", account, "-s", service, "-w"],
+            capture_output=True,
+            text=True,
+            timeout=5,
+        )
+    except (FileNotFoundError, subprocess.TimeoutExpired):
+        return None
+    if result.returncode != 0:
+        return None
+    return result.stdout.strip() or None
+
+
+def wwta_credentials() -> tuple[str, str] | None:
+    """
+    Resolve (username, app_password) for WWTA's WordPress.
+    Returns None if either piece is missing.
+    """
+    user = os.environ.get("WWTA_WP_USER")
+    if not user:
+        return None
+    password = keychain_password(user, WWTA_KEYCHAIN_SERVICE)
+    if password is None:
+        password = os.environ.get("WWTA_WP_APP_PASSWORD")
+    if not password:
+        return None
+    # WP application passwords are typically displayed with spaces
+    # ("xxxx xxxx xxxx ..."). Strip those — the API doesn't care
+    # but Basic auth gets cleaner without them.
+    return user, password.replace(" ", "")
+
+
+def http_get_json_basic_auth(
+    url: str, params: dict[str, str | int], user: str, password: str
+) -> dict[str, Any]:
+    """Like http_get_json but with HTTP Basic auth bolted on."""
+    full = f"{url}?{urllib.parse.urlencode(params)}" if params else url
+    token = base64.b64encode(f"{user}:{password}".encode()).decode()
+    req = urllib.request.Request(
+        full,
+        headers={
+            "User-Agent": USER_AGENT,
+            "Authorization": f"Basic {token}",
+        },
+    )
+    with urllib.request.urlopen(req, timeout=20) as resp:
+        return json.loads(resp.read().decode("utf-8"))
+
+
+def _normalize_for_match(name: str) -> str:
+    """Lowercase, alnum-only — for fuzzy site-name to album-name match."""
+    return "".join(ch for ch in name.lower() if ch.isalnum())
+
+
+def wwta_gallery_candidates_for(site: dict[str, Any]) -> list[dict[str, Any]]:
+    """
+    Match WWTA NextGen Gallery albums/galleries to a site by name
+    (no geocoding on the WordPress side, so this is the only
+    correlation we have). Each matched gallery's images become
+    candidates.
+
+    SHAPE NOTE: this targets the routes visible at
+    /wp-json/ngg/v1/admin/attach_to_post/{galleries,images}, which
+    are admin helpers exposed by NextGen Gallery's REST plugin.
+    The actual response shape needs confirmation against a live
+    auth call — once we see the JSON, this function will need a
+    minor adjustment (key names like `name`, `title`, `gid`,
+    `image_url` may differ). Until then it logs unrecognized
+    shapes to stderr and returns [].
+    """
+    site_name = site.get("name") or ""
+    if not site_name:
+        return []
+    creds = wwta_credentials()
+    if creds is None:
+        return []
+    user, password = creds
+
+    site_norm = _normalize_for_match(site_name)
+    if not site_norm:
+        return []
+
+    try:
+        galleries_response = http_get_json_basic_auth(
+            f"{WWTA_API_BASE}/ngg/v1/admin/attach_to_post/galleries",
+            {},
+            user,
+            password,
+        )
+    except urllib.error.URLError as exc:
+        print(f"    ! wwta gallery list error: {exc}", file=sys.stderr)
+        return []
+    time.sleep(REQUEST_DELAY_S)
+
+    # The endpoint may return a list, or {results: [...]}, or a
+    # paginated dict. Normalize.
+    if isinstance(galleries_response, list):
+        galleries = galleries_response
+    elif isinstance(galleries_response, dict):
+        galleries = (
+            galleries_response.get("results")
+            or galleries_response.get("galleries")
+            or galleries_response.get("data")
+            or []
+        )
+    else:
+        return []
+
+    candidates: list[dict[str, Any]] = []
+    for gallery in galleries:
+        if not isinstance(gallery, dict):
+            continue
+        gallery_name = (
+            gallery.get("name")
+            or gallery.get("title")
+            or gallery.get("slug")
+            or ""
+        )
+        if _normalize_for_match(gallery_name) != site_norm and site_norm not in _normalize_for_match(
+            gallery_name
+        ):
+            continue
+        gid = gallery.get("gid") or gallery.get("id") or gallery.get("ID")
+        if gid is None:
+            continue
+        try:
+            images_response = http_get_json_basic_auth(
+                f"{WWTA_API_BASE}/ngg/v1/admin/attach_to_post/images",
+                {"gallery": gid},
+                user,
+                password,
+            )
+        except urllib.error.URLError as exc:
+            print(f"    ! wwta gallery {gid} images error: {exc}", file=sys.stderr)
+            continue
+        time.sleep(REQUEST_DELAY_S)
+
+        if isinstance(images_response, list):
+            images = images_response
+        elif isinstance(images_response, dict):
+            images = (
+                images_response.get("results")
+                or images_response.get("images")
+                or images_response.get("data")
+                or []
+            )
+        else:
+            continue
+
+        for image in images:
+            if not isinstance(image, dict):
+                continue
+            url = (
+                image.get("image_url")
+                or image.get("imageURL")
+                or image.get("url")
+                or image.get("full_url")
+            )
+            if not url:
+                continue
+            candidates.append(
+                {
+                    "source": "wwta-wordpress-nextgen",
+                    "title": image.get("alttext")
+                    or image.get("title")
+                    or image.get("filename")
+                    or "",
+                    "url": url,
+                    "thumb_url": image.get("thumbURL")
+                    or image.get("thumb_url"),
+                    "page_url": gallery.get("page_url"),
+                    "mime": "image/jpeg",  # NextGen mostly stores JPEGs
+                    "photographer": image.get("description")
+                    or image.get("alttext"),
+                    # WWTA-managed photos fall under the same
+                    # Executive-Director permission grant recorded in
+                    # NOTICE.md. Confirm per-photo before publishing.
+                    "license": "WWTA permission (per NOTICE.md)",
+                    "license_url": None,
+                    "dist_m": None,
+                    "matched_gallery": gallery_name,
+                }
+            )
+
+    return candidates
+
+
+# ---------------------------------------------------------------------------
 # Driver
 # ---------------------------------------------------------------------------
 
@@ -332,8 +557,8 @@ def find_candidates(
     """
     out: list[dict[str, Any]] = []
     out.extend(commons_candidates_for(site["lat"], site["lon"], radius_m))
+    out.extend(wwta_gallery_candidates_for(site))
     # TODO: out.extend(flickr_candidates_for(...))
-    # TODO: out.extend(wwta_gallery_candidates_for(...))
     return out
 
 

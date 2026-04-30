@@ -6,8 +6,8 @@
 | ------------------------------------------------- | ------- |
 | Wikimedia Commons geosearch + license filter      | Done    |
 | Title/mime filter for orbital + aerial noise      | Done    |
+| WWTA WordPress NextGen Gallery — stubbed (Keychain auth) | Done; needs live JSON confirmation |
 | Flickr CC search                                  | Planned |
-| WWTA WordPress NextGen Gallery integration        | Planned |
 | Mapillary street-level imagery                    | Planned |
 | USGS / NPS public-domain libraries                | Planned |
 | Curated `photo-candidates.json` committed to repo | Planned |
@@ -119,23 +119,45 @@ than Commons, but requires an API key.
   alongside `commons_candidates_for` and call it from
   `find_candidates`.
 
-### 2. WWTA WordPress NextGen Gallery
+### 2. WWTA WordPress NextGen Gallery — stubbed
 
-The Washington Water Trails Association runs a WordPress site
-with the NextGen Gallery plugin. You have admin access to
-that site.
+`wwta_gallery_candidates_for(site)` is now in
+`scripts/find-photos.py`. It:
 
-- Photos aren't geocoded on the WordPress side, so association
-  to sites is by **album name → site name** matching, or
-  filename keyword matching.
-- NextGen has a JSON API behind admin auth — a REST endpoint or
-  XML-RPC dump could feed our scraper.
-- License: depends on what WWTA's photographers agreed to. If
-  these are first-party WWTA photos, they're effectively
-  reusable under the same Executive-Director permission grant
-  recorded in `NOTICE.md`. Confirm before relying on this.
-- Add a `wwta_gallery_candidates_for(site)` that takes the site
-  rather than just lat/lon, since matching is by name.
+- Resolves credentials via macOS Keychain
+  (`security find-generic-password -a $WWTA_WP_USER -s wwta-wp-app-password -w`),
+  with `WWTA_WP_APP_PASSWORD` env-var fallback for non-Mac CI.
+- Queries `/wp-json/ngg/v1/admin/attach_to_post/galleries`
+  with HTTP Basic auth.
+- Fuzzy-matches each gallery's name against the current
+  site's name (lowercase, alphanumeric-only, both substring
+  directions).
+- For each matched gallery, fetches its images and turns them
+  into candidate dicts with
+  `license: "WWTA permission (per NOTICE.md)"`.
+- Skips silently when no creds configured — Wikimedia source
+  still runs.
+
+**Pending**: confirm the live response shape. The stub guesses
+`name` / `title` / `gid` / `image_url` field names but NextGen's
+actual JSON may differ slightly. First real run will surface any
+adjustments needed.
+
+To enable on a developer machine:
+
+```sh
+security add-generic-password -U \
+  -a 'YOUR-WP-USERNAME' \
+  -s 'wwta-wp-app-password' \
+  -w  # prompts for the password without echoing
+export WWTA_WP_USER='YOUR-WP-USERNAME'
+python3 scripts/find-photos.py --limit 5
+```
+
+Photos aren't geocoded on the WordPress side, so the
+fuzzy-name match is the only correlation we have. If WWTA's
+album naming doesn't match site names cleanly, fall back to
+hand-curating a `site_id → gallery_id` map in YAML or JSON.
 
 ### 3. Mapillary street-level
 
