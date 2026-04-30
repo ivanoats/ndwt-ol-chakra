@@ -9,10 +9,13 @@ Currently queries:
 - Wikimedia Commons (https://commons.wikimedia.org/) — explicit
   license metadata, geocoded images. The cleanest source for
   reuse since every result advertises its license terms.
-- WWTA WordPress NextGen Gallery (https://www.wwta.org/) —
-  fuzzy site-name → album-name match. Skipped when no auth is
-  configured. WP Application Passwords are stored in macOS
-  Keychain; see the WWTA section below.
+- WWTA blog posts (https://www.wwta.org/) — public WP REST
+  search for the site name keyword, then `<img>` extraction
+  from each match's `content.rendered`. Photos inherit WWTA's
+  blanket permission grant (NOTICE.md). No auth required.
+- WWTA NextGen Gallery — DORMANT for NDWT (the 44 galleries
+  that exist are all Cascadia / Willapa Bay sites). Function
+  stays so this site can re-use it if scope ever expands.
 
 Reads:
   public/data/ndwt.geojson
@@ -64,6 +67,7 @@ import argparse
 import base64
 import json
 import os
+import re
 import subprocess
 import sys
 import time
@@ -302,8 +306,19 @@ def commons_candidates_for(
 
 
 # ---------------------------------------------------------------------------
-# WWTA WordPress (NextGen Gallery)
+# WWTA WordPress (NextGen Gallery) — dormant for NDWT
 # ---------------------------------------------------------------------------
+#
+# A 2026-04-30 live survey of WWTA's NextGen Gallery (auth'd via
+# Application Password) found 44 galleries — every single one is
+# for a Cascadia Marine Trail site (Shaw / Blake / Fort Ebey /
+# Penrose / Cypress Head / etc.) or a Willapa Bay site. ZERO
+# galleries cover NDWT (Columbia / Snake / Clearwater) sites. So
+# this source contributes nothing for the current dataset.
+#
+# Stub kept anyway so this site can re-use it later if scope ever
+# expands beyond NDWT. When Keychain is empty / env vars unset,
+# the function returns [] and the Wikimedia source still runs.
 #
 # Authenticated via macOS Keychain or env-var fallback. Store the
 # WordPress Application Password (https://make.wordpress.org/core/
@@ -313,13 +328,10 @@ def commons_candidates_for(
 #         -s wwta-wp-app-password -w
 #
 # (omit `-w VALUE` so `security` prompts without echoing). The
-# script reads the username from `--wwta-user` or `WWTA_WP_USER`,
-# then asks Keychain for the matching password under service
+# script reads the username from `WWTA_WP_USER`, then asks
+# Keychain for the matching password under service
 # `wwta-wp-app-password`. If Keychain isn't available (Linux CI,
 # etc.) it falls back to `WWTA_WP_APP_PASSWORD`.
-#
-# Skipped silently when no credentials are configured — the
-# Wikimedia source still runs.
 
 
 WWTA_API_BASE = "https://www.wwta.org/wp-json"
@@ -344,23 +356,85 @@ def keychain_password(account: str, service: str) -> str | None:
     return result.stdout.strip() or None
 
 
-def wwta_credentials(user_override: str | None = None) -> tuple[str, str] | None:
+_WWTA_CREDS_SENTINEL: tuple[str, str] | None | str = "unset"
+_WWTA_GALLERIES_SENTINEL: list[dict[str, Any]] | str = "unset"
+
+
+def wwta_credentials() -> tuple[str, str] | None:
     """
     Resolve (username, app_password) for WWTA's WordPress.
-    Returns None if either piece is missing.
+    Returns None if either piece is missing. Memoized so the
+    Keychain `security` subprocess only runs once per script
+    invocation, not once per site.
     """
-    user = user_override or os.environ.get("WWTA_WP_USER")
+    global _WWTA_CREDS_SENTINEL
+    if _WWTA_CREDS_SENTINEL != "unset":
+        # Already resolved (possibly to None).
+        return _WWTA_CREDS_SENTINEL  # type: ignore[return-value]
+
+    user = os.environ.get("WWTA_WP_USER")
     if not user:
+        _WWTA_CREDS_SENTINEL = None
         return None
     password = keychain_password(user, WWTA_KEYCHAIN_SERVICE)
     if password is None:
         password = os.environ.get("WWTA_WP_APP_PASSWORD")
     if not password:
+        _WWTA_CREDS_SENTINEL = None
         return None
     # WP application passwords are typically displayed with spaces
     # ("xxxx xxxx xxxx ..."). Strip those — the API doesn't care
     # but Basic auth gets cleaner without them.
-    return user, password.replace(" ", "")
+    _WWTA_CREDS_SENTINEL = (user, password.replace(" ", ""))
+    return _WWTA_CREDS_SENTINEL  # type: ignore[return-value]
+
+
+def _fetch_wwta_galleries() -> list[dict[str, Any]]:
+    """
+    Fetch the WWTA NextGen Gallery list once per run. Returns []
+    if no creds, the API rejects, or the response shape doesn't
+    parse. Subsequent calls are O(1) — used inside a loop over 159
+    sites so we don't pay 159× the network + subprocess cost.
+    """
+    global _WWTA_GALLERIES_SENTINEL
+    if _WWTA_GALLERIES_SENTINEL != "unset":
+        return _WWTA_GALLERIES_SENTINEL  # type: ignore[return-value]
+
+    creds = wwta_credentials()
+    if creds is None:
+        _WWTA_GALLERIES_SENTINEL = []
+        return []
+    user, password = creds
+
+    try:
+        response = http_get_json_basic_auth(
+            f"{WWTA_API_BASE}/ngg/v1/admin/attach_to_post/galleries",
+            {},
+            user,
+            password,
+        )
+    except urllib.error.URLError as exc:
+        print(f"    ! wwta gallery list error: {exc}", file=sys.stderr)
+        _WWTA_GALLERIES_SENTINEL = []
+        return []
+    time.sleep(REQUEST_DELAY_S)
+
+    # NextGen Gallery wraps the list under `items`; older /
+    # alternate routes may return a bare list or `results`.
+    if isinstance(response, list):
+        galleries = response
+    elif isinstance(response, dict):
+        galleries = (
+            response.get("items")
+            or response.get("results")
+            or response.get("galleries")
+            or response.get("data")
+            or []
+        )
+    else:
+        galleries = []
+    _WWTA_GALLERIES_SENTINEL = galleries
+    return galleries
 
 
 def http_get_json_basic_auth(
@@ -385,85 +459,63 @@ def _normalize_for_match(name: str) -> str:
     return "".join(ch for ch in name.lower() if ch.isalnum())
 
 
-def fetch_wwta_gallery_list(
-    user: str, password: str
-) -> list[dict[str, Any]] | None:
-    """
-    Fetch the full WWTA NextGen Gallery list once per run.
-    Returns the normalised list on success, or None on error.
-    """
-    try:
-        galleries_response = http_get_json_basic_auth(
-            f"{WWTA_API_BASE}/ngg/v1/admin/attach_to_post/galleries",
-            {},
-            user,
-            password,
-        )
-    except urllib.error.URLError as exc:
-        print(f"    ! wwta gallery list error: {exc}", file=sys.stderr)
-        return None
-    time.sleep(REQUEST_DELAY_S)
-
-    # The endpoint may return a list, or {results: [...]}, or a
-    # paginated dict. Normalize.
-    if isinstance(galleries_response, list):
-        return galleries_response
-    if isinstance(galleries_response, dict):
-        return (
-            galleries_response.get("results")
-            or galleries_response.get("galleries")
-            or galleries_response.get("data")
-            or []
-        )
-    return []
-
-
-def wwta_gallery_candidates_for(
-    site: dict[str, Any],
-    galleries: list[dict[str, Any]],
-    user: str,
-    password: str,
-) -> list[dict[str, Any]]:
+def wwta_gallery_candidates_for(site: dict[str, Any]) -> list[dict[str, Any]]:
     """
     Match WWTA NextGen Gallery albums/galleries to a site by name
     (no geocoding on the WordPress side, so this is the only
     correlation we have). Each matched gallery's images become
     candidates.
 
-    ``galleries`` must be the pre-fetched list returned by
-    :func:`fetch_wwta_gallery_list` so the remote API is only
-    called once per run, not once per site.
-
-    SHAPE NOTE: this targets the routes visible at
-    /wp-json/ngg/v1/admin/attach_to_post/{galleries,images}, which
-    are admin helpers exposed by NextGen Gallery's REST plugin.
-    The actual response shape needs confirmation against a live
-    auth call — once we see the JSON, this function will need a
-    minor adjustment (key names like `name`, `title`, `gid`,
-    `image_url` may differ). Until then it logs unrecognized
-    shapes to stderr and returns [].
+    Gallery list is fetched once per script run via
+    `_fetch_wwta_galleries`; per-site only the in-memory match
+    runs, so this is O(galleries) not O(sites × galleries) on
+    network. Image fetches still happen lazily per matched
+    gallery — usually zero matches for NDWT (see the dormant
+    note above the function).
     """
     site_name = site.get("name") or ""
     if not site_name:
         return []
-
     site_norm = _normalize_for_match(site_name)
     if not site_norm:
         return []
+
+    galleries = _fetch_wwta_galleries()
+    if not galleries:
+        return []
+    creds = wwta_credentials()
+    if creds is None:
+        return []
+    user, password = creds
 
     candidates: list[dict[str, Any]] = []
     for gallery in galleries:
         if not isinstance(gallery, dict):
             continue
+        # Per the live response, NextGen exposes all three:
+        # `name` (kebab-case ID-like, e.g. "shaw-island-campground"),
+        # `slug` (similar), and `title` (display, e.g. "Shaw Island
+        # Campground "). Match against the normalized union.
+        gallery_norms = {
+            _normalize_for_match(gallery.get(field, "") or "")
+            for field in ("name", "slug", "title")
+        }
+        gallery_norms.discard("")
+        if not gallery_norms:
+            continue
+        if not any(
+            site_norm == g_norm
+            or site_norm in g_norm
+            or g_norm in site_norm
+            for g_norm in gallery_norms
+        ):
+            continue
         gallery_name = (
-            gallery.get("name")
-            or gallery.get("title")
+            gallery.get("title")
+            or gallery.get("name")
             or gallery.get("slug")
             or ""
         )
-        gallery_norm = _normalize_for_match(gallery_name)
-        if gallery_norm not in site_norm and site_norm not in gallery_norm:
-            continue
         gid = gallery.get("gid") or gallery.get("id") or gallery.get("ID")
         if gid is None:
             continue
@@ -483,7 +535,8 @@ def wwta_gallery_candidates_for(
             images = images_response
         elif isinstance(images_response, dict):
             images = (
-                images_response.get("results")
+                images_response.get("items")
+                or images_response.get("results")
                 or images_response.get("images")
                 or images_response.get("data")
                 or []
@@ -530,6 +583,122 @@ def wwta_gallery_candidates_for(
 
 
 # ---------------------------------------------------------------------------
+# WWTA WordPress (blog posts)
+# ---------------------------------------------------------------------------
+#
+# Public WP REST API — no auth needed. WWTA's blog has ~10
+# NDWT-relevant posts (trip reports, notices) with embedded
+# photos that WWTA's authors took or curated. Higher signal than
+# Wikimedia for this dataset since the photos are explicitly of
+# NDWT sites.
+#
+# Strategy: search posts for the site's name keyword, parse
+# `<img src=>` from each match's `content.rendered`, filter to
+# wwta.org-hosted uploads, dedupe by canonical filename, return
+# as candidates. Each candidate inherits `WWTA permission (per
+# NOTICE.md)` since these are first-party WWTA content.
+
+
+WWTA_UPLOADS_PREFIX = "https://www.wwta.org/wp-content/uploads/"
+# Strip the WordPress responsive-size suffix (e.g.
+# "/foo-300x169.jpg" → "/foo.jpg") so we can dedupe sized
+# variants of the same image.
+_SIZE_SUFFIX_RE = re.compile(
+    r"-\d+x\d+(\.(?:jpg|jpeg|png|webp|gif))$", re.IGNORECASE
+)
+_IMG_SRC_RE = re.compile(r'<img[^>]*?src="([^"]+)"', re.IGNORECASE)
+
+
+def canonical_uploads_url(src: str) -> str:
+    """Strip WP's `-WxH` size suffix to get the full-size URL."""
+    return _SIZE_SUFFIX_RE.sub(r"\1", src)
+
+
+def wwta_blog_candidates_for(site: dict[str, Any]) -> list[dict[str, Any]]:
+    """
+    Search WWTA's WordPress blog for posts that mention the site
+    by name, then extract embedded `<img>` tags. Public REST,
+    no auth.
+
+    Filters to images hosted under
+    `wwta.org/wp-content/uploads/` so we drop external embeds
+    (gravatars, mail signatures, third-party CDN), then
+    dedupes by canonical filename so we don't return five sized
+    variants of the same photo.
+    """
+    site_name = (site.get("name") or "").strip()
+    if not site_name:
+        return []
+
+    # The WP search endpoint matches against title + content +
+    # excerpt. Pass the site name verbatim — WordPress's search
+    # tokenizes on its own, and `urlencode` handles spaces and
+    # punctuation in the URL.
+    try:
+        posts = http_get_json(
+            f"{WWTA_API_BASE}/wp/v2/posts",
+            {
+                "search": site_name,
+                "per_page": 5,
+                "_fields": "id,title,link,date,content",
+            },
+        )
+    except urllib.error.URLError as exc:
+        print(f"    ! wwta blog search error: {exc}", file=sys.stderr)
+        return []
+    time.sleep(REQUEST_DELAY_S)
+
+    if not isinstance(posts, list):
+        return []
+
+    candidates: list[dict[str, Any]] = []
+    seen_canonical: set[str] = set()
+    for post in posts:
+        if not isinstance(post, dict):
+            continue
+        content = (post.get("content") or {}).get("rendered") or ""
+        post_url = post.get("link") or ""
+        post_title = (post.get("title") or {}).get("rendered") or ""
+        post_date = (post.get("date") or "")[:10]
+
+        for raw_src in _IMG_SRC_RE.findall(content):
+            # Decode any HTML entities (`&amp;` → `&`) and trim.
+            src = raw_src.replace("&amp;", "&").strip()
+            if not src.startswith(WWTA_UPLOADS_PREFIX):
+                continue
+            full = canonical_uploads_url(src)
+            if full in seen_canonical:
+                continue
+            seen_canonical.add(full)
+            candidates.append(
+                {
+                    "source": "wwta-blog",
+                    # Use the post title as the candidate's title —
+                    # there's no per-image title in raw HTML, and the
+                    # post title is what credits the trip report.
+                    "title": f"{post_title} ({post_date})" if post_date else post_title,
+                    "url": full,
+                    # The matched <img src> is typically a
+                    # responsive variant (e.g. -300x169) — keep it
+                    # as the thumb so we don't have to fetch a
+                    # different file just for the thumbnail.
+                    "thumb_url": src if src != full else None,
+                    "page_url": post_url,
+                    "mime": None,
+                    # No per-image author in the post HTML — rely on
+                    # WWTA's blanket permission grant. Page URL is
+                    # there for human verification.
+                    "photographer": None,
+                    "license": "WWTA permission (per NOTICE.md)",
+                    "license_url": None,
+                    "dist_m": None,
+                }
+            )
+
+    return candidates
+
+
+# ---------------------------------------------------------------------------
 # Driver
 # ---------------------------------------------------------------------------
 
@@ -559,23 +728,19 @@ def read_sites(path: Path) -> list[dict[str, Any]]:
 
 
 def find_candidates(
-    site: dict[str, Any],
-    radius_m: int,
-    wwta_galleries: list[dict[str, Any]] | None = None,
-    wwta_user: str = "",
-    wwta_password: str = "",
+    site: dict[str, Any], radius_m: int
 ) -> list[dict[str, Any]]:
     """
-    Aggregate candidates from every source. Currently just
-    Wikimedia Commons; extension hook here for Flickr / WWTA /
-    Mapillary / etc.
+    Aggregate candidates from every source. Each source returns a
+    flat list of candidate dicts; we just concatenate. Sources are
+    wired in priority order — Wikimedia (geocoded, license-clean)
+    first, then WWTA blog posts (NDWT-specific, WWTA permission),
+    then the dormant NextGen Gallery (skipped silently for NDWT).
     """
     out: list[dict[str, Any]] = []
     out.extend(commons_candidates_for(site["lat"], site["lon"], radius_m))
-    if wwta_galleries is not None and wwta_user and wwta_password:
-        out.extend(
-            wwta_gallery_candidates_for(site, wwta_galleries, wwta_user, wwta_password)
-        )
+    out.extend(wwta_blog_candidates_for(site))
+    out.extend(wwta_gallery_candidates_for(site))
     # TODO: out.extend(flickr_candidates_for(...))
     return out
 
@@ -602,15 +767,6 @@ def main() -> None:
         default=OUTPUT_PATH,
         help="output JSON path",
     )
-    parser.add_argument(
-        "--wwta-user",
-        default=None,
-        metavar="USERNAME",
-        help=(
-            "WordPress username for WWTA authentication "
-            "(overrides WWTA_WP_USER env var)"
-        ),
-    )
     args = parser.parse_args()
 
     sites = read_sites(GEOJSON_PATH)
@@ -622,19 +778,6 @@ def main() -> None:
         file=sys.stderr,
     )
 
-    # Fetch WWTA gallery list once so every site reuses the same data.
-    wwta_galleries: list[dict[str, Any]] | None = None
-    wwta_user_val = ""
-    wwta_password_val = ""
-    creds = wwta_credentials(user_override=args.wwta_user)
-    if creds is not None:
-        wwta_user_val, wwta_password_val = creds
-        print("Fetching WWTA gallery list…", file=sys.stderr)
-        wwta_galleries = fetch_wwta_gallery_list(wwta_user_val, wwta_password_val)
-        if wwta_galleries is None:
-            print("  ! WWTA gallery list unavailable; skipping WWTA source.", file=sys.stderr)
-            wwta_galleries = None
-
     results: list[dict[str, Any]] = []
     for index, site in enumerate(sites, start=1):
         print(
@@ -643,13 +786,7 @@ def main() -> None:
             file=sys.stderr,
         )
         try:
-            candidates = find_candidates(
-                site,
-                args.radius,
-                wwta_galleries=wwta_galleries,
-                wwta_user=wwta_user_val,
-                wwta_password=wwta_password_val,
-            )
+            candidates = find_candidates(site, args.radius)
         except (urllib.error.URLError, ValueError) as exc:
             print(f"    ! error: {exc}", file=sys.stderr)
             candidates = []

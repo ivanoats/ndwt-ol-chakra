@@ -2,17 +2,18 @@
 
 ## Status
 
-| Step                                                     | State                              |
-| -------------------------------------------------------- | ---------------------------------- |
-| Wikimedia Commons geosearch + license filter             | Done                               |
-| Title/mime filter for orbital + aerial noise             | Done                               |
-| WWTA WordPress NextGen Gallery — stubbed (Keychain auth) | Done; needs live JSON confirmation |
-| Flickr CC search                                         | Planned                            |
-| Mapillary street-level imagery                           | Planned                            |
-| USGS / NPS public-domain libraries                       | Planned                            |
-| Curated `photo-candidates.json` committed to repo        | Planned                            |
-| Display photos on `/sites/<slug>` detail page            | Planned                            |
-| Display photo gallery at `/about/photo-gallery/`         | Planned                            |
+| Step                                                         | State                                 |
+| ------------------------------------------------------------ | ------------------------------------- |
+| Wikimedia Commons geosearch + license filter                 | Done                                  |
+| Title/mime filter for orbital + aerial noise                 | Done                                  |
+| WWTA WordPress NextGen Gallery — stubbed (Keychain auth)     | Dormant — zero NDWT galleries on WWTA |
+| WWTA blog posts (`<img>` extraction from `content.rendered`) | Done (smoke-tested)                   |
+| Flickr CC search                                             | Next priority                         |
+| Mapillary street-level imagery                               | Planned                               |
+| USGS / NPS public-domain libraries                           | Planned                               |
+| Curated `photo-candidates.json` committed to repo            | Planned                               |
+| Display photos on `/sites/<slug>` detail page                | Planned                               |
+| Display photo gallery at `/about/photo-gallery/`             | Planned                               |
 
 ## Goal
 
@@ -138,12 +139,20 @@ than Commons, but requires an API key.
 - Skips silently when no creds configured — Wikimedia source
   still runs.
 
-**Pending**: confirm the live response shape. The stub guesses
-`name` / `title` / `gid` / `image_url` field names but NextGen's
-actual JSON may differ slightly. First real run will surface any
-adjustments needed.
+**Result of the live survey (2026-04-30)**: WWTA's NextGen
+Gallery has 44 galleries. **Zero are NDWT-relevant.** Every
+gallery is for a Cascadia Marine Trail site (Shaw Island, Blake
+Island, Fort Ebey, Penrose, Bowman Bay, Cypress Head, etc.) or
+a Willapa Bay site. No galleries for Columbia / Snake /
+Clearwater river sites.
 
-To enable on a developer machine:
+The stub stays in the script so this site can re-use it later
+if its scope ever expands beyond NDWT (Cascadia, Willapa Bay).
+For now it skips silently and contributes nothing to NDWT
+photo discovery.
+
+To enable on a developer machine (still useful for any future
+trail this site picks up):
 
 ```sh
 security add-generic-password -U \
@@ -154,10 +163,46 @@ export WWTA_WP_USER='YOUR-WP-USERNAME'
 python3 scripts/find-photos.py --limit 5
 ```
 
-Photos aren't geocoded on the WordPress side, so the
-fuzzy-name match is the only correlation we have. If WWTA's
-album naming doesn't match site names cleanly, fall back to
-hand-curating a `site_id → gallery_id` map in YAML or JSON.
+If we adopt the photo-from-blog-post strategy instead (see
+"Next priority" below), credentials aren't needed because
+posts and pages are publicly readable.
+
+### 2a. WWTA blog posts — done (smoke-tested)
+
+`wwta_blog_candidates_for(site)` is now in
+`scripts/find-photos.py`. Public WP REST, no auth.
+
+Mechanism:
+
+1. Search posts via `/wp-json/wp/v2/posts?search=<site name>`
+   with `_fields=id,title,link,date,content`.
+2. For each match, extract `<img src>` URLs from
+   `content.rendered`.
+3. Filter to images hosted under
+   `https://www.wwta.org/wp-content/uploads/` — drops mail
+   signatures, gravatars, and third-party CDN embeds.
+4. Strip WordPress's responsive-size suffix (e.g.
+   `-300x169.jpg` → `.jpg`) and dedupe by canonical filename.
+5. Return as candidates with `source: 'wwta-blog'`,
+   `license: "WWTA permission (per NOTICE.md)"`, the post URL
+   as `page_url`, and the post's title + date as the
+   candidate title (for human attribution context).
+
+Smoke-tested against the 2023 trip report
+"Paddling the Northwest Discovery Trail from Pink House to
+Little Goose Dam":
+
+| Site             | Blog candidates                |
+| ---------------- | ------------------------------ |
+| Pink House       | 8 (one trip report)            |
+| Little Goose Dam | 8 (same trip report)           |
+| Canoe Camp       | 9 (trip report + 1 other post) |
+
+**Caveat**: a trip report covering multiple sites returns the
+same photos under each matched site. The curator picks per-site
+during the manual review pass — there's no automatic way to
+attribute "this drone shot is OF Pink House specifically"
+without OCR or filename inference.
 
 ### 3. Mapillary street-level
 
