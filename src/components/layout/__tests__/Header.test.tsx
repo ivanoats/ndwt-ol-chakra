@@ -1,8 +1,8 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen, within } from '@testing-library/react';
 
-import Header from '../Header';
+import Header, { NAV_ITEMS } from '../Header';
 
 let pathnameMock = '/';
 vi.mock('next/navigation', () => ({
@@ -68,5 +68,73 @@ describe('<Header />', () => {
       'aria-current',
       'page'
     );
+  });
+
+  it('marks the Sites link as current on per-site detail pages', () => {
+    pathnameMock = '/sites/blalock-canyon/';
+    render(<Header />);
+    expect(screen.getByRole('link', { name: 'Sites' })).toHaveAttribute(
+      'aria-current',
+      'page'
+    );
+  });
+
+  describe('mobile hamburger menu', () => {
+    it('renders the toggle button collapsed on mount', () => {
+      render(<Header />);
+      const toggle = screen.getByRole('button', { name: 'Open menu' });
+      expect(toggle).toBeInTheDocument();
+      expect(toggle).toHaveAttribute('aria-expanded', 'false');
+      // The mobile nav element only exists once the panel is open.
+      expect(
+        screen.queryByRole('navigation', { name: 'Primary (mobile)' })
+      ).not.toBeInTheDocument();
+    });
+
+    it('opens the mobile panel when the toggle is clicked', () => {
+      render(<Header />);
+      fireEvent.click(screen.getByRole('button', { name: 'Open menu' }));
+      const mobileNav = screen.getByRole('navigation', {
+        name: 'Primary (mobile)',
+      });
+      expect(mobileNav).toBeInTheDocument();
+      // Iterate the canonical NAV_ITEMS list so this assertion
+      // doesn't drift when later phases add or rename entries.
+      for (const item of NAV_ITEMS) {
+        expect(
+          within(mobileNav).getByRole('link', { name: item.label })
+        ).toBeVisible();
+      }
+      // Toggle flips to "Close menu".
+      expect(
+        screen.getByRole('button', { name: 'Close menu' })
+      ).toHaveAttribute('aria-expanded', 'true');
+    });
+
+    it('closes the panel when ESC is pressed', () => {
+      render(<Header />);
+      fireEvent.click(screen.getByRole('button', { name: 'Open menu' }));
+      expect(
+        screen.getByRole('navigation', { name: 'Primary (mobile)' })
+      ).toBeInTheDocument();
+      fireEvent.keyDown(document, { key: 'Escape' });
+      expect(
+        screen.queryByRole('navigation', { name: 'Primary (mobile)' })
+      ).not.toBeInTheDocument();
+    });
+
+    it('closes the panel on a click outside the header', () => {
+      render(<Header />);
+      fireEvent.click(screen.getByRole('button', { name: 'Open menu' }));
+      expect(
+        screen.getByRole('navigation', { name: 'Primary (mobile)' })
+      ).toBeInTheDocument();
+      // Pointer down outside the header triggers the document
+      // listener and closes the panel.
+      fireEvent.pointerDown(document.body);
+      expect(
+        screen.queryByRole('navigation', { name: 'Primary (mobile)' })
+      ).not.toBeInTheDocument();
+    });
   });
 });

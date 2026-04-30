@@ -6,7 +6,7 @@
     "MD041": false,
     "MD024": { "siblings_only": true },
   },
-  "globs": ["**/*.md"],
+  "globs": ["**/*.md", "**/*.mdx"],
   "ignores": [
     "node_modules",
     "coverage",
@@ -16,5 +16,7 @@
     ".next",
     ".agents",
     ".claude",
+    "test-results",
+    "playwright-report",
   ],
 }
