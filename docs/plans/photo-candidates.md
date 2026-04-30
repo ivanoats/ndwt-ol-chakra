@@ -6,8 +6,8 @@
 | -------------------------------------------------------- | ---------------------------------- |
 | Wikimedia Commons geosearch + license filter             | Done                               |
 | Title/mime filter for orbital + aerial noise             | Done                               |
-| WWTA WordPress NextGen Gallery — stubbed (Keychain auth) | Done; needs live JSON confirmation |
-| Flickr CC search                                         | Planned                            |
+| WWTA WordPress NextGen Gallery — stubbed (Keychain auth) | Dormant — zero NDWT galleries on WWTA |
+| Flickr CC search                                         | Next priority                      |
 | Mapillary street-level imagery                           | Planned                            |
 | USGS / NPS public-domain libraries                       | Planned                            |
 | Curated `photo-candidates.json` committed to repo        | Planned                            |
@@ -138,12 +138,20 @@ than Commons, but requires an API key.
 - Skips silently when no creds configured — Wikimedia source
   still runs.
 
-**Pending**: confirm the live response shape. The stub guesses
-`name` / `title` / `gid` / `image_url` field names but NextGen's
-actual JSON may differ slightly. First real run will surface any
-adjustments needed.
+**Result of the live survey (2026-04-30)**: WWTA's NextGen
+Gallery has 44 galleries. **Zero are NDWT-relevant.** Every
+gallery is for a Cascadia Marine Trail site (Shaw Island, Blake
+Island, Fort Ebey, Penrose, Bowman Bay, Cypress Head, etc.) or
+a Willapa Bay site. No galleries for Columbia / Snake /
+Clearwater river sites.
 
-To enable on a developer machine:
+The stub stays in the script so this site can re-use it later
+if its scope ever expands beyond NDWT (Cascadia, Willapa Bay).
+For now it skips silently and contributes nothing to NDWT
+photo discovery.
+
+To enable on a developer machine (still useful for any future
+trail this site picks up):
 
 ```sh
 security add-generic-password -U \
@@ -153,6 +161,29 @@ security add-generic-password -U \
 export WWTA_WP_USER='YOUR-WP-USERNAME'
 python3 scripts/find-photos.py --limit 5
 ```
+
+If we adopt the photo-from-blog-post strategy instead (see
+"Next priority" below), credentials aren't needed because
+posts and pages are publicly readable.
+
+### 2a. WWTA blog posts (next priority)
+
+WWTA's WordPress has ~10 NDWT-relevant blog posts including a
+2023 trip report from Pink House to Lippy. Posts are publicly
+readable via `/wp-json/wp/v2/posts?search=...&_fields=content`,
+and each rendered HTML body has embedded `<img>` tags. A small
+`wwta_blog_candidates_for(site)` function could:
+
+1. Search the WP posts endpoint for the site's name keyword.
+2. Parse `<img src=>` URLs out of each match's
+   `content.rendered`.
+3. Return them as candidates with `source: 'wwta-blog'` and
+   `license: "WWTA permission (per NOTICE.md)"`.
+
+This sidesteps the NextGen Gallery REST limitation and gives us
+NDWT-specific photos that WWTA has already curated and
+published. Higher signal than Wikimedia Commons for this
+dataset.
 
 Photos aren't geocoded on the WordPress side, so the
 fuzzy-name match is the only correlation we have. If WWTA's

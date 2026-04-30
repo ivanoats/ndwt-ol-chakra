@@ -302,8 +302,19 @@ def commons_candidates_for(
 
 
 # ---------------------------------------------------------------------------
-# WWTA WordPress (NextGen Gallery)
+# WWTA WordPress (NextGen Gallery) — dormant for NDWT
 # ---------------------------------------------------------------------------
+#
+# A 2026-04-30 live survey of WWTA's NextGen Gallery (auth'd via
+# Application Password) found 44 galleries — every single one is
+# for a Cascadia Marine Trail site (Shaw / Blake / Fort Ebey /
+# Penrose / Cypress Head / etc.) or a Willapa Bay site. ZERO
+# galleries cover NDWT (Columbia / Snake / Clearwater) sites. So
+# this source contributes nothing for the current dataset.
+#
+# Stub kept anyway so this site can re-use it later if scope ever
+# expands beyond NDWT. When Keychain is empty / env vars unset,
+# the function returns [] and the Wikimedia source still runs.
 #
 # Authenticated via macOS Keychain or env-var fallback. Store the
 # WordPress Application Password (https://make.wordpress.org/core/
@@ -313,13 +324,10 @@ def commons_candidates_for(
 #         -s wwta-wp-app-password -w
 #
 # (omit `-w VALUE` so `security` prompts without echoing). The
-# script reads the username from `--wwta-user` or `WWTA_WP_USER`,
-# then asks Keychain for the matching password under service
+# script reads the username from `WWTA_WP_USER`, then asks
+# Keychain for the matching password under service
 # `wwta-wp-app-password`. If Keychain isn't available (Linux CI,
 # etc.) it falls back to `WWTA_WP_APP_PASSWORD`.
-#
-# Skipped silently when no credentials are configured — the
-# Wikimedia source still runs.
 
 
 WWTA_API_BASE = "https://www.wwta.org/wp-json"
@@ -425,13 +433,15 @@ def wwta_gallery_candidates_for(site: dict[str, Any]) -> list[dict[str, Any]]:
         return []
     time.sleep(REQUEST_DELAY_S)
 
-    # The endpoint may return a list, or {results: [...]}, or a
-    # paginated dict. Normalize.
+    # NextGen Gallery wraps the list under `items`; older /
+    # alternate routes may return a bare list or `results`.
+    # Normalize all three.
     if isinstance(galleries_response, list):
         galleries = galleries_response
     elif isinstance(galleries_response, dict):
         galleries = (
-            galleries_response.get("results")
+            galleries_response.get("items")
+            or galleries_response.get("results")
             or galleries_response.get("galleries")
             or galleries_response.get("data")
             or []
@@ -443,16 +453,30 @@ def wwta_gallery_candidates_for(site: dict[str, Any]) -> list[dict[str, Any]]:
     for gallery in galleries:
         if not isinstance(gallery, dict):
             continue
+        # Per the live response, NextGen exposes all three:
+        # `name` (kebab-case ID-like, e.g. "shaw-island-campground"),
+        # `slug` (similar), and `title` (display, e.g. "Shaw Island
+        # Campground "). Match against the normalized union.
+        gallery_norms = {
+            _normalize_for_match(gallery.get(field, "") or "")
+            for field in ("name", "slug", "title")
+        }
+        gallery_norms.discard("")
+        if not gallery_norms:
+            continue
+        if not any(
+            site_norm == g_norm
+            or site_norm in g_norm
+            or g_norm in site_norm
+            for g_norm in gallery_norms
+        ):
+            continue
         gallery_name = (
-            gallery.get("name")
-            or gallery.get("title")
+            gallery.get("title")
+            or gallery.get("name")
             or gallery.get("slug")
             or ""
         )
-        if _normalize_for_match(gallery_name) != site_norm and site_norm not in _normalize_for_match(
-            gallery_name
-        ):
-            continue
         gid = gallery.get("gid") or gallery.get("id") or gallery.get("ID")
         if gid is None:
             continue
@@ -472,7 +496,8 @@ def wwta_gallery_candidates_for(site: dict[str, Any]) -> list[dict[str, Any]]:
             images = images_response
         elif isinstance(images_response, dict):
             images = (
-                images_response.get("results")
+                images_response.get("items")
+                or images_response.get("results")
                 or images_response.get("images")
                 or images_response.get("data")
                 or []

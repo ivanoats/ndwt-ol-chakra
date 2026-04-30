@@ -187,8 +187,19 @@ or beyond.
 WWTA's NextGen Gallery is referenced from our
 `/about/photo-gallery/` page as a placeholder link. The
 [`docs/plans/photo-candidates.md`](./plans/photo-candidates.md)
-plan covers integrating those photos as candidates per site —
-needs API access (see below).
+plan covers integrating geocoded sources per site.
+
+> **Update (2026-04-30): WWTA's NextGen Gallery has zero
+> NDWT-relevant content.** A survey of all 44 galleries (auth'd
+> via Application Password) returned only Cascadia Marine Trail
+> and Willapa Bay site galleries — Shaw Island, Blake Island,
+> Fort Ebey, Penrose, Bowman Bay, Cypress Head, etc. No
+> Columbia / Snake / Clearwater river galleries. The WWTA
+> gallery integration stays in `find-photos.py` for future
+> re-use (e.g. if this site later covers Cascadia or Willapa)
+> but won't pay off for the current dataset. Photo discovery
+> for NDWT should focus on Wikimedia Commons (already
+> integrated) and Flickr CC (planned).
 
 ## Three missing pages worth porting
 
