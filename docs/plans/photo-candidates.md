@@ -2,17 +2,17 @@
 
 ## Status
 
-| Step                                              | State   |
-| ------------------------------------------------- | ------- |
-| Wikimedia Commons geosearch + license filter      | Done    |
-| Title/mime filter for orbital + aerial noise      | Done    |
+| Step                                                     | State                              |
+| -------------------------------------------------------- | ---------------------------------- |
+| Wikimedia Commons geosearch + license filter             | Done                               |
+| Title/mime filter for orbital + aerial noise             | Done                               |
 | WWTA WordPress NextGen Gallery — stubbed (Keychain auth) | Done; needs live JSON confirmation |
-| Flickr CC search                                  | Planned |
-| Mapillary street-level imagery                    | Planned |
-| USGS / NPS public-domain libraries                | Planned |
-| Curated `photo-candidates.json` committed to repo | Planned |
-| Display photos on `/sites/<slug>` detail page     | Planned |
-| Display photo gallery at `/about/photo-gallery/`  | Planned |
+| Flickr CC search                                         | Planned                            |
+| Mapillary street-level imagery                           | Planned                            |
+| USGS / NPS public-domain libraries                       | Planned                            |
+| Curated `photo-candidates.json` committed to repo        | Planned                            |
+| Display photos on `/sites/<slug>` detail page            | Planned                            |
+| Display photo gallery at `/about/photo-gallery/`         | Planned                            |
 
 ## Goal
 
