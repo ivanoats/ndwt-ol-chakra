@@ -33,7 +33,7 @@ graph TB
   subgraph Domain["Domain (pure)"]
     Site[Site<br/>SiteId branded]
     Coords[Coordinates]
-    Facility[Facility<br/>FacilitySet = readonly Facility[]]
+    Facility["Facility<br/>FacilitySet = readonly Facility[]"]
   end
 
   subgraph Adapters["Adapters"]
