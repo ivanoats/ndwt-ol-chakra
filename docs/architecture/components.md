@@ -13,8 +13,8 @@ graph TB
     HomePage["page.tsx<br/>server: Hero + MapApp"]
     SitesIndexRoute["sites/page.tsx<br/>SiteIndex grid"]
     SiteDetailRoute["sites/[slug]/page.tsx<br/>SiteDetails"]
-    AboutRoutes["about/* pages<br/>history · partners · contact<br/>· photo-gallery"]
-    EditorialRoutes["editorial route trees<br/>water-safety · river-navigation<br/>· leave-no-trace · natural-world<br/>· past-and-present · trip-planning<br/>· get-involved"]
+    AboutRoutes["about/* pages<br/>about · contact · photo-gallery (TSX)<br/>history · partners (MDX)"]
+    EditorialRoutes["editorial route trees<br/>water-safety · river-navigation<br/>· leave-no-trace · natural-world<br/>· past-and-present (MDX)<br/>trip-planning · get-involved (TSX)"]
     Globals["globals.css<br/>cascade layers + #map"]
   end
 
@@ -103,10 +103,10 @@ graph TB
   SiteDetailRoute --> LoadSites
 
   AboutRoutes --> Article
-  AboutRoutes --> Mdx
   EditorialRoutes --> Article
   EditorialRoutes --> SectionIndex
-  EditorialRoutes --> Mdx
+  Mdx -.MDX-backed subset.-> AboutRoutes
+  Mdx -.MDX-backed subset.-> EditorialRoutes
 
   MapApp --> MapTSX
   MapApp --> Panel
@@ -133,12 +133,14 @@ graph TB
 
   Theme --> IconButton
 
+  SiteIndex --> Heading
+  SiteIndex --> Box
   SiteIndex --> Link
   SiteIndex --> Stack
-  SiteIndex --> Slug
+  SiteIndex --> Text
+  SiteIndex --> Facilities
 
-  Article --> Heading
-  Article --> Stack
+  Article --> Link
   SectionIndex --> Link
 
   Comp --> InMem
@@ -151,9 +153,9 @@ graph TB
 
   LoadSites --> Parser
   Geo --> Parser
+  Parser -.uses.-> Slug
   Site --> Coords
   Site --> Fac
-  Slug --> Site
   Idx --> Site
 
   classDef route fill:#dbeafe,stroke:#2563eb;
@@ -188,13 +190,17 @@ Routes:
 
 - `/` — map + Hero (`HomePage`)
 - `/sites/`, `/sites/[slug]/` — index grid + per-site detail
-- `/about/`, `/about/{history,contact,partners,photo-gallery}/`
-  — MDX articles for the curated about subtree
+- `/about/`, `/about/contact/`, `/about/photo-gallery/` — TSX
+  pages that wrap `ArticleLayout` directly; no MDX import.
+- `/about/history/`, `/about/partners/` — MDX-backed (`content/about/*.mdx`)
+  rendered through `ArticleLayout`.
 - `/water-safety/[[...slug]]/`, `/river-navigation/[[...slug]]/`,
   `/natural-world/[[...slug]]/`, `/past-and-present/[[...slug]]/`
-  — catch-all editorial sections backed by `content/*.mdx`
-- `/leave-no-trace/`, `/trip-planning/`, `/get-involved/` —
-  single-article editorial pages
+  — catch-all editorial sections backed by `content/*.mdx`,
+  with `SectionIndex` rendering the per-section landing pages.
+- `/leave-no-trace/` — single MDX page.
+- `/trip-planning/`, `/get-involved/` — TSX pages that wrap
+  `ArticleLayout` directly; no MDX import.
 
 ### `src/components/layout/`
 
@@ -251,17 +257,29 @@ The OpenLayers integration:
 
 ### `content/`
 
-MDX source for editorial articles. Pages under
-`app/<section>/[[...slug]]/page.tsx` import the matching MDX
-file at build time, wrap it in `ArticleLayout`, and emit static
-HTML. No MDX runtime ships in the client bundle.
+MDX source for the MDX-backed subset of editorial articles
+(`leave-no-trace.mdx`, `about/{history,partners}.mdx`, plus
+the per-section trees under `water-safety/`, `river-navigation/`,
+`natural-world/`, and `past-and-present/`). The matching route
+handlers import the MDX file at build time, wrap it in
+`ArticleLayout`, and emit static HTML. No MDX runtime ships in
+the client bundle. TSX-authored editorial pages (`/about/`,
+`/about/contact/`, `/about/photo-gallery/`, `/trip-planning/`,
+`/get-involved/`) skip `content/` entirely and write their copy
+directly in TSX.
 
 ### `src/domain/`
 
 Pure types only. Adding a non-pure dependency here is a code
 review red flag. `slug.ts` is included here because it's a pure
-derivation from `Site.name` (with collision tie-breaking by
-river mile then site id) and has no framework deps.
+derivation from a site's name (with collision tie-breaking by
+river mile then site id) and has no framework deps. It declares
+its own minimal `SluggableSite` interface rather than importing
+`site.ts`, which keeps it usable from the GeoJSON parser before
+a full `Site` exists. The parser (`parseSitesFromGeoJson`) is
+the only caller — adapters use `assignSlugs` while building the
+site list, then the slug rides along on every `Site` value as a
+plain string field.
 
 ### `src/application/`
 

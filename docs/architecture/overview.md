@@ -18,7 +18,7 @@ flowchart LR
   boater(["Boater /<br/>trip planner"])
   maintainer(["Maintainer"])
 
-  site["NW Discovery Water Trail map<br/>Static Next.js site<br/>159 launch sites + GPX downloads<br/>+ MDX editorial pages"]
+  site["NW Discovery Water Trail map<br/>Static Next.js site<br/>159 launch sites + GPX downloads<br/>+ editorial pages (MDX + TSX)"]
 
   netlify[("Netlify CDN<br/>HTTPS, deploy previews")]
   github[("GitHub<br/>repo · CI · dependabot")]
