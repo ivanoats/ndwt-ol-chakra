@@ -7,6 +7,7 @@
 | Wikimedia Commons geosearch + license filter             | Done                               |
 | Title/mime filter for orbital + aerial noise             | Done                               |
 | WWTA WordPress NextGen Gallery — stubbed (Keychain auth) | Dormant — zero NDWT galleries on WWTA |
+| WWTA blog posts (`<img>` extraction from `content.rendered`) | Done (smoke-tested)             |
 | Flickr CC search                                         | Next priority                      |
 | Mapillary street-level imagery                           | Planned                            |
 | USGS / NPS public-domain libraries                       | Planned                            |
@@ -166,29 +167,42 @@ If we adopt the photo-from-blog-post strategy instead (see
 "Next priority" below), credentials aren't needed because
 posts and pages are publicly readable.
 
-### 2a. WWTA blog posts (next priority)
+### 2a. WWTA blog posts — done (smoke-tested)
 
-WWTA's WordPress has ~10 NDWT-relevant blog posts including a
-2023 trip report from Pink House to Lippy. Posts are publicly
-readable via `/wp-json/wp/v2/posts?search=...&_fields=content`,
-and each rendered HTML body has embedded `<img>` tags. A small
-`wwta_blog_candidates_for(site)` function could:
+`wwta_blog_candidates_for(site)` is now in
+`scripts/find-photos.py`. Public WP REST, no auth.
 
-1. Search the WP posts endpoint for the site's name keyword.
-2. Parse `<img src=>` URLs out of each match's
+Mechanism:
+
+1. Search posts via `/wp-json/wp/v2/posts?search=<site name>`
+   with `_fields=id,title,link,date,content`.
+2. For each match, extract `<img src>` URLs from
    `content.rendered`.
-3. Return them as candidates with `source: 'wwta-blog'` and
-   `license: "WWTA permission (per NOTICE.md)"`.
+3. Filter to images hosted under
+   `https://www.wwta.org/wp-content/uploads/` — drops mail
+   signatures, gravatars, and third-party CDN embeds.
+4. Strip WordPress's responsive-size suffix (e.g.
+   `-300x169.jpg` → `.jpg`) and dedupe by canonical filename.
+5. Return as candidates with `source: 'wwta-blog'`,
+   `license: "WWTA permission (per NOTICE.md)"`, the post URL
+   as `page_url`, and the post's title + date as the
+   candidate title (for human attribution context).
 
-This sidesteps the NextGen Gallery REST limitation and gives us
-NDWT-specific photos that WWTA has already curated and
-published. Higher signal than Wikimedia Commons for this
-dataset.
+Smoke-tested against the 2023 trip report
+"Paddling the Northwest Discovery Trail from Pink House to
+Little Goose Dam":
 
-Photos aren't geocoded on the WordPress side, so the
-fuzzy-name match is the only correlation we have. If WWTA's
-album naming doesn't match site names cleanly, fall back to
-hand-curating a `site_id → gallery_id` map in YAML or JSON.
+| Site            | Blog candidates |
+| --------------- | --------------- |
+| Pink House      | 8 (one trip report)            |
+| Little Goose Dam | 8 (same trip report)          |
+| Canoe Camp      | 9 (trip report + 1 other post) |
+
+**Caveat**: a trip report covering multiple sites returns the
+same photos under each matched site. The curator picks per-site
+during the manual review pass — there's no automatic way to
+attribute "this drone shot is OF Pink House specifically"
+without OCR or filename inference.
 
 ### 3. Mapillary street-level
 

@@ -9,10 +9,13 @@ Currently queries:
 - Wikimedia Commons (https://commons.wikimedia.org/) — explicit
   license metadata, geocoded images. The cleanest source for
   reuse since every result advertises its license terms.
-- WWTA WordPress NextGen Gallery (https://www.wwta.org/) —
-  fuzzy site-name → album-name match. Skipped when no auth is
-  configured. WP Application Passwords are stored in macOS
-  Keychain; see the WWTA section below.
+- WWTA blog posts (https://www.wwta.org/) — public WP REST
+  search for the site name keyword, then `<img>` extraction
+  from each match's `content.rendered`. Photos inherit WWTA's
+  blanket permission grant (NOTICE.md). No auth required.
+- WWTA NextGen Gallery — DORMANT for NDWT (the 44 galleries
+  that exist are all Cascadia / Willapa Bay sites). Function
+  stays so this site can re-use it if scope ever expands.
 
 Reads:
   public/data/ndwt.geojson
@@ -64,6 +67,7 @@ import argparse
 import base64
 import json
 import os
+import re
 import subprocess
 import sys
 import time
@@ -544,6 +548,121 @@ def wwta_gallery_candidates_for(site: dict[str, Any]) -> list[dict[str, Any]]:
 
 
 # ---------------------------------------------------------------------------
+# WWTA WordPress (blog posts)
+# ---------------------------------------------------------------------------
+#
+# Public WP REST API — no auth needed. WWTA's blog has ~10
+# NDWT-relevant posts (trip reports, notices) with embedded
+# photos that WWTA's authors took or curated. Higher signal than
+# Wikimedia for this dataset since the photos are explicitly of
+# NDWT sites.
+#
+# Strategy: search posts for the site's name keyword, parse
+# `<img src=>` from each match's `content.rendered`, filter to
+# wwta.org-hosted uploads, dedupe by canonical filename, return
+# as candidates. Each candidate inherits `WWTA permission (per
+# NOTICE.md)` since these are first-party WWTA content.
+
+
+WWTA_UPLOADS_PREFIX = "https://www.wwta.org/wp-content/uploads/"
+# Strip the WordPress responsive-size suffix (e.g.
+# "/foo-300x169.jpg" → "/foo.jpg") so we can dedupe sized
+# variants of the same image.
+_SIZE_SUFFIX_RE = re.compile(
+    r"-\d+x\d+(\.(?:jpg|jpeg|png|webp|gif))$", re.IGNORECASE
+)
+_IMG_SRC_RE = re.compile(r'<img[^>]*?src="([^"]+)"', re.IGNORECASE)
+
+
+def canonical_uploads_url(src: str) -> str:
+    """Strip WP's `-WxH` size suffix to get the full-size URL."""
+    return _SIZE_SUFFIX_RE.sub(r"\1", src)
+
+
+def wwta_blog_candidates_for(site: dict[str, Any]) -> list[dict[str, Any]]:
+    """
+    Search WWTA's WordPress blog for posts that mention the site
+    by name, then extract embedded `<img>` tags. Public REST,
+    no auth.
+
+    Filters to images hosted under
+    `wwta.org/wp-content/uploads/` so we drop external embeds
+    (gravatars, mail signatures, third-party CDN), then
+    dedupes by canonical filename so we don't return five sized
+    variants of the same photo.
+    """
+    site_name = (site.get("name") or "").strip()
+    if not site_name:
+        return []
+
+    # The WP search endpoint matches against title + content +
+    # excerpt. Quoting the name keeps multi-word matches together;
+    # urlencode handles spaces/punctuation.
+    try:
+        posts = http_get_json(
+            f"{WWTA_API_BASE}/wp/v2/posts",
+            {
+                "search": site_name,
+                "per_page": 5,
+                "_fields": "id,title,link,date,content",
+            },
+        )
+    except urllib.error.URLError as exc:
+        print(f"    ! wwta blog search error: {exc}", file=sys.stderr)
+        return []
+    time.sleep(REQUEST_DELAY_S)
+
+    if not isinstance(posts, list):
+        return []
+
+    candidates: list[dict[str, Any]] = []
+    seen_canonical: set[str] = set()
+    for post in posts:
+        if not isinstance(post, dict):
+            continue
+        content = (post.get("content") or {}).get("rendered") or ""
+        post_url = post.get("link") or ""
+        post_title = (post.get("title") or {}).get("rendered") or ""
+        post_date = (post.get("date") or "")[:10]
+
+        for raw_src in _IMG_SRC_RE.findall(content):
+            # Decode any HTML entities (`&amp;` → `&`) and trim.
+            src = raw_src.replace("&amp;", "&").strip()
+            if not src.startswith(WWTA_UPLOADS_PREFIX):
+                continue
+            full = canonical_uploads_url(src)
+            if full in seen_canonical:
+                continue
+            seen_canonical.add(full)
+            candidates.append(
+                {
+                    "source": "wwta-blog",
+                    # Use the post title as the candidate's title —
+                    # there's no per-image title in raw HTML, and the
+                    # post title is what credits the trip report.
+                    "title": f"{post_title} ({post_date})" if post_date else post_title,
+                    "url": full,
+                    # The matched <img src> is typically a
+                    # responsive variant (e.g. -300x169) — keep it
+                    # as the thumb so we don't have to fetch a
+                    # different file just for the thumbnail.
+                    "thumb_url": src if src != full else None,
+                    "page_url": post_url,
+                    "mime": None,
+                    # No per-image author in the post HTML — rely on
+                    # WWTA's blanket permission grant. Page URL is
+                    # there for human verification.
+                    "photographer": None,
+                    "license": "WWTA permission (per NOTICE.md)",
+                    "license_url": None,
+                    "dist_m": None,
+                }
+            )
+
+    return candidates
+
+
+# ---------------------------------------------------------------------------
 # Driver
 # ---------------------------------------------------------------------------
 
@@ -582,6 +701,7 @@ def find_candidates(
     """
     out: list[dict[str, Any]] = []
     out.extend(commons_candidates_for(site["lat"], site["lon"], radius_m))
+    out.extend(wwta_blog_candidates_for(site))
     out.extend(wwta_gallery_candidates_for(site))
     # TODO: out.extend(flickr_candidates_for(...))
     return out
