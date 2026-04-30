@@ -36,21 +36,21 @@ WWTA's WordPress installation manages **eight water trails**:
 For NDWT specifically, WWTA has ported **every editorial page
 from ndwt.org** into WordPress under `ndwt-*` slugs:
 
-| WordPress slug | Page title |
-| --- | --- |
-| `ndwt-home` | Map Your Trip on the Water Trail |
-| `ndwt-explore-the-water-trail` | Explore the Northwest Discovery Water Trail |
-| `ndwt-site-information` | The Northwest Discovery Water Trail |
-| `ndwt-water-safety` | Water Safety (index) |
-| `ndwt-weather` / `-barge-traffic` / `-communications` / `-reading-the-rivers` / `-float-plans` / `-safety-gear` | Six water-safety sub-pages |
-| `ndwt-river-navigation` / `-lock-and-dam-protocol` / `-portage-guide` | River-navigation index + 2 sub-pages |
-| `ndwt-natural-world` / `-flora-and-fauna` / `-geology` / `-invasive-species` | Natural-world index + 3 sub-pages |
-| `ndwt-past-and-present` / `-tribal-communities` / `-early-explorers` / `-trade-and-industry` | Past-and-present index + 3 sub-pages |
-| `ndwt-leave-no-trace` | Leave No Trace |
-| `ndwt-about-the-water-trail` / `-history` / `-partners` / `-contact` / `-press-coverage` | About + sub-pages |
-| `ndwt-donate` / `-volunteer` / `-trip-reports` / `-get-involved` | Get-involved cluster |
-| `ndwt-photo-gallery` | Photo Gallery (NextGen Gallery plugin) |
-| `ndwt-links` | External links |
+| WordPress slug                                                                                                  | Page title                                  |
+| --------------------------------------------------------------------------------------------------------------- | ------------------------------------------- |
+| `ndwt-home`                                                                                                     | Map Your Trip on the Water Trail            |
+| `ndwt-explore-the-water-trail`                                                                                  | Explore the Northwest Discovery Water Trail |
+| `ndwt-site-information`                                                                                         | The Northwest Discovery Water Trail         |
+| `ndwt-water-safety`                                                                                             | Water Safety (index)                        |
+| `ndwt-weather` / `-barge-traffic` / `-communications` / `-reading-the-rivers` / `-float-plans` / `-safety-gear` | Six water-safety sub-pages                  |
+| `ndwt-river-navigation` / `-lock-and-dam-protocol` / `-portage-guide`                                           | River-navigation index + 2 sub-pages        |
+| `ndwt-natural-world` / `-flora-and-fauna` / `-geology` / `-invasive-species`                                    | Natural-world index + 3 sub-pages           |
+| `ndwt-past-and-present` / `-tribal-communities` / `-early-explorers` / `-trade-and-industry`                    | Past-and-present index + 3 sub-pages        |
+| `ndwt-leave-no-trace`                                                                                           | Leave No Trace                              |
+| `ndwt-about-the-water-trail` / `-history` / `-partners` / `-contact` / `-press-coverage`                        | About + sub-pages                           |
+| `ndwt-donate` / `-volunteer` / `-trip-reports` / `-get-involved`                                                | Get-involved cluster                        |
+| `ndwt-photo-gallery`                                                                                            | Photo Gallery (NextGen Gallery plugin)      |
+| `ndwt-links`                                                                                                    | External links                              |
 
 Three NDWT pages exist on WWTA that aren't yet on this site:
 
@@ -63,33 +63,33 @@ Three NDWT pages exist on WWTA that aren't yet on this site:
 
 ## Sitemap comparison (NDWT scope only)
 
-| Section | This site | wwta.org | Notes |
-| --- | --- | --- | --- |
-| Interactive map of ~150 sites | ✅ Have | ❌ None | This site's defining feature. |
-| Per-site detail pages (slugs) | ✅ Have | ❌ None | 159 pages at `/sites/<slug>/`. |
-| Site index / browse-by-list | ✅ Have | ❌ None | `/sites/` with filter + sort. |
-| GPX waypoint download per site | ✅ Have | ❌ None | |
-| Static GeoJSON dataset published | ✅ Have | ❌ None | `/data/ndwt.geojson`. |
-| Water Safety (6 sub-pages) | ✅ Have | ✅ Have | Same content origin (ndwt.org → both). Slight wording differences. |
-| River Navigation (2 sub-pages) | ✅ Have | ✅ Have | Same. |
-| Leave No Trace | ✅ Have | ✅ Have | Same. |
-| Natural World (3 sub-pages) | ✅ Have | ✅ Have | Same. |
-| Past & Present (3 sub-pages) | ✅ Have | ✅ Have | Tribal Communities flagged for WWTA review on our side. |
-| About: history, partners | ✅ Have | ✅ Have | Same. |
-| About: contact | ✅ Have (mailto) | ✅ Have | We point at `info@wwta.org`. |
-| About: photo gallery | ✅ Stub linking out | ✅ Have (NextGen Gallery, ~544 media items) | Our `/about/photo-gallery/` currently links to wwta.org root; placeholder URL to be confirmed. |
-| Get Involved: donate / volunteer / trip reports | ✅ Stub linking out | ✅ Have | Three CTAs on our `/get-involved/`; URLs are placeholders pointing at wwta.org root. |
-| Historical Access page | ❌ Missing | ✅ Have | NDWT-specific, never on ndwt.org. |
-| Waterway of Yesterday | ❌ Missing | ✅ Have | NDWT-specific. |
-| Recognition / designation page | ❌ Missing | ✅ Have | NDWT-specific. |
-| Press Coverage | ❌ Deferred (per `gap-analysis.md`) | ✅ Have | We chose to defer permanently. |
-| Membership / join | ❌ N/A | ✅ Have | WWTA-org concern; link out only. |
-| Shop / merchandise | ❌ N/A | ✅ Have | WWTA-org concern; link out only. |
-| Calendar of events | ❌ N/A | ✅ Have (`tribe/events`) | WWTA-org concern; link out only. |
-| Blog / news (eNews) | ❌ Missing | ✅ Have (~10 NDWT-relevant posts) | Worth linking to selected NDWT-relevant posts. |
-| Podcast | ❌ N/A | ✅ Have | WWTA-org concern. |
-| Reservations system | ❌ N/A | ✅ Have (Cascadia trail only) | Not relevant to NDWT. |
-| Site Stewards program | ❌ N/A | ✅ Have (Cascadia trail only) | Not relevant to NDWT. |
+| Section                                         | This site                           | wwta.org                                    | Notes                                                                                          |
+| ----------------------------------------------- | ----------------------------------- | ------------------------------------------- | ---------------------------------------------------------------------------------------------- |
+| Interactive map of ~150 sites                   | ✅ Have                             | ❌ None                                     | This site's defining feature.                                                                  |
+| Per-site detail pages (slugs)                   | ✅ Have                             | ❌ None                                     | 159 pages at `/sites/<slug>/`.                                                                 |
+| Site index / browse-by-list                     | ✅ Have                             | ❌ None                                     | `/sites/` with filter + sort.                                                                  |
+| GPX waypoint download per site                  | ✅ Have                             | ❌ None                                     |                                                                                                |
+| Static GeoJSON dataset published                | ✅ Have                             | ❌ None                                     | `/data/ndwt.geojson`.                                                                          |
+| Water Safety (6 sub-pages)                      | ✅ Have                             | ✅ Have                                     | Same content origin (ndwt.org → both). Slight wording differences.                             |
+| River Navigation (2 sub-pages)                  | ✅ Have                             | ✅ Have                                     | Same.                                                                                          |
+| Leave No Trace                                  | ✅ Have                             | ✅ Have                                     | Same.                                                                                          |
+| Natural World (3 sub-pages)                     | ✅ Have                             | ✅ Have                                     | Same.                                                                                          |
+| Past & Present (3 sub-pages)                    | ✅ Have                             | ✅ Have                                     | Tribal Communities flagged for WWTA review on our side.                                        |
+| About: history, partners                        | ✅ Have                             | ✅ Have                                     | Same.                                                                                          |
+| About: contact                                  | ✅ Have (mailto)                    | ✅ Have                                     | We point at `info@wwta.org`.                                                                   |
+| About: photo gallery                            | ✅ Stub linking out                 | ✅ Have (NextGen Gallery, ~544 media items) | Our `/about/photo-gallery/` currently links to wwta.org root; placeholder URL to be confirmed. |
+| Get Involved: donate / volunteer / trip reports | ✅ Stub linking out                 | ✅ Have                                     | Three CTAs on our `/get-involved/`; URLs are placeholders pointing at wwta.org root.           |
+| Historical Access page                          | ❌ Missing                          | ✅ Have                                     | NDWT-specific, never on ndwt.org.                                                              |
+| Waterway of Yesterday                           | ❌ Missing                          | ✅ Have                                     | NDWT-specific.                                                                                 |
+| Recognition / designation page                  | ❌ Missing                          | ✅ Have                                     | NDWT-specific.                                                                                 |
+| Press Coverage                                  | ❌ Deferred (per `gap-analysis.md`) | ✅ Have                                     | We chose to defer permanently.                                                                 |
+| Membership / join                               | ❌ N/A                              | ✅ Have                                     | WWTA-org concern; link out only.                                                               |
+| Shop / merchandise                              | ❌ N/A                              | ✅ Have                                     | WWTA-org concern; link out only.                                                               |
+| Calendar of events                              | ❌ N/A                              | ✅ Have (`tribe/events`)                    | WWTA-org concern; link out only.                                                               |
+| Blog / news (eNews)                             | ❌ Missing                          | ✅ Have (~10 NDWT-relevant posts)           | Worth linking to selected NDWT-relevant posts.                                                 |
+| Podcast                                         | ❌ N/A                              | ✅ Have                                     | WWTA-org concern.                                                                              |
+| Reservations system                             | ❌ N/A                              | ✅ Have (Cascadia trail only)               | Not relevant to NDWT.                                                                          |
+| Site Stewards program                           | ❌ N/A                              | ✅ Have (Cascadia trail only)               | Not relevant to NDWT.                                                                          |
 
 ## Capabilities each side has that the other doesn't
 
@@ -213,15 +213,15 @@ upcoming PR.
 The WordPress REST API is **already open for public read** on
 the public-facing content. Key endpoints I've verified:
 
-| Endpoint | Auth | Notes |
-| --- | --- | --- |
-| `GET /wp-json/wp/v2/pages?per_page=100` | None | All public pages with title, slug, content. |
-| `GET /wp-json/wp/v2/posts` | None | Blog posts, ~10 NDWT-relevant. |
-| `GET /wp-json/wp/v2/media?per_page=100` | None | All 544 media items in the library. |
-| `GET /wp-json/tribe/events/v1/events` | None | Events Calendar entries. |
-| `GET /wp-json/wp/v2/categories` | None | eNews + others. |
-| `GET /wp-json/ngg/v1/admin/attach_to_post/galleries` | **Application password** | NextGen Gallery list (admin route). |
-| `GET /wp-json/ngg/v1/admin/attach_to_post/images` | **Application password** | NextGen Gallery image metadata. |
+| Endpoint                                             | Auth                     | Notes                                       |
+| ---------------------------------------------------- | ------------------------ | ------------------------------------------- |
+| `GET /wp-json/wp/v2/pages?per_page=100`              | None                     | All public pages with title, slug, content. |
+| `GET /wp-json/wp/v2/posts`                           | None                     | Blog posts, ~10 NDWT-relevant.              |
+| `GET /wp-json/wp/v2/media?per_page=100`              | None                     | All 544 media items in the library.         |
+| `GET /wp-json/tribe/events/v1/events`                | None                     | Events Calendar entries.                    |
+| `GET /wp-json/wp/v2/categories`                      | None                     | eNews + others.                             |
+| `GET /wp-json/ngg/v1/admin/attach_to_post/galleries` | **Application password** | NextGen Gallery list (admin route).         |
+| `GET /wp-json/ngg/v1/admin/attach_to_post/images`    | **Application password** | NextGen Gallery image metadata.             |
 
 For everything we need today (gap analysis, content survey,
 build-time editorial pulls in Strategy B above), the public API
