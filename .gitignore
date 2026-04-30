@@ -35,3 +35,4 @@ skills-lock.json
 # under a different name once we settle on what to keep.
 /public/data/photo-candidates.json
 __pycache__/
+wwta-galleries.json
