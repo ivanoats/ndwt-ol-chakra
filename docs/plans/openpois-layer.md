@@ -57,23 +57,23 @@ along this corridor involves:
 
 ### Tier 2 — Useful (quality-of-life, gear, and logistics)
 
-| POI category                             | Why it matters for paddlers                                             |
-| ---------------------------------------- | ----------------------------------------------------------------------- |
-| `restaurant`, `fast_food`                | Hot meal and morale boost near portages and town stops.                 |
-| `motel`, `hostel`, `hotel`               | Bail-out option for weather windows or end-of-trip night.               |
-| `laundromat`                             | Multi-week trips generate laundry; river towns have one laundromat.     |
-| `outdoor_gear`, `sporting_goods`         | Gear repair or replacement — dry bags, paddles, PFDs.                   |
-| `hardware_store`                         | Duct tape, epoxy, zip ties — the paddler's repair kit.                  |
-| `fire_station`, `police`, `coast_guard`  | Local emergency contacts when cell service is absent.                   |
-| `portage`, `lock`, `dam` (navigation)    | Already in River Navigation content, but a map layer makes them visual. |
+| POI category                            | Why it matters for paddlers                                             |
+| --------------------------------------- | ----------------------------------------------------------------------- |
+| `restaurant`, `fast_food`               | Hot meal and morale boost near portages and town stops.                 |
+| `motel`, `hostel`, `hotel`              | Bail-out option for weather windows or end-of-trip night.               |
+| `laundromat`                            | Multi-week trips generate laundry; river towns have one laundromat.     |
+| `outdoor_gear`, `sporting_goods`        | Gear repair or replacement — dry bags, paddles, PFDs.                   |
+| `hardware_store`                        | Duct tape, epoxy, zip ties — the paddler's repair kit.                  |
+| `fire_station`, `police`, `coast_guard` | Local emergency contacts when cell service is absent.                   |
+| `portage`, `lock`, `dam` (navigation)   | Already in River Navigation content, but a map layer makes them visual. |
 
 ### Tier 3 — Nice-to-have (community / leisure)
 
-| POI category               | Why it matters                                        |
-| -------------------------- | ----------------------------------------------------- |
-| `brewery`, `winery`        | River paddling culture; popular post-paddle stops.    |
-| `cafe`, `bakery`           | Morning coffee in river towns.                        |
-| `picnic_site`, `viewpoint` | Day-hike off-river; scenic rest stops.                |
+| POI category               | Why it matters                                     |
+| -------------------------- | -------------------------------------------------- |
+| `brewery`, `winery`        | River paddling culture; popular post-paddle stops. |
+| `cafe`, `bakery`           | Morning coffee in river towns.                     |
+| `picnic_site`, `viewpoint` | Day-hike off-river; scenic rest stops.             |
 
 ### What OpenPOIs offers vs. raw OSM
 
@@ -198,20 +198,20 @@ This plan is intentionally **not yet in a phase** — it should be
 reviewed and approved before work begins. When approved:
 
 - [ ] Phase A (script): `scripts/refresh-pois.py` — DuckDB query
-  from Source Cooperative S3, bounding-box + category + confidence
-  filter → `public/data/pois-ndwt.geojson`.
+      from Source Cooperative S3, bounding-box + category + confidence
+      filter → `public/data/pois-ndwt.geojson`.
 - [ ] Phase B (data + domain): `Poi` type in `src/domain/`; `load-pois.ts`
-  inbound adapter; pass `pois` to `MapApp`.
+      inbound adapter; pass `pois` to `MapApp`.
 - [ ] Phase C (map layer): new `'pois'` overlay in `LayerSwitcher`
-  and `map.tsx`; category-specific circle styles for Tier 1 vs.
-  Tier 2.
+      and `map.tsx`; category-specific circle styles for Tier 1 vs.
+      Tier 2.
 - [ ] Phase D (info): `PoiPopup` component shown on feature click
-  (distinct from the full `SiteInfoPanel` Drawer).
+      (distinct from the full `SiteInfoPanel` Drawer).
 - [ ] Phase E (attribution + license): update `NOTICE.md`,
-  `public/data/pois-ndwt.geojson.LICENSE`, and the layer
-  attribution string in `map.tsx`.
+      `public/data/pois-ndwt.geojson.LICENSE`, and the layer
+      attribution string in `map.tsx`.
 - [ ] Phase F (refresh automation): GitHub Actions workflow on a
-  monthly schedule that runs the script and opens a PR.
+      monthly schedule that runs the script and opens a PR.
 
 ## Open questions for review
 
