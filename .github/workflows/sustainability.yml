@@ -38,7 +38,7 @@ jobs:
 
       - name: Run wsg-check (JSON report)
         run: |
-          npx -y @sustainablewebsites/wsg-check \
+          npx -y @sustainablewebsites/wsg-check@0.1.2 \
             "$PREVIEW_URL" \
             --format json \
             --output wsg-report.json \
@@ -46,7 +46,7 @@ jobs:
 
       - name: Run wsg-check (Markdown report)
         run: |
-          npx -y @sustainablewebsites/wsg-check \
+          npx -y @sustainablewebsites/wsg-check@0.1.2 \
             "$PREVIEW_URL" \
             --format markdown \
             --output wsg-report.md \
