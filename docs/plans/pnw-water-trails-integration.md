@@ -150,6 +150,43 @@ sites in one go.** Decap stays in the doc as a fallback only
 if Keystatic's GitHub-OAuth flow turns out to be awkward for
 WWTA's team setup. Option C is a fallback below that.
 
+##### The GitHub-account hurdle
+
+Any git-backed CMS authenticates editors against GitHub. For
+WWTA's 1–3 staff editors this is a one-time onboarding step:
+free personal GitHub account, added as an Outside Collaborator
+scoped to the data repo with **Triage** or **Write** role on
+the `public/data/trails/` path only. No code access needed.
+
+Where this gets uncomfortable is **occasional contributors**
+— a board member or volunteer site steward who wants to fix
+one waypoint, once a year. Three options if that wave shows
+up:
+
+- **A. Status quo: free GitHub accounts for everyone who
+  edits.** Path of least resistance for the 90% case. GitHub
+  accounts are free, the friction is one signup form, and per-
+  editor commit attribution is the upside.
+- **B. Keystatic with a custom auth proxy.** Keystatic's auth
+  layer is pluggable; the proxy can authenticate editors
+  against an existing identity (Google Workspace, Auth0,
+  magic-link email) and commit on their behalf via a service
+  account. Costs: more moving parts; loses per-editor
+  attribution unless we encode the editor identity in the
+  commit message.
+- **C. A "submit a fix" form, no auth.** A simple typeform-
+  shaped UI that emails a structured proposed-edit to a staff
+  reviewer, who applies it via the regular CMS path. Treats
+  occasional volunteers as proposers rather than committers.
+  Cleanest for occasional contributors; doesn't try to be a
+  full editing surface.
+
+Default: **A through go-live; layer on C if the
+occasional-contributor flow becomes a real source of
+friction.** B is a heavier engineering investment that we
+should only take on if A and C both fail to cover the
+realistic editor population.
+
 #### When would we adopt PostGIS?
 
 The question came up — worth recording the deferral with
@@ -436,11 +473,47 @@ mockable. Each is a thin wrapper around a public API:
 | `UsgsWaterAdapter` | USGS Water Services | River gauge for Snake/Columbia/Pend Oreille |
 | `WsdotFerryAdapter` | WSDOT Traveler API | Ferry sailings for Cascadia routes that use them |
 
-All five are **client-side fetched** at site-detail render. We
-don't pre-bake them — the data is per-request, and a static
+These don't pre-bake. The data is per-request, and a static
 export with hourly cache invalidation gives stale tides. A
 small client component fetches on mount, shows a skeleton,
 fails gracefully to "conditions unavailable."
+
+#### Client-fetch vs. function-proxy
+
+Live-data fetching splits along a single axis: **does the API
+require a key or rate-limit aggressively?**
+
+- **Keyless and CORS-friendly → client-side fetch.** NOAA
+  CO-OPS, NWS, and USGS Water Services all publish
+  `Access-Control-Allow-Origin: *` deliberately, expecting
+  researchers and public dashboards to call them directly from
+  browsers. We inherit their public-good caching and stay
+  pure-static.
+- **Keyed or rate-sensitive → Netlify Function proxy.**
+  WSDOT's Traveler API needs a key (free, but issued per
+  account); shipping it client-side leaks it to scrapers.
+  We proxy through a small Netlify Function at
+  `/api/wsdot-ferries`. The function holds the key as an env
+  var, calls WSDOT, and returns the response with a 5-minute
+  edge-cache header so 50 simultaneous users hit WSDOT once,
+  not 50 times.
+
+Why we don't drop `output: 'export'` to use Next.js Route
+Handlers instead. The argument is real — Route Handlers would
+fold the proxy into the same deploy pipeline, give us
+Next.js's caching primitives, and flatten the architecture.
+But it would also reverse a foundational decision in
+[`docs/plans/modernization.md`](./modernization.md): the site
+deploys as static files to any CDN, with zero runtime server,
+zero cold starts, and zero hosting cost beyond Netlify's free
+tier. That property is the load-bearing reason the nonprofit
+operating-cost story works at all. **We keep static export
+and use Netlify Functions as a narrow, additive escape hatch
+for the small set of APIs that actually need server-side
+mediation** — currently just WSDOT, plus the future-capability
+agent-tool surface (see _Future capabilities_). Functions are
+pay-per-invocation and add no operational state, preserving
+the static-export property in spirit.
 
 A new `MultiWaypointGpxAdapter` extends `site-to-gpx.ts` to
 emit a GPX `<rte>` (route) with multiple `<rtept>` waypoints in
@@ -465,20 +538,44 @@ of (or eventually replacing) MDX.
 Benefits at the multi-trail scale that didn't apply at single-
 trail scale:
 
-- WWTA staff edit one place; we redeploy on a Netlify
-  cron-triggered rebuild (daily is enough — content here isn't
-  hot).
+- WWTA staff edit one place; the site rebuilds automatically
+  on each publish.
 - We don't author or maintain editorial for seven trails we
   aren't subject-matter experts on.
 - The `map.wwta.org` subdomain framing makes "your CMS, our
   map" a natural division.
 
+#### Publish-to-deploy latency
+
+The trade-off in any build-time CMS pull is that an editor's
+"Publish" click in WordPress doesn't show up on `map.wwta.org`
+until the next build. Without a fix, that's a real source of
+"my edits are broken" support tickets.
+
+Plan: **wire WordPress's `save_post` action to a Netlify Build
+Hook.** Build Hooks are unique URLs Netlify exposes per site;
+hitting one triggers a fresh deploy. A small WP plugin (or the
+existing "WP Webhooks" plugin) fires `POST <build-hook-url>`
+when any page or post under the trail-relevant slugs is
+saved. Latency from publish to live: roughly the build time
+plus deploy-cache propagation — call it 3–5 minutes for our
+project size.
+
+A daily cron deploy runs alongside as a safety net, in case a
+webhook is missed (e.g., WP plugin disabled, network blip).
+
+Editor onboarding documents both the path and the expected
+latency: "Press Publish; expect ~5 minutes before the change
+is live on the map site. If it's not visible after 15
+minutes, the daily rebuild will catch it; if it's still not
+there tomorrow, file an issue."
+
 Cost: build-pipeline coupling on the WordPress API. Mitigated
 by adapter-level caching (write fetched HTML to a local JSON
-shadow during build; rebuild only on schedule or on-demand) and
-a graceful-degradation fallback that ships a "see this trail
-on wwta.org" CTA if the fetch fails — better than a broken
-build.
+shadow during build; rebuild only on webhook or daily cron)
+and a graceful-degradation fallback that ships a "see this
+trail on wwta.org" CTA if the fetch fails — better than a
+broken build.
 
 NDWT stays on MDX through Phase 14 cutover. The first
 WordPress-driven trail in this plan should be Maritime Heritage
@@ -679,11 +776,15 @@ are data-shaped; the architecture work is done in 15–16.
   HTML pages are likely usable with attribution; LCREP / WSDOT
   / state-parks data each has its own terms — verify per
   source.
-- **API rate limits**. NOAA CO-OPS has no documented hard
-  limit but asks for a `User-Agent` identifying the app. NWS
-  requires a `User-Agent`. WSDOT Traveler API needs a free key.
-  We pass the key client-side (it's not a secret), and we hide
-  the network calls behind feature flags so a missing key
+- **API rate limits and key handling**. NOAA CO-OPS has no
+  documented hard limit but asks for a `User-Agent`
+  identifying the app. NWS requires a `User-Agent`. Both
+  publish CORS headers for public-research use and are called
+  client-side. **WSDOT Traveler API needs a key** — that one
+  goes through a Netlify Function proxy at `/api/wsdot-ferries`
+  with the key as an env var and a 5-minute edge cache, per
+  _Client-fetch vs. function-proxy_ above. All adapters hide
+  behind feature flags so a missing key or upstream outage
   degrades to "conditions unavailable" rather than a 401.
 
 ## Decisions to make before kickoff
@@ -756,6 +857,17 @@ questions. Recording them here so the architecture decisions
 above don't have to be relitigated when the time comes. **None
 of these is committed to the phase plan; each is a candidate
 for a separate planning doc when prioritized.**
+
+> **Discipline check.** These are exciting engineering
+> problems and that's exactly why they're a distraction risk.
+> The core mission is getting eight trails' worth of basic
+> data digitized and live on `map.wwta.org`. **No work on
+> any future capability begins until Phase 32 is in
+> production**, and even then only if a real user need has
+> been articulated by WWTA or paddlers — not because the
+> graph-routing problem is fun to think about. If we find
+> ourselves prototyping a routing engine before Cascadia is
+> digitized, we've lost the plot.
 
 The pattern across all three: **spatial work happens at build
 time, queryable artifacts ship as JSON, runtime stays spatial-
