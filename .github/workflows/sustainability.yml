@@ -1,0 +1,70 @@
+name: WSG sustainability check
+
+on:
+  pull_request:
+
+concurrency:
+  group: wsg-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  wsg-check:
+    name: WSG sustainability check
+    runs-on: ubuntu-latest
+    # Advisory only on day 1: --fail-threshold 0 means the job
+    # never fails on the score. Promote to a real threshold once
+    # we've seen a few baseline reports against the deploy preview.
+    env:
+      PREVIEW_URL: https://deploy-preview-${{ github.event.pull_request.number }}--ndwt-ol-chakra.netlify.app
+    steps:
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: '24'
+
+      - name: Wait for Netlify deploy preview
+        run: |
+          echo "Polling $PREVIEW_URL for HTTP 200 (max ~10 min)"
+          for i in $(seq 1 60); do
+            status=$(curl -s -o /dev/null -w "%{http_code}" -L "$PREVIEW_URL" || echo "000")
+            if [ "$status" = "200" ]; then
+              echo "Deploy preview ready after ${i} attempt(s)"
+              exit 0
+            fi
+            echo "Attempt ${i}: status=${status} — retrying in 10s"
+            sleep 10
+          done
+          echo "::error::Deploy preview at $PREVIEW_URL did not return 200 within timeout"
+          exit 1
+
+      - name: Run wsg-check (JSON report)
+        run: |
+          npx -y @sustainablewebsites/wsg-check \
+            "$PREVIEW_URL" \
+            --format json \
+            --output wsg-report.json \
+            --fail-threshold 0
+
+      - name: Run wsg-check (Markdown report)
+        run: |
+          npx -y @sustainablewebsites/wsg-check \
+            "$PREVIEW_URL" \
+            --format markdown \
+            --output wsg-report.md \
+            --fail-threshold 0
+
+      - name: Print Markdown report to job summary
+        if: always()
+        run: |
+          if [ -f wsg-report.md ]; then
+            cat wsg-report.md >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        if: always()
+        with:
+          name: wsg-report
+          path: |
+            wsg-report.json
+            wsg-report.md
+          if-no-files-found: warn
+          retention-days: 14

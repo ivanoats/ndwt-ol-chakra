@@ -195,7 +195,7 @@ phase.
 
 PostGIS is **not** in scope for this plan. At ~400 sites with
 1–3 editors and a static-export hosting model, GeoJSON-in-repo
-+ Keystatic (or Decap as fallback) covers the editing workflow, and the spatial
+plus Keystatic (or Decap as fallback) covers the editing workflow, and the spatial
 queries we'd want (nearest-station precomputation, sites-near-
 me, graph routing) all happen at **build time** or **client
 side** without needing a spatial database. Adopting PostGIS
@@ -219,7 +219,7 @@ The decision flips if at least two of these become true:
   change in 2026 across all trails grouped by editor").
 - **Partner integration**: a data partner like LCREP already
   runs PostGIS, and our import for their trail naturally
-  reads from theirs. (This is a *partner* PostGIS, not us
+  reads from theirs. (This is a _partner_ PostGIS, not us
   running one.)
 
 If we ever do adopt it, the cleanest shape is **Postgres as a
