@@ -63,7 +63,7 @@ along this corridor involves:
 > to dropping them from Tier 1, since they are exactly the
 > categories where confidence-scoring matters least and safety
 > matters most.
-| `pharmacy`                               | Medication refill; first-aid supplies on long trips.                                                           |
+> | `pharmacy` | Medication refill; first-aid supplies on long trips. |
 
 ### Tier 2 — Useful (quality-of-life, gear, and logistics)
 
