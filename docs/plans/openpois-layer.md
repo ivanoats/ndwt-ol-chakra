@@ -180,11 +180,14 @@ Adding OpenPOIs data requires the following:
    `map.tsx`.
 2. **Attribution in `NOTICE.md`** alongside the existing
    content-reuse grants from WWTA.
-3. **License tag on `public/data/pois-ndwt.geojson`**: the file
-   header comment or an adjacent `pois-ndwt.geojson.LICENSE` file
-   should read: "Derived from OpenPOIs (<https://openpois.org>),
+3. **License notice for `public/data/pois-ndwt.geojson`**: keep
+   the GeoJSON file valid JSON. Do **not** add a header comment.
+   Instead, add an adjacent `pois-ndwt.geojson.LICENSE` file that
+   reads: "Derived from OpenPOIs (<https://openpois.org>),
    © OpenStreetMap contributors, Overture Maps Foundation.
    Licensed under ODbL v1.0 (<https://opendatacommons.org/licenses/odbl/1-0/>)."
+   If we also want in-file metadata, store it as normal JSON
+   properties in the GeoJSON object rather than comments.
 4. **ODbL propagation**: the `pois-ndwt.geojson` file itself is
    a derived database — it must be released under ODbL. Our
    existing `public/data/ndwt.geojson` dataset is not affected
