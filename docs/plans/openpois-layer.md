@@ -104,9 +104,8 @@ bounding box (degrees):
   (covers Snake / Clearwater / Columbia corridor with ~60 km buffer)
 ```
 
-**Script**: `scripts/refresh-pois.ts` (or `scripts/refresh-pois.py`
-for the DuckDB query — Python is the first-class runtime for the
-Parquet dataset).
+**Script**: `scripts/refresh-pois.py` for the DuckDB query —
+Python is the first-class runtime for the Parquet dataset.
 
 The script:
 
