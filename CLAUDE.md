@@ -135,6 +135,11 @@ Every PR runs:
   the project settings (Administration → Analysis Method) because
   it conflicts with the Action and would block coverage upload
 - GitGuardian secret scan
+- WSG sustainability check
+  ([wsg-check](https://github.com/ivanoats/wsg-check)) against the
+  Netlify deploy preview — advisory only (`--fail-threshold 0`),
+  emits `wsg-report.{json,md}` as a workflow artifact and pastes
+  the Markdown report into the job summary
 - Inline reviews from Gemini Code Assist and GitHub Copilot
 
 After CI is green, sweep every bot's comments before requesting

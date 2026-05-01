@@ -70,15 +70,15 @@ the dataset. NDWT already follows this pattern at
 
 What lives where:
 
-| Data | Source of truth | Edit flow |
-|---|---|---|
-| Site coordinates, name, river, mile, bank, facilities | `public/data/trails/<slug>.geojson` in this repo | PR (engineer) or via a git-backed CMS at `/admin/` — Keystatic recommended; see below |
-| Trail metadata (name, region, color, bbox) | `public/data/trails/manifest.json` in this repo | PR |
-| Trail editorial prose (overview, safety, history) | WWTA WordPress, slugs `<trail>-*` | WordPress admin → daily-cron rebuild |
-| Photos | WWTA NextGen Gallery (member-tagged) | WordPress admin → next build |
-| Tides / weather / river gauges / ferries | NOAA / NWS / USGS / WSDOT (live) | Client-fetched per request |
-| First Nations territories | Native Land Digital GeoJSON API | Pulled & cached at build |
-| First Nations site associations | `public/data/trails/<slug>.geojson` (per-site `nations` field) | PR with nation-advisory review |
+| Data                                                  | Source of truth                                                | Edit flow                                                                             |
+| ----------------------------------------------------- | -------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
+| Site coordinates, name, river, mile, bank, facilities | `public/data/trails/<slug>.geojson` in this repo               | PR (engineer) or via a git-backed CMS at `/admin/` — Keystatic recommended; see below |
+| Trail metadata (name, region, color, bbox)            | `public/data/trails/manifest.json` in this repo                | PR                                                                                    |
+| Trail editorial prose (overview, safety, history)     | WWTA WordPress, slugs `<trail>-*`                              | WordPress admin → daily-cron rebuild                                                  |
+| Photos                                                | WWTA NextGen Gallery (member-tagged)                           | WordPress admin → next build                                                          |
+| Tides / weather / river gauges / ferries              | NOAA / NWS / USGS / WSDOT (live)                               | Client-fetched per request                                                            |
+| First Nations territories                             | Native Land Digital GeoJSON API                                | Pulled & cached at build                                                              |
+| First Nations site associations                       | `public/data/trails/<slug>.geojson` (per-site `nations` field) | PR with nation-advisory review                                                        |
 
 **ArcGIS is never in the source-of-truth column.** If we
 import from a WWTA ArcGIS FeatureLayer for Cascadia (Phase
@@ -117,13 +117,13 @@ Five candidates evaluated against our constraints (preserve
 GeoJSON-in-repo SoT, static-export hosting, custom map-edit
 widget, 1–3 editors, open source preferred):
 
-| CMS | Backing model | Maintenance | Custom map widget | SoT fit | Operational cost |
-|---|---|---|---|---|---|
-| **Keystatic** | Git-backed (commits via GitHub API) | Active (Thinkmill / KeystoneJS team) | First-class TS custom field components | Native | Zero — static JS |
-| **Decap** | Git-backed (same model) | Lukewarm — community fork after Netlify wound down active dev | Possible via `registerWidget`, dated React ecosystem | Native | Zero — static JS |
-| **TinaCMS** | Git-backed locally; most teams use Tina Cloud GraphQL | Active, dual-license open + paid cloud | Custom field UIs supported, heavier setup | Self-host fits; Tina Cloud adds vendor surface | Cloud paid; self-host adds Node service |
-| **Payload** | Headless DB (Mongo / Postgres) | Very active, polished | First-class custom components | **Breaks SoT** — DB is canonical; needs export-on-publish webhook | DB + Node service, or Payload Cloud paid |
-| **Sanity** | SaaS document store (GROQ) | Very active, polished | Custom input components are excellent | **Breaks SoT** — Sanity Cloud is canonical | Free tier; vendor lock-in |
+| CMS           | Backing model                                         | Maintenance                                                   | Custom map widget                                    | SoT fit                                                           | Operational cost                         |
+| ------------- | ----------------------------------------------------- | ------------------------------------------------------------- | ---------------------------------------------------- | ----------------------------------------------------------------- | ---------------------------------------- |
+| **Keystatic** | Git-backed (commits via GitHub API)                   | Active (Thinkmill / KeystoneJS team)                          | First-class TS custom field components               | Native                                                            | Zero — static JS                         |
+| **Decap**     | Git-backed (same model)                               | Lukewarm — community fork after Netlify wound down active dev | Possible via `registerWidget`, dated React ecosystem | Native                                                            | Zero — static JS                         |
+| **TinaCMS**   | Git-backed locally; most teams use Tina Cloud GraphQL | Active, dual-license open + paid cloud                        | Custom field UIs supported, heavier setup            | Self-host fits; Tina Cloud adds vendor surface                    | Cloud paid; self-host adds Node service  |
+| **Payload**   | Headless DB (Mongo / Postgres)                        | Very active, polished                                         | First-class custom components                        | **Breaks SoT** — DB is canonical; needs export-on-publish webhook | DB + Node service, or Payload Cloud paid |
+| **Sanity**    | SaaS document store (GROQ)                            | Very active, polished                                         | Custom input components are excellent                | **Breaks SoT** — Sanity Cloud is canonical                        | Free tier; vendor lock-in                |
 
 Shortlist: **Keystatic vs Decap** — they're the only two
 that preserve "git is the source of truth" without an export
@@ -195,7 +195,7 @@ phase.
 
 PostGIS is **not** in scope for this plan. At ~400 sites with
 1–3 editors and a static-export hosting model, GeoJSON-in-repo
-+ Keystatic (or Decap as fallback) covers the editing workflow, and the spatial
+plus Keystatic (or Decap as fallback) covers the editing workflow, and the spatial
 queries we'd want (nearest-station precomputation, sites-near-
 me, graph routing) all happen at **build time** or **client
 side** without needing a spatial database. Adopting PostGIS
@@ -219,7 +219,7 @@ The decision flips if at least two of these become true:
   change in 2026 across all trails grouped by editor").
 - **Partner integration**: a data partner like LCREP already
   runs PostGIS, and our import for their trail naturally
-  reads from theirs. (This is a *partner* PostGIS, not us
+  reads from theirs. (This is a _partner_ PostGIS, not us
   running one.)
 
 If we ever do adopt it, the cleanest shape is **Postgres as a
@@ -280,19 +280,19 @@ fresh sweep of wwta.org's eight trail pages.
 
 ### Net gaps relative to a unified PNW water-trails hub
 
-| Capability | Source today | Gap |
-|---|---|---|
-| Vector interactive map | This site (NDWT only) | Need same for the other 7 |
-| Per-site detail pages | This site (NDWT only) | Need same for ~150–250 more sites |
-| Facility filtering / search | This site (NDWT only) | Need data for other trails |
-| GPX export per site | This site (NDWT only) | Trivial extension once data lands |
-| Multi-waypoint route + day-itinerary | Neither | New capability |
-| Tides / currents / weather / river gauges | Neither | New capability |
-| ArcGIS story map for Cascadia | wwta.org (beta) | Decide: replace or link out |
-| 75-site Cascadia list with detail | wwta.org (HTML only) | Digitize to GeoJSON |
-| Member login / donate / events / shop | wwta.org | Stay there; link out |
-| Editorial pages for non-NDWT trails | wwta.org | Either link out or pull via WP REST |
-| Photo gallery | wwta.org NextGen | Stay there or pull metadata |
+| Capability                                | Source today          | Gap                                 |
+| ----------------------------------------- | --------------------- | ----------------------------------- |
+| Vector interactive map                    | This site (NDWT only) | Need same for the other 7           |
+| Per-site detail pages                     | This site (NDWT only) | Need same for ~150–250 more sites   |
+| Facility filtering / search               | This site (NDWT only) | Need data for other trails          |
+| GPX export per site                       | This site (NDWT only) | Trivial extension once data lands   |
+| Multi-waypoint route + day-itinerary      | Neither               | New capability                      |
+| Tides / currents / weather / river gauges | Neither               | New capability                      |
+| ArcGIS story map for Cascadia             | wwta.org (beta)       | Decide: replace or link out         |
+| 75-site Cascadia list with detail         | wwta.org (HTML only)  | Digitize to GeoJSON                 |
+| Member login / donate / events / shop     | wwta.org              | Stay there; link out                |
+| Editorial pages for non-NDWT trails       | wwta.org              | Either link out or pull via WP REST |
+| Photo gallery                             | wwta.org NextGen      | Stay there or pull metadata         |
 
 ## What we propose to build
 
@@ -413,14 +413,19 @@ interface Trail {
   readonly id: TrailId;
   readonly slug: string;
   readonly name: string;
-  readonly shortName: string;       // "Cascadia"
+  readonly shortName: string; // "Cascadia"
   readonly type: 'marine' | 'river' | 'lake' | 'mixed';
-  readonly region: 'puget-sound' | 'columbia-snake' | 'coast'
-    | 'king-county' | 'kitsap' | 'pend-oreille';
+  readonly region:
+    | 'puget-sound'
+    | 'columbia-snake'
+    | 'coast'
+    | 'king-county'
+    | 'kitsap'
+    | 'pend-oreille';
   readonly colorPalette: PandaColorPalette; // 'green' | 'sage' | 'blue' | …
   readonly bbox: readonly [number, number, number, number];
   readonly description: string;
-  readonly partnerOrg?: string;     // "WWTA", "LCREP", …
+  readonly partnerOrg?: string; // "WWTA", "LCREP", …
   readonly externalUrls: {
     wwtaPage?: string;
     arcgisStoryMap?: string;
@@ -465,13 +470,13 @@ deduplicated and the union of `trailIds` is preserved.
 Live-data adapters all sit behind ports so they're optional and
 mockable. Each is a thin wrapper around a public API:
 
-| Adapter | API | Use |
-|---|---|---|
-| `NoaaTideAdapter` | NOAA CO-OPS `/api/datagetter` | Nearest tide station forecast for marine sites |
-| `NoaaCurrentAdapter` | NOAA CO-OPS currents | Slack / max ebb / max flood for Cascadia routes |
-| `NwsWeatherAdapter` | NWS `/gridpoints/.../forecast` | Forecast at site coords |
-| `UsgsWaterAdapter` | USGS Water Services | River gauge for Snake/Columbia/Pend Oreille |
-| `WsdotFerryAdapter` | WSDOT Traveler API | Ferry sailings for Cascadia routes that use them |
+| Adapter              | API                            | Use                                              |
+| -------------------- | ------------------------------ | ------------------------------------------------ |
+| `NoaaTideAdapter`    | NOAA CO-OPS `/api/datagetter`  | Nearest tide station forecast for marine sites   |
+| `NoaaCurrentAdapter` | NOAA CO-OPS currents           | Slack / max ebb / max flood for Cascadia routes  |
+| `NwsWeatherAdapter`  | NWS `/gridpoints/.../forecast` | Forecast at site coords                          |
+| `UsgsWaterAdapter`   | USGS Water Services            | River gauge for Snake/Columbia/Pend Oreille      |
+| `WsdotFerryAdapter`  | WSDOT Traveler API             | Ferry sailings for Cascadia routes that use them |
 
 These don't pre-bake. The data is per-request, and a static
 export with hourly cache invalidation gives stale tides. A
@@ -657,16 +662,16 @@ The architecture is the easy part. The hard part is the
 **data** for the seven non-NDWT trails. Counts and starting
 points:
 
-| Trail | Sites on wwta.org | Source format | Effort estimate |
-|---|---|---|---|
-| Cascadia Marine | 75 | HTML list, ArcGIS story map | High — digitize 75 entries with full facility metadata |
-| Maritime Heritage | ~5 (pilot near Bainbridge) | HTML | Low — small dataset |
-| Lakes-to-Locks | 0 listed | HTML narrative only | Medium — needs primary research with King County / Seattle Parks |
-| NDWT | ~150 | Already have `ndwt.geojson` | Done |
-| Willapa Bay | 12 | HTML list with amenity notes | Low — manual transcription |
-| Kitsap Peninsula | TBD | HTML | Medium — verify count |
-| Lower Columbia | TBD | LCREP partner data may exist | Medium — explore partner source |
-| Pend Oreille | TBD | HTML | Medium — verify count |
+| Trail             | Sites on wwta.org          | Source format                | Effort estimate                                                  |
+| ----------------- | -------------------------- | ---------------------------- | ---------------------------------------------------------------- |
+| Cascadia Marine   | 75                         | HTML list, ArcGIS story map  | High — digitize 75 entries with full facility metadata           |
+| Maritime Heritage | ~5 (pilot near Bainbridge) | HTML                         | Low — small dataset                                              |
+| Lakes-to-Locks    | 0 listed                   | HTML narrative only          | Medium — needs primary research with King County / Seattle Parks |
+| NDWT              | ~150                       | Already have `ndwt.geojson`  | Done                                                             |
+| Willapa Bay       | 12                         | HTML list with amenity notes | Low — manual transcription                                       |
+| Kitsap Peninsula  | TBD                        | HTML                         | Medium — verify count                                            |
+| Lower Columbia    | TBD                        | LCREP partner data may exist | Medium — explore partner source                                  |
+| Pend Oreille      | TBD                        | HTML                         | Medium — verify count                                            |
 
 Approach: digitize one trail per PR, in increasing site-count
 order so the small ones land fast and we hit the architecture
@@ -722,29 +727,29 @@ that worst case for Cascadia's effort estimate.
 Per `CLAUDE.md`, **one PR per phase**. Each phase is a
 shippable, lint-clean, tests-green increment.
 
-| Phase | Description | State |
-|---|---|---|
-| 15 | `Trail` entity + repository extension; NDWT migrated to `public/data/trails/ndwt.geojson`; no UI change | Proposed |
-| 15a | **Spike**: ArcGIS FeatureLayer reachability for Cascadia (& any other WWTA hosted layer) — half-day, no PR if negative | Proposed |
-| 15b | **Spike**: WordPress REST adapter shape — typed `Page` fetch + ArticleLayout render of one wwta.org page | Proposed |
-| 15c | **Coordination**: pitch `map.wwta.org` subdomain + DNS to WWTA board | Proposed |
-| 16 | `/trails/` index + per-trail landing routes; map gains per-trail layers (NDWT only at first) | Proposed |
-| 17 | Digitize Maritime Heritage (~5 sites) via WP REST adapter — first non-NDWT trail; validates both data path and CMS path | Proposed |
-| 18 | Digitize Willapa Bay (12 sites); marine facility flags exercised | Proposed |
-| 19 | Digitize Kitsap Peninsula | Proposed |
-| 20 | Digitize Lower Columbia (LCREP data spike first) | Proposed |
-| 21 | Digitize Pend Oreille | Proposed |
-| 22 | Digitize Lakes-to-Locks (primary research) | Proposed |
-| 23 | Digitize Cascadia Marine — ArcGIS adapter if 15a was positive, otherwise hand-transcribe (75 sites; biggest PR) | Proposed |
-| 24 | NOAA tide + NWS weather adapter; per-site conditions card | Proposed |
-| 25 | USGS river gauge adapter for river trails | Proposed |
-| 26 | Multi-waypoint GPX + `/plan/` route builder | Proposed |
-| 27 | `/conditions/` hub: at-a-glance for all monitored stations | Proposed |
-| 28 | NOAA ENC marine charts overlay layer | Proposed |
-| 29 | First Nations territories overlay (Native Land Digital adapter) — gated on WWTA Tribal Communities advisory review | Proposed |
-| 30 | Hazards as a `Site.kind` plus a hand-curated hazards seed dataset | Proposed |
-| 31 | NextGen Gallery photo adapter (Application Password auth) — trail-tagged photos on site detail | Proposed |
-| 32 | `/about/membership/` public-vs-member feature comparison page; "Member detail on wwta.org" CTA in site drawer | Proposed |
+| Phase | Description                                                                                                             | State    |
+| ----- | ----------------------------------------------------------------------------------------------------------------------- | -------- |
+| 15    | `Trail` entity + repository extension; NDWT migrated to `public/data/trails/ndwt.geojson`; no UI change                 | Proposed |
+| 15a   | **Spike**: ArcGIS FeatureLayer reachability for Cascadia (& any other WWTA hosted layer) — half-day, no PR if negative  | Proposed |
+| 15b   | **Spike**: WordPress REST adapter shape — typed `Page` fetch + ArticleLayout render of one wwta.org page                | Proposed |
+| 15c   | **Coordination**: pitch `map.wwta.org` subdomain + DNS to WWTA board                                                    | Proposed |
+| 16    | `/trails/` index + per-trail landing routes; map gains per-trail layers (NDWT only at first)                            | Proposed |
+| 17    | Digitize Maritime Heritage (~5 sites) via WP REST adapter — first non-NDWT trail; validates both data path and CMS path | Proposed |
+| 18    | Digitize Willapa Bay (12 sites); marine facility flags exercised                                                        | Proposed |
+| 19    | Digitize Kitsap Peninsula                                                                                               | Proposed |
+| 20    | Digitize Lower Columbia (LCREP data spike first)                                                                        | Proposed |
+| 21    | Digitize Pend Oreille                                                                                                   | Proposed |
+| 22    | Digitize Lakes-to-Locks (primary research)                                                                              | Proposed |
+| 23    | Digitize Cascadia Marine — ArcGIS adapter if 15a was positive, otherwise hand-transcribe (75 sites; biggest PR)         | Proposed |
+| 24    | NOAA tide + NWS weather adapter; per-site conditions card                                                               | Proposed |
+| 25    | USGS river gauge adapter for river trails                                                                               | Proposed |
+| 26    | Multi-waypoint GPX + `/plan/` route builder                                                                             | Proposed |
+| 27    | `/conditions/` hub: at-a-glance for all monitored stations                                                              | Proposed |
+| 28    | NOAA ENC marine charts overlay layer                                                                                    | Proposed |
+| 29    | First Nations territories overlay (Native Land Digital adapter) — gated on WWTA Tribal Communities advisory review      | Proposed |
+| 30    | Hazards as a `Site.kind` plus a hand-curated hazards seed dataset                                                       | Proposed |
+| 31    | NextGen Gallery photo adapter (Application Password auth) — trail-tagged photos on site detail                          | Proposed |
+| 32    | `/about/membership/` public-vs-member feature comparison page; "Member detail on wwta.org" CTA in site drawer           | Proposed |
 
 Phase 15 is the only phase that's pure refactor — landing it
 unlocks every later phase without UI risk. The three **15x
