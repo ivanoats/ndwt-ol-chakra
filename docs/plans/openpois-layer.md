@@ -53,6 +53,16 @@ along this corridor involves:
 | `gas_station`, `fuel`                    | Shuttle drivers need fuel. Also camp stove canisters at outdoor shops.                                         |
 | `boat_ramp`, `marina`                    | Additional water access and take-out points beyond NDWT sites.                                                 |
 | `drinking_water` (at parks / trailheads) | Potable water sources between NDWT sites with water facilities.                                                |
+
+> **Coverage caveat**: `boat_ramp` and `drinking_water` are OSM
+> amenities, not businesses. Overture Places (one half of the
+> OpenPOIs conflation) focuses on named businesses and may strip
+> these during ingest. If a Phase A schema check shows them
+> missing from the OpenPOIs dataset, sourcing them via a separate
+> Overpass extract — even a one-shot manual one — is preferable
+> to dropping them from Tier 1, since they are exactly the
+> categories where confidence-scoring matters least and safety
+> matters most.
 | `pharmacy`                               | Medication refill; first-aid supplies on long trips.                                                           |
 
 ### Tier 2 — Useful (quality-of-life, gear, and logistics)
@@ -99,10 +109,18 @@ files at script time; ship the result as a static file alongside
 
 ```text
 bounding box (degrees):
-  min_lon: -120.0  max_lon: -114.0
-  min_lat:  44.5   max_lat:  47.5
-  (covers Snake / Clearwater / Columbia corridor with ~60 km buffer)
+  min_lon: -122.5  max_lon: -115.5
+  min_lat:  45.0   max_lat:  47.3
+  (covers Snake / Clearwater / Columbia corridor with ~30–60 km buffer)
 ```
+
+Derived from the actual extent of the 159 sites in
+`public/data/ndwt.geojson` (lon: -121.97 to -116.00, lat: 45.60
+to 46.70) plus a buffer to surface POIs in adjacent river towns
+that paddlers route through for resupply. **Verify against the
+current dataset before scripting**: if the corridor ever extends
+downstream past Bonneville Dam or upstream beyond the Clearwater
+headwaters, widen the box accordingly.
 
 **Script**: `scripts/refresh-pois.py` for the DuckDB query —
 Python is the first-class runtime for the Parquet dataset.
@@ -215,29 +233,47 @@ reviewed and approved before work begins. When approved:
 - [ ] Phase F (refresh automation): GitHub Actions workflow on a
       monthly schedule that runs the script and opens a PR.
 
+## Phase A prerequisites (resolve before scripting)
+
+Two items below were originally framed as open questions, but
+the entire Phase A filter design depends on them — they need a
+one-hour reconnaissance pass against the live Parquet partition
+before `scripts/refresh-pois.py` is written, not after.
+
+1. **Schema reconnaissance.** OpenPOIs is a conflation of OSM
+   and Overture Maps; the OSM-style category strings used in the
+   Tier tables above (`campground`, `gas_station`, `urgent_care`,
+   `boat_ramp`, `drinking_water`, etc.) are illustrative.
+   Open the latest Parquet partition, list the actual category
+   columns and value taxonomy (Overture's `categories.primary`
+   is hierarchical, e.g. `health_and_medical.hospital`), and map
+   each Tier 1/2 row to the real category strings. Confirm
+   coverage of `boat_ramp` and `drinking_water` (see Tier 1
+   coverage caveat above) — if either is absent, decide now
+   whether to substitute an Overpass extract or drop the row.
+2. **Confidence threshold calibration.** 0.75 is a placeholder.
+   Pull ~50 records at varying thresholds (0.5, 0.7, 0.85) within
+   a known town (Lewiston, Clarkston, or Pasco), ground-truth
+   each against Google Maps / Street View, and pick the threshold
+   that maximizes precision without dropping live businesses.
+   Record the chosen value and rationale at the top of
+   `scripts/refresh-pois.py`.
+
 ## Open questions for review
 
-1. **Which POI categories to include in v1?** The Tier 1 list
-   above is a safe starting point, but the Overture schema
-   category strings need to be verified against the live Parquet
-   data before filtering.
-2. **Confidence threshold**: 0.75 is an initial guess. A sampling
-   pass over the corridor (looking at a random 50 records) would
-   validate whether 0.75 is too strict (misses real places) or
-   too loose (shows closed restaurants).
-3. **Icon design**: should Tier 1 (safety/resupply) use a different
+1. **Icon design**: should Tier 1 (safety/resupply) use a different
    visual treatment from Tier 2 (convenience)? A category-grouped
    approach (e.g. a hospital icon, a tent icon, a fuel icon) would
    be the most useful but requires SVG sprite work.
-4. **Popup vs. panel**: should a POI click open a Popover
+2. **Popup vs. panel**: should a POI click open a Popover
    (lightweight, dismisses on map click) or the same Drawer as
    NDWT sites? Popover seems right — these are supplementary data,
    not first-class trail sites.
-5. **ODbL and ndwt.geojson merge risk**: confirm with the project
+3. **ODbL and ndwt.geojson merge risk**: confirm with the project
    owner that we will never merge `pois-ndwt.geojson` into
    `ndwt.geojson` (which would bring ODbL obligations onto the
    whole site dataset).
-6. **Monthly refresh automation**: is a GitHub Actions cron job
+4. **Monthly refresh automation**: is a GitHub Actions cron job
    acceptable, or does the repo owner prefer manual script runs
    that produce explicit commit diffs for review?
 
