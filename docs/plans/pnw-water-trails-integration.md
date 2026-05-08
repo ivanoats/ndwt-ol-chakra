@@ -71,7 +71,7 @@ the dataset. NDWT already follows this pattern at
 What lives where:
 
 | Data | Source of truth | Edit flow |
-|---|---|---|
+| --- | --- | --- |
 | Site coordinates, name, river, mile, bank, facilities | `public/data/trails/<slug>.geojson` in this repo | PR (engineer) or via a git-backed CMS at `/admin/` — Keystatic recommended; see below |
 | Trail metadata (name, region, color, bbox) | `public/data/trails/manifest.json` in this repo | PR |
 | Trail editorial prose (overview, safety, history) | WWTA WordPress, slugs `<trail>-*` | WordPress admin → daily-cron rebuild |
@@ -118,7 +118,7 @@ GeoJSON-in-repo SoT, static-export hosting, custom map-edit
 widget, 1–3 editors, open source preferred):
 
 | CMS | Backing model | Maintenance | Custom map widget | SoT fit | Operational cost |
-|---|---|---|---|---|---|
+| --- | --- | --- | --- | --- | --- |
 | **Keystatic** | Git-backed (commits via GitHub API) | Active (Thinkmill / KeystoneJS team) | First-class TS custom field components | Native | Zero — static JS |
 | **Decap** | Git-backed (same model) | Lukewarm — community fork after Netlify wound down active dev | Possible via `registerWidget`, dated React ecosystem | Native | Zero — static JS |
 | **TinaCMS** | Git-backed locally; most teams use Tina Cloud GraphQL | Active, dual-license open + paid cloud | Custom field UIs supported, heavier setup | Self-host fits; Tina Cloud adds vendor surface | Cloud paid; self-host adds Node service |
@@ -195,7 +195,7 @@ phase.
 
 PostGIS is **not** in scope for this plan. At ~400 sites with
 1–3 editors and a static-export hosting model, GeoJSON-in-repo
-+ Keystatic (or Decap as fallback) covers the editing workflow, and the spatial
+and Keystatic (or Decap as fallback) covers the editing workflow, and the spatial
 queries we'd want (nearest-station precomputation, sites-near-
 me, graph routing) all happen at **build time** or **client
 side** without needing a spatial database. Adopting PostGIS
@@ -219,7 +219,7 @@ The decision flips if at least two of these become true:
   change in 2026 across all trails grouped by editor").
 - **Partner integration**: a data partner like LCREP already
   runs PostGIS, and our import for their trail naturally
-  reads from theirs. (This is a *partner* PostGIS, not us
+  reads from theirs. (This is a _partner_ PostGIS, not us
   running one.)
 
 If we ever do adopt it, the cleanest shape is **Postgres as a
@@ -281,7 +281,7 @@ fresh sweep of wwta.org's eight trail pages.
 ### Net gaps relative to a unified PNW water-trails hub
 
 | Capability | Source today | Gap |
-|---|---|---|
+| --- | --- | --- |
 | Vector interactive map | This site (NDWT only) | Need same for the other 7 |
 | Per-site detail pages | This site (NDWT only) | Need same for ~150–250 more sites |
 | Facility filtering / search | This site (NDWT only) | Need data for other trails |
@@ -466,7 +466,7 @@ Live-data adapters all sit behind ports so they're optional and
 mockable. Each is a thin wrapper around a public API:
 
 | Adapter | API | Use |
-|---|---|---|
+| --- | --- | --- |
 | `NoaaTideAdapter` | NOAA CO-OPS `/api/datagetter` | Nearest tide station forecast for marine sites |
 | `NoaaCurrentAdapter` | NOAA CO-OPS currents | Slack / max ebb / max flood for Cascadia routes |
 | `NwsWeatherAdapter` | NWS `/gridpoints/.../forecast` | Forecast at site coords |
@@ -658,7 +658,7 @@ The architecture is the easy part. The hard part is the
 points:
 
 | Trail | Sites on wwta.org | Source format | Effort estimate |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | Cascadia Marine | 75 | HTML list, ArcGIS story map | High — digitize 75 entries with full facility metadata |
 | Maritime Heritage | ~5 (pilot near Bainbridge) | HTML | Low — small dataset |
 | Lakes-to-Locks | 0 listed | HTML narrative only | Medium — needs primary research with King County / Seattle Parks |
@@ -723,7 +723,7 @@ Per `CLAUDE.md`, **one PR per phase**. Each phase is a
 shippable, lint-clean, tests-green increment.
 
 | Phase | Description | State |
-|---|---|---|
+| --- | --- | --- |
 | 15 | `Trail` entity + repository extension; NDWT migrated to `public/data/trails/ndwt.geojson`; no UI change | Proposed |
 | 15a | **Spike**: ArcGIS FeatureLayer reachability for Cascadia (& any other WWTA hosted layer) — half-day, no PR if negative | Proposed |
 | 15b | **Spike**: WordPress REST adapter shape — typed `Page` fetch + ArticleLayout render of one wwta.org page | Proposed |
