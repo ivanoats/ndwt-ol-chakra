@@ -97,6 +97,40 @@ test.describe('Northwest Discovery Water Trail map', () => {
     await page.keyboard.press('Escape');
     await expect(panel).toBeHidden();
   });
+
+  test('switching to the NOAA nautical chart basemap keeps the canvas live', async ({
+    page,
+  }) => {
+    await page.goto('/');
+    // Wait for OL to be wired up before driving the switcher — the
+    // map is dynamic-imported with ssr:false, so the canvas may not
+    // be ready on first paint.
+    await page.waitForFunction(
+      () =>
+        Boolean((globalThis as unknown as { __ndwtMap?: unknown }).__ndwtMap),
+      undefined,
+      { timeout: 15_000 }
+    );
+
+    await page.getByRole('button', { name: 'Toggle layer switcher' }).click();
+    const chartButton = page.getByRole('button', {
+      name: /NOAA Nautical Chart/,
+    });
+    await chartButton.click();
+
+    await expect(chartButton).toHaveAttribute('aria-pressed', 'true');
+    await expect(
+      page.getByRole('button', { name: /Street Map/ })
+    ).toHaveAttribute('aria-pressed', 'false');
+
+    // Map should still be rendered after the basemap swap.
+    const canvas = page.locator('#map').locator('canvas').first();
+    await expect(canvas).toBeVisible();
+    const box = await canvas.boundingBox();
+    if (box === null) throw new Error('OL canvas should have a bounding box');
+    expect(box.width).toBeGreaterThan(0);
+    expect(box.height).toBeGreaterThan(0);
+  });
 });
 
 async function clickFirstMarker(page: Page): Promise<void> {

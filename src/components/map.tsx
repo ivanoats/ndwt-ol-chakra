@@ -41,6 +41,7 @@ interface LayerRefs {
   osm: TileLayer<OSM> | null;
   usgs: TileLayer<XYZ> | null;
   openTopo: TileLayer<XYZ> | null;
+  noaa: TileLayer<XYZ> | null;
   openSea: TileLayer<XYZ> | null;
   hiking: TileLayer<XYZ> | null;
 }
@@ -60,6 +61,7 @@ export default function MapComponent({ sites, getSite }: MapComponentProps) {
     osm: null,
     usgs: null,
     openTopo: null,
+    noaa: null,
     openSea: null,
     hiking: null,
   });
@@ -100,6 +102,19 @@ export default function MapComponent({ sites, getSite }: MapComponentProps) {
       }),
       visible: activeBaseMap === 'opentopomap',
     });
+    // NOAA Chart Display Service — raster tiles rendered weekly from
+    // the latest ENC vector data. Cap at z=16 to avoid 404s above
+    // NOAA's published cache range. Disclaimer kept in attribution
+    // because this isn't certified for navigation.
+    const noaaLayer = new TileLayer({
+      source: new XYZ({
+        url: 'https://tileservice.charts.noaa.gov/tiles/50000_1/{z}/{x}/{y}.png',
+        attributions:
+          'Charts: © <a href="https://nauticalcharts.noaa.gov/">NOAA Office of Coast Survey</a> — Not for navigation',
+        maxZoom: 16,
+      }),
+      visible: activeBaseMap === 'noaa',
+    });
     const openSeaLayer = new TileLayer({
       zIndex: 10,
       source: new XYZ({
@@ -123,6 +138,7 @@ export default function MapComponent({ sites, getSite }: MapComponentProps) {
       osm: osmLayer,
       usgs: usgsLayer,
       openTopo: openTopoLayer,
+      noaa: noaaLayer,
       openSea: openSeaLayer,
       hiking: hikingLayer,
     };
@@ -133,6 +149,7 @@ export default function MapComponent({ sites, getSite }: MapComponentProps) {
         osmLayer,
         usgsLayer,
         openTopoLayer,
+        noaaLayer,
         openSeaLayer,
         hikingLayer,
         new VectorLayer({
@@ -162,6 +179,7 @@ export default function MapComponent({ sites, getSite }: MapComponentProps) {
         osm: null,
         usgs: null,
         openTopo: null,
+        noaa: null,
         openSea: null,
         hiking: null,
       };
@@ -175,10 +193,11 @@ export default function MapComponent({ sites, getSite }: MapComponentProps) {
 
   // Sync base map visibility whenever activeBaseMap changes.
   useEffect(() => {
-    const { osm, usgs, openTopo } = layerRefs.current;
+    const { osm, usgs, openTopo, noaa } = layerRefs.current;
     osm?.setVisible(activeBaseMap === 'osm');
     usgs?.setVisible(activeBaseMap === 'usgs');
     openTopo?.setVisible(activeBaseMap === 'opentopomap');
+    noaa?.setVisible(activeBaseMap === 'noaa');
   }, [activeBaseMap]);
 
   // Sync overlay visibility whenever activeOverlays changes.
