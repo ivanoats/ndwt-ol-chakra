@@ -113,20 +113,18 @@ test.describe('Northwest Discovery Water Trail map', () => {
     // latter so a USGS outage doesn't block deploys.
     const url =
       'https://basemap.nationalmap.gov/arcgis/rest/services/USGSImageryOnly/MapServer/tile/12/1430/655';
-    let resp;
+    let resp: Awaited<ReturnType<typeof request.get>> | undefined;
+    let skipReason: string | undefined;
     try {
       resp = await request.get(url, { timeout: 10_000 });
+      if (resp.status() >= 500) {
+        skipReason = `USGS National Map returned ${resp.status()} — transient upstream outage`;
+      }
     } catch (err) {
-      test.skip(
-        true,
-        `USGS National Map unreachable: ${err instanceof Error ? err.message : String(err)}`
-      );
-      return;
+      skipReason = `USGS National Map unreachable: ${err instanceof Error ? err.message : String(err)}`;
     }
-    test.skip(
-      resp.status() >= 500,
-      `USGS National Map returned ${resp.status()} — treating as transient upstream outage`
-    );
+    test.skip(skipReason !== undefined, skipReason ?? '');
+    if (resp === undefined) return; // unreachable post-skip; satisfies TS narrowing
     expect(resp.status()).toBe(200);
     expect(resp.headers()['content-type']).toMatch(/^image\//);
     const body = await resp.body();
@@ -141,22 +139,19 @@ test.describe('Northwest Discovery Water Trail map', () => {
     // USGS National Map is unreachable or returning 5xx, soft-skip
     // — that's an upstream outage, not an app regression. The full
     // contract assertions still run when the service is healthy.
+    let skipReason: string | undefined;
     try {
       const probe = await request.get(
         'https://basemap.nationalmap.gov/arcgis/rest/services/USGSImageryOnly/MapServer/tile/8/87/41',
         { timeout: 10_000 }
       );
-      test.skip(
-        probe.status() >= 500,
-        `USGS upstream returned ${probe.status()} on probe — transient outage`
-      );
+      if (probe.status() >= 500) {
+        skipReason = `USGS upstream returned ${probe.status()} on probe — transient outage`;
+      }
     } catch (err) {
-      test.skip(
-        true,
-        `USGS upstream unreachable on probe: ${err instanceof Error ? err.message : String(err)}`
-      );
-      return;
+      skipReason = `USGS upstream unreachable on probe: ${err instanceof Error ? err.message : String(err)}`;
     }
+    test.skip(skipReason !== undefined, skipReason ?? '');
 
     // Capture every response from the USGSImageryOnly tile prefix so
     // we can assert at least one returned real bytes (>1.5 KB) — a
