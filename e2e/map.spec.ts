@@ -97,6 +97,81 @@ test.describe('Northwest Discovery Water Trail map', () => {
     await page.keyboard.press('Escape');
     await expect(panel).toBeHidden();
   });
+
+  test('USGS Aerial Imagery tile URL serves real imagery for the NDWT extent', async ({
+    request,
+  }) => {
+    // Direct contract check on the upstream tile service: a known
+    // z=12 tile over the Tri-Cities reach of the Columbia should
+    // return a substantive JPEG (~10–20 KB on USGS National Map).
+    // Catches the regression class where a typo / dead URL silently
+    // returns a 404 page or an empty placeholder.
+    const url =
+      'https://basemap.nationalmap.gov/arcgis/rest/services/USGSImageryOnly/MapServer/tile/12/1430/655';
+    const resp = await request.get(url);
+    expect(resp.status()).toBe(200);
+    expect(resp.headers()['content-type']).toMatch(/^image\//);
+    const body = await resp.body();
+    expect(body.length).toBeGreaterThan(5000);
+  });
+
+  test('switching to Aerial Imagery fetches real tiles and keeps canvas live', async ({
+    page,
+  }) => {
+    // Capture every response from the USGSImageryOnly tile prefix so
+    // we can assert at least one returned real bytes (>1.5 KB) — a
+    // size floor that rules out 404 HTML error pages and any empty
+    // placeholder PNG.
+    const TILE_PREFIX =
+      'https://basemap.nationalmap.gov/arcgis/rest/services/USGSImageryOnly/MapServer/tile';
+    const tileResponses: Array<{ status: number; size: number }> = [];
+    page.on('response', (resp) => {
+      if (resp.url().startsWith(TILE_PREFIX)) {
+        const lenHeader = resp.headers()['content-length'];
+        tileResponses.push({
+          status: resp.status(),
+          size: lenHeader === undefined ? 0 : parseInt(lenHeader, 10),
+        });
+      }
+    });
+
+    await page.goto('/');
+    // Wait for OL to be wired up — the map is dynamic-imported with
+    // ssr:false so the canvas may not be ready on first paint.
+    await page.waitForFunction(
+      () =>
+        Boolean((globalThis as unknown as { __ndwtMap?: unknown }).__ndwtMap),
+      undefined,
+      { timeout: 15_000 }
+    );
+
+    await page.getByRole('button', { name: 'Toggle layer switcher' }).click();
+    const aerialButton = page.getByRole('button', { name: /Aerial Imagery/ });
+    await aerialButton.click();
+
+    await expect(aerialButton).toHaveAttribute('aria-pressed', 'true');
+    await expect(
+      page.getByRole('button', { name: /Street Map/ })
+    ).toHaveAttribute('aria-pressed', 'false');
+
+    // Canvas still renders after the basemap swap.
+    const canvas = page.locator('#map').locator('canvas').first();
+    await expect(canvas).toBeVisible();
+    const box = await canvas.boundingBox();
+    if (box === null) throw new Error('OL canvas should have a bounding box');
+    expect(box.width).toBeGreaterThan(0);
+    expect(box.height).toBeGreaterThan(0);
+
+    // Regression: at least one imagery tile request must return 200
+    // with substantive bytes.
+    await expect
+      .poll(
+        () =>
+          tileResponses.filter((r) => r.status === 200 && r.size > 1500).length,
+        { timeout: 15_000 }
+      )
+      .toBeGreaterThan(0);
+  });
 });
 
 async function clickFirstMarker(page: Page): Promise<void> {

@@ -41,6 +41,7 @@ interface LayerRefs {
   osm: TileLayer<OSM> | null;
   usgs: TileLayer<XYZ> | null;
   openTopo: TileLayer<XYZ> | null;
+  aerial: TileLayer<XYZ> | null;
   openSea: TileLayer<XYZ> | null;
   hiking: TileLayer<XYZ> | null;
 }
@@ -60,6 +61,7 @@ export default function MapComponent({ sites, getSite }: MapComponentProps) {
     osm: null,
     usgs: null,
     openTopo: null,
+    aerial: null,
     openSea: null,
     hiking: null,
   });
@@ -100,6 +102,18 @@ export default function MapComponent({ sites, getSite }: MapComponentProps) {
       }),
       visible: activeBaseMap === 'opentopomap',
     });
+    // USGS National Map ImageryOnly — public-domain orthoimagery
+    // basemap from the same TNM service as the USGS Topo layer.
+    // Uses ArcGIS z/y/x ordering (the path flips x/y).
+    const aerialLayer = new TileLayer({
+      source: new XYZ({
+        url: 'https://basemap.nationalmap.gov/arcgis/rest/services/USGSImageryOnly/MapServer/tile/{z}/{y}/{x}',
+        attributions:
+          'Imagery: © <a href="https://www.usgs.gov/">USGS</a> National Map',
+        maxZoom: 16,
+      }),
+      visible: activeBaseMap === 'aerial',
+    });
     const openSeaLayer = new TileLayer({
       zIndex: 10,
       source: new XYZ({
@@ -123,6 +137,7 @@ export default function MapComponent({ sites, getSite }: MapComponentProps) {
       osm: osmLayer,
       usgs: usgsLayer,
       openTopo: openTopoLayer,
+      aerial: aerialLayer,
       openSea: openSeaLayer,
       hiking: hikingLayer,
     };
@@ -133,6 +148,7 @@ export default function MapComponent({ sites, getSite }: MapComponentProps) {
         osmLayer,
         usgsLayer,
         openTopoLayer,
+        aerialLayer,
         openSeaLayer,
         hikingLayer,
         new VectorLayer({
@@ -162,6 +178,7 @@ export default function MapComponent({ sites, getSite }: MapComponentProps) {
         osm: null,
         usgs: null,
         openTopo: null,
+        aerial: null,
         openSea: null,
         hiking: null,
       };
@@ -175,10 +192,11 @@ export default function MapComponent({ sites, getSite }: MapComponentProps) {
 
   // Sync base map visibility whenever activeBaseMap changes.
   useEffect(() => {
-    const { osm, usgs, openTopo } = layerRefs.current;
+    const { osm, usgs, openTopo, aerial } = layerRefs.current;
     osm?.setVisible(activeBaseMap === 'osm');
     usgs?.setVisible(activeBaseMap === 'usgs');
     openTopo?.setVisible(activeBaseMap === 'opentopomap');
+    aerial?.setVisible(activeBaseMap === 'aerial');
   }, [activeBaseMap]);
 
   // Sync overlay visibility whenever activeOverlays changes.
