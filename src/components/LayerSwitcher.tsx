@@ -4,7 +4,7 @@ import { Layers } from 'lucide-react';
 import { useState } from 'react';
 import { css } from 'styled-system/css';
 
-export type BaseMapId = 'osm' | 'usgs' | 'opentopomap';
+export type BaseMapId = 'osm' | 'usgs' | 'opentopomap' | 'aerial';
 export type OverlayId = 'openseamap' | 'hiking';
 
 interface LayerSwitcherProps {
@@ -18,6 +18,7 @@ const BASE_MAPS: Array<{ id: BaseMapId; label: string }> = [
   { id: 'osm', label: 'Street Map' },
   { id: 'usgs', label: 'USGS Topo' },
   { id: 'opentopomap', label: 'OpenTopoMap' },
+  { id: 'aerial', label: 'Aerial Imagery' },
 ];
 
 const OVERLAYS: Array<{ id: OverlayId; label: string }> = [
