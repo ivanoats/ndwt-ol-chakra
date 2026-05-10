@@ -63,8 +63,8 @@ export default function TileHealthBanner({
   const [now, setNow] = useState<number>(() => Date.now());
 
   useEffect(() => {
-    const id = window.setInterval(() => setNow(Date.now()), TICK_MS);
-    return () => window.clearInterval(id);
+    const id = setInterval(() => setNow(Date.now()), TICK_MS);
+    return () => clearInterval(id);
   }, []);
 
   const status = health === undefined ? 'unknown' : classify(health, now);
