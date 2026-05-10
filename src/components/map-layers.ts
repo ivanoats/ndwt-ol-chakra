@@ -2,6 +2,8 @@ import TileLayer from 'ol/layer/Tile';
 import OSM from 'ol/source/OSM';
 import XYZ from 'ol/source/XYZ';
 
+import type { BaseMapId, OverlayId } from './LayerSwitcher';
+
 // USGS National Map — official US government topographic basemap.
 // The ArcGIS REST endpoint flips x/y in the path: /tile/{z}/{y}/{x}.
 export const USGS_TILE_URL =
@@ -63,4 +65,76 @@ export function createNoaaLayer(visible: boolean): TileLayer<XYZ> {
     }),
     visible,
   });
+}
+
+// OpenSeaMap seamarks — transparent overlay rendering buoys, beacons,
+// lights, anchorages on top of the active basemap. zIndex keeps it
+// above all basemaps but below site markers.
+export const OPENSEA_TILE_URL =
+  'https://tiles.openseamap.org/seamark/{z}/{x}/{y}.png';
+export const OPENSEA_ATTRIBUTION =
+  'Marine data: © <a href="https://www.openseamap.org">OpenSeaMap</a> contributors';
+export const OPENSEA_Z_INDEX = 10;
+
+// Waymarked Trails hiking overlay — transparent OSM-derived tiles for
+// foot trails near launches.
+export const HIKING_TILE_URL =
+  'https://tile.waymarkedtrails.org/hiking/{z}/{x}/{y}.png';
+export const HIKING_ATTRIBUTION =
+  'Trail data: © OpenStreetMap contributors | <a href="https://waymarkedtrails.org">Waymarked Trails</a>';
+export const HIKING_Z_INDEX = 5;
+
+export function createOpenSeaLayer(visible: boolean): TileLayer<XYZ> {
+  return new TileLayer({
+    zIndex: OPENSEA_Z_INDEX,
+    source: new XYZ({
+      url: OPENSEA_TILE_URL,
+      attributions: OPENSEA_ATTRIBUTION,
+    }),
+    visible,
+  });
+}
+
+export function createHikingLayer(visible: boolean): TileLayer<XYZ> {
+  return new TileLayer({
+    zIndex: HIKING_Z_INDEX,
+    source: new XYZ({
+      url: HIKING_TILE_URL,
+      attributions: HIKING_ATTRIBUTION,
+    }),
+    visible,
+  });
+}
+
+// Subset of LayerRefs needed for visibility syncing. Kept here so the
+// pure helpers can be unit-tested without dragging in the full map
+// component refs.
+export interface BaseMapVisibilityRefs {
+  osm: TileLayer<OSM> | null;
+  usgs: TileLayer<XYZ> | null;
+  openTopo: TileLayer<XYZ> | null;
+  noaa: TileLayer<XYZ> | null;
+}
+
+export interface OverlayVisibilityRefs {
+  openSea: TileLayer<XYZ> | null;
+  hiking: TileLayer<XYZ> | null;
+}
+
+export function syncBaseMapVisibility(
+  refs: BaseMapVisibilityRefs,
+  active: BaseMapId
+): void {
+  refs.osm?.setVisible(active === 'osm');
+  refs.usgs?.setVisible(active === 'usgs');
+  refs.openTopo?.setVisible(active === 'opentopomap');
+  refs.noaa?.setVisible(active === 'noaa');
+}
+
+export function syncOverlayVisibility(
+  refs: OverlayVisibilityRefs,
+  active: ReadonlySet<OverlayId>
+): void {
+  refs.openSea?.setVisible(active.has('openseamap'));
+  refs.hiking?.setVisible(active.has('hiking'));
 }

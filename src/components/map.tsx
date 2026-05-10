@@ -2,12 +2,12 @@
 
 import { Feature, Map, View } from 'ol';
 import Point from 'ol/geom/Point';
-import TileLayer from 'ol/layer/Tile';
+import type TileLayer from 'ol/layer/Tile';
 import VectorLayer from 'ol/layer/Vector';
 import { fromLonLat } from 'ol/proj';
 import type OSM from 'ol/source/OSM';
 import VectorSource from 'ol/source/Vector';
-import XYZ from 'ol/source/XYZ';
+import type XYZ from 'ol/source/XYZ';
 import { Circle, Fill, Stroke, Style } from 'ol/style';
 import { useEffect, useRef, useState } from 'react';
 
@@ -17,10 +17,14 @@ import type { Site } from '../domain';
 import LayerSwitcher, { type BaseMapId, type OverlayId } from './LayerSwitcher';
 import { makeHandleClick, makeHandlePointerMove } from './map-handlers';
 import {
+  createHikingLayer,
   createNoaaLayer,
+  createOpenSeaLayer,
   createOpenTopoLayer,
   createOsmLayer,
   createUsgsLayer,
+  syncBaseMapVisibility,
+  syncOverlayVisibility,
 } from './map-layers';
 
 type GlobalWithMap = typeof globalThis & { __ndwtMap?: Map };
@@ -84,31 +88,15 @@ export default function MapComponent({ sites, getSite }: MapComponentProps) {
     // map re-init (e.g. on `sites`/`getSite` change) preserves the
     // user's selections. The two sync effects below handle later
     // toggles without rebuilding the map.
-    // Basemap factories live in ./map-layers so the per-source URLs
-    // and attribution strings stay unit-testable in jsdom (OL's
-    // TileLayer/XYZ constructors don't need a canvas).
+    // Layer factories live in ./map-layers so per-source URLs,
+    // attribution strings, and visibility syncing stay unit-testable
+    // in jsdom (OL's TileLayer/XYZ constructors don't need a canvas).
     const osmLayer = createOsmLayer(activeBaseMap === 'osm');
     const usgsLayer = createUsgsLayer(activeBaseMap === 'usgs');
     const openTopoLayer = createOpenTopoLayer(activeBaseMap === 'opentopomap');
     const noaaLayer = createNoaaLayer(activeBaseMap === 'noaa');
-    const openSeaLayer = new TileLayer({
-      zIndex: 10,
-      source: new XYZ({
-        url: 'https://tiles.openseamap.org/seamark/{z}/{x}/{y}.png',
-        attributions:
-          'Marine data: © <a href="https://www.openseamap.org">OpenSeaMap</a> contributors',
-      }),
-      visible: activeOverlays.has('openseamap'),
-    });
-    const hikingLayer = new TileLayer({
-      zIndex: 5,
-      source: new XYZ({
-        url: 'https://tile.waymarkedtrails.org/hiking/{z}/{x}/{y}.png',
-        attributions:
-          'Trail data: © OpenStreetMap contributors | <a href="https://waymarkedtrails.org">Waymarked Trails</a>',
-      }),
-      visible: activeOverlays.has('hiking'),
-    });
+    const openSeaLayer = createOpenSeaLayer(activeOverlays.has('openseamap'));
+    const hikingLayer = createHikingLayer(activeOverlays.has('hiking'));
 
     layerRefs.current = {
       osm: osmLayer,
@@ -169,18 +157,12 @@ export default function MapComponent({ sites, getSite }: MapComponentProps) {
 
   // Sync base map visibility whenever activeBaseMap changes.
   useEffect(() => {
-    const { osm, usgs, openTopo, noaa } = layerRefs.current;
-    osm?.setVisible(activeBaseMap === 'osm');
-    usgs?.setVisible(activeBaseMap === 'usgs');
-    openTopo?.setVisible(activeBaseMap === 'opentopomap');
-    noaa?.setVisible(activeBaseMap === 'noaa');
+    syncBaseMapVisibility(layerRefs.current, activeBaseMap);
   }, [activeBaseMap]);
 
   // Sync overlay visibility whenever activeOverlays changes.
   useEffect(() => {
-    const { openSea, hiking } = layerRefs.current;
-    openSea?.setVisible(activeOverlays.has('openseamap'));
-    hiking?.setVisible(activeOverlays.has('hiking'));
+    syncOverlayVisibility(layerRefs.current, activeOverlays);
   }, [activeOverlays]);
 
   const handleOverlayToggle = (id: OverlayId) => {

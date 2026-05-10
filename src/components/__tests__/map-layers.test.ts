@@ -1,18 +1,29 @@
 import TileLayer from 'ol/layer/Tile';
 import OSM from 'ol/source/OSM';
 import XYZ from 'ol/source/XYZ';
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 
+import type { OverlayId } from '../LayerSwitcher';
 import {
+  createHikingLayer,
   createNoaaLayer,
+  createOpenSeaLayer,
   createOpenTopoLayer,
   createOsmLayer,
   createUsgsLayer,
+  HIKING_ATTRIBUTION,
+  HIKING_TILE_URL,
+  HIKING_Z_INDEX,
   NOAA_ATTRIBUTION,
   NOAA_MAX_ZOOM,
   NOAA_TILE_URL,
+  OPENSEA_ATTRIBUTION,
+  OPENSEA_TILE_URL,
+  OPENSEA_Z_INDEX,
   OPENTOPO_ATTRIBUTION,
   OPENTOPO_TILE_URL,
+  syncBaseMapVisibility,
+  syncOverlayVisibility,
   USGS_ATTRIBUTION,
   USGS_MAX_ZOOM,
   USGS_TILE_URL,
@@ -100,5 +111,121 @@ describe('map-layers — NOAA', () => {
   it('uses the configured URL on the source', () => {
     const layer = createNoaaLayer(false);
     expect(layer.getSource()?.getUrls()?.[0]).toBe(NOAA_TILE_URL);
+  });
+});
+
+describe('map-layers — OpenSeaMap overlay', () => {
+  it('points at the OpenSeaMap seamarks tile path', () => {
+    expect(OPENSEA_TILE_URL).toMatch(/^https:\/\/tiles\.openseamap\.org\//);
+    expect(OPENSEA_TILE_URL).toContain('seamark/{z}/{x}/{y}');
+  });
+
+  it('attribution names OpenSeaMap contributors', () => {
+    expect(OPENSEA_ATTRIBUTION).toMatch(/OpenSeaMap/);
+  });
+
+  it('createOpenSeaLayer applies the seamarks z-index above basemaps', () => {
+    const layer = createOpenSeaLayer(true);
+    expect(layer.getZIndex()).toBe(OPENSEA_Z_INDEX);
+    expect(layer.getVisible()).toBe(true);
+  });
+});
+
+describe('map-layers — Hiking overlay', () => {
+  it('points at the Waymarked Trails hiking tile path', () => {
+    expect(HIKING_TILE_URL).toMatch(
+      /^https:\/\/tile\.waymarkedtrails\.org\/hiking\//
+    );
+  });
+
+  it('attribution credits OSM contributors and Waymarked Trails', () => {
+    expect(HIKING_ATTRIBUTION).toMatch(/OpenStreetMap contributors/);
+    expect(HIKING_ATTRIBUTION).toMatch(/Waymarked Trails/);
+  });
+
+  it('createHikingLayer sits below the seamarks overlay', () => {
+    const layer = createHikingLayer(false);
+    expect(layer.getZIndex()).toBe(HIKING_Z_INDEX);
+    expect(HIKING_Z_INDEX).toBeLessThan(OPENSEA_Z_INDEX);
+    expect(layer.getVisible()).toBe(false);
+  });
+});
+
+describe('syncBaseMapVisibility', () => {
+  function makeRefs() {
+    return {
+      osm: { setVisible: vi.fn() } as unknown as TileLayer<OSM>,
+      usgs: { setVisible: vi.fn() } as unknown as TileLayer<XYZ>,
+      openTopo: { setVisible: vi.fn() } as unknown as TileLayer<XYZ>,
+      noaa: { setVisible: vi.fn() } as unknown as TileLayer<XYZ>,
+    };
+  }
+
+  it('shows only the active basemap', () => {
+    const refs = makeRefs();
+    syncBaseMapVisibility(refs, 'noaa');
+    expect(refs.osm.setVisible).toHaveBeenCalledWith(false);
+    expect(refs.usgs.setVisible).toHaveBeenCalledWith(false);
+    expect(refs.openTopo.setVisible).toHaveBeenCalledWith(false);
+    expect(refs.noaa.setVisible).toHaveBeenCalledWith(true);
+  });
+
+  it('handles each basemap id', () => {
+    for (const id of ['osm', 'usgs', 'opentopomap', 'noaa'] as const) {
+      const refs = makeRefs();
+      syncBaseMapVisibility(refs, id);
+      const expected = {
+        osm: id === 'osm',
+        usgs: id === 'usgs',
+        openTopo: id === 'opentopomap',
+        noaa: id === 'noaa',
+      };
+      expect(refs.osm.setVisible).toHaveBeenCalledWith(expected.osm);
+      expect(refs.usgs.setVisible).toHaveBeenCalledWith(expected.usgs);
+      expect(refs.openTopo.setVisible).toHaveBeenCalledWith(expected.openTopo);
+      expect(refs.noaa.setVisible).toHaveBeenCalledWith(expected.noaa);
+    }
+  });
+
+  it('skips null refs (map not yet initialized)', () => {
+    const refs = { osm: null, usgs: null, openTopo: null, noaa: null };
+    expect(() => syncBaseMapVisibility(refs, 'osm')).not.toThrow();
+  });
+});
+
+describe('syncOverlayVisibility', () => {
+  function makeRefs() {
+    return {
+      openSea: { setVisible: vi.fn() } as unknown as TileLayer<XYZ>,
+      hiking: { setVisible: vi.fn() } as unknown as TileLayer<XYZ>,
+    };
+  }
+
+  it('toggles overlays based on the active set', () => {
+    const refs = makeRefs();
+    syncOverlayVisibility(refs, new Set<OverlayId>(['openseamap']));
+    expect(refs.openSea.setVisible).toHaveBeenCalledWith(true);
+    expect(refs.hiking.setVisible).toHaveBeenCalledWith(false);
+  });
+
+  it('hides everything when the set is empty', () => {
+    const refs = makeRefs();
+    syncOverlayVisibility(refs, new Set<OverlayId>());
+    expect(refs.openSea.setVisible).toHaveBeenCalledWith(false);
+    expect(refs.hiking.setVisible).toHaveBeenCalledWith(false);
+  });
+
+  it('shows everything when both ids are active', () => {
+    const refs = makeRefs();
+    syncOverlayVisibility(refs, new Set<OverlayId>(['openseamap', 'hiking']));
+    expect(refs.openSea.setVisible).toHaveBeenCalledWith(true);
+    expect(refs.hiking.setVisible).toHaveBeenCalledWith(true);
+  });
+
+  it('skips null refs', () => {
+    const refs = { openSea: null, hiking: null };
+    expect(() =>
+      syncOverlayVisibility(refs, new Set<OverlayId>(['openseamap']))
+    ).not.toThrow();
   });
 });
