@@ -63,8 +63,8 @@ export default function TileHealthBanner({
   const [now, setNow] = useState<number>(() => Date.now());
 
   useEffect(() => {
-    const id = setInterval(() => setNow(Date.now()), TICK_MS);
-    return () => clearInterval(id);
+    const id = globalThis.setInterval(() => setNow(Date.now()), TICK_MS);
+    return () => globalThis.clearInterval(id);
   }, []);
 
   const status = health === undefined ? 'unknown' : classify(health, now);
@@ -76,12 +76,12 @@ export default function TileHealthBanner({
       : `${activeLayerLabel} is having trouble loading some tiles.`;
 
   return (
-    // role="status" implies aria-live="polite" — non-interruptive
-    // announcement that doesn't preempt the user's current task.
-    // role="alert" would force assertive interruption, which is the
-    // wrong tone for "your basemap is slow."
-    <div
-      role="status"
+    // <output> has an implicit `role="status"` (and the matching
+    // `aria-live="polite"`), which is better-supported by screen
+    // readers than `<div role="status">`. The non-interruptive
+    // semantics fit "your basemap is slow" — `role="alert"` would
+    // force assertive announcement which is too loud for this.
+    <output
       data-testid="tile-health-banner"
       data-status={status}
       className={bannerClass}
@@ -93,6 +93,6 @@ export default function TileHealthBanner({
         </div>
         <div>{message}</div>
       </div>
-    </div>
+    </output>
   );
 }
