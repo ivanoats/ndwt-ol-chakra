@@ -13,9 +13,15 @@ import { useEffect, useRef, useState } from 'react';
 
 import type { GetSite } from '../application/use-cases/get-site';
 import type { Site } from '../domain';
+import { useTileHealth } from '../store/tile-health';
 
-import LayerSwitcher, { type BaseMapId, type OverlayId } from './LayerSwitcher';
+import LayerSwitcher, {
+  BASE_MAPS,
+  type BaseMapId,
+  type OverlayId,
+} from './LayerSwitcher';
 import { makeHandleClick, makeHandlePointerMove } from './map-handlers';
+import TileHealthBanner from './TileHealthBanner';
 
 type GlobalWithMap = typeof globalThis & { __ndwtMap?: Map };
 
@@ -142,6 +148,26 @@ export default function MapComponent({ sites, getSite }: MapComponentProps) {
       hiking: hikingLayer,
     };
 
+    // Wire OL tile-load events into the tile-health store so the
+    // banner can show when the active basemap is failing. Use the
+    // store's getState() — these listeners run outside React's
+    // render lifecycle, so we don't need (and can't safely use) a
+    // hook subscription here.
+    const recordSuccess = useTileHealth.getState().recordSuccess;
+    const recordError = useTileHealth.getState().recordError;
+    const trackTileEvents = (key: string, layer: TileLayer<OSM | XYZ>) => {
+      const source = layer.getSource();
+      if (source === null) return;
+      source.on('tileloadend', () => recordSuccess(key));
+      source.on('tileloaderror', () => recordError(key));
+    };
+    trackTileEvents('osm', osmLayer);
+    trackTileEvents('usgs', usgsLayer);
+    trackTileEvents('opentopomap', openTopoLayer);
+    trackTileEvents('aerial', aerialLayer);
+    trackTileEvents('openseamap', openSeaLayer);
+    trackTileEvents('hiking', hikingLayer);
+
     const map = new Map({
       target: container,
       layers: [
@@ -218,8 +244,15 @@ export default function MapComponent({ sites, getSite }: MapComponentProps) {
     });
   };
 
+  const activeLayerLabel =
+    BASE_MAPS.find((b) => b.id === activeBaseMap)?.label ?? activeBaseMap;
+
   return (
     <div id="map" ref={containerRef}>
+      <TileHealthBanner
+        activeLayer={activeBaseMap}
+        activeLayerLabel={activeLayerLabel}
+      />
       <LayerSwitcher
         activeBaseMap={activeBaseMap}
         activeOverlays={activeOverlays}
