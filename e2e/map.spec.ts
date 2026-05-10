@@ -97,6 +97,119 @@ test.describe('Northwest Discovery Water Trail map', () => {
     await page.keyboard.press('Escape');
     await expect(panel).toBeHidden();
   });
+
+  test('USGS Aerial Imagery tile URL serves real imagery for the NDWT extent', async ({
+    request,
+  }) => {
+    // Direct contract check on the upstream tile service: a known
+    // z=12 tile over the Tri-Cities reach of the Columbia should
+    // return a substantive JPEG (~10–20 KB on USGS National Map).
+    // Catches the regression class where a typo / dead URL silently
+    // returns a 404 page or an empty placeholder.
+    //
+    // Tolerance: distinguish contract violations (4xx, wrong
+    // content-type, empty body — real bugs) from transient upstream
+    // outages (5xx, network errors — not our code). Soft-skip the
+    // latter so a USGS outage doesn't block deploys.
+    const url =
+      'https://basemap.nationalmap.gov/arcgis/rest/services/USGSImageryOnly/MapServer/tile/12/1430/655';
+    let resp: Awaited<ReturnType<typeof request.get>> | undefined;
+    let skipReason: string | undefined;
+    try {
+      resp = await request.get(url, { timeout: 10_000 });
+      if (resp.status() >= 500) {
+        skipReason = `USGS National Map returned ${resp.status()} — transient upstream outage`;
+      }
+    } catch (err) {
+      skipReason = `USGS National Map unreachable: ${err instanceof Error ? err.message : String(err)}`;
+    }
+    test.skip(skipReason !== undefined, skipReason ?? '');
+    if (resp === undefined) return; // unreachable post-skip; satisfies TS narrowing
+    expect(resp.status()).toBe(200);
+    expect(resp.headers()['content-type']).toMatch(/^image\//);
+    const body = await resp.body();
+    expect(body.length).toBeGreaterThan(5000);
+  });
+
+  test('switching to Aerial Imagery fetches real tiles and keeps canvas live', async ({
+    page,
+    request,
+  }) => {
+    // Probe upstream availability once before driving the UI. If
+    // USGS National Map is unreachable or returning 5xx, soft-skip
+    // — that's an upstream outage, not an app regression. The full
+    // contract assertions still run when the service is healthy.
+    let skipReason: string | undefined;
+    try {
+      const probe = await request.get(
+        'https://basemap.nationalmap.gov/arcgis/rest/services/USGSImageryOnly/MapServer/tile/8/87/41',
+        { timeout: 10_000 }
+      );
+      if (probe.status() >= 500) {
+        skipReason = `USGS upstream returned ${probe.status()} on probe — transient outage`;
+      }
+    } catch (err) {
+      skipReason = `USGS upstream unreachable on probe: ${err instanceof Error ? err.message : String(err)}`;
+    }
+    test.skip(skipReason !== undefined, skipReason ?? '');
+
+    // Capture every response from the USGSImageryOnly tile prefix so
+    // we can assert at least one returned real bytes (>1.5 KB) — a
+    // size floor that rules out 404 HTML error pages and any empty
+    // placeholder PNG. Use the actual body length (not the
+    // Content-Length header) so chunked-transfer or
+    // Content-Length-stripping proxies can't cause false negatives.
+    const TILE_PREFIX =
+      'https://basemap.nationalmap.gov/arcgis/rest/services/USGSImageryOnly/MapServer/tile';
+    const tileResponses: Array<{ status: number; size: number }> = [];
+    page.on('response', async (resp) => {
+      if (resp.url().startsWith(TILE_PREFIX)) {
+        try {
+          const body = await resp.body();
+          tileResponses.push({ status: resp.status(), size: body.length });
+        } catch {
+          // Aborted / non-bufferable responses — skip silently.
+        }
+      }
+    });
+
+    await page.goto('/');
+    // Wait for OL to be wired up — the map is dynamic-imported with
+    // ssr:false so the canvas may not be ready on first paint.
+    await page.waitForFunction(
+      () =>
+        Boolean((globalThis as unknown as { __ndwtMap?: unknown }).__ndwtMap),
+      undefined,
+      { timeout: 15_000 }
+    );
+
+    await page.getByRole('button', { name: 'Toggle layer switcher' }).click();
+    const aerialButton = page.getByRole('button', { name: /Aerial Imagery/ });
+    await aerialButton.click();
+
+    await expect(aerialButton).toHaveAttribute('aria-pressed', 'true');
+    await expect(
+      page.getByRole('button', { name: /Street Map/ })
+    ).toHaveAttribute('aria-pressed', 'false');
+
+    // Canvas still renders after the basemap swap.
+    const canvas = page.locator('#map').locator('canvas').first();
+    await expect(canvas).toBeVisible();
+    const box = await canvas.boundingBox();
+    if (box === null) throw new Error('OL canvas should have a bounding box');
+    expect(box.width).toBeGreaterThan(0);
+    expect(box.height).toBeGreaterThan(0);
+
+    // Regression: at least one imagery tile request must return 200
+    // with substantive bytes.
+    await expect
+      .poll(
+        () =>
+          tileResponses.filter((r) => r.status === 200 && r.size > 1500).length,
+        { timeout: 15_000 }
+      )
+      .toBeGreaterThan(0);
+  });
 });
 
 async function clickFirstMarker(page: Page): Promise<void> {
