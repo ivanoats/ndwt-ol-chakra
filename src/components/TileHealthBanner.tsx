@@ -6,10 +6,11 @@ import { css } from 'styled-system/css';
 
 import { useTileHealth } from '../store/tile-health';
 
+import type { BaseMapId } from './LayerSwitcher';
 import { classify } from './tile-health-tracker';
 
 interface TileHealthBannerProps {
-  readonly activeLayer: string;
+  readonly activeLayer: BaseMapId;
   readonly activeLayerLabel: string;
 }
 
@@ -75,9 +76,12 @@ export default function TileHealthBanner({
       : `${activeLayerLabel} is having trouble loading some tiles.`;
 
   return (
+    // role="status" implies aria-live="polite" — non-interruptive
+    // announcement that doesn't preempt the user's current task.
+    // role="alert" would force assertive interruption, which is the
+    // wrong tone for "your basemap is slow."
     <div
-      role="alert"
-      aria-live="polite"
+      role="status"
       data-testid="tile-health-banner"
       data-status={status}
       className={bannerClass}

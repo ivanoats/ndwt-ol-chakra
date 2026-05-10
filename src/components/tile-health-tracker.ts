@@ -17,7 +17,10 @@ export interface LayerHealth {
 }
 
 export const EMPTY_HEALTH: LayerHealth = Object.freeze({
-  events: [],
+  // Object.freeze is shallow — also freeze the array so an
+  // accidental `EMPTY_HEALTH.events.push(...)` from a caller can't
+  // poison this shared singleton.
+  events: Object.freeze([] as TileLoadEvent[]),
   consecutiveErrors: 0,
   lastSuccessAt: null,
 });
@@ -32,9 +35,12 @@ export const WINDOW_SIZE = 20;
 export const DOWN_AFTER_CONSECUTIVE_ERRORS = 5;
 export const DOWN_NO_SUCCESS_FOR_MS = 10_000;
 
-// Degraded threshold — 30% errors in the recent window. High enough
-// that a single failed tile during a busy pan doesn't trip it.
+// Degraded threshold — 30% errors in the recent window AND at least
+// MIN_EVENTS_FOR_DEGRADED events recorded. The floor avoids a single
+// transient failure on initial load (1/1 = 100% > 30%) tripping the
+// banner before we have enough samples to call the layer degraded.
 export const DEGRADED_ERROR_RATIO = 0.3;
+export const MIN_EVENTS_FOR_DEGRADED = 5;
 
 export function recordEvent(
   state: LayerHealth,
@@ -63,9 +69,11 @@ export function classify(state: LayerHealth, now: number): HealthStatus {
     return 'down';
   }
 
-  const errorCount = state.events.filter((e) => e.kind === 'error').length;
-  if (errorCount / state.events.length > DEGRADED_ERROR_RATIO) {
-    return 'degraded';
+  if (state.events.length >= MIN_EVENTS_FOR_DEGRADED) {
+    const errorCount = state.events.filter((e) => e.kind === 'error').length;
+    if (errorCount / state.events.length > DEGRADED_ERROR_RATIO) {
+      return 'degraded';
+    }
   }
 
   return 'ok';
