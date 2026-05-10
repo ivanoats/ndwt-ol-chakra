@@ -5,12 +5,14 @@ import { describe, expect, it, vi } from 'vitest';
 
 import type { OverlayId } from '../LayerSwitcher';
 import {
+  buildLayers,
   createHikingLayer,
   createNoaaLayer,
   createOpenSeaLayer,
   createOpenTopoLayer,
   createOsmLayer,
   createUsgsLayer,
+  EMPTY_LAYER_REFS,
   HIKING_ATTRIBUTION,
   HIKING_TILE_URL,
   HIKING_Z_INDEX,
@@ -227,5 +229,62 @@ describe('syncOverlayVisibility', () => {
     expect(() =>
       syncOverlayVisibility(refs, new Set<OverlayId>(['openseamap']))
     ).not.toThrow();
+  });
+});
+
+describe('EMPTY_LAYER_REFS', () => {
+  it('has every ref nulled out', () => {
+    expect(EMPTY_LAYER_REFS).toEqual({
+      osm: null,
+      usgs: null,
+      openTopo: null,
+      noaa: null,
+      openSea: null,
+      hiking: null,
+    });
+  });
+
+  it('is frozen so callers cannot mutate the shared empty', () => {
+    expect(Object.isFrozen(EMPTY_LAYER_REFS)).toBe(true);
+  });
+});
+
+describe('buildLayers', () => {
+  it('returns refs for every layer the map owns', () => {
+    const { refs } = buildLayers('noaa', new Set<OverlayId>(['openseamap']));
+    expect(Object.keys(refs).sort()).toEqual([
+      'hiking',
+      'noaa',
+      'openSea',
+      'openTopo',
+      'osm',
+      'usgs',
+    ]);
+  });
+
+  it('marks only the active basemap visible', () => {
+    const { refs } = buildLayers('noaa', new Set<OverlayId>());
+    expect(refs.osm.getVisible()).toBe(false);
+    expect(refs.usgs.getVisible()).toBe(false);
+    expect(refs.openTopo.getVisible()).toBe(false);
+    expect(refs.noaa.getVisible()).toBe(true);
+  });
+
+  it('marks only the requested overlays visible', () => {
+    const { refs } = buildLayers('osm', new Set<OverlayId>(['hiking']));
+    expect(refs.openSea.getVisible()).toBe(false);
+    expect(refs.hiking.getVisible()).toBe(true);
+  });
+
+  it('orders layers basemap-first then overlays so seamarks paint above', () => {
+    const { refs, ordered } = buildLayers('osm', new Set<OverlayId>());
+    expect(ordered).toEqual([
+      refs.osm,
+      refs.usgs,
+      refs.openTopo,
+      refs.noaa,
+      refs.openSea,
+      refs.hiking,
+    ]);
   });
 });

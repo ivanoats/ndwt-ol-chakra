@@ -138,3 +138,50 @@ export function syncOverlayVisibility(
   refs.openSea?.setVisible(active.has('openseamap'));
   refs.hiking?.setVisible(active.has('hiking'));
 }
+
+export interface LayerRefs
+  extends BaseMapVisibilityRefs, OverlayVisibilityRefs {}
+
+// Initial ref shape — used both as the React useRef seed and for the
+// cleanup reset on unmount. Spread when consumed so callers can't
+// mutate the shared empty.
+export const EMPTY_LAYER_REFS: Readonly<LayerRefs> = Object.freeze({
+  osm: null,
+  usgs: null,
+  openTopo: null,
+  noaa: null,
+  openSea: null,
+  hiking: null,
+});
+
+// buildLayers always returns concrete TileLayer instances, so the
+// refs object's fields are non-nullable in this shape (the broader
+// LayerRefs permits null because the React useRef seed and cleanup
+// reset both populate it with nulls).
+export type BuiltLayerRefs = {
+  [K in keyof LayerRefs]: NonNullable<LayerRefs[K]>;
+};
+
+export interface BuiltLayers {
+  refs: BuiltLayerRefs;
+  ordered: TileLayer<OSM | XYZ>[];
+}
+
+// One-shot builder for every layer the map owns, given the current
+// switcher state. Returns both a ref object (for visibility sync) and
+// an ordered array (for the Map constructor's `layers` prop).
+export function buildLayers(
+  activeBaseMap: BaseMapId,
+  activeOverlays: ReadonlySet<OverlayId>
+): BuiltLayers {
+  const osm = createOsmLayer(activeBaseMap === 'osm');
+  const usgs = createUsgsLayer(activeBaseMap === 'usgs');
+  const openTopo = createOpenTopoLayer(activeBaseMap === 'opentopomap');
+  const noaa = createNoaaLayer(activeBaseMap === 'noaa');
+  const openSea = createOpenSeaLayer(activeOverlays.has('openseamap'));
+  const hiking = createHikingLayer(activeOverlays.has('hiking'));
+  return {
+    refs: { osm, usgs, openTopo, noaa, openSea, hiking },
+    ordered: [osm, usgs, openTopo, noaa, openSea, hiking],
+  };
+}

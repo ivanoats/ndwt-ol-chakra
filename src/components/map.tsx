@@ -2,12 +2,9 @@
 
 import { Feature, Map, View } from 'ol';
 import Point from 'ol/geom/Point';
-import type TileLayer from 'ol/layer/Tile';
 import VectorLayer from 'ol/layer/Vector';
 import { fromLonLat } from 'ol/proj';
-import type OSM from 'ol/source/OSM';
 import VectorSource from 'ol/source/Vector';
-import type XYZ from 'ol/source/XYZ';
 import { Circle, Fill, Stroke, Style } from 'ol/style';
 import { useEffect, useRef, useState } from 'react';
 
@@ -17,12 +14,9 @@ import type { Site } from '../domain';
 import LayerSwitcher, { type BaseMapId, type OverlayId } from './LayerSwitcher';
 import { makeHandleClick, makeHandlePointerMove } from './map-handlers';
 import {
-  createHikingLayer,
-  createNoaaLayer,
-  createOpenSeaLayer,
-  createOpenTopoLayer,
-  createOsmLayer,
-  createUsgsLayer,
+  buildLayers,
+  EMPTY_LAYER_REFS,
+  type LayerRefs,
   syncBaseMapVisibility,
   syncOverlayVisibility,
 } from './map-layers';
@@ -47,15 +41,6 @@ const siteToFeature = (site: Site): Feature<Point> => {
   return feature;
 };
 
-interface LayerRefs {
-  osm: TileLayer<OSM> | null;
-  usgs: TileLayer<XYZ> | null;
-  openTopo: TileLayer<XYZ> | null;
-  noaa: TileLayer<XYZ> | null;
-  openSea: TileLayer<XYZ> | null;
-  hiking: TileLayer<XYZ> | null;
-}
-
 interface MapComponentProps {
   readonly sites: readonly Site[];
   readonly getSite: GetSite;
@@ -67,14 +52,7 @@ const DEFAULT_OVERLAYS: ReadonlySet<OverlayId> = new Set<OverlayId>([
 
 export default function MapComponent({ sites, getSite }: MapComponentProps) {
   const containerRef = useRef<HTMLDivElement | null>(null);
-  const layerRefs = useRef<LayerRefs>({
-    osm: null,
-    usgs: null,
-    openTopo: null,
-    noaa: null,
-    openSea: null,
-    hiking: null,
-  });
+  const layerRefs = useRef<LayerRefs>({ ...EMPTY_LAYER_REFS });
 
   const [activeBaseMap, setActiveBaseMap] = useState<BaseMapId>('osm');
   const [activeOverlays, setActiveOverlays] =
@@ -88,34 +66,17 @@ export default function MapComponent({ sites, getSite }: MapComponentProps) {
     // map re-init (e.g. on `sites`/`getSite` change) preserves the
     // user's selections. The two sync effects below handle later
     // toggles without rebuilding the map.
-    // Layer factories live in ./map-layers so per-source URLs,
-    // attribution strings, and visibility syncing stay unit-testable
-    // in jsdom (OL's TileLayer/XYZ constructors don't need a canvas).
-    const osmLayer = createOsmLayer(activeBaseMap === 'osm');
-    const usgsLayer = createUsgsLayer(activeBaseMap === 'usgs');
-    const openTopoLayer = createOpenTopoLayer(activeBaseMap === 'opentopomap');
-    const noaaLayer = createNoaaLayer(activeBaseMap === 'noaa');
-    const openSeaLayer = createOpenSeaLayer(activeOverlays.has('openseamap'));
-    const hikingLayer = createHikingLayer(activeOverlays.has('hiking'));
-
-    layerRefs.current = {
-      osm: osmLayer,
-      usgs: usgsLayer,
-      openTopo: openTopoLayer,
-      noaa: noaaLayer,
-      openSea: openSeaLayer,
-      hiking: hikingLayer,
-    };
+    // Layer factories and ordering live in ./map-layers so per-source
+    // URLs, attribution strings, and visibility syncing stay
+    // unit-testable in jsdom (OL's TileLayer/XYZ constructors don't
+    // need a canvas).
+    const { refs, ordered } = buildLayers(activeBaseMap, activeOverlays);
+    layerRefs.current = refs;
 
     const map = new Map({
       target: container,
       layers: [
-        osmLayer,
-        usgsLayer,
-        openTopoLayer,
-        noaaLayer,
-        openSeaLayer,
-        hikingLayer,
+        ...ordered,
         new VectorLayer({
           zIndex: 20,
           source: new VectorSource({ features: sites.map(siteToFeature) }),
@@ -139,14 +100,7 @@ export default function MapComponent({ sites, getSite }: MapComponentProps) {
     return () => {
       map.setTarget();
       delete (globalThis as GlobalWithMap).__ndwtMap;
-      layerRefs.current = {
-        osm: null,
-        usgs: null,
-        openTopo: null,
-        noaa: null,
-        openSea: null,
-        hiking: null,
-      };
+      layerRefs.current = { ...EMPTY_LAYER_REFS };
     };
     // activeBaseMap / activeOverlays are read for *initial* layer
     // visibility only; later toggles are handled by the dedicated
