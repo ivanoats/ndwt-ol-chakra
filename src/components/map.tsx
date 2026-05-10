@@ -5,7 +5,7 @@ import Point from 'ol/geom/Point';
 import TileLayer from 'ol/layer/Tile';
 import VectorLayer from 'ol/layer/Vector';
 import { fromLonLat } from 'ol/proj';
-import OSM from 'ol/source/OSM';
+import type OSM from 'ol/source/OSM';
 import VectorSource from 'ol/source/Vector';
 import XYZ from 'ol/source/XYZ';
 import { Circle, Fill, Stroke, Style } from 'ol/style';
@@ -16,6 +16,12 @@ import type { Site } from '../domain';
 
 import LayerSwitcher, { type BaseMapId, type OverlayId } from './LayerSwitcher';
 import { makeHandleClick, makeHandlePointerMove } from './map-handlers';
+import {
+  createNoaaLayer,
+  createOpenTopoLayer,
+  createOsmLayer,
+  createUsgsLayer,
+} from './map-layers';
 
 type GlobalWithMap = typeof globalThis & { __ndwtMap?: Map };
 
@@ -78,43 +84,13 @@ export default function MapComponent({ sites, getSite }: MapComponentProps) {
     // map re-init (e.g. on `sites`/`getSite` change) preserves the
     // user's selections. The two sync effects below handle later
     // toggles without rebuilding the map.
-    const osmLayer = new TileLayer({
-      source: new OSM(),
-      visible: activeBaseMap === 'osm',
-    });
-    // USGS National Map — official US government topographic basemap.
-    // Service docs: https://basemap.nationalmap.gov/arcgis/rest/services/USGSTopo/MapServer
-    const usgsLayer = new TileLayer({
-      source: new XYZ({
-        url: 'https://basemap.nationalmap.gov/arcgis/rest/services/USGSTopo/MapServer/tile/{z}/{y}/{x}',
-        attributions: 'Map data: © <a href="https://www.usgs.gov/">USGS</a>',
-        maxZoom: 16,
-      }),
-      visible: activeBaseMap === 'usgs',
-    });
-    // OpenTopoMap — OSM + SRTM elevation rendering.
-    // {a-c} is an OL subdomain template expanded to a/b/c for load balancing.
-    const openTopoLayer = new TileLayer({
-      source: new XYZ({
-        url: 'https://{a-c}.tile.opentopomap.org/{z}/{x}/{y}.png',
-        attributions:
-          'Map data: © OpenStreetMap contributors, SRTM | Map style: © <a href="https://opentopomap.org">OpenTopoMap</a> (CC-BY-SA)',
-      }),
-      visible: activeBaseMap === 'opentopomap',
-    });
-    // NOAA Chart Display Service — raster tiles rendered weekly from
-    // the latest ENC vector data. Cap at z=16 to avoid 404s above
-    // NOAA's published cache range. Disclaimer kept in attribution
-    // because this isn't certified for navigation.
-    const noaaLayer = new TileLayer({
-      source: new XYZ({
-        url: 'https://tileservice.charts.noaa.gov/tiles/50000_1/{z}/{x}/{y}.png',
-        attributions:
-          'Charts: © <a href="https://nauticalcharts.noaa.gov/">NOAA Office of Coast Survey</a> — Not for navigation',
-        maxZoom: 16,
-      }),
-      visible: activeBaseMap === 'noaa',
-    });
+    // Basemap factories live in ./map-layers so the per-source URLs
+    // and attribution strings stay unit-testable in jsdom (OL's
+    // TileLayer/XYZ constructors don't need a canvas).
+    const osmLayer = createOsmLayer(activeBaseMap === 'osm');
+    const usgsLayer = createUsgsLayer(activeBaseMap === 'usgs');
+    const openTopoLayer = createOpenTopoLayer(activeBaseMap === 'opentopomap');
+    const noaaLayer = createNoaaLayer(activeBaseMap === 'noaa');
     const openSeaLayer = new TileLayer({
       zIndex: 10,
       source: new XYZ({
