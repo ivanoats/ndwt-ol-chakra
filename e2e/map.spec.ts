@@ -106,9 +106,27 @@ test.describe('Northwest Discovery Water Trail map', () => {
     // return a substantive JPEG (~10–20 KB on USGS National Map).
     // Catches the regression class where a typo / dead URL silently
     // returns a 404 page or an empty placeholder.
+    //
+    // Tolerance: distinguish contract violations (4xx, wrong
+    // content-type, empty body — real bugs) from transient upstream
+    // outages (5xx, network errors — not our code). Soft-skip the
+    // latter so a USGS outage doesn't block deploys.
     const url =
       'https://basemap.nationalmap.gov/arcgis/rest/services/USGSImageryOnly/MapServer/tile/12/1430/655';
-    const resp = await request.get(url);
+    let resp;
+    try {
+      resp = await request.get(url, { timeout: 10_000 });
+    } catch (err) {
+      test.skip(
+        true,
+        `USGS National Map unreachable: ${err instanceof Error ? err.message : String(err)}`
+      );
+      return;
+    }
+    test.skip(
+      resp.status() >= 500,
+      `USGS National Map returned ${resp.status()} — treating as transient upstream outage`
+    );
     expect(resp.status()).toBe(200);
     expect(resp.headers()['content-type']).toMatch(/^image\//);
     const body = await resp.body();
@@ -117,7 +135,29 @@ test.describe('Northwest Discovery Water Trail map', () => {
 
   test('switching to Aerial Imagery fetches real tiles and keeps canvas live', async ({
     page,
+    request,
   }) => {
+    // Probe upstream availability once before driving the UI. If
+    // USGS National Map is unreachable or returning 5xx, soft-skip
+    // — that's an upstream outage, not an app regression. The full
+    // contract assertions still run when the service is healthy.
+    try {
+      const probe = await request.get(
+        'https://basemap.nationalmap.gov/arcgis/rest/services/USGSImageryOnly/MapServer/tile/8/87/41',
+        { timeout: 10_000 }
+      );
+      test.skip(
+        probe.status() >= 500,
+        `USGS upstream returned ${probe.status()} on probe — transient outage`
+      );
+    } catch (err) {
+      test.skip(
+        true,
+        `USGS upstream unreachable on probe: ${err instanceof Error ? err.message : String(err)}`
+      );
+      return;
+    }
+
     // Capture every response from the USGSImageryOnly tile prefix so
     // we can assert at least one returned real bytes (>1.5 KB) — a
     // size floor that rules out 404 HTML error pages and any empty
