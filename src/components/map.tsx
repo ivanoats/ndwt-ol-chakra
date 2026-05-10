@@ -1,9 +1,11 @@
 'use client';
 
 import { Feature, Map, View } from 'ol';
+import type { EventsKey } from 'ol/events';
 import Point from 'ol/geom/Point';
 import TileLayer from 'ol/layer/Tile';
 import VectorLayer from 'ol/layer/Vector';
+import { unByKey } from 'ol/Observable';
 import { fromLonLat } from 'ol/proj';
 import OSM from 'ol/source/OSM';
 import VectorSource from 'ol/source/Vector';
@@ -13,9 +15,16 @@ import { useEffect, useRef, useState } from 'react';
 
 import type { GetSite } from '../application/use-cases/get-site';
 import type { Site } from '../domain';
+import type { LayerKey } from '../store/tile-health';
+import { useTileHealth } from '../store/tile-health';
 
-import LayerSwitcher, { type BaseMapId, type OverlayId } from './LayerSwitcher';
+import LayerSwitcher, {
+  BASE_MAPS,
+  type BaseMapId,
+  type OverlayId,
+} from './LayerSwitcher';
 import { makeHandleClick, makeHandlePointerMove } from './map-handlers';
+import TileHealthBanner from './TileHealthBanner';
 
 type GlobalWithMap = typeof globalThis & { __ndwtMap?: Map };
 
@@ -142,6 +151,33 @@ export default function MapComponent({ sites, getSite }: MapComponentProps) {
       hiking: hikingLayer,
     };
 
+    // Wire OL tile-load events into the tile-health store so the
+    // banner can show when the active basemap is failing. Use the
+    // store's getState() — these listeners run outside React's
+    // render lifecycle, so we don't need (and can't safely use) a
+    // hook subscription here. Capture the EventsKeys so the cleanup
+    // returned by this effect can detach them via unByKey; otherwise
+    // a re-run of the effect (e.g. on `sites` change) would leave
+    // the previous map's sources holding live listeners and double-
+    // count tile events for the rebuilt map.
+    const recordSuccess = useTileHealth.getState().recordSuccess;
+    const recordError = useTileHealth.getState().recordError;
+    const tileEventKeys: EventsKey[] = [];
+    const trackTileEvents = (key: LayerKey, layer: TileLayer<OSM | XYZ>) => {
+      const source = layer.getSource();
+      if (source === null) return;
+      tileEventKeys.push(
+        source.on('tileloadend', () => recordSuccess(key)) as EventsKey,
+        source.on('tileloaderror', () => recordError(key)) as EventsKey
+      );
+    };
+    trackTileEvents('osm', osmLayer);
+    trackTileEvents('usgs', usgsLayer);
+    trackTileEvents('opentopomap', openTopoLayer);
+    trackTileEvents('aerial', aerialLayer);
+    trackTileEvents('openseamap', openSeaLayer);
+    trackTileEvents('hiking', hikingLayer);
+
     const map = new Map({
       target: container,
       layers: [
@@ -172,6 +208,10 @@ export default function MapComponent({ sites, getSite }: MapComponentProps) {
     (globalThis as GlobalWithMap).__ndwtMap = map;
 
     return () => {
+      // Detach tile-load listeners so the next mount's tracker
+      // doesn't double-count and the old sources can be GC'd once
+      // their in-flight requests settle.
+      for (const k of tileEventKeys) unByKey(k);
       map.setTarget();
       delete (globalThis as GlobalWithMap).__ndwtMap;
       layerRefs.current = {
@@ -218,8 +258,15 @@ export default function MapComponent({ sites, getSite }: MapComponentProps) {
     });
   };
 
+  const activeLayerLabel =
+    BASE_MAPS.find((b) => b.id === activeBaseMap)?.label ?? activeBaseMap;
+
   return (
     <div id="map" ref={containerRef}>
+      <TileHealthBanner
+        activeLayer={activeBaseMap}
+        activeLayerLabel={activeLayerLabel}
+      />
       <LayerSwitcher
         activeBaseMap={activeBaseMap}
         activeOverlays={activeOverlays}

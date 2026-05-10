@@ -14,7 +14,10 @@ interface LayerSwitcherProps {
   readonly onOverlayToggle: (id: OverlayId) => void;
 }
 
-const BASE_MAPS: Array<{ id: BaseMapId; label: string }> = [
+// Exported so other components (e.g. the tile-health banner) can
+// resolve a layer's display label from its id without duplicating the
+// list.
+export const BASE_MAPS: ReadonlyArray<{ id: BaseMapId; label: string }> = [
   { id: 'osm', label: 'Street Map' },
   { id: 'usgs', label: 'USGS Topo' },
   { id: 'opentopomap', label: 'OpenTopoMap' },

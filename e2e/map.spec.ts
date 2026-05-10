@@ -210,6 +210,59 @@ test.describe('Northwest Discovery Water Trail map', () => {
       )
       .toBeGreaterThan(0);
   });
+
+  test('shows the basemap-unavailable banner when active layer tiles fail', async ({
+    page,
+  }) => {
+    // Force every OSM tile request to 503 — simulates an upstream
+    // outage of the user's active basemap. The banner should show
+    // up within a few seconds once OL's source has fired enough
+    // tileloaderror events to cross the "down" threshold.
+    await page.route(/tile\.openstreetmap\.org\//, (route) =>
+      route.fulfill({ status: 503, body: 'simulated outage' })
+    );
+
+    await page.goto('/');
+    await page.waitForFunction(
+      () =>
+        Boolean((globalThis as unknown as { __ndwtMap?: unknown }).__ndwtMap),
+      undefined,
+      { timeout: 15_000 }
+    );
+
+    // OSM is the default basemap → its failure triggers the banner.
+    const banner = page.getByTestId('tile-health-banner');
+    await expect(banner).toBeVisible({ timeout: 20_000 });
+    await expect(banner).toContainText(/Basemap unavailable/i);
+    await expect(banner).toContainText(/Street Map/);
+  });
+
+  test('hides the banner once a healthy basemap is selected', async ({
+    page,
+  }) => {
+    await page.route(/tile\.openstreetmap\.org\//, (route) =>
+      route.fulfill({ status: 503, body: 'simulated outage' })
+    );
+
+    await page.goto('/');
+    await page.waitForFunction(
+      () =>
+        Boolean((globalThis as unknown as { __ndwtMap?: unknown }).__ndwtMap),
+      undefined,
+      { timeout: 15_000 }
+    );
+
+    const banner = page.getByTestId('tile-health-banner');
+    await expect(banner).toBeVisible({ timeout: 20_000 });
+
+    // Switch to USGS Topo (different host, no route override). The
+    // banner reads health for the new active layer, which has no
+    // events yet → 'unknown' → banner hides.
+    await page.getByRole('button', { name: 'Toggle layer switcher' }).click();
+    await page.getByRole('button', { name: /USGS Topo/ }).click();
+
+    await expect(banner).toBeHidden({ timeout: 5_000 });
+  });
 });
 
 async function clickFirstMarker(page: Page): Promise<void> {
