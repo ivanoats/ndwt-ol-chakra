@@ -121,17 +121,20 @@ test.describe('Northwest Discovery Water Trail map', () => {
     // Capture every response from the USGSImageryOnly tile prefix so
     // we can assert at least one returned real bytes (>1.5 KB) — a
     // size floor that rules out 404 HTML error pages and any empty
-    // placeholder PNG.
+    // placeholder PNG. Use the actual body length (not the
+    // Content-Length header) so chunked-transfer or
+    // Content-Length-stripping proxies can't cause false negatives.
     const TILE_PREFIX =
       'https://basemap.nationalmap.gov/arcgis/rest/services/USGSImageryOnly/MapServer/tile';
     const tileResponses: Array<{ status: number; size: number }> = [];
-    page.on('response', (resp) => {
+    page.on('response', async (resp) => {
       if (resp.url().startsWith(TILE_PREFIX)) {
-        const lenHeader = resp.headers()['content-length'];
-        tileResponses.push({
-          status: resp.status(),
-          size: lenHeader === undefined ? 0 : parseInt(lenHeader, 10),
-        });
+        try {
+          const body = await resp.body();
+          tileResponses.push({ status: resp.status(), size: body.length });
+        } catch {
+          // Aborted / non-bufferable responses — skip silently.
+        }
       }
     });
 
