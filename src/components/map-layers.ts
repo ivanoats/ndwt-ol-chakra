@@ -19,17 +19,20 @@ export const OPENTOPO_TILE_URL =
 export const OPENTOPO_ATTRIBUTION =
   'Map data: © OpenStreetMap contributors, SRTM | Map style: © <a href="https://opentopomap.org">OpenTopoMap</a> (CC-BY-SA)';
 
-// NOAA Chart Display Service — public XYZ cache that fronts NCDS.
-// Tiles are raster PNGs re-rendered weekly from the latest ENC vector
-// data, in EPSG:3857. Cap at z=16 to avoid 404s above NOAA's
-// published cache range. Disclaimer is baked into the attribution
-// string so OL's default control surfaces it whenever the layer is
-// visible — these tiles are not certified for navigation.
-export const NOAA_TILE_URL =
-  'https://tileservice.charts.noaa.gov/tiles/50000_1/{z}/{x}/{y}.png';
-export const NOAA_ATTRIBUTION =
-  'Charts: © <a href="https://nauticalcharts.noaa.gov/">NOAA Office of Coast Survey</a> — Not for navigation';
-export const NOAA_MAX_ZOOM = 16;
+// Esri World Ocean Base — the de facto free public marine basemap.
+// Sourced in part from NOAA, GEBCO, and other hydrographic agencies;
+// it includes bathymetry, depth shading, and coastline detail useful
+// for paddler trip-planning. NOAA's own NCDS doesn't serve live web
+// tiles for the public (only MBTiles for download), so this is the
+// closest functional substitute for a free chart-style basemap. Tiles
+// are continuously hosted at server.arcgisonline.com, EPSG:3857, with
+// /{z}/{y}/{x} ordering (ArcGIS convention). Cap at z=13 to match the
+// service's published max — higher zooms return blank tiles.
+export const NAUTICAL_TILE_URL =
+  'https://server.arcgisonline.com/ArcGIS/rest/services/Ocean/World_Ocean_Base/MapServer/tile/{z}/{y}/{x}';
+export const NAUTICAL_ATTRIBUTION =
+  'Tiles © <a href="https://www.esri.com/">Esri</a> — Sources: GEBCO, NOAA, National Geographic, DeLorme, HERE, Geonames.org and other contributors — Not for navigation';
+export const NAUTICAL_MAX_ZOOM = 13;
 
 export function createOsmLayer(visible: boolean): TileLayer<OSM> {
   return new TileLayer({ source: new OSM(), visible });
@@ -56,12 +59,12 @@ export function createOpenTopoLayer(visible: boolean): TileLayer<XYZ> {
   });
 }
 
-export function createNoaaLayer(visible: boolean): TileLayer<XYZ> {
+export function createNauticalLayer(visible: boolean): TileLayer<XYZ> {
   return new TileLayer({
     source: new XYZ({
-      url: NOAA_TILE_URL,
-      attributions: NOAA_ATTRIBUTION,
-      maxZoom: NOAA_MAX_ZOOM,
+      url: NAUTICAL_TILE_URL,
+      attributions: NAUTICAL_ATTRIBUTION,
+      maxZoom: NAUTICAL_MAX_ZOOM,
     }),
     visible,
   });
@@ -113,7 +116,7 @@ export interface BaseMapVisibilityRefs {
   osm: TileLayer<OSM> | null;
   usgs: TileLayer<XYZ> | null;
   openTopo: TileLayer<XYZ> | null;
-  noaa: TileLayer<XYZ> | null;
+  nautical: TileLayer<XYZ> | null;
 }
 
 export interface OverlayVisibilityRefs {
@@ -128,7 +131,7 @@ export function syncBaseMapVisibility(
   refs.osm?.setVisible(active === 'osm');
   refs.usgs?.setVisible(active === 'usgs');
   refs.openTopo?.setVisible(active === 'opentopomap');
-  refs.noaa?.setVisible(active === 'noaa');
+  refs.nautical?.setVisible(active === 'nautical');
 }
 
 export function syncOverlayVisibility(
@@ -149,7 +152,7 @@ export const EMPTY_LAYER_REFS: Readonly<LayerRefs> = Object.freeze({
   osm: null,
   usgs: null,
   openTopo: null,
-  noaa: null,
+  nautical: null,
   openSea: null,
   hiking: null,
 });
@@ -177,11 +180,11 @@ export function buildLayers(
   const osm = createOsmLayer(activeBaseMap === 'osm');
   const usgs = createUsgsLayer(activeBaseMap === 'usgs');
   const openTopo = createOpenTopoLayer(activeBaseMap === 'opentopomap');
-  const noaa = createNoaaLayer(activeBaseMap === 'noaa');
+  const nautical = createNauticalLayer(activeBaseMap === 'nautical');
   const openSea = createOpenSeaLayer(activeOverlays.has('openseamap'));
   const hiking = createHikingLayer(activeOverlays.has('hiking'));
   return {
-    refs: { osm, usgs, openTopo, noaa, openSea, hiking },
-    ordered: [osm, usgs, openTopo, noaa, openSea, hiking],
+    refs: { osm, usgs, openTopo, nautical, openSea, hiking },
+    ordered: [osm, usgs, openTopo, nautical, openSea, hiking],
   };
 }

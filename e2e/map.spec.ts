@@ -98,9 +98,43 @@ test.describe('Northwest Discovery Water Trail map', () => {
     await expect(panel).toBeHidden();
   });
 
-  test('switching to the NOAA nautical chart basemap keeps the canvas live', async ({
+  test('Nautical Chart tile URL serves real imagery for the Salish Sea', async ({
+    request,
+  }) => {
+    // Direct contract check on the upstream tile service: a known
+    // z=8 tile covering Puget Sound should return a substantive
+    // image (~30 KB on Esri World Ocean Base). The previous NOAA
+    // endpoint we tried returned 0-byte / 1.1 KB placeholder
+    // responses — this size floor catches that class of regression.
+    const url =
+      'https://server.arcgisonline.com/ArcGIS/rest/services/Ocean/World_Ocean_Base/MapServer/tile/8/87/41';
+    const resp = await request.get(url);
+    expect(resp.status()).toBe(200);
+    expect(resp.headers()['content-type']).toMatch(/^image\//);
+    const body = await resp.body();
+    expect(body.length).toBeGreaterThan(5000);
+  });
+
+  test('switching to Nautical Chart fetches real tiles and keeps canvas live', async ({
     page,
   }) => {
+    // Capture every response from the upstream tile prefix so we can
+    // assert *real* tile bytes were served (not a 400 or a tiny
+    // placeholder PNG, which is how the original NOAA endpoint
+    // failed silently).
+    const TILE_PREFIX =
+      'https://server.arcgisonline.com/ArcGIS/rest/services/Ocean/World_Ocean_Base/MapServer/tile';
+    const tileResponses: Array<{ status: number; size: number }> = [];
+    page.on('response', (resp) => {
+      if (resp.url().startsWith(TILE_PREFIX)) {
+        const lenHeader = resp.headers()['content-length'];
+        tileResponses.push({
+          status: resp.status(),
+          size: lenHeader === undefined ? 0 : parseInt(lenHeader, 10),
+        });
+      }
+    });
+
     await page.goto('/');
     // Wait for OL to be wired up before driving the switcher — the
     // map is dynamic-imported with ssr:false, so the canvas may not
@@ -113,9 +147,7 @@ test.describe('Northwest Discovery Water Trail map', () => {
     );
 
     await page.getByRole('button', { name: 'Toggle layer switcher' }).click();
-    const chartButton = page.getByRole('button', {
-      name: /NOAA Nautical Chart/,
-    });
+    const chartButton = page.getByRole('button', { name: /Nautical Chart/ });
     await chartButton.click();
 
     await expect(chartButton).toHaveAttribute('aria-pressed', 'true');
@@ -123,13 +155,24 @@ test.describe('Northwest Discovery Water Trail map', () => {
       page.getByRole('button', { name: /Street Map/ })
     ).toHaveAttribute('aria-pressed', 'false');
 
-    // Map should still be rendered after the basemap swap.
+    // Canvas still renders after the basemap swap.
     const canvas = page.locator('#map').locator('canvas').first();
     await expect(canvas).toBeVisible();
     const box = await canvas.boundingBox();
     if (box === null) throw new Error('OL canvas should have a bounding box');
     expect(box.width).toBeGreaterThan(0);
     expect(box.height).toBeGreaterThan(0);
+
+    // Regression: at least one chart tile request must return 200
+    // with substantive bytes. >1.5 KB rules out the placeholder PNGs
+    // that masked the original blank-basemap bug.
+    await expect
+      .poll(
+        () =>
+          tileResponses.filter((r) => r.status === 200 && r.size > 1500).length,
+        { timeout: 15_000 }
+      )
+      .toBeGreaterThan(0);
   });
 });
 

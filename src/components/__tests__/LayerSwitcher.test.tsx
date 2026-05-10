@@ -53,7 +53,7 @@ describe('<LayerSwitcher />', () => {
       screen.getByRole('button', { name: /OpenTopoMap/ })
     ).toBeInTheDocument();
     expect(
-      screen.getByRole('button', { name: /NOAA Nautical Chart/ })
+      screen.getByRole('button', { name: /Nautical Chart/ })
     ).toBeInTheDocument();
     expect(
       screen.getByRole('button', { name: /Sea Marks/ })
@@ -106,7 +106,7 @@ describe('<LayerSwitcher />', () => {
     );
   });
 
-  it('calls onBaseMapChange with "noaa" when the chart option is clicked', () => {
+  it('calls onBaseMapChange with "nautical" when the chart option is clicked', () => {
     const onBaseMapChange = vi.fn();
     render(
       <LayerSwitcher
@@ -119,11 +119,11 @@ describe('<LayerSwitcher />', () => {
     fireEvent.click(
       screen.getByRole('button', { name: 'Toggle layer switcher' })
     );
-    fireEvent.click(
-      screen.getByRole('button', { name: /NOAA Nautical Chart/ })
-    );
+    fireEvent.click(screen.getByRole('button', { name: /Nautical Chart/ }));
 
-    expect(onBaseMapChange).toHaveBeenCalledWith('noaa' satisfies BaseMapId);
+    expect(onBaseMapChange).toHaveBeenCalledWith(
+      'nautical' satisfies BaseMapId
+    );
   });
 
   it('marks active overlays as pressed', () => {

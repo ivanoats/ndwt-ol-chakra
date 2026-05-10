@@ -7,7 +7,7 @@ import type { OverlayId } from '../LayerSwitcher';
 import {
   buildLayers,
   createHikingLayer,
-  createNoaaLayer,
+  createNauticalLayer,
   createOpenSeaLayer,
   createOpenTopoLayer,
   createOsmLayer,
@@ -16,9 +16,9 @@ import {
   HIKING_ATTRIBUTION,
   HIKING_TILE_URL,
   HIKING_Z_INDEX,
-  NOAA_ATTRIBUTION,
-  NOAA_MAX_ZOOM,
-  NOAA_TILE_URL,
+  NAUTICAL_ATTRIBUTION,
+  NAUTICAL_MAX_ZOOM,
+  NAUTICAL_TILE_URL,
   OPENSEA_ATTRIBUTION,
   OPENSEA_TILE_URL,
   OPENSEA_Z_INDEX,
@@ -82,37 +82,39 @@ describe('map-layers — OpenTopoMap', () => {
   });
 });
 
-describe('map-layers — NOAA', () => {
-  it('points at the NOAA NCDS public tile cache with an XYZ template', () => {
-    expect(NOAA_TILE_URL).toMatch(
-      /^https:\/\/tileservice\.charts\.noaa\.gov\//
+describe('map-layers — Nautical (Esri World Ocean)', () => {
+  it('points at the Esri World Ocean Base ArcGIS tile service with z/y/x ordering', () => {
+    expect(NAUTICAL_TILE_URL).toMatch(
+      /^https:\/\/server\.arcgisonline\.com\/ArcGIS\/rest\/services\/Ocean\/World_Ocean_Base\/MapServer\/tile\//
     );
-    expect(NOAA_TILE_URL).toContain('{z}/{x}/{y}');
+    expect(NAUTICAL_TILE_URL).toContain('{z}/{y}/{x}');
   });
 
-  it('attribution names NOAA Office of Coast Survey and the not-for-navigation caveat', () => {
-    expect(NOAA_ATTRIBUTION).toMatch(/NOAA Office of Coast Survey/);
-    expect(NOAA_ATTRIBUTION).toMatch(/Not for navigation/);
+  it('attribution credits Esri/NOAA/GEBCO sources and carries the not-for-navigation caveat', () => {
+    expect(NAUTICAL_ATTRIBUTION).toMatch(/Esri/);
+    expect(NAUTICAL_ATTRIBUTION).toMatch(/NOAA/);
+    expect(NAUTICAL_ATTRIBUTION).toMatch(/GEBCO/);
+    expect(NAUTICAL_ATTRIBUTION).toMatch(/Not for navigation/);
   });
 
-  it('caps zoom at 16 to match the published NOAA cache range', () => {
-    expect(NOAA_MAX_ZOOM).toBe(16);
+  it('caps zoom at 13 to match the Esri service maximum', () => {
+    expect(NAUTICAL_MAX_ZOOM).toBe(13);
   });
 
-  it('createNoaaLayer constructs a TileLayer with an XYZ source', () => {
-    const layer = createNoaaLayer(false);
+  it('createNauticalLayer constructs a TileLayer with an XYZ source', () => {
+    const layer = createNauticalLayer(false);
     expect(layer).toBeInstanceOf(TileLayer);
     expect(layer.getSource()).toBeInstanceOf(XYZ);
   });
 
   it('honours the visibility argument', () => {
-    expect(createNoaaLayer(true).getVisible()).toBe(true);
-    expect(createNoaaLayer(false).getVisible()).toBe(false);
+    expect(createNauticalLayer(true).getVisible()).toBe(true);
+    expect(createNauticalLayer(false).getVisible()).toBe(false);
   });
 
   it('uses the configured URL on the source', () => {
-    const layer = createNoaaLayer(false);
-    expect(layer.getSource()?.getUrls()?.[0]).toBe(NOAA_TILE_URL);
+    const layer = createNauticalLayer(false);
+    expect(layer.getSource()?.getUrls()?.[0]).toBe(NAUTICAL_TILE_URL);
   });
 });
 
@@ -159,38 +161,38 @@ describe('syncBaseMapVisibility', () => {
       osm: { setVisible: vi.fn() } as unknown as TileLayer<OSM>,
       usgs: { setVisible: vi.fn() } as unknown as TileLayer<XYZ>,
       openTopo: { setVisible: vi.fn() } as unknown as TileLayer<XYZ>,
-      noaa: { setVisible: vi.fn() } as unknown as TileLayer<XYZ>,
+      nautical: { setVisible: vi.fn() } as unknown as TileLayer<XYZ>,
     };
   }
 
   it('shows only the active basemap', () => {
     const refs = makeRefs();
-    syncBaseMapVisibility(refs, 'noaa');
+    syncBaseMapVisibility(refs, 'nautical');
     expect(refs.osm.setVisible).toHaveBeenCalledWith(false);
     expect(refs.usgs.setVisible).toHaveBeenCalledWith(false);
     expect(refs.openTopo.setVisible).toHaveBeenCalledWith(false);
-    expect(refs.noaa.setVisible).toHaveBeenCalledWith(true);
+    expect(refs.nautical.setVisible).toHaveBeenCalledWith(true);
   });
 
   it('handles each basemap id', () => {
-    for (const id of ['osm', 'usgs', 'opentopomap', 'noaa'] as const) {
+    for (const id of ['osm', 'usgs', 'opentopomap', 'nautical'] as const) {
       const refs = makeRefs();
       syncBaseMapVisibility(refs, id);
       const expected = {
         osm: id === 'osm',
         usgs: id === 'usgs',
         openTopo: id === 'opentopomap',
-        noaa: id === 'noaa',
+        nautical: id === 'nautical',
       };
       expect(refs.osm.setVisible).toHaveBeenCalledWith(expected.osm);
       expect(refs.usgs.setVisible).toHaveBeenCalledWith(expected.usgs);
       expect(refs.openTopo.setVisible).toHaveBeenCalledWith(expected.openTopo);
-      expect(refs.noaa.setVisible).toHaveBeenCalledWith(expected.noaa);
+      expect(refs.nautical.setVisible).toHaveBeenCalledWith(expected.nautical);
     }
   });
 
   it('skips null refs (map not yet initialized)', () => {
-    const refs = { osm: null, usgs: null, openTopo: null, noaa: null };
+    const refs = { osm: null, usgs: null, openTopo: null, nautical: null };
     expect(() => syncBaseMapVisibility(refs, 'osm')).not.toThrow();
   });
 });
@@ -238,7 +240,7 @@ describe('EMPTY_LAYER_REFS', () => {
       osm: null,
       usgs: null,
       openTopo: null,
-      noaa: null,
+      nautical: null,
       openSea: null,
       hiking: null,
     });
@@ -251,10 +253,13 @@ describe('EMPTY_LAYER_REFS', () => {
 
 describe('buildLayers', () => {
   it('returns refs for every layer the map owns', () => {
-    const { refs } = buildLayers('noaa', new Set<OverlayId>(['openseamap']));
+    const { refs } = buildLayers(
+      'nautical',
+      new Set<OverlayId>(['openseamap'])
+    );
     expect(Object.keys(refs).sort()).toEqual([
       'hiking',
-      'noaa',
+      'nautical',
       'openSea',
       'openTopo',
       'osm',
@@ -263,11 +268,11 @@ describe('buildLayers', () => {
   });
 
   it('marks only the active basemap visible', () => {
-    const { refs } = buildLayers('noaa', new Set<OverlayId>());
+    const { refs } = buildLayers('nautical', new Set<OverlayId>());
     expect(refs.osm.getVisible()).toBe(false);
     expect(refs.usgs.getVisible()).toBe(false);
     expect(refs.openTopo.getVisible()).toBe(false);
-    expect(refs.noaa.getVisible()).toBe(true);
+    expect(refs.nautical.getVisible()).toBe(true);
   });
 
   it('marks only the requested overlays visible', () => {
@@ -282,7 +287,7 @@ describe('buildLayers', () => {
       refs.osm,
       refs.usgs,
       refs.openTopo,
-      refs.noaa,
+      refs.nautical,
       refs.openSea,
       refs.hiking,
     ]);
