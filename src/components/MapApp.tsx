@@ -71,10 +71,11 @@ export default function MapApp({ sites }: MapAppProps) {
 
   // Register the tile-cache service worker once on first mount. Skip
   // in dev (NODE_ENV check inside the helper), no-op without browser
-  // SW support. Production users get cache-first offline tiles after
-  // the first online visit.
+  // SW support. The helper swallows its own failures so a rejected
+  // promise can't propagate here — no `.catch` needed at the call
+  // site.
   useEffect(() => {
-    void registerServiceWorker();
+    registerServiceWorker();
   }, []);
 
   return (

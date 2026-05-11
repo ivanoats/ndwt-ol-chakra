@@ -37,7 +37,7 @@ test.describe('Tile cache service worker', () => {
     // rather than relying on a fixed sleep.
     await expect
       .poll(
-        async () =>
+        () =>
           page.evaluate(async () => {
             const names = await caches.keys();
             let total = 0;
@@ -103,7 +103,7 @@ test.describe('Tile cache service worker', () => {
 
     await expect
       .poll(
-        async () =>
+        () =>
           page.evaluate(async () => {
             const names = await caches.keys();
             const hosts = new Set<string>();
