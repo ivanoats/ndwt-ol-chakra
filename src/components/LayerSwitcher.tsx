@@ -126,6 +126,13 @@ const dividerClass = css({
 // Color reflects the layer's current tile-health classification.
 // Hidden from screen readers — the `title` provides hover-tooltip
 // context and the surrounding banner already announces failures.
+const HEALTH_DOT_COLORS: Record<HealthStatus, string> = {
+  ok: 'green.9',
+  degraded: 'amber.9',
+  down: 'red.9',
+  unknown: 'gray.6',
+};
+
 const healthDotClass = (status: HealthStatus) =>
   css({
     marginLeft: 'auto',
@@ -133,14 +140,7 @@ const healthDotClass = (status: HealthStatus) =>
     height: '2',
     borderRadius: 'full',
     flexShrink: 0,
-    backgroundColor:
-      status === 'down'
-        ? 'red.9'
-        : status === 'degraded'
-          ? 'amber.9'
-          : status === 'ok'
-            ? 'green.9'
-            : 'gray.6',
+    backgroundColor: HEALTH_DOT_COLORS[status],
     opacity: status === 'unknown' ? 0.35 : 1,
   });
 
