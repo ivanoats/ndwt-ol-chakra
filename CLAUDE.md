@@ -152,7 +152,12 @@ human review:
    commits with the SHA in your reply; mark threads resolved.
 3. For DeepSource, the report URL is in the commit status — the
    page is publicly accessible for public repos, so a quick
-   curl https://app.deepsource.com/.../run/<id>/javascript/ | grep -oE '[A-Z]{2,}-[A-Z0-9]+' | sort -u
+
+   ```sh
+   curl -s 'https://app.deepsource.com/gh/<org>/<repo>/run/<id>/javascript/' \
+     | grep -oE '[A-Z]{2,}-[A-Z0-9]+' | sort -u
+   ```
+
    surfaces the rule IDs without auth. The full per-issue
    detail (file paths, line numbers, code excerpts) is also in
    the same HTML — parse it directly rather than asking a human
