@@ -36,8 +36,12 @@ const TILE_HOSTS = [
 ];
 
 function isTileRequest(url) {
-  // URL constructor handles both absolute URLs and relative ones.
-  // We only intercept absolute cross-origin tile hosts.
+  // The URL constructor here only handles absolute URLs — we don't
+  // pass a base. That's fine because every request that reaches the
+  // SW's `fetch` event has an absolute `request.url`, and we only
+  // care about cross-origin tile hosts. A relative URL would throw
+  // and fall through to `false`, which is the right answer (don't
+  // intercept).
   try {
     const parsed = new URL(url);
     return TILE_HOSTS.includes(parsed.hostname);
@@ -91,9 +95,14 @@ self.addEventListener('fetch', (event) => {
 
       try {
         const response = await fetch(request);
-        // Only cache successful responses. 4xx / 5xx errors get
-        // returned to the page but not stored.
-        if (response.ok || response.type === 'opaque') {
+        // Only cache successful CORS responses. 4xx / 5xx errors get
+        // returned to the page but not stored. Opaque responses
+        // (no-cors fetches) are deliberately skipped — they expose
+        // status=0 so we can't tell success from upstream failure,
+        // and OL's tile sources set `crossOrigin: 'anonymous'`
+        // anyway, so genuine tile fetches always come back as CORS
+        // responses with a real status.
+        if (response.ok) {
           // `response.clone()` is required because a Response body
           // can only be consumed once and we need to both return it
           // and put it in the cache.
@@ -106,8 +115,11 @@ self.addEventListener('fetch', (event) => {
       } catch {
         // Network failure with no cached fallback — return a
         // synthetic 504 so OL fires its tileloaderror handler and
-        // the tile-health banner can show the user.
-        return new Response('Tile unavailable offline', {
+        // the tile-health banner can show the user. Empty body
+        // because the response stands in for image bytes;
+        // returning text would surface "corrupt image" warnings in
+        // the browser console when OL tries to decode it.
+        return new Response(null, {
           status: 504,
           statusText: 'Gateway Timeout',
         });

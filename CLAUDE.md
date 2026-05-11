@@ -197,8 +197,9 @@ section in `docs/plans/modernization.md`.
   shape; the `activate` handler purges old `ndwt-tiles-*` caches
   automatically. Registration is gated on `NODE_ENV === 'production'`
   in `src/lib/register-service-worker.ts`, so `next dev` is
-  unaffected. For local offline testing use `npm run build && npm
-run preview` (SW works on localhost over HTTP).
+  unaffected. For local offline testing run
+  `npm run build && npm run preview` (SW works on localhost over
+  HTTP).
 - **Sonar's CI Action and Sonar's automatic analysis collide**.
   Automatic analysis must be off in the SonarCloud project
   settings (Administration → Analysis Method) for the Action's

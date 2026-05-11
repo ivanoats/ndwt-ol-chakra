@@ -1,13 +1,29 @@
 import { expect, test } from '@playwright/test';
 
+// Single source of truth for the host list the SW intercepts. Keep
+// in sync with TILE_HOSTS in public/sw.js — if drift happens the
+// scope-correctness test below will fail loudly. The regex and the
+// allowed-host check used in the scope test are both derived from
+// this list so we only have one place to update.
+const TILE_HOSTS = [
+  'tile.openstreetmap.org',
+  'basemap.nationalmap.gov',
+  'a.tile.opentopomap.org',
+  'b.tile.opentopomap.org',
+  'c.tile.opentopomap.org',
+  'tiles.openseamap.org',
+  'tile.waymarkedtrails.org',
+] as const;
+
 // Matches every basemap / overlay tile host the SW knows about.
 // Used to selectively block tile traffic at the Playwright layer
 // without taking the localhost preview server offline — the
 // realistic scenario is "online enough to load the app, tile hosts
 // unreachable", which `context.setOffline(true)` can't model
 // because it kills localhost too.
-const TILE_HOST_REGEX =
-  /(?:tile\.openstreetmap\.org|basemap\.nationalmap\.gov|\b[abc]\.tile\.opentopomap\.org|tiles\.openseamap\.org|tile\.waymarkedtrails\.org)\//;
+const TILE_HOST_REGEX = new RegExp(
+  `(?:${TILE_HOSTS.map((h) => h.replace(/\./g, '\\.')).join('|')})/`
+);
 
 test.describe('Tile cache service worker', () => {
   test('caches basemap tiles and serves them after tile hosts are blocked', async ({
@@ -125,15 +141,7 @@ test.describe('Tile cache service worker', () => {
     // can't enumerate the exact list because OL only fetches the
     // active basemap's tiles, not every host; but every cached
     // entry MUST be a known tile host.)
-    const allowedHosts = new Set([
-      'tile.openstreetmap.org',
-      'basemap.nationalmap.gov',
-      'a.tile.opentopomap.org',
-      'b.tile.opentopomap.org',
-      'c.tile.opentopomap.org',
-      'tiles.openseamap.org',
-      'tile.waymarkedtrails.org',
-    ]);
+    const allowedHosts = new Set<string>(TILE_HOSTS);
     // `expect.poll` returns void; re-query the value for the assert.
     const finalHosts = await page.evaluate(async () => {
       const names = await caches.keys();
