@@ -14,6 +14,12 @@ export interface LayerHealth {
   readonly events: readonly TileLoadEvent[];
   readonly consecutiveErrors: number;
   readonly lastSuccessAt: number | null;
+  // Wall-clock timestamp of the most recent "down" trigger. Once
+  // set, classify keeps reporting 'down' for DOWN_PERSIST_MS even
+  // if a few sporadic successes arrive — this suppresses banner
+  // flapping during a flaky outage. Cleared implicitly when the
+  // persistence window elapses (classify just stops honouring it).
+  readonly downSince: number | null;
 }
 
 export const EMPTY_HEALTH: LayerHealth = Object.freeze({
@@ -23,6 +29,7 @@ export const EMPTY_HEALTH: LayerHealth = Object.freeze({
   events: Object.freeze([] as TileLoadEvent[]),
   consecutiveErrors: 0,
   lastSuccessAt: null,
+  downSince: null,
 });
 
 // Rolling window — 20 events covers ~5–10 panned tile batches at
@@ -42,22 +49,45 @@ export const DOWN_NO_SUCCESS_FOR_MS = 10_000;
 export const DEGRADED_ERROR_RATIO = 0.3;
 export const MIN_EVENTS_FOR_DEGRADED = 5;
 
+// Once a layer is classified 'down', stay 'down' for at least this
+// long even if intermittent successes arrive. Stops the banner from
+// flapping during a flaky outage. Tuned to 5 minutes — long enough
+// for users to notice and switch basemap, short enough that a true
+// recovery surfaces quickly.
+export const DOWN_PERSIST_MS = 5 * 60_000;
+
 export function recordEvent(
   state: LayerHealth,
   kind: 'success' | 'error',
   now: number
 ): LayerHealth {
   const events = [...state.events, { kind, at: now }].slice(-WINDOW_SIZE);
-  return {
-    events,
-    consecutiveErrors: kind === 'error' ? state.consecutiveErrors + 1 : 0,
-    lastSuccessAt: kind === 'success' ? now : state.lastSuccessAt,
-  };
+  const consecutiveErrors = kind === 'error' ? state.consecutiveErrors + 1 : 0;
+  const lastSuccessAt = kind === 'success' ? now : state.lastSuccessAt;
+
+  // Latch / refresh the sticky-down timestamp whenever we're sitting
+  // at or above the consecutive-error threshold. Overwriting `now`
+  // every time errors come in extends the persistence window for
+  // sustained outages but leaves it untouched (and eventually
+  // expiring) once errors stop.
+  const downSince =
+    consecutiveErrors >= DOWN_AFTER_CONSECUTIVE_ERRORS ? now : state.downSince;
+
+  return { events, consecutiveErrors, lastSuccessAt, downSince };
 }
 
 export function classify(state: LayerHealth, now: number): HealthStatus {
   if (state.events.length === 0) return 'unknown';
 
+  // Sticky down: keep reporting 'down' for the persistence window
+  // after the most recent down trigger, even if a few successes
+  // have arrived since.
+  if (state.downSince !== null && now - state.downSince < DOWN_PERSIST_MS) {
+    return 'down';
+  }
+
+  // Fresh down check — catches the case where the persistence
+  // window has elapsed but the layer is still actively failing.
   const noRecentSuccess =
     state.lastSuccessAt === null ||
     now - state.lastSuccessAt > DOWN_NO_SUCCESS_FOR_MS;
@@ -77,4 +107,37 @@ export function classify(state: LayerHealth, now: number): HealthStatus {
   }
 
   return 'ok';
+}
+
+// Pick the best alternative basemap to suggest when the active
+// layer is down. Returns null if every other candidate is also
+// down. Prefers 'ok' over 'unknown' over 'degraded'; never
+// suggests a layer that's currently 'down' itself.
+const FALLBACK_PREFERENCE: Record<HealthStatus, number> = {
+  ok: 0,
+  unknown: 1,
+  degraded: 2,
+  down: 3,
+};
+
+export function suggestFallback<TId extends string>(
+  active: TId,
+  healths: Readonly<Partial<Record<TId, LayerHealth>>>,
+  candidates: readonly TId[],
+  now: number
+): TId | null {
+  const ranked = candidates
+    .filter((id) => id !== active)
+    .map((id) => {
+      const entry = healths[id];
+      const status: HealthStatus =
+        entry === undefined ? 'unknown' : classify(entry, now);
+      return { id, status };
+    })
+    .filter((c) => c.status !== 'down')
+    .sort(
+      (a, b) => FALLBACK_PREFERENCE[a.status] - FALLBACK_PREFERENCE[b.status]
+    );
+
+  return ranked[0]?.id ?? null;
 }

@@ -1,6 +1,6 @@
-import { beforeEach, describe, expect, it } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 
 import type { LayerKey } from '../../store/tile-health';
 import { useTileHealth } from '../../store/tile-health';
@@ -23,10 +23,18 @@ const repeatRecord = (
   Array.from({ length: count }).forEach(() => action(layer));
 };
 
+const NOOP = (): void => {
+  /* unused in tests that don't exercise the switch button */
+};
+
 describe('<TileHealthBanner />', () => {
   it('renders nothing when no tile events have been recorded for the layer', () => {
     render(
-      <TileHealthBanner activeLayer="osm" activeLayerLabel="Street Map" />
+      <TileHealthBanner
+        activeLayer="osm"
+        activeLayerLabel="Street Map"
+        onSwitchTo={NOOP}
+      />
     );
     expect(screen.queryByTestId('tile-health-banner')).not.toBeInTheDocument();
   });
@@ -34,7 +42,11 @@ describe('<TileHealthBanner />', () => {
   it('renders nothing while the active layer is healthy', () => {
     useTileHealth.getState().recordSuccess('osm');
     render(
-      <TileHealthBanner activeLayer="osm" activeLayerLabel="Street Map" />
+      <TileHealthBanner
+        activeLayer="osm"
+        activeLayerLabel="Street Map"
+        onSwitchTo={NOOP}
+      />
     );
     expect(screen.queryByTestId('tile-health-banner')).not.toBeInTheDocument();
   });
@@ -42,7 +54,11 @@ describe('<TileHealthBanner />', () => {
   it('shows the "down" banner when the active layer crosses the threshold', () => {
     repeatRecord('osm', 'error', DOWN_AFTER_CONSECUTIVE_ERRORS);
     render(
-      <TileHealthBanner activeLayer="osm" activeLayerLabel="Street Map" />
+      <TileHealthBanner
+        activeLayer="osm"
+        activeLayerLabel="Street Map"
+        onSwitchTo={NOOP}
+      />
     );
 
     const banner = screen.getByTestId('tile-health-banner');
@@ -58,6 +74,7 @@ describe('<TileHealthBanner />', () => {
       <TileHealthBanner
         activeLayer="aerial"
         activeLayerLabel="Aerial Imagery"
+        onSwitchTo={NOOP}
       />
     );
 
@@ -72,24 +89,107 @@ describe('<TileHealthBanner />', () => {
     useTileHealth.getState().recordSuccess('usgs');
 
     render(
-      <TileHealthBanner activeLayer="usgs" activeLayerLabel="USGS Topo" />
+      <TileHealthBanner
+        activeLayer="usgs"
+        activeLayerLabel="USGS Topo"
+        onSwitchTo={NOOP}
+      />
     );
     expect(screen.queryByTestId('tile-health-banner')).not.toBeInTheDocument();
   });
 
   it('shows the degraded banner copy when status is "degraded"', () => {
-    // 4 errors + 6 successes = 40% errors, above the 30% degraded
-    // threshold but consecutiveErrors=4 stays under the 5-error
-    // "down" threshold; 10 events ≥ MIN_EVENTS_FOR_DEGRADED.
     repeatRecord('osm', 'success', 6);
     repeatRecord('osm', 'error', 4);
 
     render(
-      <TileHealthBanner activeLayer="osm" activeLayerLabel="Street Map" />
+      <TileHealthBanner
+        activeLayer="osm"
+        activeLayerLabel="Street Map"
+        onSwitchTo={NOOP}
+      />
     );
 
     const banner = screen.getByTestId('tile-health-banner');
     expect(banner).toHaveAttribute('data-status', 'degraded');
     expect(banner).toHaveTextContent(/Slow connection/);
+  });
+
+  describe('switch-to-fallback button', () => {
+    it('renders a switch button when down and a healthy alternative exists', () => {
+      // Active layer (OSM) is down; USGS has at least one successful
+      // load so it qualifies as the fallback.
+      repeatRecord('osm', 'error', DOWN_AFTER_CONSECUTIVE_ERRORS);
+      useTileHealth.getState().recordSuccess('usgs');
+
+      render(
+        <TileHealthBanner
+          activeLayer="osm"
+          activeLayerLabel="Street Map"
+          onSwitchTo={NOOP}
+        />
+      );
+
+      const button = screen.getByTestId('tile-health-fallback-button');
+      expect(button).toBeInTheDocument();
+      expect(button).toHaveTextContent(/Switch to USGS Topo/);
+    });
+
+    it('calls onSwitchTo with the suggested layer id when clicked', () => {
+      repeatRecord('osm', 'error', DOWN_AFTER_CONSECUTIVE_ERRORS);
+      useTileHealth.getState().recordSuccess('usgs');
+      const onSwitchTo = vi.fn();
+
+      render(
+        <TileHealthBanner
+          activeLayer="osm"
+          activeLayerLabel="Street Map"
+          onSwitchTo={onSwitchTo}
+        />
+      );
+
+      fireEvent.click(screen.getByTestId('tile-health-fallback-button'));
+      expect(onSwitchTo).toHaveBeenCalledWith('usgs');
+    });
+
+    it('does not render the switch button when status is only degraded', () => {
+      // Degraded layers are still usable; a forced switch would be
+      // more disruptive than helpful.
+      repeatRecord('osm', 'success', 6);
+      repeatRecord('osm', 'error', 4);
+
+      render(
+        <TileHealthBanner
+          activeLayer="osm"
+          activeLayerLabel="Street Map"
+          onSwitchTo={NOOP}
+        />
+      );
+
+      expect(
+        screen.queryByTestId('tile-health-fallback-button')
+      ).not.toBeInTheDocument();
+    });
+
+    it('does not render the switch button when every other basemap is also down', () => {
+      // No healthy fallback exists — suggestFallback returns null.
+      repeatRecord('osm', 'error', DOWN_AFTER_CONSECUTIVE_ERRORS);
+      repeatRecord('usgs', 'error', DOWN_AFTER_CONSECUTIVE_ERRORS);
+      repeatRecord('opentopomap', 'error', DOWN_AFTER_CONSECUTIVE_ERRORS);
+      repeatRecord('aerial', 'error', DOWN_AFTER_CONSECUTIVE_ERRORS);
+
+      render(
+        <TileHealthBanner
+          activeLayer="osm"
+          activeLayerLabel="Street Map"
+          onSwitchTo={NOOP}
+        />
+      );
+
+      expect(screen.getByTestId('tile-health-banner')).toBeInTheDocument();
+      expect(
+        screen.queryByTestId('tile-health-fallback-button')
+      ).not.toBeInTheDocument();
+    });
   });
 });

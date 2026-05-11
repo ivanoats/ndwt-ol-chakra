@@ -5,10 +5,12 @@ import {
   DEGRADED_ERROR_RATIO,
   DOWN_AFTER_CONSECUTIVE_ERRORS,
   DOWN_NO_SUCCESS_FOR_MS,
+  DOWN_PERSIST_MS,
   EMPTY_HEALTH,
   type LayerHealth,
   MIN_EVENTS_FOR_DEGRADED,
   recordEvent,
+  suggestFallback,
   WINDOW_SIZE,
 } from '../tile-health-tracker';
 
@@ -33,6 +35,7 @@ describe('recordEvent', () => {
     expect(EMPTY_HEALTH.events).toHaveLength(0);
     expect(EMPTY_HEALTH.consecutiveErrors).toBe(0);
     expect(EMPTY_HEALTH.lastSuccessAt).toBeNull();
+    expect(EMPTY_HEALTH.downSince).toBeNull();
   });
 
   it('appends a success event and updates lastSuccessAt', () => {
@@ -41,6 +44,7 @@ describe('recordEvent', () => {
     expect(next.events[0]).toEqual({ kind: 'success', at: T0 });
     expect(next.lastSuccessAt).toBe(T0);
     expect(next.consecutiveErrors).toBe(0);
+    expect(next.downSince).toBeNull();
   });
 
   it('increments consecutiveErrors on errors, resets on success', () => {
@@ -76,6 +80,39 @@ describe('recordEvent', () => {
     const beforeSnapshot = JSON.stringify(before);
     recordEvent(before, 'error', T0 + 100);
     expect(JSON.stringify(before)).toBe(beforeSnapshot);
+  });
+
+  it('latches downSince when consecutiveErrors crosses the threshold', () => {
+    const allErrors = feedEvents(
+      EMPTY_HEALTH,
+      'error',
+      DOWN_AFTER_CONSECUTIVE_ERRORS,
+      T0
+    );
+    expect(allErrors.downSince).toBe(T0);
+  });
+
+  it('refreshes downSince on each error past the threshold', () => {
+    const allErrors = feedEvents(
+      EMPTY_HEALTH,
+      'error',
+      DOWN_AFTER_CONSECUTIVE_ERRORS,
+      T0
+    );
+    const moreErrors = recordEvent(allErrors, 'error', T0 + 500);
+    expect(moreErrors.downSince).toBe(T0 + 500);
+  });
+
+  it('leaves downSince untouched on success below threshold', () => {
+    const allErrors = feedEvents(
+      EMPTY_HEALTH,
+      'error',
+      DOWN_AFTER_CONSECUTIVE_ERRORS,
+      T0
+    );
+    const oneSuccess = recordEvent(allErrors, 'success', T0 + 500);
+    expect(oneSuccess.consecutiveErrors).toBe(0);
+    expect(oneSuccess.downSince).toBe(T0);
   });
 });
 
@@ -127,9 +164,10 @@ describe('classify', () => {
     expect(classify(allErrors, T0)).toBe('down');
   });
 
-  it('does not report down if a success arrived within the recovery window', () => {
-    // 5 errors but a success was just recorded — recovery resets the
-    // consecutiveErrors counter to 0, so it cannot be 'down'.
+  it('stays down for the persistence window even when a single success arrives', () => {
+    // Tier 2 anti-flapping: 5 errors latch downSince; a single
+    // success resets consecutiveErrors but the sticky timestamp
+    // keeps classify reporting 'down' through the 5-min window.
     const allErrors = feedEvents(
       EMPTY_HEALTH,
       'error',
@@ -137,7 +175,22 @@ describe('classify', () => {
       T0
     );
     const recovered = recordEvent(allErrors, 'success', T0 + 100);
-    expect(classify(recovered, T0 + 200)).not.toBe('down');
+    expect(recovered.consecutiveErrors).toBe(0);
+    expect(classify(recovered, T0 + 200)).toBe('down');
+  });
+
+  it('exits the sticky down state once the persistence window elapses', () => {
+    // After DOWN_PERSIST_MS passes since the last down trigger
+    // *and* no new errors have hit the threshold, classify drops
+    // back to its fresh evaluation (ok / degraded as appropriate).
+    const allErrors = feedEvents(
+      EMPTY_HEALTH,
+      'error',
+      DOWN_AFTER_CONSECUTIVE_ERRORS,
+      T0
+    );
+    const recovered = feedEvents(allErrors, 'success', WINDOW_SIZE, T0 + 100);
+    expect(classify(recovered, T0 + DOWN_PERSIST_MS + 1)).toBe('ok');
   });
 
   it('does not report down if consecutive errors are below the threshold', () => {
@@ -167,7 +220,7 @@ describe('classify', () => {
     expect(classify(sustainedErrors, T0 + 100)).toBe('down');
   });
 
-  it('recovers to ok once the rolling window fills with successes', () => {
+  it('recovers to ok once the rolling window fills with successes and the sticky window expires', () => {
     const downState = feedEvents(
       EMPTY_HEALTH,
       'error',
@@ -177,6 +230,76 @@ describe('classify', () => {
     expect(classify(downState, T0)).toBe('down');
 
     const recovered = feedEvents(downState, 'success', WINDOW_SIZE, T0);
-    expect(classify(recovered, T0 + 1)).toBe('ok');
+    // Inside the persistence window — still down.
+    expect(classify(recovered, T0 + 1)).toBe('down');
+    // After the persistence window — fresh classification kicks in.
+    expect(classify(recovered, T0 + DOWN_PERSIST_MS + 1)).toBe('ok');
+  });
+});
+
+describe('suggestFallback', () => {
+  const ALL: readonly string[] = ['osm', 'usgs', 'opentopomap', 'aerial'];
+
+  it('returns null when there are no other candidates', () => {
+    expect(suggestFallback('osm', {}, ['osm'], T0)).toBeNull();
+  });
+
+  it('skips the currently active layer', () => {
+    const healths = {
+      osm: feedEvents(EMPTY_HEALTH, 'success', 1, T0),
+      usgs: feedEvents(EMPTY_HEALTH, 'success', 1, T0),
+    };
+    expect(suggestFallback('osm', healths, ['osm', 'usgs'], T0)).toBe('usgs');
+  });
+
+  it('returns null when every other candidate is down', () => {
+    const downHealth = feedEvents(
+      EMPTY_HEALTH,
+      'error',
+      DOWN_AFTER_CONSECUTIVE_ERRORS,
+      T0
+    );
+    const healths = {
+      osm: downHealth,
+      usgs: downHealth,
+      opentopomap: downHealth,
+      aerial: downHealth,
+    };
+    expect(suggestFallback('osm', healths, ALL, T0 + 1)).toBeNull();
+  });
+
+  it('prefers an ok layer over an unknown one', () => {
+    const healths = {
+      usgs: feedEvents(EMPTY_HEALTH, 'success', 1, T0),
+      // 'opentopomap' has no entry → unknown
+    };
+    expect(suggestFallback('osm', healths, ALL, T0)).toBe('usgs');
+  });
+
+  it('prefers unknown over degraded', () => {
+    const degraded = feedEvents(
+      feedEvents(EMPTY_HEALTH, 'success', 6, T0),
+      'error',
+      4,
+      T0 + 6
+    );
+    const healths = { usgs: degraded };
+    // opentopomap and aerial have no entry → unknown, preferred
+    expect(suggestFallback('osm', healths, ALL, T0 + 100)).not.toBe('usgs');
+  });
+
+  it('skips the active layer even if it is the healthiest', () => {
+    const ok = feedEvents(EMPTY_HEALTH, 'success', 5, T0);
+    const degraded = feedEvents(
+      feedEvents(EMPTY_HEALTH, 'success', 6, T0),
+      'error',
+      4,
+      T0 + 6
+    );
+    const healths = { osm: ok, usgs: degraded };
+    // OSM is the healthiest but it's the one we're switching away from
+    expect(suggestFallback('osm', healths, ['osm', 'usgs'], T0 + 100)).toBe(
+      'usgs'
+    );
   });
 });

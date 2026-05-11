@@ -1,8 +1,12 @@
 'use client';
 
 import { Layers } from 'lucide-react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { css } from 'styled-system/css';
+
+import { useTileHealth } from '../store/tile-health';
+
+import { classify, type HealthStatus } from './tile-health-tracker';
 
 export type BaseMapId = 'osm' | 'usgs' | 'opentopomap' | 'aerial';
 export type OverlayId = 'openseamap' | 'hiking';
@@ -118,6 +122,56 @@ const dividerClass = css({
   margin: '0',
 });
 
+// Health dot: pushed to the right of the button via marginLeft auto.
+// Color reflects the layer's current tile-health classification.
+// Hidden from screen readers — the `title` provides hover-tooltip
+// context and the surrounding banner already announces failures.
+const HEALTH_DOT_COLORS: Record<HealthStatus, string> = {
+  ok: 'green.9',
+  degraded: 'amber.9',
+  down: 'red.9',
+  unknown: 'gray.6',
+};
+
+const healthDotClass = (status: HealthStatus) =>
+  css({
+    marginLeft: 'auto',
+    width: '2',
+    height: '2',
+    borderRadius: 'full',
+    flexShrink: 0,
+    backgroundColor: HEALTH_DOT_COLORS[status],
+    opacity: status === 'unknown' ? 0.35 : 1,
+  });
+
+const HEALTH_TITLES: Record<HealthStatus, string> = {
+  ok: 'Tiles loading',
+  degraded: 'Slow / partial tile loads',
+  down: 'Tile service unavailable',
+  unknown: 'No tile loads yet',
+};
+
+// Screen-reader-only span that announces the layer's status as part
+// of the surrounding button's accessible name. The dot itself stays
+// purely decorative — title tooltips aren't reliably exposed to
+// assistive tech.
+const srOnlyClass = css({
+  position: 'absolute',
+  width: '1px',
+  height: '1px',
+  padding: 0,
+  margin: '-1px',
+  overflow: 'hidden',
+  whiteSpace: 'nowrap',
+  borderWidth: 0,
+  clipPath: 'inset(50%)',
+});
+
+// Re-tick at the same cadence as the banner so time-based
+// classifications (e.g. "no successful tile in 10s") age the dots
+// even when no new events arrive.
+const TICK_MS = 2000;
+
 export default function LayerSwitcher({
   activeBaseMap,
   activeOverlays,
@@ -125,6 +179,23 @@ export default function LayerSwitcher({
   onOverlayToggle,
 }: LayerSwitcherProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const allHealth = useTileHealth((s) => s.health);
+  const [now, setNow] = useState<number>(() => Date.now());
+
+  // Only tick while the dropdown is open — the dots are hidden when
+  // it's closed, so a background interval would just burn wakeups
+  // on mobile / low-power devices. The first render after opening
+  // already reads a fresh Date.now() via the lazy useState init.
+  useEffect(() => {
+    if (!isOpen) return undefined;
+    const id = globalThis.setInterval(() => setNow(Date.now()), TICK_MS);
+    return () => globalThis.clearInterval(id);
+  }, [isOpen]);
+
+  const statusFor = (id: BaseMapId | OverlayId): HealthStatus => {
+    const entry = allHealth[id];
+    return entry === undefined ? 'unknown' : classify(entry, now);
+  };
 
   return (
     <div className={panelClass}>
@@ -141,38 +212,70 @@ export default function LayerSwitcher({
       {isOpen && (
         <div className={dropdownClass} role="group" aria-label="Map layers">
           <p className={sectionLabelClass}>Base Map</p>
-          {BASE_MAPS.map(({ id, label }) => (
-            <button
-              key={id}
-              type="button"
-              aria-pressed={activeBaseMap === id}
-              onClick={() => onBaseMapChange(id)}
-              className={layerBtnClass(activeBaseMap === id)}
-            >
-              <span aria-hidden="true">
-                {activeBaseMap === id ? '● ' : '○ '}
-              </span>
-              {label}
-            </button>
-          ))}
+          {BASE_MAPS.map(({ id, label }) => {
+            const status = statusFor(id);
+            return (
+              <button
+                key={id}
+                type="button"
+                aria-pressed={activeBaseMap === id}
+                onClick={() => onBaseMapChange(id)}
+                className={layerBtnClass(activeBaseMap === id)}
+              >
+                <span aria-hidden="true">
+                  {activeBaseMap === id ? '● ' : '○ '}
+                </span>
+                {label}
+                {status !== 'ok' && status !== 'unknown' && (
+                  <span className={srOnlyClass}>
+                    {' '}
+                    ({HEALTH_TITLES[status]})
+                  </span>
+                )}
+                <span
+                  aria-hidden="true"
+                  title={HEALTH_TITLES[status]}
+                  data-testid={`health-dot-${id}`}
+                  data-status={status}
+                  className={healthDotClass(status)}
+                />
+              </button>
+            );
+          })}
 
           <hr className={dividerClass} />
 
           <p className={sectionLabelClass}>Overlays</p>
-          {OVERLAYS.map(({ id, label }) => (
-            <button
-              key={id}
-              type="button"
-              aria-pressed={activeOverlays.has(id)}
-              onClick={() => onOverlayToggle(id)}
-              className={layerBtnClass(activeOverlays.has(id))}
-            >
-              <span aria-hidden="true">
-                {activeOverlays.has(id) ? '☑ ' : '☐ '}
-              </span>
-              {label}
-            </button>
-          ))}
+          {OVERLAYS.map(({ id, label }) => {
+            const status = statusFor(id);
+            return (
+              <button
+                key={id}
+                type="button"
+                aria-pressed={activeOverlays.has(id)}
+                onClick={() => onOverlayToggle(id)}
+                className={layerBtnClass(activeOverlays.has(id))}
+              >
+                <span aria-hidden="true">
+                  {activeOverlays.has(id) ? '☑ ' : '☐ '}
+                </span>
+                {label}
+                {status !== 'ok' && status !== 'unknown' && (
+                  <span className={srOnlyClass}>
+                    {' '}
+                    ({HEALTH_TITLES[status]})
+                  </span>
+                )}
+                <span
+                  aria-hidden="true"
+                  title={HEALTH_TITLES[status]}
+                  data-testid={`health-dot-${id}`}
+                  data-status={status}
+                  className={healthDotClass(status)}
+                />
+              </button>
+            );
+          })}
         </div>
       )}
     </div>
