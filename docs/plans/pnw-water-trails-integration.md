@@ -195,7 +195,7 @@ phase.
 
 PostGIS is **not** in scope for this plan. At ~400 sites with
 1–3 editors and a static-export hosting model, GeoJSON-in-repo
-plus Keystatic (or Decap as fallback) covers the editing workflow, and the spatial
+and Keystatic (or Decap as fallback) covers the editing workflow, and the spatial
 queries we'd want (nearest-station precomputation, sites-near-
 me, graph routing) all happen at **build time** or **client
 side** without needing a spatial database. Adopting PostGIS
