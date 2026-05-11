@@ -162,6 +162,7 @@ human review:
    detail (file paths, line numbers, code excerpts) is also in
    the same HTML — parse it directly rather than asking a human
    to paste it.
+
 4. Tick the "bot triage" checkbox in the PR template before
    requesting human review.
 
