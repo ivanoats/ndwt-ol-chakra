@@ -6,12 +6,13 @@ import { css } from 'styled-system/css';
 
 import { useTileHealth } from '../store/tile-health';
 
-import type { BaseMapId } from './LayerSwitcher';
-import { classify } from './tile-health-tracker';
+import { BASE_MAPS, type BaseMapId } from './LayerSwitcher';
+import { classify, suggestFallback } from './tile-health-tracker';
 
 interface TileHealthBannerProps {
   readonly activeLayer: BaseMapId;
   readonly activeLayerLabel: string;
+  readonly onSwitchTo: (id: BaseMapId) => void;
 }
 
 // Top-center banner over the map. Sits high enough to clear the
@@ -49,17 +50,46 @@ const labelClass = css({
   fontWeight: 'semibold',
 });
 
+const switchBtnClass = css({
+  marginTop: '2',
+  display: 'inline-flex',
+  alignItems: 'center',
+  padding: '1.5',
+  paddingInline: '3',
+  borderRadius: 'sm',
+  cursor: 'pointer',
+  fontSize: 'sm',
+  fontWeight: 'semibold',
+  backgroundColor: 'colorPalette.9',
+  color: 'colorPalette.contrast',
+  borderWidth: '1px',
+  borderColor: 'colorPalette.9',
+  _hover: { backgroundColor: 'colorPalette.10' },
+  _focusVisible: {
+    outline: '2px solid',
+    outlineColor: 'colorPalette.9',
+    outlineOffset: '2px',
+  },
+});
+
 // Time-based classification (e.g. "no successful tile in 10s") needs
 // the component to re-render even when no new events arrive. Tick at
 // a coarse interval — 2 s is fine for human-perceived latency and
 // keeps wakeups cheap.
 const TICK_MS = 2000;
 
+const BASE_MAP_IDS: readonly BaseMapId[] = BASE_MAPS.map((b) => b.id);
+
+const labelFor = (id: BaseMapId): string =>
+  BASE_MAPS.find((b) => b.id === id)?.label ?? id;
+
 export default function TileHealthBanner({
   activeLayer,
   activeLayerLabel,
+  onSwitchTo,
 }: TileHealthBannerProps) {
   const health = useTileHealth((s) => s.health[activeLayer]);
+  const allHealth = useTileHealth((s) => s.health);
   const [now, setNow] = useState<number>(() => Date.now());
 
   useEffect(() => {
@@ -74,6 +104,21 @@ export default function TileHealthBanner({
     status === 'down'
       ? `${activeLayerLabel} isn't loading right now. The tile service might be temporarily down — try a different basemap from the layers menu.`
       : `${activeLayerLabel} is having trouble loading some tiles.`;
+
+  // Only offer the one-click switch when the active layer is fully
+  // down — a 'degraded' layer is still usable and a forced swap
+  // would be more disruptive than helpful. `suggestFallback` returns
+  // null if every other basemap is also down, in which case there's
+  // nowhere good to send the user.
+  const fallbackId =
+    status === 'down'
+      ? (suggestFallback(
+          activeLayer,
+          allHealth,
+          BASE_MAP_IDS,
+          now
+        ) as BaseMapId | null)
+      : null;
 
   return (
     // <output> has an implicit `role="status"` (and the matching
@@ -92,6 +137,16 @@ export default function TileHealthBanner({
           {status === 'down' ? 'Basemap unavailable' : 'Slow connection'}
         </div>
         <div>{message}</div>
+        {fallbackId !== null && (
+          <button
+            type="button"
+            className={switchBtnClass}
+            data-testid="tile-health-fallback-button"
+            onClick={() => onSwitchTo(fallbackId)}
+          >
+            Switch to {labelFor(fallbackId)}
+          </button>
+        )}
       </div>
     </output>
   );

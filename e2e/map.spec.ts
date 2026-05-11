@@ -257,11 +257,89 @@ test.describe('Northwest Discovery Water Trail map', () => {
 
     // Switch to USGS Topo (different host, no route override). The
     // banner reads health for the new active layer, which has no
-    // events yet → 'unknown' → banner hides.
+    // events yet → 'unknown' → banner hides. Scope the click to the
+    // LayerSwitcher panel — the Tier 2 banner now also renders a
+    // "Switch to USGS Topo" fallback button which would otherwise
+    // collide on the role/name selector.
     await page.getByRole('button', { name: 'Toggle layer switcher' }).click();
-    await page.getByRole('button', { name: /USGS Topo/ }).click();
+    await page
+      .getByRole('group', { name: 'Map layers' })
+      .getByRole('button', { name: /USGS Topo/ })
+      .click();
 
     await expect(banner).toBeHidden({ timeout: 5_000 });
+  });
+
+  test('one-click fallback switches to a healthy basemap and clears the banner', async ({
+    page,
+  }) => {
+    // OSM is the failing default; force every OSM tile to 503 so
+    // the banner reaches the 'down' state. USGS, OpenTopoMap, and
+    // USGS Imagery are untouched so suggestFallback has healthy
+    // candidates to surface in the switch button.
+    await page.route(/tile\.openstreetmap\.org\//, (route) =>
+      route.fulfill({ status: 503, body: 'simulated outage' })
+    );
+
+    await page.goto('/');
+    await page.waitForFunction(
+      () =>
+        Boolean((globalThis as unknown as { __ndwtMap?: unknown }).__ndwtMap),
+      undefined,
+      { timeout: 15_000 }
+    );
+
+    const banner = page.getByTestId('tile-health-banner');
+    await expect(banner).toBeVisible({ timeout: 20_000 });
+    await expect(banner).toHaveAttribute('data-status', 'down');
+
+    // The fallback button should appear inside the banner once the
+    // layer is fully down. Its label names whichever basemap
+    // suggestFallback picked — verify the click handler switches to
+    // that layer.
+    const fallbackButton = page.getByTestId('tile-health-fallback-button');
+    await expect(fallbackButton).toBeVisible({ timeout: 5_000 });
+    await expect(fallbackButton).toContainText(/Switch to/);
+
+    await fallbackButton.click();
+
+    // Banner clears because the new active basemap has no recorded
+    // events yet (or is healthy).
+    await expect(banner).toBeHidden({ timeout: 5_000 });
+
+    // And the active basemap actually changed away from OSM.
+    await page.getByRole('button', { name: 'Toggle layer switcher' }).click();
+    await expect(
+      page.getByRole('button', { name: /Street Map/ })
+    ).toHaveAttribute('aria-pressed', 'false');
+  });
+
+  test('LayerSwitcher health dot turns red when the active basemap is down', async ({
+    page,
+  }) => {
+    await page.route(/tile\.openstreetmap\.org\//, (route) =>
+      route.fulfill({ status: 503, body: 'simulated outage' })
+    );
+
+    await page.goto('/');
+    await page.waitForFunction(
+      () =>
+        Boolean((globalThis as unknown as { __ndwtMap?: unknown }).__ndwtMap),
+      undefined,
+      { timeout: 15_000 }
+    );
+
+    // Wait for the banner so we know OSM has reached 'down'.
+    await expect(page.getByTestId('tile-health-banner')).toBeVisible({
+      timeout: 20_000,
+    });
+
+    // Open the switcher and assert the dot for OSM is red.
+    await page.getByRole('button', { name: 'Toggle layer switcher' }).click();
+    await expect(page.getByTestId('health-dot-osm')).toHaveAttribute(
+      'data-status',
+      'down'
+    );
   });
 });
 

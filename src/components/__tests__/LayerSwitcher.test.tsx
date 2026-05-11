@@ -1,15 +1,21 @@
-import { describe, expect, it, vi } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { fireEvent, render, screen } from '@testing-library/react';
 
+import { useTileHealth } from '../../store/tile-health';
 import LayerSwitcher, {
   type BaseMapId,
   type OverlayId,
 } from '../LayerSwitcher';
+import { DOWN_AFTER_CONSECUTIVE_ERRORS } from '../tile-health-tracker';
 
 const DEFAULT_OVERLAYS: ReadonlySet<OverlayId> = new Set<OverlayId>([
   'openseamap',
 ]);
+
+beforeEach(() => {
+  useTileHealth.setState({ health: {} });
+});
 
 describe('<LayerSwitcher />', () => {
   it('renders the toggle button', () => {
@@ -185,5 +191,72 @@ describe('<LayerSwitcher />', () => {
     expect(
       screen.queryByRole('group', { name: 'Map layers' })
     ).not.toBeInTheDocument();
+  });
+
+  describe('health dots', () => {
+    const openPanel = (): void => {
+      fireEvent.click(
+        screen.getByRole('button', { name: 'Toggle layer switcher' })
+      );
+    };
+
+    it('renders an unknown-status dot for every layer before any tile events', () => {
+      render(
+        <LayerSwitcher
+          activeBaseMap="osm"
+          activeOverlays={new Set<OverlayId>()}
+          onBaseMapChange={vi.fn()}
+          onOverlayToggle={vi.fn()}
+        />
+      );
+      openPanel();
+
+      for (const id of ['osm', 'usgs', 'opentopomap', 'aerial'] as const) {
+        const dot = screen.getByTestId(`health-dot-${id}`);
+        expect(dot).toHaveAttribute('data-status', 'unknown');
+      }
+    });
+
+    it('reflects per-layer health: ok for layers with successes, down for failing layers', () => {
+      // OSM: 5 errors → down. USGS: 1 success → ok.
+      Array.from({ length: DOWN_AFTER_CONSECUTIVE_ERRORS }).forEach(() =>
+        useTileHealth.getState().recordError('osm')
+      );
+      useTileHealth.getState().recordSuccess('usgs');
+
+      render(
+        <LayerSwitcher
+          activeBaseMap="osm"
+          activeOverlays={new Set<OverlayId>()}
+          onBaseMapChange={vi.fn()}
+          onOverlayToggle={vi.fn()}
+        />
+      );
+      openPanel();
+
+      expect(screen.getByTestId('health-dot-osm')).toHaveAttribute(
+        'data-status',
+        'down'
+      );
+      expect(screen.getByTestId('health-dot-usgs')).toHaveAttribute(
+        'data-status',
+        'ok'
+      );
+    });
+
+    it('renders health dots for overlays as well as basemaps', () => {
+      render(
+        <LayerSwitcher
+          activeBaseMap="osm"
+          activeOverlays={new Set<OverlayId>()}
+          onBaseMapChange={vi.fn()}
+          onOverlayToggle={vi.fn()}
+        />
+      );
+      openPanel();
+
+      expect(screen.getByTestId('health-dot-openseamap')).toBeInTheDocument();
+      expect(screen.getByTestId('health-dot-hiking')).toBeInTheDocument();
+    });
   });
 });

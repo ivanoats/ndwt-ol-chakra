@@ -266,6 +266,7 @@ export default function MapComponent({ sites, getSite }: MapComponentProps) {
       <TileHealthBanner
         activeLayer={activeBaseMap}
         activeLayerLabel={activeLayerLabel}
+        onSwitchTo={setActiveBaseMap}
       />
       <LayerSwitcher
         activeBaseMap={activeBaseMap}
