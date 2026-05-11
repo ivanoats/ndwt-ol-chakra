@@ -109,34 +109,34 @@ export default function TileHealthBanner({
   // down — a 'degraded' layer is still usable and a forced swap
   // would be more disruptive than helpful. `suggestFallback` returns
   // null if every other basemap is also down, in which case there's
-  // nowhere good to send the user.
+  // nowhere good to send the user. The helper is generic over the id
+  // type so no cast is needed.
   const fallbackId =
     status === 'down'
-      ? (suggestFallback(
-          activeLayer,
-          allHealth,
-          BASE_MAP_IDS,
-          now
-        ) as BaseMapId | null)
+      ? suggestFallback(activeLayer, allHealth, BASE_MAP_IDS, now)
       : null;
 
   return (
-    // <output> has an implicit `role="status"` (and the matching
-    // `aria-live="polite"`), which is better-supported by screen
-    // readers than `<div role="status">`. The non-interruptive
-    // semantics fit "your basemap is slow" — `role="alert"` would
-    // force assertive announcement which is too loud for this.
-    <output
+    // Outer wrapper carries the test/data attributes for selectors
+    // and the visual styling, but no live-region role. The textual
+    // status lives in an inner <output> (implicit role="status" +
+    // aria-live="polite"); the fallback button sits as a sibling
+    // outside that live region so screen readers don't repeatedly
+    // announce the button when state ticks. Pattern recommended by
+    // WAI-ARIA: keep interactive controls outside aria-live regions.
+    <div
       data-testid="tile-health-banner"
       data-status={status}
       className={bannerClass}
     >
       <AlertTriangle size={20} className={iconClass} aria-hidden="true" />
       <div>
-        <div className={labelClass}>
-          {status === 'down' ? 'Basemap unavailable' : 'Slow connection'}
-        </div>
-        <div>{message}</div>
+        <output>
+          <div className={labelClass}>
+            {status === 'down' ? 'Basemap unavailable' : 'Slow connection'}
+          </div>
+          <div>{message}</div>
+        </output>
         {fallbackId !== null && (
           <button
             type="button"
@@ -148,6 +148,6 @@ export default function TileHealthBanner({
           </button>
         )}
       </div>
-    </output>
+    </div>
   );
 }

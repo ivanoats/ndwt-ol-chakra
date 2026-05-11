@@ -151,6 +151,22 @@ const HEALTH_TITLES: Record<HealthStatus, string> = {
   unknown: 'No tile loads yet',
 };
 
+// Screen-reader-only span that announces the layer's status as part
+// of the surrounding button's accessible name. The dot itself stays
+// purely decorative — title tooltips aren't reliably exposed to
+// assistive tech.
+const srOnlyClass = css({
+  position: 'absolute',
+  width: '1px',
+  height: '1px',
+  padding: 0,
+  margin: '-1px',
+  overflow: 'hidden',
+  whiteSpace: 'nowrap',
+  borderWidth: 0,
+  clipPath: 'inset(50%)',
+});
+
 // Re-tick at the same cadence as the banner so time-based
 // classifications (e.g. "no successful tile in 10s") age the dots
 // even when no new events arrive.
@@ -166,10 +182,15 @@ export default function LayerSwitcher({
   const allHealth = useTileHealth((s) => s.health);
   const [now, setNow] = useState<number>(() => Date.now());
 
+  // Only tick while the dropdown is open — the dots are hidden when
+  // it's closed, so a background interval would just burn wakeups
+  // on mobile / low-power devices. The first render after opening
+  // already reads a fresh Date.now() via the lazy useState init.
   useEffect(() => {
+    if (!isOpen) return undefined;
     const id = globalThis.setInterval(() => setNow(Date.now()), TICK_MS);
     return () => globalThis.clearInterval(id);
-  }, []);
+  }, [isOpen]);
 
   const statusFor = (id: BaseMapId | OverlayId): HealthStatus => {
     const entry = allHealth[id];
@@ -205,6 +226,12 @@ export default function LayerSwitcher({
                   {activeBaseMap === id ? '● ' : '○ '}
                 </span>
                 {label}
+                {status !== 'ok' && status !== 'unknown' && (
+                  <span className={srOnlyClass}>
+                    {' '}
+                    ({HEALTH_TITLES[status]})
+                  </span>
+                )}
                 <span
                   aria-hidden="true"
                   title={HEALTH_TITLES[status]}
@@ -233,6 +260,12 @@ export default function LayerSwitcher({
                   {activeOverlays.has(id) ? '☑ ' : '☐ '}
                 </span>
                 {label}
+                {status !== 'ok' && status !== 'unknown' && (
+                  <span className={srOnlyClass}>
+                    {' '}
+                    ({HEALTH_TITLES[status]})
+                  </span>
+                )}
                 <span
                   aria-hidden="true"
                   title={HEALTH_TITLES[status]}

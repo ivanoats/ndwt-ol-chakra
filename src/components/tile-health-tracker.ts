@@ -120,12 +120,12 @@ const FALLBACK_PREFERENCE: Record<HealthStatus, number> = {
   down: 3,
 };
 
-export function suggestFallback(
-  active: string,
-  healths: Readonly<Partial<Record<string, LayerHealth>>>,
-  candidates: readonly string[],
+export function suggestFallback<TId extends string>(
+  active: TId,
+  healths: Readonly<Partial<Record<TId, LayerHealth>>>,
+  candidates: readonly TId[],
   now: number
-): string | null {
+): TId | null {
   const ranked = candidates
     .filter((id) => id !== active)
     .map((id) => {
