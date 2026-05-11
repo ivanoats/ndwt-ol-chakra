@@ -189,6 +189,16 @@ section in `docs/plans/modernization.md`.
   `--workers=1` (CI does this by default).
 - **Netlify build env defaults to a stale Node** — `netlify.toml`
   pins `NODE_VERSION = "24"`. Don't drop the file.
+- **Tile-cache service worker (`public/sw.js`)** intercepts requests
+  to known basemap / overlay hosts cache-first. Scope is the whole
+  origin (SW served at `/sw.js`) but it ONLY touches the hostnames
+  in `TILE_HOSTS` — app assets pass through untouched. Bump the
+  `CACHE_NAME` version suffix on any change to the SW's caching
+  shape; the `activate` handler purges old `ndwt-tiles-*` caches
+  automatically. Registration is gated on `NODE_ENV === 'production'`
+  in `src/lib/register-service-worker.ts`, so `next dev` is
+  unaffected. For local offline testing use `npm run build && npm
+  run preview` (SW works on localhost over HTTP).
 - **Sonar's CI Action and Sonar's automatic analysis collide**.
   Automatic analysis must be off in the SonarCloud project
   settings (Administration → Analysis Method) for the Action's

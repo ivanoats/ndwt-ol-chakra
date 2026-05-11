@@ -1,6 +1,16 @@
 import { expect, type Page, test } from '@playwright/test';
 
 test.describe('Northwest Discovery Water Trail map', () => {
+  // Block the tile-cache service worker for this entire describe
+  // block. Several tests below use `page.route()` to mock specific
+  // tile-host responses (503, etc.) — but `page.route()` doesn't
+  // intercept fetches initiated *inside* a service worker, so once
+  // the SW is registered it would shadow the page-level mock and
+  // hand OL real cached / network responses. The offline.spec.ts
+  // suite is the one that actually exercises the SW; here we just
+  // want the pre-SW network behaviour.
+  test.use({ serviceWorkers: 'block' });
+
   test('renders the OpenLayers canvas at non-zero size', async ({ page }) => {
     await page.goto('/');
 
