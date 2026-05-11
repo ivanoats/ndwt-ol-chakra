@@ -88,8 +88,11 @@ export default function TileHealthBanner({
   activeLayerLabel,
   onSwitchTo,
 }: TileHealthBannerProps) {
-  const health = useTileHealth((s) => s.health[activeLayer]);
+  // Single store subscription — the active layer's slice is derived
+  // from the full record. Avoids two `useTileHealth` calls when one
+  // subscription already gives us everything we need.
   const allHealth = useTileHealth((s) => s.health);
+  const health = allHealth[activeLayer];
   const [now, setNow] = useState<number>(() => Date.now());
 
   useEffect(() => {
