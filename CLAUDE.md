@@ -150,8 +150,19 @@ human review:
    inline thread.
 2. Bucket each comment as **fix / defer / dismiss**. Push fixup
    commits with the SHA in your reply; mark threads resolved.
-3. For DeepSource, the report URL is in the commit status —
-   the user has to paste it because the dashboard requires auth.
+3. For DeepSource, the report URL is in the commit status — the
+   page is publicly accessible for public repos, so a quick
+
+   ```sh
+   curl -s 'https://app.deepsource.com/gh/<org>/<repo>/run/<id>/javascript/' \
+     | grep -oE '[A-Z]{2,}-[A-Z0-9]+' | sort -u
+   ```
+
+   surfaces the rule IDs without auth. The full per-issue
+   detail (file paths, line numbers, code excerpts) is also in
+   the same HTML — parse it directly rather than asking a human
+   to paste it.
+
 4. Tick the "bot triage" checkbox in the PR template before
    requesting human review.
 
