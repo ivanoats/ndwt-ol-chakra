@@ -58,16 +58,16 @@ export default function OfflineIndicator() {
     // guarantees that), but guarding against missing globals keeps
     // the component safe to instantiate from any future caller —
     // an isolated SSR snapshot, a node-side test that doesn't load
-    // jsdom, etc.
-    if (typeof window === 'undefined' || typeof navigator === 'undefined') {
-      return undefined;
-    }
+    // jsdom, etc. `globalThis` is the modern preferred reference
+    // (Sonar typescript:S7764) and works identically to `window`
+    // in browsers.
+    if (typeof navigator === 'undefined') return undefined;
     const update = (): void => setIsOnline(navigator.onLine);
-    window.addEventListener('online', update);
-    window.addEventListener('offline', update);
+    globalThis.addEventListener('online', update);
+    globalThis.addEventListener('offline', update);
     return () => {
-      window.removeEventListener('online', update);
-      window.removeEventListener('offline', update);
+      globalThis.removeEventListener('online', update);
+      globalThis.removeEventListener('offline', update);
     };
   }, []);
 

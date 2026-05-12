@@ -22,7 +22,7 @@ function setOnLine(value: boolean): void {
 
 function fireConnectivityEvent(name: 'online' | 'offline'): void {
   act(() => {
-    window.dispatchEvent(new Event(name));
+    globalThis.dispatchEvent(new Event(name));
   });
 }
 
@@ -86,8 +86,8 @@ describe('<OfflineIndicator />', () => {
     // references it registered. Dispatching events post-unmount
     // doesn't throw in React 19, so a "did the listener still run"
     // assertion would silently pass even if cleanup were broken.
-    const addSpy = vi.spyOn(window, 'addEventListener');
-    const removeSpy = vi.spyOn(window, 'removeEventListener');
+    const addSpy = vi.spyOn(globalThis, 'addEventListener');
+    const removeSpy = vi.spyOn(globalThis, 'removeEventListener');
 
     const { unmount } = render(<OfflineIndicator />);
 
