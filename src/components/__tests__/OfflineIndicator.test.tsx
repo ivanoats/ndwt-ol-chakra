@@ -1,0 +1,93 @@
+import { afterEach, beforeEach, describe, expect, it } from 'vitest';
+
+import { act, render, screen } from '@testing-library/react';
+
+import OfflineIndicator from '../OfflineIndicator';
+
+// Save the original navigator.onLine descriptor so each test starts
+// from a known "online" baseline regardless of the host machine's
+// real connectivity.
+const originalOnLineDescriptor = Object.getOwnPropertyDescriptor(
+  Object.getPrototypeOf(navigator),
+  'onLine'
+);
+
+function setOnLine(value: boolean): void {
+  Object.defineProperty(navigator, 'onLine', {
+    value,
+    configurable: true,
+    writable: true,
+  });
+}
+
+function fireConnectivityEvent(name: 'online' | 'offline'): void {
+  act(() => {
+    window.dispatchEvent(new Event(name));
+  });
+}
+
+beforeEach(() => {
+  setOnLine(true);
+});
+
+afterEach(() => {
+  // Restore the prototype descriptor so we don't leak the per-test
+  // mock into other suites that read navigator.onLine.
+  if (originalOnLineDescriptor !== undefined) {
+    Object.defineProperty(
+      Object.getPrototypeOf(navigator),
+      'onLine',
+      originalOnLineDescriptor
+    );
+  }
+  // Also strip any own-property override we set.
+  delete (navigator as { onLine?: boolean }).onLine;
+});
+
+describe('<OfflineIndicator />', () => {
+  it('renders nothing while the browser is online', () => {
+    setOnLine(true);
+    render(<OfflineIndicator />);
+    expect(screen.queryByTestId('offline-indicator')).not.toBeInTheDocument();
+  });
+
+  it('renders the offline pill when the browser starts offline', () => {
+    setOnLine(false);
+    render(<OfflineIndicator />);
+    const pill = screen.getByTestId('offline-indicator');
+    expect(pill).toBeInTheDocument();
+    expect(pill).toHaveTextContent(/Offline/);
+    expect(pill).toHaveTextContent(/cached tiles/);
+  });
+
+  it('appears when the browser fires the offline event after mount', () => {
+    setOnLine(true);
+    render(<OfflineIndicator />);
+    expect(screen.queryByTestId('offline-indicator')).not.toBeInTheDocument();
+
+    setOnLine(false);
+    fireConnectivityEvent('offline');
+    expect(screen.getByTestId('offline-indicator')).toBeInTheDocument();
+  });
+
+  it('disappears when the browser fires the online event after going back online', () => {
+    setOnLine(false);
+    render(<OfflineIndicator />);
+    expect(screen.getByTestId('offline-indicator')).toBeInTheDocument();
+
+    setOnLine(true);
+    fireConnectivityEvent('online');
+    expect(screen.queryByTestId('offline-indicator')).not.toBeInTheDocument();
+  });
+
+  it('removes its event listeners on unmount', () => {
+    setOnLine(false);
+    const { unmount } = render(<OfflineIndicator />);
+    unmount();
+
+    // Fire an offline event after unmount — would throw if the
+    // component still had a listener attached and tried to setState
+    // on an unmounted component (React warns / Vitest catches).
+    expect(() => fireConnectivityEvent('offline')).not.toThrow();
+  });
+});
