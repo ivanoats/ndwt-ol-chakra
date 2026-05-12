@@ -24,6 +24,7 @@ import LayerSwitcher, {
   type OverlayId,
 } from './LayerSwitcher';
 import { makeHandleClick, makeHandlePointerMove } from './map-handlers';
+import OfflineIndicator from './OfflineIndicator';
 import TileHealthBanner from './TileHealthBanner';
 
 type GlobalWithMap = typeof globalThis & { __ndwtMap?: Map };
@@ -274,6 +275,7 @@ export default function MapComponent({ sites, getSite }: MapComponentProps) {
         onBaseMapChange={setActiveBaseMap}
         onOverlayToggle={handleOverlayToggle}
       />
+      <OfflineIndicator />
     </div>
   );
 }

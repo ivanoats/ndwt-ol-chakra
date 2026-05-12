@@ -25,6 +25,37 @@ const TILE_HOST_REGEX = new RegExp(
   `(?:${TILE_HOSTS.map((h) => h.replace(/\./g, '\\.')).join('|')})/`
 );
 
+test.describe('Offline indicator', () => {
+  test('shows the offline pill when the browser goes offline and hides on reconnect', async ({
+    page,
+    context,
+  }) => {
+    await page.goto('/');
+    // Wait for OL to mount so we know the map component (and the
+    // sibling OfflineIndicator) is in the DOM.
+    await page.waitForFunction(
+      () =>
+        Boolean((globalThis as unknown as { __ndwtMap?: unknown }).__ndwtMap),
+      undefined,
+      { timeout: 15_000 }
+    );
+
+    const indicator = page.getByTestId('offline-indicator');
+    await expect(indicator).toBeHidden();
+
+    // Drop connectivity. Chrome fires the `offline` event on
+    // window, the indicator's listener flips state, the pill
+    // renders.
+    await context.setOffline(true);
+    await expect(indicator).toBeVisible({ timeout: 5_000 });
+    await expect(indicator).toContainText(/Offline/);
+
+    // Reconnect — pill hides again.
+    await context.setOffline(false);
+    await expect(indicator).toBeHidden({ timeout: 5_000 });
+  });
+});
+
 test.describe('Tile cache service worker', () => {
   test('caches basemap tiles and serves them after tile hosts are blocked', async ({
     page,
