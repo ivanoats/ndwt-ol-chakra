@@ -53,6 +53,15 @@ export default function OfflineIndicator() {
   );
 
   useEffect(() => {
+    // Belt-and-suspenders. In practice this effect only runs after
+    // a successful client-side mount (React's useEffect contract
+    // guarantees that), but guarding against missing globals keeps
+    // the component safe to instantiate from any future caller —
+    // an isolated SSR snapshot, a node-side test that doesn't load
+    // jsdom, etc.
+    if (typeof window === 'undefined' || typeof navigator === 'undefined') {
+      return undefined;
+    }
     const update = (): void => setIsOnline(navigator.onLine);
     window.addEventListener('online', update);
     window.addEventListener('offline', update);

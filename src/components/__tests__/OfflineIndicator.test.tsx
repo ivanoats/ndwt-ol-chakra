@@ -1,4 +1,4 @@
-import { afterEach, beforeEach, describe, expect, it } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { act, render, screen } from '@testing-library/react';
 
@@ -81,13 +81,26 @@ describe('<OfflineIndicator />', () => {
   });
 
   it('removes its event listeners on unmount', () => {
-    setOnLine(false);
+    // Spy on add / removeEventListener so we can assert the
+    // component's cleanup actually unregisters the same handler
+    // references it registered. Dispatching events post-unmount
+    // doesn't throw in React 19, so a "did the listener still run"
+    // assertion would silently pass even if cleanup were broken.
+    const addSpy = vi.spyOn(window, 'addEventListener');
+    const removeSpy = vi.spyOn(window, 'removeEventListener');
+
     const { unmount } = render(<OfflineIndicator />);
+
+    const onlineCall = addSpy.mock.calls.find(([type]) => type === 'online');
+    const offlineCall = addSpy.mock.calls.find(([type]) => type === 'offline');
+    expect(onlineCall).toBeDefined();
+    expect(offlineCall).toBeDefined();
+    const onlineHandler = onlineCall?.[1];
+    const offlineHandler = offlineCall?.[1];
+
     unmount();
 
-    // Fire an offline event after unmount — would throw if the
-    // component still had a listener attached and tried to setState
-    // on an unmounted component (React warns / Vitest catches).
-    expect(() => fireConnectivityEvent('offline')).not.toThrow();
+    expect(removeSpy).toHaveBeenCalledWith('online', onlineHandler);
+    expect(removeSpy).toHaveBeenCalledWith('offline', offlineHandler);
   });
 });
