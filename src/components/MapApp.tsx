@@ -6,6 +6,7 @@ import { css } from 'styled-system/css';
 
 import { createComposition } from '../composition-root';
 import type { Site } from '../domain';
+import { registerServiceWorker } from '../lib/register-service-worker';
 import { useSelectedSite } from '../store/selected-site';
 
 import SiteInfoPanel from './panels/SiteInfoPanel';
@@ -67,6 +68,15 @@ const useSiteUrlSync = (sites: readonly Site[]) => {
 export default function MapApp({ sites }: MapAppProps) {
   const composition = useMemo(() => createComposition(sites), [sites]);
   useSiteUrlSync(sites);
+
+  // Register the tile-cache service worker once on first mount. Skip
+  // in dev (NODE_ENV check inside the helper), no-op without browser
+  // SW support. The helper swallows its own failures so a rejected
+  // promise can't propagate here — no `.catch` needed at the call
+  // site.
+  useEffect(() => {
+    registerServiceWorker();
+  }, []);
 
   return (
     // The root layout's <main> is a flex column; this container
