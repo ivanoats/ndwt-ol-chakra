@@ -86,6 +86,183 @@ const statusLineClass = css({
   marginTop: '1',
 });
 
+// Sub-components keep the JSX shallow so the deep-nesting linter
+// (DeepSource JS-0415) stays quiet at 4 levels max. Each section is
+// independently testable too.
+
+interface CacheSectionProps {
+  readonly stats: CacheStats;
+  readonly status: Status;
+  readonly onRefresh: () => void;
+  readonly onClear: () => void;
+}
+
+function CacheSection({
+  stats,
+  status,
+  onRefresh,
+  onClear,
+}: CacheSectionProps) {
+  const tilesLabel = `${stats.tileCount} tile${stats.tileCount === 1 ? '' : 's'}`;
+  return (
+    <section className={sectionClass} aria-labelledby="settings-cache-heading">
+      <h3 id="settings-cache-heading" className={sectionHeadingClass}>
+        Offline tile cache
+      </h3>
+      <p className={helpTextClass}>
+        Tiles you&apos;ve already viewed are stored in your browser so the map
+        keeps working when you lose signal.
+      </p>
+      <CacheReadout
+        tilesLabel={tilesLabel}
+        bytesLabel={`~${formatBytes(stats.byteEstimate)} of storage used`}
+      />
+      <CacheActions
+        onRefresh={onRefresh}
+        onClear={onClear}
+        clearDisabled={status.kind === 'clearing' || stats.tileCount === 0}
+      />
+      {status.kind === 'clearing' ? (
+        <p className={statusLineClass}>Clearing…</p>
+      ) : null}
+      {status.kind === 'cleared' ? (
+        <p className={statusLineClass} data-testid="cache-cleared-status">
+          Cleared.
+        </p>
+      ) : null}
+    </section>
+  );
+}
+
+interface CacheReadoutProps {
+  readonly tilesLabel: string;
+  readonly bytesLabel: string;
+}
+
+function CacheReadout({ tilesLabel, bytesLabel }: CacheReadoutProps) {
+  return (
+    <div className={statRowClass}>
+      <span className={statValueClass} data-testid="cache-tile-count">
+        {tilesLabel}
+      </span>
+      <span className={helpTextClass} data-testid="cache-byte-estimate">
+        {bytesLabel}
+      </span>
+    </div>
+  );
+}
+
+interface CacheActionsProps {
+  readonly onRefresh: () => void;
+  readonly onClear: () => void;
+  readonly clearDisabled: boolean;
+}
+
+function CacheActions({
+  onRefresh,
+  onClear,
+  clearDisabled,
+}: CacheActionsProps) {
+  return (
+    <div className={actionsRowClass}>
+      <Button
+        data-testid="cache-refresh"
+        variant="outline"
+        size="sm"
+        onClick={onRefresh}
+      >
+        Refresh
+      </Button>
+      <Button
+        data-testid="cache-clear"
+        variant="outline"
+        size="sm"
+        colorScheme="gray"
+        onClick={onClear}
+        disabled={clearDisabled}
+      >
+        Clear cached tiles
+      </Button>
+    </div>
+  );
+}
+
+interface PrewarmSectionProps {
+  readonly status: Status;
+  readonly onPrewarm: () => void;
+}
+
+function PrewarmSection({ status, onPrewarm }: PrewarmSectionProps) {
+  return (
+    <section
+      className={sectionClass}
+      aria-labelledby="settings-prewarm-heading"
+    >
+      <h3 id="settings-prewarm-heading" className={sectionHeadingClass}>
+        Pre-load this view
+      </h3>
+      <p className={helpTextClass}>
+        Cache every tile in the current viewport for the basemap and overlays
+        you have on. Do this while you have WiFi so the map still works on the
+        river.
+      </p>
+      <PrewarmAction
+        onPrewarm={onPrewarm}
+        disabled={status.kind === 'prewarming'}
+      />
+      <PrewarmStatusLine status={status} />
+    </section>
+  );
+}
+
+interface PrewarmActionProps {
+  readonly onPrewarm: () => void;
+  readonly disabled: boolean;
+}
+
+function PrewarmAction({ onPrewarm, disabled }: PrewarmActionProps) {
+  return (
+    <div className={actionsRowClass}>
+      <Button
+        data-testid="cache-prewarm"
+        variant="solid"
+        size="sm"
+        onClick={onPrewarm}
+        disabled={disabled}
+      >
+        Save current view for offline use
+      </Button>
+    </div>
+  );
+}
+
+function PrewarmStatusLine({ status }: { readonly status: Status }) {
+  if (status.kind === 'prewarming') {
+    const failNote =
+      status.progress.failed > 0 ? ` (${status.progress.failed} failed)` : '';
+    return (
+      <p className={statusLineClass} data-testid="prewarm-progress">
+        Caching {status.progress.fetched} / {status.progress.total} tiles
+        {failNote}…
+      </p>
+    );
+  }
+  if (status.kind === 'prewarm-done') {
+    const { total, failed } = status.progress;
+    const tileWord = total === 1 ? 'tile' : 'tiles';
+    const message =
+      failed === 0
+        ? `Saved ${total} ${tileWord}.`
+        : `Saved ${total - failed} of ${total} ${tileWord} (${failed} failed).`;
+    return (
+      <p className={statusLineClass} data-testid="prewarm-done-status">
+        {message}
+      </p>
+    );
+  }
+  return null;
+}
+
 export default function MapSettingsDrawer({
   open,
   onClose,
@@ -103,7 +280,7 @@ export default function MapSettingsDrawer({
   // tiles loaded from the visible map).
   useEffect(() => {
     if (!open) return;
-    void refreshStats();
+    refreshStats();
   }, [open, refreshStats]);
 
   const handleClear = useCallback(async () => {
@@ -152,105 +329,22 @@ export default function MapSettingsDrawer({
         </h2>
       </DrawerHeader>
       <DrawerBody>
-        <section
-          className={sectionClass}
-          aria-labelledby="settings-cache-heading"
-        >
-          <h3 id="settings-cache-heading" className={sectionHeadingClass}>
-            Offline tile cache
-          </h3>
-          <p className={helpTextClass}>
-            Tiles you&apos;ve already viewed are stored in your browser so the
-            map keeps working when you lose signal.
-          </p>
-          <div className={statRowClass}>
-            <span className={statValueClass} data-testid="cache-tile-count">
-              {stats.tileCount} tile{stats.tileCount === 1 ? '' : 's'}
-            </span>
-            <span className={helpTextClass} data-testid="cache-byte-estimate">
-              ~{formatBytes(stats.byteEstimate)} of storage used
-            </span>
-          </div>
-          <div className={actionsRowClass}>
-            <Button
-              data-testid="cache-refresh"
-              variant="outline"
-              size="sm"
-              onClick={() => {
-                void refreshStats();
-              }}
-            >
-              Refresh
-            </Button>
-            <Button
-              data-testid="cache-clear"
-              variant="outline"
-              size="sm"
-              colorScheme="gray"
-              onClick={() => {
-                void handleClear();
-              }}
-              disabled={status.kind === 'clearing' || stats.tileCount === 0}
-            >
-              Clear cached tiles
-            </Button>
-          </div>
-          {status.kind === 'clearing' ? (
-            <p className={statusLineClass}>Clearing…</p>
-          ) : null}
-          {status.kind === 'cleared' ? (
-            <p className={statusLineClass} data-testid="cache-cleared-status">
-              Cleared.
-            </p>
-          ) : null}
-        </section>
-
-        <section
-          className={sectionClass}
-          aria-labelledby="settings-prewarm-heading"
-        >
-          <h3 id="settings-prewarm-heading" className={sectionHeadingClass}>
-            Pre-load this view
-          </h3>
-          <p className={helpTextClass}>
-            Cache every tile in the current viewport for the basemap and
-            overlays you have on. Do this while you have WiFi so the map still
-            works on the river.
-          </p>
-          <div className={actionsRowClass}>
-            <Button
-              data-testid="cache-prewarm"
-              variant="solid"
-              size="sm"
-              onClick={() => {
-                void handlePrewarm();
-              }}
-              disabled={status.kind === 'prewarming'}
-            >
-              Save current view for offline use
-            </Button>
-          </div>
-          {status.kind === 'prewarming' ? (
-            <p className={statusLineClass} data-testid="prewarm-progress">
-              Caching {status.progress.fetched} / {status.progress.total} tiles
-              {status.progress.failed > 0
-                ? ` (${status.progress.failed} failed)`
-                : ''}
-              …
-            </p>
-          ) : null}
-          {status.kind === 'prewarm-done' ? (
-            <p className={statusLineClass} data-testid="prewarm-done-status">
-              {status.progress.failed === 0
-                ? `Saved ${status.progress.total} tile${
-                    status.progress.total === 1 ? '' : 's'
-                  }.`
-                : `Saved ${status.progress.total - status.progress.failed} of ${
-                    status.progress.total
-                  } tiles (${status.progress.failed} failed).`}
-            </p>
-          ) : null}
-        </section>
+        <CacheSection
+          stats={stats}
+          status={status}
+          onRefresh={() => {
+            refreshStats();
+          }}
+          onClear={() => {
+            handleClear();
+          }}
+        />
+        <PrewarmSection
+          status={status}
+          onPrewarm={() => {
+            handlePrewarm();
+          }}
+        />
       </DrawerBody>
     </Drawer>
   );

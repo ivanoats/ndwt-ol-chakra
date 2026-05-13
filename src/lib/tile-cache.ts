@@ -232,9 +232,9 @@ export function enumerateTileUrls<P>(
     if (grid === null) continue;
     const range = grid.getTileRangeForExtentAndZ(extent, z);
     const tileUrlFn = source.getTileUrlFunction();
-    for (let x = range.minX; x <= range.maxX; x += 1) {
-      for (let y = range.minY; y <= range.maxY; y += 1) {
-        const url = tileUrlFn([z, x, y], pixelRatio, projection);
+    for (let tileX = range.minX; tileX <= range.maxX; tileX += 1) {
+      for (let tileY = range.minY; tileY <= range.maxY; tileY += 1) {
+        const url = tileUrlFn([z, tileX, tileY], pixelRatio, projection);
         if (typeof url === 'string') urls.push(url);
       }
     }

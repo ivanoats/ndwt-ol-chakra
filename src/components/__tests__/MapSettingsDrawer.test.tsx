@@ -10,6 +10,10 @@ import {
 
 import MapSettingsDrawer from '../MapSettingsDrawer';
 
+// Shared no-op for tests that don't care about close events.
+// Extracted so we don't repeat `() => {}` (DeepSource JS-0321).
+const noop = (): void => undefined;
+
 // Mock the tile-cache module — these tests cover the drawer's wiring,
 // not the cache helpers themselves (those have their own suite).
 const getCacheStats = vi.fn();
@@ -50,7 +54,7 @@ afterEach(() => {
 
 describe('<MapSettingsDrawer />', () => {
   it('loads cache stats when opened and renders the tile count + size', async () => {
-    render(<MapSettingsDrawer open onClose={() => {}} />);
+    render(<MapSettingsDrawer open onClose={noop} />);
 
     expect(getCacheStats).toHaveBeenCalledTimes(1);
     await waitFor(() => {
@@ -64,12 +68,12 @@ describe('<MapSettingsDrawer />', () => {
   });
 
   it('does not load stats while the drawer is closed', () => {
-    render(<MapSettingsDrawer open={false} onClose={() => {}} />);
+    render(<MapSettingsDrawer open={false} onClose={noop} />);
     expect(getCacheStats).not.toHaveBeenCalled();
   });
 
   it('refreshes stats when the user clicks Refresh', async () => {
-    render(<MapSettingsDrawer open onClose={() => {}} />);
+    render(<MapSettingsDrawer open onClose={noop} />);
     await waitFor(() => expect(getCacheStats).toHaveBeenCalledTimes(1));
 
     // Bump the mocked value so we can confirm the readout updates.
@@ -87,7 +91,7 @@ describe('<MapSettingsDrawer />', () => {
   });
 
   it('clears caches when the user clicks Clear cached tiles', async () => {
-    render(<MapSettingsDrawer open onClose={() => {}} />);
+    render(<MapSettingsDrawer open onClose={noop} />);
     await waitFor(() => expect(getCacheStats).toHaveBeenCalledTimes(1));
 
     // After clearing, the next stats read should reflect an empty cache.
@@ -104,7 +108,7 @@ describe('<MapSettingsDrawer />', () => {
 
   it('disables Clear when the cache is already empty', async () => {
     getCacheStats.mockResolvedValueOnce({ tileCount: 0, byteEstimate: 0 });
-    render(<MapSettingsDrawer open onClose={() => {}} />);
+    render(<MapSettingsDrawer open onClose={noop} />);
     await waitFor(() => {
       expect(screen.getByTestId('cache-tile-count')).toHaveTextContent(
         '0 tiles'
@@ -118,7 +122,7 @@ describe('<MapSettingsDrawer />', () => {
       // Sentinel — tileUrlsForMap is mocked, so the contents don't matter.
     };
 
-    render(<MapSettingsDrawer open onClose={() => {}} />);
+    render(<MapSettingsDrawer open onClose={noop} />);
     await waitFor(() => expect(getCacheStats).toHaveBeenCalledTimes(1));
 
     fireEvent.click(screen.getByTestId('cache-prewarm'));
@@ -143,7 +147,7 @@ describe('<MapSettingsDrawer />', () => {
       ok: false,
     });
 
-    render(<MapSettingsDrawer open onClose={() => {}} />);
+    render(<MapSettingsDrawer open onClose={noop} />);
     await waitFor(() => expect(getCacheStats).toHaveBeenCalledTimes(1));
     fireEvent.click(screen.getByTestId('cache-prewarm'));
 
@@ -156,10 +160,13 @@ describe('<MapSettingsDrawer />', () => {
 
   it('skips pre-warm silently when no map handle is exposed', async () => {
     delete (globalThis as { __ndwtMap?: unknown }).__ndwtMap;
-    render(<MapSettingsDrawer open onClose={() => {}} />);
+    render(<MapSettingsDrawer open onClose={noop} />);
     await waitFor(() => expect(getCacheStats).toHaveBeenCalledTimes(1));
 
-    await act(async () => {
+    // act() is synchronous here — fireEvent doesn't return a promise,
+    // and there's nothing to await inside. Wrapping prevents React
+    // from flushing the (no-op) state work outside an act() scope.
+    act(() => {
       fireEvent.click(screen.getByTestId('cache-prewarm'));
     });
 
