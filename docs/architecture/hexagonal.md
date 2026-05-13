@@ -117,6 +117,27 @@ Concrete enforcement points:
   `@/adapters/*` from a UI module are a smell — the composition
   root is the choke point.
 
+### Browser-platform adapters
+
+`src/lib/tile-cache.ts` and `public/sw.js` are also platform-edge
+adapters in spirit: they wrap the Cache Storage API and the Service
+Worker runtime so the React tree can stay declarative. They live
+**outside** `src/adapters/` deliberately:
+
+- They don't implement the domain `SiteRepository` port — they
+  serve a different concern (browser-side tile cache management).
+- They don't carry domain types. `tile-cache.ts` deals in
+  `Request`, `Response`, and tile-URL strings; nothing crosses the
+  domain boundary.
+- `public/sw.js` is a static asset shipped by Next, not a TypeScript
+  module imported by anything in `src/`. Putting it under
+  `src/adapters/` would imply a code path that doesn't exist.
+
+The dependency rule still applies: nothing in `src/lib/tile-cache.ts`
+imports from `src/domain/`, and the UI components that consume it
+treat it as another adapter-shaped seam. See ADR
+[0004](../decisions/0004-tile-resilience.md) for the full rationale.
+
 ## Why hexagonal here
 
 The data path is small (one file, one in-memory map, one fs read

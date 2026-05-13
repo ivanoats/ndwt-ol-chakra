@@ -45,7 +45,9 @@ flowchart LR
 The container view zooms into the deployable units. Notice that
 **the only dynamic component is the user's browser** — Netlify
 serves pre-rendered HTML and the trail data + editorial articles
-are baked into each page at build time.
+are baked into each page at build time. A service worker running
+in the browser intercepts tile fetches cache-first so the map keeps
+working when the user is out of signal.
 
 ```mermaid
 flowchart TB
@@ -54,8 +56,10 @@ flowchart TB
   subgraph deploy["Static deploy on Netlify"]
     direction TB
     html["Pre-rendered HTML<br/>Next.js static export<br/>map · sites index · site detail<br/>+ water-safety · river-navigation<br/>+ leave-no-trace · natural-world<br/>+ past-and-present · trip-planning<br/>+ get-involved · about · about/*"]
-    js["Hydration bundle<br/>React 19 + OpenLayers 10<br/>map · layer switcher<br/>panel · GPX download"]
+    js["Hydration bundle<br/>React 19 + OpenLayers 10<br/>map · layer switcher · health banner<br/>panel · offline pill · settings drawer<br/>GPX download"]
     css["Atomic CSS<br/>PandaCSS<br/>generated at build time<br/>no runtime CSS-in-JS"]
+    sw["Service worker<br/>public/sw.js<br/>cache-first for tile hosts<br/>scoped to TILE_HOSTS allowlist"]
+    cache[("Cache Storage<br/>ndwt-tiles-v1<br/>tile blobs, LRU-evicted")]
     data[("/data/ndwt.geojson<br/>159 sites + facility flags<br/>still served for external GIS")]
     mdx[("content/*.mdx<br/>editorial articles<br/>safety · navigation · history…")]
   end
@@ -66,7 +70,10 @@ flowchart TB
 
   boater -->|HTTPS| html
   html -->|Hydrates| js
-  js -->|Tile requests| tiles
+  js -.->|Registers on mount<br/>production only| sw
+  js -->|Tile requests| sw
+  sw -->|cache-first<br/>then network| tiles
+  sw <-->|read / write| cache
   html -.->|Baked at build time| data
   html -.->|Baked at build time| mdx
   repo -->|Push triggers| ci
@@ -76,10 +83,12 @@ flowchart TB
   classDef store fill:#fef3c7,stroke:#d97706,color:#78350f;
   classDef ext fill:#fee2e2,stroke:#dc2626,color:#7f1d1d;
   classDef person fill:#dbeafe,stroke:#2563eb,color:#1e3a8a;
+  classDef resilience fill:#e0f2fe,stroke:#0284c7,color:#0c4a6e;
   class boater person
   class html,js,css container
   class data,mdx store
   class ci,tiles,repo ext
+  class sw,cache resilience
 ```
 
 ## Why this shape
@@ -99,6 +108,14 @@ flowchart TB
   OpenSeaMap sea marks or Waymarked Trails hiking. All tile
   fetches are direct from the browser to the provider; the
   static deploy never proxies them.
+- **Tile resilience handled in the browser** — a service worker
+  (`public/sw.js`) intercepts requests to the seven known tile
+  hosts cache-first. Combined with the in-page tile-health
+  tracker (banner + per-layer dots) and the offline indicator,
+  the map degrades gracefully from "fully online" through
+  "cached only" to "tiles unavailable." A settings drawer lets
+  the user pre-warm a planned route's tiles while on WiFi. See
+  ADR [0004](../decisions/0004-tile-resilience.md).
 - **OL is the only meaningful client-side dependency** — the
   hydration bundle stays small because we don't ship a UI
   runtime (Park UI components compile to plain elements +

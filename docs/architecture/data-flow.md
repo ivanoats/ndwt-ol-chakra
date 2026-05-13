@@ -1,8 +1,10 @@
 # Data flow
 
-There are two distinct flows worth understanding: the **build-time
-load** that bakes the trail data into the static export, and the
-**runtime click** that opens the info panel for a selected marker.
+There are three flows worth understanding: the **build-time load**
+that bakes the trail data into the static export, the **runtime
+click** that opens the info panel for a selected marker, and the
+**tile fetch with resilience** that the user actually exercises every
+time they pan the map.
 
 ## Build-time: GeoJSON → static HTML
 
@@ -78,7 +80,79 @@ sequenceDiagram
   Panel->>User: drawer opens with site info
 ```
 
-## Notable design decisions in this flow
+## Runtime: tile fetch with resilience
+
+Every pan, zoom, or basemap switch fires this loop. The service
+worker intercepts the network round-trip and the tile-health store
+tracks success/failure so the banner can suggest a healthy fallback
+when an upstream provider goes flaky.
+
+```mermaid
+sequenceDiagram
+  autonumber
+  participant Map as map.tsx<br/>(OL TileLayer source)
+  participant SW as public/sw.js<br/>(scoped to TILE_HOSTS)
+  participant Cache as Cache Storage<br/>(ndwt-tiles-v1)
+  participant Provider as Tile provider<br/>(OSM / USGS / …)
+  participant Store as Zustand<br/>tile-health
+  participant Tracker as tile-health-tracker
+  participant Banner as TileHealthBanner
+  participant Switcher as LayerSwitcher<br/>(per-layer dots)
+  participant Pill as OfflineIndicator
+
+  Note over Map: User pans → OL requests<br/>tile URL via img element
+
+  Map->>SW: GET tile URL
+  alt cache hit (warm region or pre-warmed)
+    SW->>Cache: match(request)
+    Cache-->>SW: cached Response
+    SW-->>Map: 200 OK (from cache)
+    Map->>Store: tileloadend(layerKey)
+  else cache miss
+    SW->>Provider: fetch(request)
+    alt network ok and response.ok
+      Provider-->>SW: 200 OK tile bytes
+      SW->>Cache: put(request, response.clone())
+      SW-->>Map: 200 OK
+      Map->>Store: tileloadend(layerKey)
+    else upstream error (4xx/5xx) or network failure
+      SW-->>Map: error response<br/>(or synthetic 504 on netfail)
+      Map->>Store: tileloaderror(layerKey)
+    end
+  end
+
+  Store->>Tracker: classify(events)
+  Tracker-->>Store: 'ok' / 'degraded' / 'down'
+
+  alt active basemap is 'down'
+    Store-->>Banner: re-render
+    Banner-->>Map: shows banner +<br/>auto-suggest fallback
+  end
+  Store-->>Switcher: re-render dots
+  Note over Pill: independent path —<br/>listens to navigator.onLine,<br/>shows pill when offline
+```
+
+**What this means in practice:**
+
+- **The SW lives outside React.** A route navigation or component
+  remount doesn't drop the cache; the SW keeps working while the page
+  reloads.
+- **The classifier is pure.** Sticky-down latching (`downSince`,
+  5-minute persistence) suppresses banner flapping when an outage is
+  partial — a few sporadic successes won't immediately revert the
+  classification to 'ok'.
+- **The SW only intercepts the seven known tile hosts.** App bundles,
+  GeoJSON, MDX content, and static assets all pass through to the
+  browser's default handling. See ADR
+  [0004](../decisions/0004-tile-resilience.md) for the full host
+  list and the rationale.
+- **The "Save current view for offline use" action in the settings
+  drawer** (top-right gear icon) walks the visible tile layers,
+  enumerates every (z, x, y) in the current viewport, and fetches
+  each through the same SW. After the action completes the tile
+  count in the drawer reflects the warmed cache.
+
+## Notable design decisions in these flows
 
 - **`MapApp` builds a fresh composition per render** via `useMemo`
   on `sites`. There is **no module-level mutable state** — every
@@ -108,3 +182,6 @@ sequenceDiagram
 - ADR [0001](../decisions/0001-nextjs-app-router.md) (static
   export) and [0003](../decisions/0003-hexagonal-architecture.md)
   (hex-arch) underpin the choice to bake data at build time
+- ADR [0004](../decisions/0004-tile-resilience.md) explains the
+  tile resilience choices — pure classifier, raw SW, cache-first
+  scoped to known hosts, sticky-down latching

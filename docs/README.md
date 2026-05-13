@@ -29,6 +29,9 @@ Architecture Decision Records explain the load-bearing choices:
   PandaCSS + Park UI preset over Chakra UI 2.
 - [`decisions/0003-hexagonal-architecture.md`](./decisions/0003-hexagonal-architecture.md) —
   Hexagonal architecture for site data.
+- [`decisions/0004-tile-resilience.md`](./decisions/0004-tile-resilience.md) —
+  Tile resilience via tracker + service worker + cache storage
+  (issue #64; PRs #65 / #67 / #68 / #70 / #71).
 
 ## Plans
 
