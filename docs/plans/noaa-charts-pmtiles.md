@@ -7,17 +7,17 @@ extends to Salish Sea.**
 
 ## Status
 
-| Step | Status |
-| --- | --- |
-| Identify NOAA MBTiles distribution and download workflow | ✅ |
-| Convert MBTiles → PMTiles via `go-pmtiles` CLI | ✅ |
-| Wire `ol-pmtiles` into the existing OL layer pipeline | ✅ |
-| Visual confirmation: charts render correctly in dev | ✅ (Puget Sound + San Juans, zooms 10 + 13) |
-| Range-request behavior verified (no full-file fetch) | ✅ |
-| Demo extract committed to repo for Netlify previews | ✅ (`public/data/charts/puget-sound-demo.pmtiles`, 11 MB at z0-12) |
-| External hosting (R2 / B2) for full-resolution coverage | ⏸ deferred — needed only when NDWT adds Salish Sea waypoints |
-| Refresh automation (weekly NOAA updates) | ⏸ deferred |
-| User-facing ship | 🚦 conditional — demo is live on Netlify previews and main, but the NOAA Charts button only renders meaningfully when the user pans to Puget Sound |
+| Step                                                     | Status                                                                                                                                             |
+| -------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Identify NOAA MBTiles distribution and download workflow | ✅                                                                                                                                                 |
+| Convert MBTiles → PMTiles via `go-pmtiles` CLI           | ✅                                                                                                                                                 |
+| Wire `ol-pmtiles` into the existing OL layer pipeline    | ✅                                                                                                                                                 |
+| Visual confirmation: charts render correctly in dev      | ✅ (Puget Sound + San Juans, zooms 10 + 13)                                                                                                        |
+| Range-request behavior verified (no full-file fetch)     | ✅                                                                                                                                                 |
+| Demo extract committed to repo for Netlify previews      | ✅ (`public/data/charts/puget-sound-demo.pmtiles`, 11 MB at z0-12)                                                                                 |
+| External hosting (R2 / B2) for full-resolution coverage  | ⏸ deferred — needed only when NDWT adds Salish Sea waypoints                                                                                       |
+| Refresh automation (weekly NOAA updates)                 | ⏸ deferred                                                                                                                                         |
+| User-facing ship                                         | 🚦 conditional — demo is live on Netlify previews and main, but the NOAA Charts button only renders meaningfully when the user pans to Puget Sound |
 
 ## Why PMTiles instead of a tile server
 
@@ -38,12 +38,12 @@ a CDN with range-request support; the Next deploy stays small.
 
 ### File sizes (real, measured on 2026-05-13)
 
-| Region | MBTiles | PMTiles | Compression | Notes |
-| --- | --- | --- | --- | --- |
-| `ncds_21` (offshore Pacific NW) | 35 MB | 18 MB | 49% smaller | Heavy dedup — 906k tile coords resolve to 6.3k unique PNG payloads (lots of "open ocean" duplicates) |
-| `ncds_20c` (Puget Sound) | 632 MB | 496 MB | 21% smaller | Dense detail, 906k tile coords → 100k unique payloads |
-| `ncds_20b` (north Salish Sea + San Juans) | 371 MB | est. 290 MB | — | Not converted in this PoC; estimate based on `ncds_20c` ratio |
-| **Full Salish Sea coverage estimate** | ~1 GB | **~790 MB** | — | `ncds_20b` + `ncds_20c` |
+| Region                                    | MBTiles | PMTiles     | Compression | Notes                                                                                                |
+| ----------------------------------------- | ------- | ----------- | ----------- | ---------------------------------------------------------------------------------------------------- |
+| `ncds_21` (offshore Pacific NW)           | 35 MB   | 18 MB       | 49% smaller | Heavy dedup — 906k tile coords resolve to 6.3k unique PNG payloads (lots of "open ocean" duplicates) |
+| `ncds_20c` (Puget Sound)                  | 632 MB  | 496 MB      | 21% smaller | Dense detail, 906k tile coords → 100k unique payloads                                                |
+| `ncds_20b` (north Salish Sea + San Juans) | 371 MB  | est. 290 MB | —           | Not converted in this PoC; estimate based on `ncds_20c` ratio                                        |
+| **Full Salish Sea coverage estimate**     | ~1 GB   | **~790 MB** | —           | `ncds_20b` + `ncds_20c`                                                                              |
 
 PMTiles is a re-container, not a re-compressor. The size reduction
 comes entirely from content-addressed deduplication of repeated PNG
@@ -250,7 +250,7 @@ handles range responses correctly.
    included in `BaseMapId` so the type system accepts it, but no
    tracker calls it.
 4. **Attribution caveat is HTML-encoded** with `<strong>Not for
-   navigation</strong>`. OL renders attribution as HTML by default;
+navigation</strong>`. OL renders attribution as HTML by default;
    double-check this works in the production attribution control
    before shipping.
 5. **Chart edges are abrupt.** The PMTiles archive covers only
