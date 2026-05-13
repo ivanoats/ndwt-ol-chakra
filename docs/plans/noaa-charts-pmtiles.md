@@ -7,17 +7,17 @@ env var.**
 
 ## Status
 
-| Step | Status |
-| --- | --- |
-| Identify NOAA MBTiles distribution and download workflow | ✅ |
-| Convert MBTiles → PMTiles via `go-pmtiles` CLI | ✅ |
-| Wire `ol-pmtiles` into the existing OL layer pipeline | ✅ (PR #73) |
-| Visual confirmation: charts render correctly in dev | ✅ (Puget Sound + San Juans, zooms 10 + 13) |
-| Range-request behavior verified (no full-file fetch) | ✅ |
-| Cloudflare R2 hosting for full-resolution coverage | ✅ (PR #74, bucket: `wwta`) |
-| Weekly refresh GitHub Action | ✅ (`.github/workflows/refresh-noaa-charts.yml`) |
-| Manual upload runbook script | ✅ (`scripts/upload-noaa-charts.sh`) |
-| User-facing ship | 🚦 gated on `NEXT_PUBLIC_NOAA_CHARTS_URL` being set in Netlify env vars |
+| Step                                                     | Status                                                                  |
+| -------------------------------------------------------- | ----------------------------------------------------------------------- |
+| Identify NOAA MBTiles distribution and download workflow | ✅                                                                      |
+| Convert MBTiles → PMTiles via `go-pmtiles` CLI           | ✅                                                                      |
+| Wire `ol-pmtiles` into the existing OL layer pipeline    | ✅ (PR #73)                                                             |
+| Visual confirmation: charts render correctly in dev      | ✅ (Puget Sound + San Juans, zooms 10 + 13)                             |
+| Range-request behavior verified (no full-file fetch)     | ✅                                                                      |
+| Cloudflare R2 hosting for full-resolution coverage       | ✅ (PR #74, bucket: `wwta`)                                             |
+| Weekly refresh GitHub Action                             | ✅ (`.github/workflows/refresh-noaa-charts.yml`)                        |
+| Manual upload runbook script                             | ✅ (`scripts/upload-noaa-charts.sh`)                                    |
+| User-facing ship                                         | 🚦 gated on `NEXT_PUBLIC_NOAA_CHARTS_URL` being set in Netlify env vars |
 
 ## Why PMTiles instead of a tile server
 
@@ -257,7 +257,7 @@ will pick it up. Trigger a redeploy or push any commit.
   addressed by tile bytes, so unchanged tiles produce identical
   range-response payloads; browsers' HTTP caches degrade gracefully.
 - **Manual refresh** for ad-hoc updates: `gh workflow run
-  refresh-noaa-charts.yml -f region=ncds_20c` (or any other NCDS
+refresh-noaa-charts.yml -f region=ncds_20c` (or any other NCDS
   region name).
 - **Cloudflare edge cache**: R2 doesn't front-cache by default; if
   you've enabled Cloudflare CDN caching on the bucket's custom
@@ -294,7 +294,7 @@ handles range responses correctly.
    included in `BaseMapId` so the type system accepts it, but no
    tracker calls it.
 4. **Attribution caveat is HTML-encoded** with `<strong>Not for
-   navigation</strong>`. OL renders attribution as HTML by default;
+navigation</strong>`. OL renders attribution as HTML by default;
    double-check this works in the production attribution control
    before shipping.
 5. **Chart edges are abrupt.** The R2-hosted archive currently
@@ -302,7 +302,7 @@ handles range responses correctly.
    Strait of Juan de Fuca or north into the Gulf Islands shows no
    tiles. To extend coverage, the GHA workflow accepts a `region`
    input — run `gh workflow run refresh-noaa-charts.yml -f
-   region=ncds_20b` to upload `ncds_20b.pmtiles` alongside. A future
+region=ncds_20b` to upload `ncds_20b.pmtiles` alongside. A future
    refinement could compose multiple archives into one via the
    `pmtiles merge` command so the chart layer covers the full
    Salish Sea seamlessly.
