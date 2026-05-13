@@ -36,3 +36,5 @@ skills-lock.json
 /public/data/photo-candidates.json
 __pycache__/
 wwta-galleries.json
+/.charts-poc/
+/public/data/charts/

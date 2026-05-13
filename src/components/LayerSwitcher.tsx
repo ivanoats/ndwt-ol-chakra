@@ -8,7 +8,12 @@ import { useTileHealth } from '../store/tile-health';
 
 import { classify, type HealthStatus } from './tile-health-tracker';
 
-export type BaseMapId = 'osm' | 'usgs' | 'opentopomap' | 'aerial';
+export type BaseMapId =
+  | 'osm'
+  | 'usgs'
+  | 'opentopomap'
+  | 'aerial'
+  | 'noaa-charts';
 export type OverlayId = 'openseamap' | 'hiking';
 
 interface LayerSwitcherProps {
@@ -26,6 +31,7 @@ export const BASE_MAPS: ReadonlyArray<{ id: BaseMapId; label: string }> = [
   { id: 'usgs', label: 'USGS Topo' },
   { id: 'opentopomap', label: 'OpenTopoMap' },
   { id: 'aerial', label: 'Aerial Imagery' },
+  { id: 'noaa-charts', label: 'NOAA Charts' },
 ];
 
 const OVERLAYS: Array<{ id: OverlayId; label: string }> = [

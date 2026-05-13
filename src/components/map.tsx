@@ -7,10 +7,12 @@ import TileLayer from 'ol/layer/Tile';
 import VectorLayer from 'ol/layer/Vector';
 import { unByKey } from 'ol/Observable';
 import { fromLonLat } from 'ol/proj';
+import type DataTileSource from 'ol/source/DataTile';
 import OSM from 'ol/source/OSM';
 import VectorSource from 'ol/source/Vector';
 import XYZ from 'ol/source/XYZ';
 import { Circle, Fill, Stroke, Style } from 'ol/style';
+import { PMTilesRasterSource } from 'ol-pmtiles';
 import { useEffect, useRef, useState } from 'react';
 
 import type { GetSite } from '../application/use-cases/get-site';
@@ -54,7 +56,16 @@ interface LayerRefs {
   aerial: TileLayer<XYZ> | null;
   openSea: TileLayer<XYZ> | null;
   hiking: TileLayer<XYZ> | null;
+  noaaCharts: TileLayer<DataTileSource> | null;
 }
+
+// PoC: NOAA Chart Display Service PMTiles. Set via env var so dev
+// can point at a local file (`/data/charts/ncds_21.pmtiles`) and
+// production at a CDN-hosted archive (R2 / B2). When unset, the
+// NOAA Charts layer is rendered as a non-functional placeholder
+// (visible button in the layer switcher, but no tiles fetched) —
+// the actual chart layer only activates when the URL is provided.
+const NOAA_CHARTS_PMTILES_URL = process.env.NEXT_PUBLIC_NOAA_CHARTS_URL ?? '';
 
 interface MapComponentProps {
   readonly sites: readonly Site[];
@@ -74,6 +85,7 @@ export default function MapComponent({ sites, getSite }: MapComponentProps) {
     aerial: null,
     openSea: null,
     hiking: null,
+    noaaCharts: null,
   });
 
   const [activeBaseMap, setActiveBaseMap] = useState<BaseMapId>('osm');
@@ -142,6 +154,24 @@ export default function MapComponent({ sites, getSite }: MapComponentProps) {
       }),
       visible: activeOverlays.has('hiking'),
     });
+    // NOAA Chart Display Service raster tiles, packaged as a single
+    // PMTiles archive and served via HTTP range requests. Construction
+    // is conditional on NOAA_CHARTS_PMTILES_URL being set — without a
+    // URL we skip the source entirely so the page doesn't issue a
+    // failed fetch on first paint. The button still appears in the
+    // layer switcher; clicking it without the URL configured renders
+    // a blank canvas with the attribution string only.
+    const noaaChartsLayer = new TileLayer<DataTileSource>({
+      source:
+        NOAA_CHARTS_PMTILES_URL === ''
+          ? undefined
+          : new PMTilesRasterSource({
+              url: NOAA_CHARTS_PMTILES_URL,
+              attributions:
+                'Charts: © <a href="https://nauticalcharts.noaa.gov/">NOAA Office of Coast Survey</a> — <strong>Not for navigation</strong>',
+            }),
+      visible: activeBaseMap === 'noaa-charts',
+    });
 
     layerRefs.current = {
       osm: osmLayer,
@@ -150,6 +180,7 @@ export default function MapComponent({ sites, getSite }: MapComponentProps) {
       aerial: aerialLayer,
       openSea: openSeaLayer,
       hiking: hikingLayer,
+      noaaCharts: noaaChartsLayer,
     };
 
     // Wire OL tile-load events into the tile-health store so the
@@ -186,6 +217,7 @@ export default function MapComponent({ sites, getSite }: MapComponentProps) {
         usgsLayer,
         openTopoLayer,
         aerialLayer,
+        noaaChartsLayer,
         openSeaLayer,
         hikingLayer,
         new VectorLayer({
@@ -222,6 +254,7 @@ export default function MapComponent({ sites, getSite }: MapComponentProps) {
         aerial: null,
         openSea: null,
         hiking: null,
+        noaaCharts: null,
       };
     };
     // activeBaseMap / activeOverlays are read for *initial* layer
@@ -233,11 +266,12 @@ export default function MapComponent({ sites, getSite }: MapComponentProps) {
 
   // Sync base map visibility whenever activeBaseMap changes.
   useEffect(() => {
-    const { osm, usgs, openTopo, aerial } = layerRefs.current;
+    const { osm, usgs, openTopo, aerial, noaaCharts } = layerRefs.current;
     osm?.setVisible(activeBaseMap === 'osm');
     usgs?.setVisible(activeBaseMap === 'usgs');
     openTopo?.setVisible(activeBaseMap === 'opentopomap');
     aerial?.setVisible(activeBaseMap === 'aerial');
+    noaaCharts?.setVisible(activeBaseMap === 'noaa-charts');
   }, [activeBaseMap]);
 
   // Sync overlay visibility whenever activeOverlays changes.
