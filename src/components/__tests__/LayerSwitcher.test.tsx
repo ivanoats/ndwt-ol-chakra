@@ -130,6 +130,26 @@ describe('<LayerSwitcher />', () => {
     expect(onBaseMapChange).toHaveBeenCalledWith('aerial' satisfies BaseMapId);
   });
 
+  it('calls onBaseMapChange with "noaa-charts" when NOAA Charts is clicked', () => {
+    const onBaseMapChange = vi.fn();
+    render(
+      <LayerSwitcher
+        activeBaseMap="osm"
+        activeOverlays={new Set<OverlayId>()}
+        onBaseMapChange={onBaseMapChange}
+        onOverlayToggle={vi.fn()}
+      />
+    );
+    fireEvent.click(
+      screen.getByRole('button', { name: 'Toggle layer switcher' })
+    );
+    fireEvent.click(screen.getByRole('button', { name: /NOAA Charts/ }));
+
+    expect(onBaseMapChange).toHaveBeenCalledWith(
+      'noaa-charts' satisfies BaseMapId
+    );
+  });
+
   it('marks active overlays as pressed', () => {
     render(
       <LayerSwitcher

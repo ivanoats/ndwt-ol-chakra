@@ -177,6 +177,7 @@ describe('<TileHealthBanner />', () => {
       repeatRecord('usgs', 'error', DOWN_AFTER_CONSECUTIVE_ERRORS);
       repeatRecord('opentopomap', 'error', DOWN_AFTER_CONSECUTIVE_ERRORS);
       repeatRecord('aerial', 'error', DOWN_AFTER_CONSECUTIVE_ERRORS);
+      repeatRecord('noaa-charts', 'error', DOWN_AFTER_CONSECUTIVE_ERRORS);
 
       render(
         <TileHealthBanner
