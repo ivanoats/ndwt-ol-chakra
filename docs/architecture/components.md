@@ -39,9 +39,26 @@ graph TB
   subgraph Map_["src/components/ (map)"]
     MapApp["MapApp.tsx<br/>'use client'<br/>composition + dynamic map"]
     MapTSX["map.tsx<br/>OL Map instance<br/>5 tile layers + vectors"]
-    LayerSwitcher_["LayerSwitcher.tsx<br/>base-map + overlay toggles"]
+    LayerSwitcher_["LayerSwitcher.tsx<br/>base-map + overlay toggles<br/>+ per-layer health dots"]
     Handlers["map-handlers.ts<br/>pure click + pointermove"]
     Theme["ThemeToggleButton.tsx"]
+  end
+
+  subgraph Resilience_["src/components/ (tile resilience)"]
+    Tracker["tile-health-tracker.ts<br/>pure classifier<br/>ok / degraded / down"]
+    HealthBanner["TileHealthBanner.tsx<br/>top-center · auto-suggest"]
+    OfflinePill["OfflineIndicator.tsx<br/>bottom-center · navigator.onLine"]
+    SettingsBtn["MapSettingsButton.tsx<br/>top-right gear icon"]
+    SettingsDrawer["MapSettingsDrawer.tsx<br/>cache stats · clear · pre-warm"]
+  end
+
+  subgraph Lib_["src/lib/"]
+    SwReg["register-service-worker.ts<br/>production-only registration"]
+    TileCache["tile-cache.ts<br/>Cache Storage helpers<br/>+ tile-URL enumeration"]
+  end
+
+  subgraph Public_["public/"]
+    Sw["sw.js<br/>cache-first SW<br/>scoped to known tile hosts"]
   end
 
   subgraph Panels_["src/components/panels/"]
@@ -87,6 +104,7 @@ graph TB
 
   Comp["composition-root.ts<br/>createComposition factory"]
   Store["store/selected-site.ts<br/>Zustand"]
+  HealthStore["store/tile-health.ts<br/>Zustand · per-layer health"]
 
   Layout --> Providers
   Layout --> Header
@@ -112,10 +130,24 @@ graph TB
   MapApp --> Panel
   MapApp --> Theme
   MapApp --> Comp
+  MapApp --> SwReg
+  MapApp --> OfflinePill
+  MapApp --> SettingsBtn
+  MapApp --> SettingsDrawer
 
   MapTSX --> Handlers
   MapTSX --> LayerSwitcher_
+  MapTSX --> HealthBanner
+  MapTSX -->|tileloadend/error| HealthStore
+  HealthStore --> Tracker
+  HealthBanner --> HealthStore
+  LayerSwitcher_ --> HealthStore
   Handlers --> Store
+
+  SwReg -.registers.-> Sw
+  Sw -.intercepts.-> Tiles[("tile providers<br/>(SW boundary)")]
+  SettingsDrawer --> TileCache
+  TileCache -.reads/writes.-> Sw
 
   Panel --> Drawer
   Panel --> SiteDetails_
@@ -165,14 +197,16 @@ graph TB
   classDef adapter fill:#fef3c7,stroke:#d97706;
   classDef glue fill:#fee2e2,stroke:#dc2626;
   classDef content fill:#fae8ff,stroke:#a21caf;
+  classDef resilience fill:#e0f2fe,stroke:#0284c7,color:#0c4a6e;
 
   class Layout,Providers,HomePage,SitesIndexRoute,SiteDetailRoute,AboutRoutes,EditorialRoutes,Globals route
   class Header,Hero,Footer,Box,Stack,Text,Heading,Badge,Link,Button,IconButton,Drawer,Panel,SiteDetails_,Facilities,MapApp,MapTSX,LayerSwitcher_,Theme,SiteIndex,Article,SectionIndex ui
   class Site,Coords,Fac,Slug,Idx domain
   class Port,ListUC,GetUC app
   class LoadSites,InMem,Geo,Parser,Gpx adapter
-  class Comp,Store,Handlers glue
+  class Comp,Store,Handlers,HealthStore glue
   class Mdx content
+  class Tracker,HealthBanner,OfflinePill,SettingsBtn,SettingsDrawer,SwReg,TileCache,Sw,Tiles resilience
 ```
 
 ## What lives where
@@ -241,19 +275,69 @@ list of articles inside one of the catch-all editorial routes.
 The OpenLayers integration:
 
 - `MapApp.tsx` is the `'use client'` boundary. It builds the
-  composition once per `sites` prop via `useMemo` and dynamic-
-  imports the OL component with `ssr: false`.
+  composition once per `sites` prop via `useMemo`, dynamic-
+  imports the OL component with `ssr: false`, registers the
+  service worker on first mount, and renders the offline pill
+  and settings button as siblings of the map.
 - `map.tsx` owns the `ol.Map` instance and its lifecycle (mount
   on `useEffect`, set the global test handle, clean up). It
   registers five tile layers (OSM / USGS / OpenTopoMap base
-  maps + OpenSeaMap / Waymarked Trails overlays) and syncs
-  their visibility from React state.
+  maps + OpenSeaMap / Waymarked Trails overlays), syncs their
+  visibility from React state, and wires `tileloadend` /
+  `tileloaderror` events from each source into the tile-health
+  store.
 - `LayerSwitcher.tsx` is the floating dropdown that drives the
-  base-map and overlay state. Pure presentation — `map.tsx`
-  passes the active selections and toggle callbacks in.
+  base-map and overlay state, plus the per-layer health dots
+  (🟢 ok / 🟡 degraded / 🔴 down) read off the tile-health
+  store.
 - `map-handlers.ts` exports curried pure functions
   (`makeHandleClick`, `makeHandlePointerMove`) that don't import
   any UI deps — straightforward to unit test against a fake Map.
+
+### Tile resilience (`tile-health-tracker.ts`, `TileHealthBanner.tsx`, `OfflineIndicator.tsx`, `MapSettingsButton.tsx`, `MapSettingsDrawer.tsx`)
+
+The graceful-degradation stack on top of the OL integration:
+
+- `tile-health-tracker.ts` is a pure classifier — no React, no OL.
+  Takes a rolling window of success / error events per layer and
+  emits `'unknown' | 'ok' | 'degraded' | 'down'`. Sticky-down
+  latching via `downSince` prevents banner flapping during a
+  flaky outage.
+- `TileHealthBanner.tsx` is the top-center status banner. Reads
+  the tile-health store; when the active basemap classifies as
+  'down', it surfaces a non-modal banner with a one-click
+  "Switch to USGS Topo?" auto-suggest.
+- `OfflineIndicator.tsx` is the bottom-center pill, driven by
+  `navigator.onLine` plus `online` / `offline` window events.
+  Pairs with the SW: when offline, the user gets clear feedback
+  that the map is running on cached tiles.
+- `MapSettingsButton.tsx` is the top-right gear icon.
+  `MapSettingsDrawer.tsx` is its drawer body — cache stats
+  (count + estimated bytes), Clear button, and "Save current
+  view for offline use" pre-warm action. Reuses the
+  `globalThis.__ndwtMap` handle to enumerate viewport tiles.
+
+### `src/lib/` (`register-service-worker.ts`, `tile-cache.ts`)
+
+Browser-edge helpers that the React tree consumes:
+
+- `register-service-worker.ts` — a one-liner the `MapApp` mount
+  calls. Gates on `NODE_ENV === 'production'` and swallows
+  registration failures.
+- `tile-cache.ts` — Cache Storage helpers (`getCacheStats`,
+  `clearTileCaches`, `formatBytes`), the bounded-concurrency
+  `prewarmTiles` worker pool, the pure `enumerateTileUrls`
+  helper, and the OL-aware `tileUrlsForMap` wrapper that
+  narrows OL layers/sources by `instanceof` before delegating.
+
+### `public/sw.js`
+
+The cache-first service worker. Scoped strictly to known tile
+hosts (`TILE_HOSTS`); everything else passes through to the
+browser's default handling. Cache versioned via `CACHE_NAME`;
+old caches are purged in the `activate` handler. See ADR
+[0004](../decisions/0004-tile-resilience.md) for the full
+rationale.
 
 ### `content/`
 
@@ -313,11 +397,21 @@ it to its own module would be a clean refactor.
 
 ### `src/store/`
 
-A single Zustand slice for the selected site. The split between
-"domain data" (in the composition) and "ephemeral UI state" (in
-Zustand) is intentional. The map's layer-switcher state lives
-in component-local `useState` inside `map.tsx`, not in Zustand,
-because no other component needs to read it.
+Two Zustand slices, each for one concern:
+
+- `selected-site.ts` — the currently-open site for the info
+  panel. Driven by the OL click handler (outside React's
+  context, so Zustand's `getState()` is the right fit).
+- `tile-health.ts` — per-layer rolling tile-load health. Fed by
+  the OL tile-event listeners in `map.tsx`, read by both the
+  `TileHealthBanner` and the per-layer dots in
+  `LayerSwitcher`. Wraps the pure classifier in
+  `tile-health-tracker.ts`.
+
+The split between "domain data" (in the composition) and
+"ephemeral UI state" (in Zustand) is intentional. The map's
+layer-switcher base/overlay state still lives in component-local
+`useState` inside `map.tsx` — no other component needs to read it.
 
 ## See also
 
