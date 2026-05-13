@@ -196,7 +196,7 @@ export interface VisibleTileSource<P> {
   readonly getTileGrid: () => {
     readonly getTileRangeForExtentAndZ: (
       extent: number[],
-      z: number
+      zoom: number
     ) => TileRangeLike;
   } | null;
   readonly getTileUrlFunction: () => (
@@ -208,33 +208,33 @@ export interface VisibleTileSource<P> {
 
 export interface TileEnumerationContext<P> {
   readonly extent: number[];
-  readonly z: number;
+  readonly tileZ: number;
   readonly projection: P;
   readonly pixelRatio?: number;
 }
 
 /**
  * Pure helper — given the visible tile sources and the viewport
- * geometry, expand every (z, x, y) into a URL string. No OL classes
- * involved, so vitest can exercise this directly. The `P` generic
- * carries the projection type through opaquely (OL's `Projection`
- * in production, anything in tests) so we don't have to import OL
- * types into the pure helper.
+ * geometry, expand every (tileZ, tileX, tileY) into a URL string.
+ * No OL classes involved, so vitest can exercise this directly. The
+ * `P` generic carries the projection type through opaquely (OL's
+ * `Projection` in production, anything in tests) so we don't have
+ * to import OL types into the pure helper.
  */
 export function enumerateTileUrls<P>(
   sources: readonly VisibleTileSource<P>[],
   context: TileEnumerationContext<P>
 ): readonly string[] {
-  const { extent, z, projection, pixelRatio = 1 } = context;
+  const { extent, tileZ, projection, pixelRatio = 1 } = context;
   const urls: string[] = [];
   for (const source of sources) {
     const grid = source.getTileGrid();
     if (grid === null) continue;
-    const range = grid.getTileRangeForExtentAndZ(extent, z);
+    const range = grid.getTileRangeForExtentAndZ(extent, tileZ);
     const tileUrlFn = source.getTileUrlFunction();
     for (let tileX = range.minX; tileX <= range.maxX; tileX += 1) {
       for (let tileY = range.minY; tileY <= range.maxY; tileY += 1) {
-        const url = tileUrlFn([z, tileX, tileY], pixelRatio, projection);
+        const url = tileUrlFn([tileZ, tileX, tileY], pixelRatio, projection);
         if (typeof url === 'string') urls.push(url);
       }
     }
@@ -270,7 +270,7 @@ export function tileUrlsForMap(map: OlMap): readonly string[] {
   const extent = view.calculateExtent(size);
   const zoom = view.getZoom();
   if (zoom === undefined) return [];
-  const z = Math.round(zoom);
+  const tileZ = Math.round(zoom);
 
   const sources: VisibleTileSource<typeof projection>[] = [];
   for (const layer of map.getLayers().getArray()) {
@@ -284,6 +284,6 @@ export function tileUrlsForMap(map: OlMap): readonly string[] {
     if (!(source instanceof UrlTile)) continue;
     sources.push(source);
   }
-  return enumerateTileUrls(sources, { extent, z, projection });
+  return enumerateTileUrls(sources, { extent, tileZ, projection });
 }
 /* c8 ignore stop */

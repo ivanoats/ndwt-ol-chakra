@@ -226,7 +226,11 @@ describe('enumerateTileUrls', () => {
     grid = true,
   }: {
     readonly range: { minX: number; maxX: number; minY: number; maxY: number };
-    readonly template: (z: number, x: number, y: number) => string | undefined;
+    readonly template: (
+      tileZ: number,
+      tileX: number,
+      tileY: number
+    ) => string | undefined;
     readonly grid?: boolean;
   }): VisibleTileSource<unknown> {
     return {
@@ -238,19 +242,20 @@ describe('enumerateTileUrls', () => {
           : null,
       getTileUrlFunction:
         () =>
-        ([z, x, y]: [number, number, number]) =>
-          template(z, x, y),
+        ([tileZ, tileX, tileY]: [number, number, number]) =>
+          template(tileZ, tileX, tileY),
     };
   }
 
   it('expands every tile coord in the range into a URL', () => {
     const source = fakeSource({
       range: { minX: 0, maxX: 1, minY: 0, maxY: 1 },
-      template: (z, x, y) => `https://example/${z}/${x}/${y}.png`,
+      template: (tileZ, tileX, tileY) =>
+        `https://example/${tileZ}/${tileX}/${tileY}.png`,
     });
     const urls = enumerateTileUrls([source], {
       extent: [0, 0, 1, 1],
-      z: 7,
+      tileZ: 7,
       projection: null,
     });
     expect([...urls].sort()).toEqual(
@@ -270,7 +275,11 @@ describe('enumerateTileUrls', () => {
       grid: false,
     });
     expect(
-      enumerateTileUrls([source], { extent: [0, 0, 1, 1], z: 5, projection: 0 })
+      enumerateTileUrls([source], {
+        extent: [0, 0, 1, 1],
+        tileZ: 5,
+        projection: 0,
+      })
     ).toEqual([]);
   });
 
@@ -280,11 +289,11 @@ describe('enumerateTileUrls', () => {
       // Returning undefined matches what OL's tileUrlFunction does
       // for coords outside a source's coverage area (eg. NOAA Charts
       // off-coast).
-      template: (_z, x) => (x === 0 ? 'a' : undefined),
+      template: (_tileZ, tileX) => (tileX === 0 ? 'a' : undefined),
     });
     const urls = enumerateTileUrls([source], {
       extent: [0, 0, 1, 1],
-      z: 3,
+      tileZ: 3,
       projection: null,
     });
     expect(urls).toEqual(['a']);
@@ -292,23 +301,29 @@ describe('enumerateTileUrls', () => {
 
   it('returns an empty array when given no sources', () => {
     expect(
-      enumerateTileUrls([], { extent: [0, 0, 1, 1], z: 1, projection: null })
+      enumerateTileUrls([], {
+        extent: [0, 0, 1, 1],
+        tileZ: 1,
+        projection: null,
+      })
     ).toEqual([]);
   });
 
   it('combines URLs from multiple sources (basemap + overlays)', () => {
     const base = fakeSource({
       range: { minX: 0, maxX: 0, minY: 0, maxY: 0 },
-      template: (z, x, y) => `https://base/${z}/${x}/${y}`,
+      template: (tileZ, tileX, tileY) =>
+        `https://base/${tileZ}/${tileX}/${tileY}`,
     });
     const overlay = fakeSource({
       range: { minX: 0, maxX: 0, minY: 0, maxY: 0 },
-      template: (z, x, y) => `https://overlay/${z}/${x}/${y}`,
+      template: (tileZ, tileX, tileY) =>
+        `https://overlay/${tileZ}/${tileX}/${tileY}`,
     });
     expect(
       enumerateTileUrls([base, overlay], {
         extent: [0, 0, 1, 1],
-        z: 4,
+        tileZ: 4,
         projection: null,
       })
     ).toEqual(['https://base/4/0/0', 'https://overlay/4/0/0']);
