@@ -56,6 +56,105 @@ test.describe('Offline indicator', () => {
   });
 });
 
+test.describe('Map settings drawer', () => {
+  test('shows cache stats and clears the tile cache on demand', async ({
+    page,
+  }) => {
+    await page.goto('/');
+    await page.evaluate(() => navigator.serviceWorker.ready);
+    await page.waitForFunction(
+      () =>
+        Boolean((globalThis as unknown as { __ndwtMap?: unknown }).__ndwtMap),
+      undefined,
+      { timeout: 15_000 }
+    );
+
+    // Wait until the SW has cached at least one tile so the readout
+    // and the Clear button have something to operate on.
+    await expect
+      .poll(
+        () =>
+          page.evaluate(async () => {
+            const names = await caches.keys();
+            let total = 0;
+            for (const name of names.filter((n) =>
+              n.startsWith('ndwt-tiles-')
+            )) {
+              const cache = await caches.open(name);
+              const keys = await cache.keys();
+              total += keys.length;
+            }
+            return total;
+          }),
+        { timeout: 15_000 }
+      )
+      .toBeGreaterThan(0);
+
+    // Open the drawer.
+    await page.getByTestId('map-settings-button').click();
+    const drawer = page.getByTestId('map-settings-drawer');
+    await expect(drawer).toBeVisible();
+
+    // Tile count should be > 0 after the SW warmed it up.
+    const tileCount = page.getByTestId('cache-tile-count');
+    await expect(tileCount).not.toHaveText(/^0 tiles/);
+
+    // Clear the cache and verify the readout drops to zero.
+    await page.getByTestId('cache-clear').click();
+    await expect(page.getByTestId('cache-cleared-status')).toBeVisible({
+      timeout: 5_000,
+    });
+    await expect(tileCount).toHaveText(/^0 tiles/);
+
+    // Cache Storage should now be empty of ndwt-tiles-* buckets.
+    const remaining = await page.evaluate(async () => {
+      const names = await caches.keys();
+      return names.filter((n) => n.startsWith('ndwt-tiles-')).length;
+    });
+    expect(remaining).toBe(0);
+  });
+
+  test('pre-warms the current viewport and bumps the tile count', async ({
+    page,
+  }) => {
+    await page.goto('/');
+    await page.evaluate(() => navigator.serviceWorker.ready);
+    await page.waitForFunction(
+      () =>
+        Boolean((globalThis as unknown as { __ndwtMap?: unknown }).__ndwtMap),
+      undefined,
+      { timeout: 15_000 }
+    );
+
+    // Start from an empty cache so the assertion is unambiguous —
+    // any tile count after pre-warm is attributable to the action.
+    await page.evaluate(async () => {
+      const names = await caches.keys();
+      await Promise.all(
+        names
+          .filter((n) => n.startsWith('ndwt-tiles-'))
+          .map((n) => caches.delete(n))
+      );
+    });
+
+    await page.getByTestId('map-settings-button').click();
+    await expect(page.getByTestId('map-settings-drawer')).toBeVisible();
+
+    await page.getByTestId('cache-prewarm').click();
+
+    // The done-status appears once every queued tile has settled.
+    await expect(page.getByTestId('prewarm-done-status')).toBeVisible({
+      timeout: 30_000,
+    });
+
+    // And the tile count is no longer zero — the SW captured the
+    // prewarm fetches.
+    await expect(page.getByTestId('cache-tile-count')).not.toHaveText(
+      /^0 tiles/
+    );
+  });
+});
+
 test.describe('Tile cache service worker', () => {
   test('caches basemap tiles and serves them after tile hosts are blocked', async ({
     page,
