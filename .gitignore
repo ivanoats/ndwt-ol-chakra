@@ -37,4 +37,8 @@ skills-lock.json
 __pycache__/
 wwta-galleries.json
 /.charts-poc/
-/public/data/charts/
+# Track only the committed demo PMTiles (a small Puget Sound extract
+# at z0-12, ~11 MB). All other PMTiles in this directory are big
+# dev-only files staged from .charts-poc/.
+/public/data/charts/*
+!/public/data/charts/puget-sound-demo.pmtiles

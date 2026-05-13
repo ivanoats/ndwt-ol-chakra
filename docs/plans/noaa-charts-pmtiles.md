@@ -14,9 +14,10 @@ extends to Salish Sea.**
 | Wire `ol-pmtiles` into the existing OL layer pipeline | ✅ |
 | Visual confirmation: charts render correctly in dev | ✅ (Puget Sound + San Juans, zooms 10 + 13) |
 | Range-request behavior verified (no full-file fetch) | ✅ |
-| External hosting (R2 / B2) | ⏸ deferred — Netlify can't host the >300MB archives |
+| Demo extract committed to repo for Netlify previews | ✅ (`public/data/charts/puget-sound-demo.pmtiles`, 11 MB at z0-12) |
+| External hosting (R2 / B2) for full-resolution coverage | ⏸ deferred — needed only when NDWT adds Salish Sea waypoints |
 | Refresh automation (weekly NOAA updates) | ⏸ deferred |
-| User-facing ship | ⏸ deferred — no Salish Sea waypoints in current GeoJSON |
+| User-facing ship | 🚦 conditional — demo is live on Netlify previews and main, but the NOAA Charts button only renders meaningfully when the user pans to Puget Sound |
 
 ## Why PMTiles instead of a tile server
 
@@ -75,10 +76,17 @@ hosting too.
   `TileLayer<DataTileSource>` from the env-var URL, adds it to the
   layer array and to the visibility sync effect.
 
-### Runtime gating
+### Runtime URL resolution
 
-The NOAA chart layer's source is constructed only when
-`NEXT_PUBLIC_NOAA_CHARTS_URL` is set:
+The NOAA chart layer's source URL falls through three levels:
+
+1. `NEXT_PUBLIC_NOAA_CHARTS_URL` env var — production override (e.g.
+   an R2/B2 CDN URL with full Salish Sea coverage)
+2. The committed demo file at `/data/charts/puget-sound-demo.pmtiles`
+   — works out of the box on `main`, Netlify previews, and local dev
+3. Empty-string sentinel — explicitly disables the layer (button
+   stays in the switcher but renders blank). Set
+   `NEXT_PUBLIC_NOAA_CHARTS_URL=""` to opt out.
 
 ```ts
 const noaaChartsLayer = new TileLayer<DataTileSource>({
@@ -94,10 +102,22 @@ const noaaChartsLayer = new TileLayer<DataTileSource>({
 });
 ```
 
-When the env var is unset (the default on `main`), the layer-switcher
-button is still visible but clicking it shows a blank canvas with
-just the attribution string. This keeps the layer-switcher's UX shape
-stable across environments without requiring a feature flag.
+### Committed demo file
+
+`public/data/charts/puget-sound-demo.pmtiles` is a 11 MB extract of
+`ncds_20c` covering Puget Sound + the eastern Olympic Peninsula at
+z0-12. Generated with:
+
+```sh
+pmtiles extract ncds_20c.pmtiles puget-sound-demo.pmtiles \
+  --bbox=-123.3,47.0,-122.2,48.8 --maxzoom=12
+```
+
+This file is intentionally tracked in git (the `.gitignore` carves
+out an exception) so Netlify deploy previews can show the layer
+working without external hosting. Refresh it manually by re-running
+the extract command above against a freshly-downloaded
+`ncds_20c.mbtiles`.
 
 ### Dev workflow
 
