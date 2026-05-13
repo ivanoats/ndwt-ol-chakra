@@ -59,16 +59,15 @@ interface LayerRefs {
   noaaCharts: TileLayer<DataTileSource> | null;
 }
 
-// NOAA Chart Display Service PMTiles. Defaults to a small Puget
-// Sound demo extract committed to `public/data/charts/` (~11 MB,
-// z0-12 over Puget Sound + Olympic edge). Override via env var to
-// point at a full-coverage CDN-hosted archive (R2 / B2) in
-// production. The empty-string sentinel disables the source entirely
-// (button stays in the layer switcher but renders blank), which is
-// useful for environments that want to opt out of the demo file.
-const NOAA_CHARTS_PMTILES_URL =
-  process.env.NEXT_PUBLIC_NOAA_CHARTS_URL ??
-  '/data/charts/puget-sound-demo.pmtiles';
+// NOAA Chart Display Service PMTiles. Set via NEXT_PUBLIC_NOAA_CHARTS_URL
+// to point at a Cloudflare R2 (or other CDN) URL hosting the converted
+// archive — see docs/plans/noaa-charts-pmtiles.md for the upload
+// runbook. When the env var is unset (or set to empty string), the
+// NOAA Charts button stays visible in the layer switcher but selecting
+// it renders a blank canvas with just the attribution string. This is
+// the default on local dev (without `.env.local`) and on any
+// environment that hasn't been configured with an R2 URL yet.
+const NOAA_CHARTS_PMTILES_URL = process.env.NEXT_PUBLIC_NOAA_CHARTS_URL ?? '';
 
 interface MapComponentProps {
   readonly sites: readonly Site[];
