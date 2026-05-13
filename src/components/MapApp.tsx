@@ -1,7 +1,7 @@
 'use client';
 
 import dynamic from 'next/dynamic';
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { css } from 'styled-system/css';
 
 import { createComposition } from '../composition-root';
@@ -10,6 +10,8 @@ import { registerServiceWorker } from '../lib/register-service-worker';
 import { useSelectedSite } from '../store/selected-site';
 
 import SiteInfoPanel from './panels/SiteInfoPanel';
+import MapSettingsButton from './MapSettingsButton';
+import MapSettingsDrawer from './MapSettingsDrawer';
 import ThemeToggleButton from './ThemeToggleButton';
 
 // OpenLayers touches `window` at import time, so dynamic-import with
@@ -69,6 +71,11 @@ export default function MapApp({ sites }: MapAppProps) {
   const composition = useMemo(() => createComposition(sites), [sites]);
   useSiteUrlSync(sites);
 
+  // Settings-drawer open state. Lifted here so the gear button and
+  // the drawer are siblings of the map without prop-drilling through
+  // the dynamic-imported MapComponent.
+  const [settingsOpen, setSettingsOpen] = useState(false);
+
   // Register the tile-cache service worker once on first mount. Skip
   // in dev (NODE_ENV check inside the helper), no-op without browser
   // SW support. The helper swallows its own failures so a rejected
@@ -93,6 +100,11 @@ export default function MapApp({ sites }: MapAppProps) {
       })}
     >
       <MapComponent sites={sites} getSite={composition.getSite} />
+      <MapSettingsButton onClick={() => setSettingsOpen(true)} />
+      <MapSettingsDrawer
+        open={settingsOpen}
+        onClose={() => setSettingsOpen(false)}
+      />
       <SiteInfoPanel />
       <ThemeToggleButton />
     </div>

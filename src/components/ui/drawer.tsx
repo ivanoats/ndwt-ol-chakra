@@ -30,6 +30,13 @@ interface DrawerProps {
   readonly onClose: () => void;
   readonly children: ReactNode;
   readonly placement?: 'right' | 'left';
+  /**
+   * Optional override for the panel's data-testid. Defaults to the
+   * historical 'site-info-panel' value so existing tests keep
+   * passing; supply a different id when mounting multiple drawers
+   * in the same tree to avoid `getByTestId` collisions.
+   */
+  readonly testId?: string;
 }
 
 export function Drawer({
@@ -37,6 +44,7 @@ export function Drawer({
   onClose,
   children,
   placement = 'right',
+  testId = 'site-info-panel',
 }: DrawerProps) {
   return (
     <Dialog.Root
@@ -63,7 +71,7 @@ export function Drawer({
           })}
         >
           <Dialog.Content
-            data-testid="site-info-panel"
+            data-testid={testId}
             className={css({
               ...content,
               ...(placement === 'right' ? rightPlacement : leftPlacement),
