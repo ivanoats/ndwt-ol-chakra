@@ -155,11 +155,22 @@ wired up; the steps below are the one-time bootstrap.
   MB of tiles.
 - **R2** has zero egress fees, S3-compatible API, and is what
   Protomaps' own demo (`r2-public.protomaps.com`) uses. The free
-  tier (10 GB-month storage + 1M Class A ops/month + 10M Class B
-  ops/month + zero egress) covers our workload — ~800 MB stored,
-  ~52 weekly writes, modest reads — entirely for free. Even at
-  100× current scale we stay inside the free tier. NDWT's actual
-  R2 bill is **$0**.
+  tier covers NDWT's workload entirely — actual bill is **$0**.
+
+  R2 free-tier limits and our usage against them:
+
+  | Resource | Free tier | NDWT usage (today) | NDWT usage (full Salish Sea projection) |
+  | --- | --- | --- | --- |
+  | Storage | 10 GB-month | ~500 MB (`ncds_20c`) | ~800 MB (`ncds_20b` + `ncds_20c`) |
+  | Class A ops (writes) | 1M / month | ~52 / year | ~104 / year |
+  | Class B ops (reads) | 10M / month | range-fetches per session | range-fetches per session |
+  | Egress | unmetered | unmetered | unmetered |
+
+  If we were entirely outside the free tier the storage cost would
+  be `0.5 GB × $0.015/GB/mo × 12 mo ≈ $0.09/year` (or `~$0.14/year`
+  at 800 MB full coverage); read ops at $0.36/million stay below
+  $0.05/year unless NDWT hits multi-million monthly sessions.
+  Cost is not a deployment blocker at any realistic NDWT scale.
 - **Backblaze B2** also works (fronted by Cloudflare CDN for free
   egress) — slightly more expensive and an extra layer of config.
 

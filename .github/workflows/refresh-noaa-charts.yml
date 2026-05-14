@@ -40,7 +40,12 @@ on:
 env:
   PMTILES_VERSION: '1.30.2'
   PMTILES_SHA256: '2cd3aa18868297fc88425038f794efdc0995e0275f4ca16fa496dd79e245a40c'
-  AWS_DEFAULT_REGION: 'auto' # R2 ignores the region but the CLI demands one
+  # R2 doesn't care about the region but the CLI demands one. Set
+  # both AWS_REGION and AWS_DEFAULT_REGION because different versions
+  # of the AWS CLI and other S3-compatible tools prioritize one or
+  # the other.
+  AWS_REGION: 'auto'
+  AWS_DEFAULT_REGION: 'auto'
 
 # Single-flight: if a manual run is triggered while the scheduled run
 # is in progress (or vice versa), let the in-progress run finish.
@@ -111,13 +116,14 @@ jobs:
             echo "::error::R2_ENDPOINT_URL secret is unset."; exit 1
           fi
           # `aws s3 cp` does multipart upload automatically for files
-          # above the threshold. The content-type override is for
-          # browser sanity; the PMTiles JS library doesn't actually
-          # check it, but a sensible MIME helps debugging.
+          # above the threshold. The content-type override is the
+          # officially-registered PMTiles MIME; some CDNs key their
+          # caching / security headers off MIME so the specific type
+          # matters for downstream tooling.
           aws s3 cp \
             "${REGION}.pmtiles" \
             "s3://${R2_BUCKET}/charts/${REGION}.pmtiles" \
             --endpoint-url "${R2_ENDPOINT_URL}" \
-            --content-type "application/octet-stream" \
+            --content-type "application/vnd.pmtiles" \
             --no-progress
           echo "Uploaded s3://${R2_BUCKET}/charts/${REGION}.pmtiles"
