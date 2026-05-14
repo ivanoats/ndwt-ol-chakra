@@ -69,6 +69,7 @@ ls -lh "${region}.pmtiles"
 echo "[3/3] Uploading to s3://${R2_BUCKET}/charts/${region}.pmtiles..."
 AWS_ACCESS_KEY_ID="${R2_ACCESS_KEY_ID}" \
 AWS_SECRET_ACCESS_KEY="${R2_SECRET_ACCESS_KEY}" \
+AWS_REGION="auto" \
 AWS_DEFAULT_REGION="auto" \
 AWS_EC2_METADATA_DISABLED="true" \
 aws s3 cp \
