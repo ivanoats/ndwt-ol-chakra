@@ -1,0 +1,129 @@
+name: Refresh NOAA charts to R2
+
+# NOAA's Chart Display Service rebuilds baseline MBTiles weekly. This
+# workflow re-downloads, converts to PMTiles, and uploads to the
+# Cloudflare R2 bucket that the production site reads from
+# (NEXT_PUBLIC_NOAA_CHARTS_URL in Netlify env vars).
+#
+# Defaults to NCDS region 20c (Puget Sound). Override the `region`
+# input on a manual run to refresh a different region — see
+# https://distribution.charts.noaa.gov/ncds/index.html for the list.
+#
+# Secrets the repo must have set (Settings → Secrets and variables →
+# Actions):
+#   R2_ACCESS_KEY_ID        — Cloudflare R2 API token's access key
+#   R2_SECRET_ACCESS_KEY    — Cloudflare R2 API token's secret
+#   R2_ENDPOINT_URL         — https://<ACCOUNT_ID>.r2.cloudflarestorage.com
+#                             (or https://<account>.r2.dev — either works
+#                             for the S3 API)
+#
+# Variables (Settings → Secrets and variables → Actions → Variables):
+#   R2_BUCKET               — bucket name (e.g. "wwta"); set in repo vars
+#                             so it's visible in workflow runs
+
+on:
+  schedule:
+    # Mondays 12:00 UTC — a few hours after NOAA's typical weekly
+    # publish window so the new baseline is up before we pull.
+    - cron: '0 12 * * 1'
+  workflow_dispatch:
+    inputs:
+      region:
+        description: 'NCDS region to refresh (e.g. ncds_20c)'
+        required: false
+        default: 'ncds_20c'
+        type: string
+
+# Pin the go-pmtiles release to a known-good version. Update by hand
+# (and verify the SHA256) when bumping. Releases at:
+# https://github.com/protomaps/go-pmtiles/releases
+env:
+  PMTILES_VERSION: '1.30.2'
+  PMTILES_SHA256: '2cd3aa18868297fc88425038f794efdc0995e0275f4ca16fa496dd79e245a40c'
+  # R2 doesn't care about the region but the CLI demands one. Set
+  # both AWS_REGION and AWS_DEFAULT_REGION because different versions
+  # of the AWS CLI and other S3-compatible tools prioritize one or
+  # the other.
+  AWS_REGION: 'auto'
+  AWS_DEFAULT_REGION: 'auto'
+
+# Single-flight: if a manual run is triggered while the scheduled run
+# is in progress (or vice versa), let the in-progress run finish.
+concurrency:
+  group: refresh-noaa-charts
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    name: Download, convert, and upload region
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: read
+    # Job-level env so REGION is set once and reused without
+    # interpolating ${{ inputs.region }} directly inside any run:
+    # block. The hook flags direct interpolation as a shell-injection
+    # surface even when the input is auth-gated by workflow_dispatch;
+    # using env: with quoted "$REGION" sidesteps it entirely.
+    env:
+      REGION: ${{ inputs.region || 'ncds_20c' }}
+    steps:
+      - name: Install pmtiles CLI
+        run: |
+          set -euo pipefail
+          curl -sSL -o pmtiles.tar.gz \
+            "https://github.com/protomaps/go-pmtiles/releases/download/v${PMTILES_VERSION}/go-pmtiles_${PMTILES_VERSION}_Linux_x86_64.tar.gz"
+          echo "${PMTILES_SHA256}  pmtiles.tar.gz" | sha256sum -c -
+          tar xzf pmtiles.tar.gz pmtiles
+          chmod +x pmtiles
+          ./pmtiles version
+
+      - name: Download NCDS MBTiles
+        run: |
+          set -euo pipefail
+          echo "Fetching ${REGION}.mbtiles from NOAA NCDS..."
+          curl -sSL --fail --max-time 600 -o "${REGION}.mbtiles" \
+            "https://distribution.charts.noaa.gov/ncds/mbtiles/${REGION}.mbtiles"
+          # Sanity: NCDS regions are at minimum 30 MB. Anything smaller
+          # is likely an upstream 404 served as HTML.
+          size=$(stat -c%s "${REGION}.mbtiles")
+          if [ "$size" -lt 30000000 ]; then
+            echo "::error::Downloaded file is only $size bytes — NOAA may have moved the region or the URL changed."
+            head -c 200 "${REGION}.mbtiles"
+            exit 1
+          fi
+          echo "Downloaded ${size} bytes."
+
+      - name: Convert MBTiles → PMTiles
+        run: |
+          set -euo pipefail
+          ./pmtiles convert "${REGION}.mbtiles" "${REGION}.pmtiles"
+          ls -lh "${REGION}.pmtiles"
+
+      - name: Upload PMTiles to R2
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+          AWS_EC2_METADATA_DISABLED: 'true'
+          R2_BUCKET: ${{ vars.R2_BUCKET }}
+          R2_ENDPOINT_URL: ${{ secrets.R2_ENDPOINT_URL }}
+        run: |
+          set -euo pipefail
+          if [ -z "${R2_BUCKET:-}" ]; then
+            echo "::error::R2_BUCKET repo variable is unset."; exit 1
+          fi
+          if [ -z "${R2_ENDPOINT_URL:-}" ]; then
+            echo "::error::R2_ENDPOINT_URL secret is unset."; exit 1
+          fi
+          # `aws s3 cp` does multipart upload automatically for files
+          # above the threshold. The content-type override is the
+          # officially-registered PMTiles MIME; some CDNs key their
+          # caching / security headers off MIME so the specific type
+          # matters for downstream tooling.
+          aws s3 cp \
+            "${REGION}.pmtiles" \
+            "s3://${R2_BUCKET}/charts/${REGION}.pmtiles" \
+            --endpoint-url "${R2_ENDPOINT_URL}" \
+            --content-type "application/vnd.pmtiles" \
+            --no-progress
+          echo "Uploaded s3://${R2_BUCKET}/charts/${REGION}.pmtiles"

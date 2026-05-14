@@ -37,8 +37,7 @@ skills-lock.json
 __pycache__/
 wwta-galleries.json
 /.charts-poc/
-# Track only the committed demo PMTiles (a small Puget Sound extract
-# at z0-12, ~11 MB). All other PMTiles in this directory are big
-# dev-only files staged from .charts-poc/.
-/public/data/charts/*
-!/public/data/charts/puget-sound-demo.pmtiles
+# Dev-only staging area for NOAA PMTiles archives. Production serves
+# these from Cloudflare R2 via NEXT_PUBLIC_NOAA_CHARTS_URL — nothing
+# in this directory ships through Netlify.
+/public/data/charts/

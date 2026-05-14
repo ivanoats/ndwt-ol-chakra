@@ -1,23 +1,23 @@
-# NOAA charts via MBTiles → PMTiles (PoC)
+# NOAA charts via MBTiles → PMTiles
 
-Plan + runbook for adding NOAA Chart Display Service raster charts as a
-basemap option, hosted as a PMTiles archive served via HTTP range
-requests. Status: **PoC complete, deployment paused until NDWT route
-extends to Salish Sea.**
+Plan + runbook for the NOAA Chart Display Service raster charts as a
+basemap option, hosted as a PMTiles archive on Cloudflare R2 and
+served via HTTP range requests. **Status: shipped behind a Netlify
+env var.**
 
 ## Status
 
-| Step                                                     | Status                                                                                                                                             |
-| -------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Identify NOAA MBTiles distribution and download workflow | ✅                                                                                                                                                 |
-| Convert MBTiles → PMTiles via `go-pmtiles` CLI           | ✅                                                                                                                                                 |
-| Wire `ol-pmtiles` into the existing OL layer pipeline    | ✅                                                                                                                                                 |
-| Visual confirmation: charts render correctly in dev      | ✅ (Puget Sound + San Juans, zooms 10 + 13)                                                                                                        |
-| Range-request behavior verified (no full-file fetch)     | ✅                                                                                                                                                 |
-| Demo extract committed to repo for Netlify previews      | ✅ (`public/data/charts/puget-sound-demo.pmtiles`, 11 MB at z0-12)                                                                                 |
-| External hosting (R2 / B2) for full-resolution coverage  | ⏸ deferred — needed only when NDWT adds Salish Sea waypoints                                                                                       |
-| Refresh automation (weekly NOAA updates)                 | ⏸ deferred                                                                                                                                         |
-| User-facing ship                                         | 🚦 conditional — demo is live on Netlify previews and main, but the NOAA Charts button only renders meaningfully when the user pans to Puget Sound |
+| Step                                                     | Status                                                                  |
+| -------------------------------------------------------- | ----------------------------------------------------------------------- |
+| Identify NOAA MBTiles distribution and download workflow | ✅                                                                      |
+| Convert MBTiles → PMTiles via `go-pmtiles` CLI           | ✅                                                                      |
+| Wire `ol-pmtiles` into the existing OL layer pipeline    | ✅ (PR #73)                                                             |
+| Visual confirmation: charts render correctly in dev      | ✅ (Puget Sound + San Juans, zooms 10 + 13)                             |
+| Range-request behavior verified (no full-file fetch)     | ✅                                                                      |
+| Cloudflare R2 hosting for full-resolution coverage       | ✅ (PR #74, bucket: `wwta`)                                             |
+| Weekly refresh GitHub Action                             | ✅ (`.github/workflows/refresh-noaa-charts.yml`)                        |
+| Manual upload runbook script                             | ✅ (`scripts/upload-noaa-charts.sh`)                                    |
+| User-facing ship                                         | 🚦 gated on `NEXT_PUBLIC_NOAA_CHARTS_URL` being set in Netlify env vars |
 
 ## Why PMTiles instead of a tile server
 
@@ -78,15 +78,12 @@ hosting too.
 
 ### Runtime URL resolution
 
-The NOAA chart layer's source URL falls through three levels:
-
-1. `NEXT_PUBLIC_NOAA_CHARTS_URL` env var — production override (e.g.
-   an R2/B2 CDN URL with full Salish Sea coverage)
-2. The committed demo file at `/data/charts/puget-sound-demo.pmtiles`
-   — works out of the box on `main`, Netlify previews, and local dev
-3. Empty-string sentinel — explicitly disables the layer (button
-   stays in the switcher but renders blank). Set
-   `NEXT_PUBLIC_NOAA_CHARTS_URL=""` to opt out.
+The NOAA chart layer's source URL comes from
+`NEXT_PUBLIC_NOAA_CHARTS_URL` at build time. When the env var is
+unset (or empty string), the layer's source is `undefined` —
+selecting "NOAA Charts" in the layer switcher renders a blank canvas
+with just the attribution string. This is the default on `main` and
+on any environment that hasn't been configured.
 
 ```ts
 const noaaChartsLayer = new TileLayer<DataTileSource>({
@@ -102,43 +99,27 @@ const noaaChartsLayer = new TileLayer<DataTileSource>({
 });
 ```
 
-### Committed demo file
+### Dev workflow (local PMTiles)
 
-`public/data/charts/puget-sound-demo.pmtiles` is a 11 MB extract of
-`ncds_20c` covering Puget Sound + the eastern Olympic Peninsula at
-z0-12. Generated with:
-
-```sh
-pmtiles extract ncds_20c.pmtiles puget-sound-demo.pmtiles \
-  --bbox=-123.3,47.0,-122.2,48.8 --maxzoom=12
-```
-
-This file is intentionally tracked in git (the `.gitignore` carves
-out an exception) so Netlify deploy previews can show the layer
-working without external hosting. Refresh it manually by re-running
-the extract command above against a freshly-downloaded
-`ncds_20c.mbtiles`.
-
-### Dev workflow
+For local dev without R2 credentials, you can serve a PMTiles file
+from the dev server directly:
 
 ```sh
-# 1. Pick a region (see "Finding the right region" below)
+# 1. Download + convert (requires `brew install pmtiles`)
 mkdir -p .charts-poc public/data/charts
 cd .charts-poc
 curl -LO https://distribution.charts.noaa.gov/ncds/mbtiles/ncds_20c.mbtiles
-
-# 2. Convert to PMTiles (requires `pmtiles` CLI — `brew install pmtiles`)
 pmtiles convert ncds_20c.mbtiles ncds_20c.pmtiles
 
-# 3. Stage in public/ for Next dev
+# 2. Stage in public/ for Next dev
 cp ncds_20c.pmtiles ../public/data/charts/
 
-# 4. Point the dev env at it
+# 3. Point the dev env at it
 cat > ../.env.local <<EOF
 NEXT_PUBLIC_NOAA_CHARTS_URL=/data/charts/ncds_20c.pmtiles
 EOF
 
-# 5. Start dev
+# 4. Start dev
 cd .. && npm run dev
 ```
 
@@ -160,70 +141,148 @@ curl -s 'https://gis.charttools.noaa.gov/arcgis/rest/services/MarineChart_Servic
 The Salish Sea splits across `ncds_20b` (north — San Juans + Strait of
 Juan de Fuca) and `ncds_20c` (south — Puget Sound proper).
 
-## Deployment path (when we decide to ship)
+## Production deployment
 
-### 1. Pick a CDN with range-request support and free/cheap egress
+NDWT serves the production chart layer from **Cloudflare R2** (bucket
+`wwta`). Two automated mechanisms keep the archive fresh and the site
+wired up; the steps below are the one-time bootstrap.
 
-- **Cloudflare R2** — Protomaps' own demos use R2 (zero egress fees,
-  S3-compatible API). Recommended.
-- **Backblaze B2** — also viable, slightly more expensive on
-  egress but Cloudflare CDN fronts it for free.
-- **DO NOT** ship the `.pmtiles` archive via Netlify. Their per-file
-  cap and 100GB/mo bandwidth budget will both bite. Netlify Large
-  Media was deprecated 2023-09-01 with no replacement.
+### Why R2 (not Netlify, not Backblaze)
 
-### 2. Set CORS + range headers on the bucket
+- **Not Netlify** — Large Media was deprecated 2023-09-01; per-file
+  asset caps and 100 GB/mo bandwidth on the free tier both bite when
+  the archive is ~500 MB and every map session range-fetches tens of
+  MB of tiles.
+- **R2** has zero egress fees, S3-compatible API, and is what
+  Protomaps' own demo (`r2-public.protomaps.com`) uses. The free
+  tier covers NDWT's workload entirely — actual bill is **$0**.
 
-R2 custom domains do this by default. Verify with:
+  R2 free-tier limits and our usage against them:
+
+  | Resource             | Free tier   | NDWT usage (today)        | NDWT usage (full Salish Sea projection) |
+  | -------------------- | ----------- | ------------------------- | --------------------------------------- |
+  | Storage              | 10 GB-month | ~500 MB (`ncds_20c`)      | ~800 MB (`ncds_20b` + `ncds_20c`)       |
+  | Class A ops (writes) | 1M / month  | ~52 / year                | ~104 / year                             |
+  | Class B ops (reads)  | 10M / month | range-fetches per session | range-fetches per session               |
+  | Egress               | unmetered   | unmetered                 | unmetered                               |
+
+  If we were entirely outside the free tier the storage cost would
+  be `0.5 GB × $0.015/GB/mo × 12 mo ≈ $0.09/year` (or `~$0.14/year`
+  at 800 MB full coverage); read ops at $0.36/million stay below
+  $0.05/year unless NDWT hits multi-million monthly sessions.
+  Cost is not a deployment blocker at any realistic NDWT scale.
+
+- **Backblaze B2** also works (fronted by Cloudflare CDN for free
+  egress) — slightly more expensive and an extra layer of config.
+
+### One-time bootstrap
+
+#### 1. Set GitHub Actions secrets
+
+Repo settings → Secrets and variables → Actions → New repository
+secret. Add three secrets:
+
+```text
+R2_ACCESS_KEY_ID         — from Cloudflare dashboard → R2 → Manage R2 API tokens
+R2_SECRET_ACCESS_KEY     — generated alongside R2_ACCESS_KEY_ID
+R2_ENDPOINT_URL          — https://<ACCOUNT_ID>.r2.cloudflarestorage.com
+```
+
+The R2 API token should be scoped **Read + Write** on the `wwta`
+bucket only (least privilege; lets you rotate it independently of
+other R2 access if needed).
+
+#### 2. Set GitHub Actions variables
+
+Same UI, "Variables" tab. Add one repo variable:
+
+```text
+R2_BUCKET                — wwta
+```
+
+Variables are visible in workflow logs; secrets aren't. Bucket name
+is non-sensitive so it lives as a variable.
+
+#### 3. First upload
+
+Either trigger the workflow manually:
 
 ```sh
-curl -sI -r 0-1023 https://your-bucket.example.com/ncds_20c.pmtiles
+gh workflow run refresh-noaa-charts.yml
+gh run watch
+```
+
+Or run the manual script (requires the same R2 env vars in your
+shell):
+
+```sh
+export R2_ACCESS_KEY_ID=...
+export R2_SECRET_ACCESS_KEY=...
+export R2_ENDPOINT_URL=https://<ACCOUNT_ID>.r2.cloudflarestorage.com
+export R2_BUCKET=wwta
+./scripts/upload-noaa-charts.sh ncds_20c
+```
+
+Both paths produce `s3://wwta/charts/ncds_20c.pmtiles`.
+
+#### 4. Verify the file is publicly readable with range requests
+
+```sh
+# Replace with your actual public R2 URL (r2.dev or custom domain):
+curl -sI -r 0-1023 https://<your-public-r2-url>/charts/ncds_20c.pmtiles
 # Expect:
 #   HTTP/2 206
 #   accept-ranges: bytes
-#   access-control-allow-origin: *  (or your origin)
+#   access-control-allow-origin: *
 ```
 
-### 3. Set the production env var
+If CORS is missing, configure it on the R2 bucket dashboard:
 
-In Netlify site settings → Environment variables:
+```json
+[
+  {
+    "AllowedOrigins": ["*"],
+    "AllowedMethods": ["GET", "HEAD"],
+    "AllowedHeaders": ["Range"],
+    "ExposeHeaders": ["Accept-Ranges", "Content-Range", "Content-Length"]
+  }
+]
+```
+
+Tighten `AllowedOrigins` to your specific domains once you're done
+testing.
+
+#### 5. Set the Netlify env var
+
+In the Netlify site dashboard → Site configuration → Environment
+variables → Add a variable:
 
 ```text
-NEXT_PUBLIC_NOAA_CHARTS_URL=https://your-bucket.example.com/ncds_20c.pmtiles
+NEXT_PUBLIC_NOAA_CHARTS_URL = https://<your-public-r2-url>/charts/ncds_20c.pmtiles
 ```
 
-The variable is read at build time by Next, so any change requires
-redeploying.
+`NEXT_PUBLIC_*` is read at build time by Next, so the next deploy
+will pick it up. Trigger a redeploy or push any commit.
 
-### 4. Weekly refresh automation
+### Ongoing operation
 
-NOAA regenerates baseline MBTiles weekly. A GitHub Actions cron should:
+- **Weekly refresh** runs automatically via
+  `.github/workflows/refresh-noaa-charts.yml` — Mondays at 12:00 UTC.
+  The workflow downloads the latest NOAA NCDS region 20c, converts to
+  PMTiles, and uploads to R2 at the same path. PMTiles is content-
+  addressed by tile bytes, so unchanged tiles produce identical
+  range-response payloads; browsers' HTTP caches degrade gracefully.
+- **Manual refresh** for ad-hoc updates: `gh workflow run
+refresh-noaa-charts.yml -f region=ncds_20c` (or any other NCDS
+  region name).
+- **Cloudflare edge cache**: R2 doesn't front-cache by default; if
+  you've enabled Cloudflare CDN caching on the bucket's custom
+  domain, you may need to purge it after a refresh. The PMTiles
+  format tolerates a mismatch between the directory and tile content
+  briefly (PMTiles JS re-reads the header on each session), but
+  consistent post-refresh behavior requires purging.
 
-```yaml
-# .github/workflows/refresh-noaa-charts.yml
-on:
-  schedule:
-    - cron: '0 12 * * 1' # Mondays at noon UTC
-jobs:
-  refresh:
-    runs-on: ubuntu-latest
-    steps:
-      - run: |
-          curl -LO https://distribution.charts.noaa.gov/ncds/mbtiles/ncds_20c.mbtiles
-          # install pmtiles binary
-          curl -L https://github.com/protomaps/go-pmtiles/releases/.../pmtiles-linux-amd64.tar.gz | tar xz
-          ./pmtiles convert ncds_20c.mbtiles ncds_20c.pmtiles
-          # upload to R2 via rclone or aws-cli
-          aws s3 cp ncds_20c.pmtiles s3://${{ secrets.R2_BUCKET }}/ncds_20c.pmtiles \
-            --endpoint-url ${{ secrets.R2_ENDPOINT }}
-```
-
-Cache invalidation: R2's edge cache is content-addressed, so a new
-file with identical contents won't bust caches; but a new tile fetch
-re-fetches the archive's directory entries, which read the new
-content. No explicit invalidation needed.
-
-### 5. Service worker scope — do NOT add R2 host to TILE_HOSTS
+### Service worker scope — do NOT add R2 host to TILE_HOSTS
 
 `public/sw.js` intercepts tile fetches cache-first per ADR
 [0004](../decisions/0004-tile-resilience.md). Adding the R2 host
@@ -232,7 +291,7 @@ defeating the whole point. The existing SW config is correct as-is:
 PMTiles requests pass through to the browser's HTTP cache, which
 handles range responses correctly.
 
-## Known gaps in this PoC
+## Known gaps
 
 1. **No tile-health tracking on the chart layer.** The Tier 1+2
    `tileloadend` / `tileloaderror` wiring in `map.tsx` only attaches
@@ -242,10 +301,11 @@ handles range responses correctly.
    confirming the equivalent events on `DataTileSource`. Low
    priority — the chart layer's failure mode is "blank canvas at the
    right coordinate," which is visible enough.
-2. **No e2e coverage.** The PoC was visually validated in dev only.
-   Before shipping, an e2e should at least confirm the layer button
-   appears and the layer renders without errors when the env var is
-   set.
+2. **No e2e coverage of the R2-served layer.** The Netlify env var
+   isn't set on PR-preview deploys (only on production), so an e2e
+   that asserts chart tiles render only fires meaningfully on
+   `main`. The LayerSwitcher button test (added in PR #73) is the
+   only unit coverage today.
 3. **No `LayerKey` mapping for tile-health.** `'noaa-charts'` is
    included in `BaseMapId` so the type system accepts it, but no
    tracker calls it.
@@ -253,28 +313,12 @@ handles range responses correctly.
 navigation</strong>`. OL renders attribution as HTML by default;
    double-check this works in the production attribution control
    before shipping.
-5. **Chart edges are abrupt.** The PMTiles archive covers only
-   Puget Sound; panning the chart layer east of the Cascades shows
-   no tiles at all (tile fetches return undefined → blank). A future
-   refinement could compose two PMTiles archives (`ncds_20b` +
-   `ncds_20c`) into a single archive via the `pmtiles merge` command
-   so the chart layer covers the full Salish Sea seamlessly.
-
-## Decision: ship vs defer
-
-This PoC proves the pipeline is real and the integration is small
-(~30 LOC of source changes + a 50MB env-flagged data plumbing
-diff). Shipping it today would mean:
-
-- Pro: ready for the day NDWT extends to the Salish Sea
-- Pro: technically a no-op for current users (env var unset)
-- Con: confusing UI — clicking "NOAA Charts" today shows nothing
-- Con: ongoing CDN cost (R2 zero-egress is "free" but storage is
-  ~$0.015/GB/mo, so 800 MB = $12/year)
-- Con: weekly refresh job is real ops work for zero current user value
-
-Recommendation: **keep the PoC branch alive, do not merge to `main`
-yet.** When NDWT's `public/data/ndwt.geojson` gains its first Salish
-Sea launch site, that's the trigger to pick this up. The branch can
-be rebased onto `main` and merged with no source-tree changes
-beyond what's already in it.
+5. **Chart edges are abrupt.** The R2-hosted archive currently
+   covers only `ncds_20c` (Puget Sound); panning west into the
+   Strait of Juan de Fuca or north into the Gulf Islands shows no
+   tiles. To extend coverage, the GHA workflow accepts a `region`
+   input — run `gh workflow run refresh-noaa-charts.yml -f
+region=ncds_20b` to upload `ncds_20b.pmtiles` alongside. A future
+   refinement could compose multiple archives into one via the
+   `pmtiles merge` command so the chart layer covers the full
+   Salish Sea seamlessly.
