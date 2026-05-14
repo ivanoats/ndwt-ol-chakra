@@ -154,8 +154,12 @@ wired up; the steps below are the one-time bootstrap.
   the archive is ~500 MB and every map session range-fetches tens of
   MB of tiles.
 - **R2** has zero egress fees, S3-compatible API, and is what
-  Protomaps' own demo (`r2-public.protomaps.com`) uses. Storage
-  alone is the cost: 800 MB at $0.015/GB/mo = ~$12/year.
+  Protomaps' own demo (`r2-public.protomaps.com`) uses. The free
+  tier (10 GB-month storage + 1M Class A ops/month + 10M Class B
+  ops/month + zero egress) covers our workload — ~800 MB stored,
+  ~52 weekly writes, modest reads — entirely for free. Even at
+  100× current scale we stay inside the free tier. NDWT's actual
+  R2 bill is **$0**.
 - **Backblaze B2** also works (fronted by Cloudflare CDN for free
   egress) — slightly more expensive and an extra layer of config.
 
