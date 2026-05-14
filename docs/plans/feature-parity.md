@@ -11,11 +11,15 @@
 | 12    | Natural World + Past & Present                        | In review     |
 | 13    | About expansion + Get Involved + Photo Gallery        | In review     |
 | 14    | Cutover — redirects, sitemap, SEO, custom-domain swap | Planned       |
+| 15    | Recreation.gov site-info enrichment feasibility       | Planned       |
 
 This plan picks up where
 [`modernization.md`](./modernization.md) left off (phases 1–7).
 Same shape: one PR per phase, each independently reviewable, bot
 triage on every PR before requesting human review.
+
+Recreation.gov follow-up research and plan:
+[`recreation-gov-site-info.md`](./recreation-gov-site-info.md).
 
 ## Context
 
