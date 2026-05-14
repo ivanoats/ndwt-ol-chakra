@@ -159,18 +159,19 @@ wired up; the steps below are the one-time bootstrap.
 
   R2 free-tier limits and our usage against them:
 
-  | Resource | Free tier | NDWT usage (today) | NDWT usage (full Salish Sea projection) |
-  | --- | --- | --- | --- |
-  | Storage | 10 GB-month | ~500 MB (`ncds_20c`) | ~800 MB (`ncds_20b` + `ncds_20c`) |
-  | Class A ops (writes) | 1M / month | ~52 / year | ~104 / year |
-  | Class B ops (reads) | 10M / month | range-fetches per session | range-fetches per session |
-  | Egress | unmetered | unmetered | unmetered |
+  | Resource             | Free tier   | NDWT usage (today)        | NDWT usage (full Salish Sea projection) |
+  | -------------------- | ----------- | ------------------------- | --------------------------------------- |
+  | Storage              | 10 GB-month | ~500 MB (`ncds_20c`)      | ~800 MB (`ncds_20b` + `ncds_20c`)       |
+  | Class A ops (writes) | 1M / month  | ~52 / year                | ~104 / year                             |
+  | Class B ops (reads)  | 10M / month | range-fetches per session | range-fetches per session               |
+  | Egress               | unmetered   | unmetered                 | unmetered                               |
 
   If we were entirely outside the free tier the storage cost would
   be `0.5 GB × $0.015/GB/mo × 12 mo ≈ $0.09/year` (or `~$0.14/year`
   at 800 MB full coverage); read ops at $0.36/million stay below
   $0.05/year unless NDWT hits multi-million monthly sessions.
   Cost is not a deployment blocker at any realistic NDWT scale.
+
 - **Backblaze B2** also works (fronted by Cloudflare CDN for free
   egress) — slightly more expensive and an extra layer of config.
 
