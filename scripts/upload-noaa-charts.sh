@@ -76,7 +76,7 @@ aws s3 cp \
   "${region}.pmtiles" \
   "s3://${R2_BUCKET}/charts/${region}.pmtiles" \
   --endpoint-url "${R2_ENDPOINT_URL}" \
-  --content-type "application/octet-stream"
+  --content-type "application/vnd.pmtiles"
 
 echo
 echo "Done. The PMTiles archive is now at:"
