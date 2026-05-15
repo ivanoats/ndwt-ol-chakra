@@ -11,9 +11,9 @@ jobs:
   wsg-check:
     name: WSG sustainability check
     runs-on: ubuntu-latest
-    # Advisory only on day 1: --fail-threshold 0 means the job
-    # never fails on the score. Promote to a real threshold once
-    # we've seen a few baseline reports against the deploy preview.
+    # Ratchet 1: threshold raised to 50 (clamp minimum) after confirming
+    # 5 successful WSG runs on PRs #71–#75. Score data was not retrievable
+    # in this environment; tighten further once scores are observable.
     env:
       PREVIEW_URL: https://deploy-preview-${{ github.event.pull_request.number }}--ndwt-ol-chakra.netlify.app
     steps:
@@ -42,7 +42,7 @@ jobs:
             "$PREVIEW_URL" \
             --format json \
             --output wsg-report.json \
-            --fail-threshold 0
+            --fail-threshold 50
 
       - name: Run wsg-check (Markdown report)
         run: |
@@ -50,7 +50,7 @@ jobs:
             "$PREVIEW_URL" \
             --format markdown \
             --output wsg-report.md \
-            --fail-threshold 0
+            --fail-threshold 50
 
       - name: Print Markdown report to job summary
         if: always()
