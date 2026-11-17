@@ -4,13 +4,15 @@ import ArticleLayout from '@/components/editorial/ArticleLayout';
 import { Heading } from '@/components/ui/heading';
 import { Link } from '@/components/ui/link';
 import { Text } from '@/components/ui/text';
+import { pageMetadata } from '@/lib/page-metadata';
 
-export const metadata: Metadata = {
-  title: 'Contact — About — Northwest Discovery Water Trail',
+export const metadata: Metadata = pageMetadata({
+  title: 'Contact — About',
+  path: '/about/contact/',
   description:
     'Get in touch with the Washington Water Trails Association about ' +
     'the Northwest Discovery Water Trail.',
-};
+});
 
 export default function ContactPage() {
   return (

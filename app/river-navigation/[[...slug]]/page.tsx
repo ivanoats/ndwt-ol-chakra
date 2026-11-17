@@ -4,6 +4,7 @@ import { type ComponentType } from 'react';
 
 import ArticleLayout from '@/components/editorial/ArticleLayout';
 import SectionIndex from '@/components/editorial/SectionIndex';
+import { pageMetadata } from '@/lib/page-metadata';
 
 import LockAndDam from '../../../content/river-navigation/lock-and-dam.mdx';
 import PortageGuide from '../../../content/river-navigation/portage-guide.mdx';
@@ -59,17 +60,20 @@ export async function generateMetadata({
   const { slug } = await params;
   const sub = slug?.[0];
   if (sub === undefined) {
-    return {
-      title: `${SECTION_TITLE} — Northwest Discovery Water Trail`,
+    return pageMetadata({
+      title: SECTION_TITLE,
       description: SECTION_DESC,
-    };
+      path: '/river-navigation/',
+    });
   }
   const entry = PAGES[sub];
   if (entry === undefined) return {};
-  return {
-    title: `${entry.title} — ${SECTION_TITLE} — Northwest Discovery Water Trail`,
+  return pageMetadata({
+    title: `${entry.title} — ${SECTION_TITLE}`,
     description: entry.summary,
-  };
+    path: `/river-navigation/${sub}/`,
+    type: 'article',
+  });
 }
 
 export default async function RiverNavigationPage({ params }: PageProps) {

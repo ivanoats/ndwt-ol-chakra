@@ -5,6 +5,8 @@ import { css } from 'styled-system/css';
 import { loadSites } from '@/adapters/inbound/next/load-sites';
 import { SiteBody, SiteHeading } from '@/components/panels/SiteDetails';
 import { Link } from '@/components/ui/link';
+import { pageMetadata } from '@/lib/page-metadata';
+import { sitePath } from '@/lib/site-routes';
 
 interface RouteParams {
   readonly slug: string;
@@ -29,15 +31,12 @@ export async function generateMetadata({
   const segmentSuffix =
     site.riverSegment !== '' ? ` — ${site.riverSegment}` : '';
   const desc = `${site.riverName} River, mile ${site.riverMile}${segmentSuffix}`;
-  return {
-    title: `${site.name} — Northwest Discovery Water Trail`,
+  return pageMetadata({
+    title: site.name,
     description: desc,
-    openGraph: {
-      title: site.name,
-      description: desc,
-      type: 'article',
-    },
-  };
+    path: sitePath(site.slug),
+    type: 'article',
+  });
 }
 
 const pageStyle = css({

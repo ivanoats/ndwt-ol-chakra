@@ -2,11 +2,13 @@ import type { Metadata } from 'next';
 
 import ArticleLayout from '@/components/editorial/ArticleLayout';
 import { Link } from '@/components/ui/link';
+import { pageMetadata } from '@/lib/page-metadata';
 
-export const metadata: Metadata = {
-  title: 'About — Northwest Discovery Water Trail',
+export const metadata: Metadata = pageMetadata({
+  title: 'About',
+  path: '/about/',
   description: 'About the Northwest Discovery Water Trail and this map site.',
-};
+});
 
 export default function AboutPage() {
   return (
