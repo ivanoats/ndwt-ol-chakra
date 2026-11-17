@@ -14,6 +14,10 @@ repo only prepares the site to receive the traffic.
     two 301 hops, first to `/sites/legacy/<id>/` and then to
     `/sites/<slug>/`, because Netlify can capture a query value but
     can't match on an exact one.
+    Netlify forwards the original query string along both hops, so
+    the browser lands on `/sites/<slug>/?site=<id>`. That's harmless:
+    the page ignores the parameter and its canonical tag names the
+    clean URL. Netlify has no documented way to strip it.
   - Every editorial `.asp` page whose copy was ported (17 pages).
   - Catch-alls for each legacy section directory, then `/ndwt/*` → `/`.
 - **Sitemap and robots.** `out/sitemap.xml` (every static, editorial,
