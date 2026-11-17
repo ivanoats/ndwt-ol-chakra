@@ -4,16 +4,24 @@ import { css } from 'styled-system/css';
 
 import Footer from '../src/components/layout/Footer';
 import Header from '../src/components/layout/Header';
+import { SITE_DESCRIPTION, SITE_NAME } from '../src/lib/page-metadata';
+import { SITE_URL } from '../src/lib/site-url';
 
 import { Providers } from './providers';
 
 import './globals.css';
 
+// Site-wide defaults. Each page sets its own title, description,
+// canonical URL, and share card via pageMetadata() (see
+// src/lib/page-metadata.ts); these defaults cover only routes that
+// don't, such as the 404 page.
 export const metadata: Metadata = {
-  title: 'Northwest Discovery Water Trail',
-  description:
-    'A 367-mile recreational boating route on the Snake, Columbia, and ' +
-    'Clearwater rivers — Canoe Camp to Bonneville Dam.',
+  // Resolves the relative canonical/OpenGraph URLs every page emits
+  // into absolute ones. See src/lib/site-url.ts for how the origin
+  // is chosen at build time.
+  metadataBase: new URL(SITE_URL),
+  title: SITE_NAME,
+  description: SITE_DESCRIPTION,
   icons: {
     // 192/512 stay in the manifest only — they're for PWA install
     // surfaces, not for the browser-tab icon that <link rel="icon">

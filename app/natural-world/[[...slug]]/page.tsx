@@ -4,6 +4,7 @@ import { type ComponentType } from 'react';
 
 import ArticleLayout from '@/components/editorial/ArticleLayout';
 import SectionIndex from '@/components/editorial/SectionIndex';
+import { pageMetadata } from '@/lib/page-metadata';
 
 import FloraFauna from '../../../content/natural-world/flora-fauna.mdx';
 import Geology from '../../../content/natural-world/geology.mdx';
@@ -67,17 +68,20 @@ export async function generateMetadata({
   const { slug } = await params;
   const sub = slug?.[0];
   if (sub === undefined) {
-    return {
-      title: `${SECTION_TITLE} — Northwest Discovery Water Trail`,
+    return pageMetadata({
+      title: SECTION_TITLE,
       description: SECTION_DESC,
-    };
+      path: '/natural-world/',
+    });
   }
   const entry = PAGES[sub];
   if (entry === undefined) return {};
-  return {
-    title: `${entry.title} — ${SECTION_TITLE} — Northwest Discovery Water Trail`,
+  return pageMetadata({
+    title: `${entry.title} — ${SECTION_TITLE}`,
     description: entry.summary,
-  };
+    path: `/natural-world/${sub}/`,
+    type: 'article',
+  });
 }
 
 export default async function NaturalWorldPage({ params }: PageProps) {

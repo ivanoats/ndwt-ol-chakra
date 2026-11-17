@@ -4,6 +4,7 @@ import { type ComponentType } from 'react';
 
 import ArticleLayout from '@/components/editorial/ArticleLayout';
 import SectionIndex from '@/components/editorial/SectionIndex';
+import { pageMetadata } from '@/lib/page-metadata';
 
 import BargeTraffic from '../../../content/water-safety/barge-traffic.mdx';
 import Communications from '../../../content/water-safety/communications.mdx';
@@ -90,17 +91,20 @@ export async function generateMetadata({
   const { slug } = await params;
   const sub = slug?.[0];
   if (sub === undefined) {
-    return {
-      title: `${SECTION_TITLE} — Northwest Discovery Water Trail`,
+    return pageMetadata({
+      title: SECTION_TITLE,
       description: SECTION_DESC,
-    };
+      path: '/water-safety/',
+    });
   }
   const entry = PAGES[sub];
   if (entry === undefined) return {};
-  return {
-    title: `${entry.title} — ${SECTION_TITLE} — Northwest Discovery Water Trail`,
+  return pageMetadata({
+    title: `${entry.title} — ${SECTION_TITLE}`,
     description: entry.summary,
-  };
+    path: `/water-safety/${sub}/`,
+    type: 'article',
+  });
 }
 
 export default async function WaterSafetyPage({ params }: PageProps) {

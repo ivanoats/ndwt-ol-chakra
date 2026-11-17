@@ -4,13 +4,15 @@ import ArticleLayout from '@/components/editorial/ArticleLayout';
 import { Heading } from '@/components/ui/heading';
 import { Link } from '@/components/ui/link';
 import { Text } from '@/components/ui/text';
+import { pageMetadata } from '@/lib/page-metadata';
 
-export const metadata: Metadata = {
-  title: 'Photo Gallery — About — Northwest Discovery Water Trail',
+export const metadata: Metadata = pageMetadata({
+  title: 'Photo Gallery — About',
+  path: '/about/photo-gallery/',
   description:
     'Photos of the Northwest Discovery Water Trail are hosted by the ' +
     'Washington Water Trails Association.',
-};
+});
 
 // Link directly to WWTA's dedicated Northwest Discovery Water Trail
 // photo gallery page so the CTA lands on the gallery itself.

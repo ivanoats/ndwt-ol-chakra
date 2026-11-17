@@ -200,6 +200,18 @@ section in `docs/plans/modernization.md`.
   unaffected. For local offline testing run
   `npm run build && npm run preview` (SW works on localhost over
   HTTP).
+- **Legacy redirects are generated, not hand-written.**
+  `app/%5Fredirects/route.ts` (the `%5F` escapes App Router's
+  private-folder `_` prefix) renders `out/_redirects` from
+  `src/lib/legacy-redirects.ts`. Adding a page means adding it to
+  `src/lib/site-routes.ts` too; `site-routes.test.ts` fails if a
+  `page.tsx` or `content/**/*.mdx` file is missing from the manifest.
+- **Page metadata goes through `pageMetadata()`** in
+  `src/lib/page-metadata.ts`. Next merges metadata shallowly, so a
+  page that sets its own `openGraph` loses the layout's. The helper
+  builds the full set each time. Absolute URLs come from
+  `metadataBase`, which resolves `SITE_URL`, then Netlify's `URL`
+  (`src/lib/site-url.ts`).
 - **Sonar's CI Action and Sonar's automatic analysis collide**.
   Automatic analysis must be off in the SonarCloud project
   settings (Administration → Analysis Method) for the Action's
