@@ -5,8 +5,11 @@ name: Refresh NOAA charts to R2
 # Cloudflare R2 bucket that the production site reads from
 # (NEXT_PUBLIC_NOAA_CHARTS_URL in Netlify env vars).
 #
-# Defaults to NCDS region 20c (Puget Sound). Override the `region`
-# input on a manual run to refresh a different region — see
+# Defaults to NCDS region 20b (44.70°N–47.01°N), which covers the whole
+# water trail: the Columbia from Bonneville upstream and the Snake to
+# Clarkston. NCDS regions are latitude bands, not named areas; 20c
+# (47.01°N and north) is Puget Sound and the Salish Sea. Override the
+# `region` input on a manual run to refresh a different region — see
 # https://distribution.charts.noaa.gov/ncds/index.html for the list.
 #
 # Secrets the repo must have set (Settings → Secrets and variables →
@@ -29,9 +32,9 @@ on:
   workflow_dispatch:
     inputs:
       region:
-        description: 'NCDS region to refresh (e.g. ncds_20c)'
+        description: 'NCDS region to refresh (e.g. ncds_20b)'
         required: false
-        default: 'ncds_20c'
+        default: 'ncds_20b'
         type: string
 
 # Pin the go-pmtiles release to a known-good version. Update by hand
@@ -66,7 +69,7 @@ jobs:
     # surface even when the input is auth-gated by workflow_dispatch;
     # using env: with quoted "$REGION" sidesteps it entirely.
     env:
-      REGION: ${{ inputs.region || 'ncds_20c' }}
+      REGION: ${{ inputs.region || 'ncds_20b' }}
     steps:
       - name: Install pmtiles CLI
         run: |
