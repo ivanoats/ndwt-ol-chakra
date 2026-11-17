@@ -6,14 +6,16 @@ import { Box } from '@/components/ui/box';
 import { Heading } from '@/components/ui/heading';
 import { Link } from '@/components/ui/link';
 import { Text } from '@/components/ui/text';
+import { pageMetadata } from '@/lib/page-metadata';
 
-export const metadata: Metadata = {
-  title: 'Get Involved — Northwest Discovery Water Trail',
+export const metadata: Metadata = pageMetadata({
+  title: 'Get Involved',
+  path: '/get-involved/',
   description:
     'Volunteer, donate, or share a trip report from the Northwest ' +
     'Discovery Water Trail through the Washington Water Trails ' +
     'Association.',
-};
+});
 
 // WWTA hosts dedicated NDWT action pages for these CTAs.
 const VOLUNTEER_URL = 'https://www.wwta.org/ndwt-volunteer/';

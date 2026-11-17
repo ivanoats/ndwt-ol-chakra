@@ -3,14 +3,16 @@ import { css } from 'styled-system/css';
 
 import { loadSites } from '@/adapters/inbound/next/load-sites';
 import SiteIndex from '@/components/sites/SiteIndex';
+import { pageMetadata } from '@/lib/page-metadata';
 
-export const metadata: Metadata = {
-  title: 'Sites — Northwest Discovery Water Trail',
+export const metadata: Metadata = pageMetadata({
+  title: 'Sites',
+  path: '/sites/',
   description:
     'Browse every launch site, campground, and day-use area on the ' +
     '367-mile Northwest Discovery Water Trail. Filter by name, river, ' +
     'or facilities.',
-};
+});
 
 const pageStyle = css({
   maxWidth: '5xl',

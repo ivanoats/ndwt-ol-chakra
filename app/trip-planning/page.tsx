@@ -2,13 +2,15 @@ import type { Metadata } from 'next';
 
 import ArticleLayout from '@/components/editorial/ArticleLayout';
 import { Link } from '@/components/ui/link';
+import { pageMetadata } from '@/lib/page-metadata';
 
-export const metadata: Metadata = {
-  title: 'Trip Planning — Northwest Discovery Water Trail',
+export const metadata: Metadata = pageMetadata({
+  title: 'Trip Planning',
+  path: '/trip-planning/',
   description:
     'Plan a trip on the Northwest Discovery Water Trail using the ' +
     'interactive map, site facilities, and downloadable GPX waypoints.',
-};
+});
 
 export default function TripPlanningPage() {
   return (
