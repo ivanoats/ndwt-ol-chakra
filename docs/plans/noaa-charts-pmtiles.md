@@ -7,17 +7,18 @@ env var.**
 
 ## Status
 
-| Step                                                     | Status                                                                  |
-| -------------------------------------------------------- | ----------------------------------------------------------------------- |
-| Identify NOAA MBTiles distribution and download workflow | ✅                                                                      |
-| Convert MBTiles → PMTiles via `go-pmtiles` CLI           | ✅                                                                      |
-| Wire `ol-pmtiles` into the existing OL layer pipeline    | ✅ (PR #73)                                                             |
-| Visual confirmation: charts render correctly in dev      | ✅ (Puget Sound + San Juans, zooms 10 + 13)                             |
-| Range-request behavior verified (no full-file fetch)     | ✅                                                                      |
-| Cloudflare R2 hosting for full-resolution coverage       | ✅ (PR #74, bucket: `wwta`)                                             |
-| Weekly refresh GitHub Action                             | ✅ (`.github/workflows/refresh-noaa-charts.yml`)                        |
-| Manual upload runbook script                             | ✅ (`scripts/upload-noaa-charts.sh`)                                    |
-| User-facing ship                                         | 🚦 gated on `NEXT_PUBLIC_NOAA_CHARTS_URL` being set in Netlify env vars |
+| Step                                                     | Status                                                       |
+| -------------------------------------------------------- | ------------------------------------------------------------ |
+| Identify NOAA MBTiles distribution and download workflow | ✅                                                           |
+| Convert MBTiles → PMTiles via `go-pmtiles` CLI           | ✅                                                           |
+| Wire `ol-pmtiles` into the existing OL layer pipeline    | ✅ (PR #73)                                                  |
+| Visual confirmation: charts render correctly in dev      | ✅ (Puget Sound + San Juans, zooms 10 + 13)                  |
+| Coverage for the water trail itself                      | ✅ switched to `ncds_20b` (Columbia + Snake)                 |
+| Range-request behavior verified (no full-file fetch)     | ✅                                                           |
+| Cloudflare R2 hosting for full-resolution coverage       | ✅ (PR #74, bucket: `wwta`)                                  |
+| Weekly refresh GitHub Action                             | ✅ (`.github/workflows/refresh-noaa-charts.yml`)             |
+| Manual upload runbook script                             | ✅ (`scripts/upload-noaa-charts.sh`)                         |
+| User-facing ship                                         | ✅ `NEXT_PUBLIC_NOAA_CHARTS_URL` set in Netlify (2026-11-17) |
 
 ## Why PMTiles instead of a tile server
 
@@ -38,12 +39,11 @@ a CDN with range-request support; the Next deploy stays small.
 
 ### File sizes (real, measured on 2026-05-13)
 
-| Region                                    | MBTiles | PMTiles     | Compression | Notes                                                                                                |
-| ----------------------------------------- | ------- | ----------- | ----------- | ---------------------------------------------------------------------------------------------------- |
-| `ncds_21` (offshore Pacific NW)           | 35 MB   | 18 MB       | 49% smaller | Heavy dedup — 906k tile coords resolve to 6.3k unique PNG payloads (lots of "open ocean" duplicates) |
-| `ncds_20c` (Puget Sound)                  | 632 MB  | 496 MB      | 21% smaller | Dense detail, 906k tile coords → 100k unique payloads                                                |
-| `ncds_20b` (north Salish Sea + San Juans) | 371 MB  | est. 290 MB | —           | Not converted in this PoC; estimate based on `ncds_20c` ratio                                        |
-| **Full Salish Sea coverage estimate**     | ~1 GB   | **~790 MB** | —           | `ncds_20b` + `ncds_20c`                                                                              |
+| Region                                  | MBTiles | PMTiles     | Compression | Notes                                                                                                |
+| --------------------------------------- | ------- | ----------- | ----------- | ---------------------------------------------------------------------------------------------------- |
+| `ncds_21` (offshore Pacific NW)         | 35 MB   | 18 MB       | 49% smaller | Heavy dedup — 906k tile coords resolve to 6.3k unique PNG payloads (lots of "open ocean" duplicates) |
+| `ncds_20c` (Puget Sound)                | 632 MB  | 496 MB      | 21% smaller | Dense detail, 906k tile coords → 100k unique payloads                                                |
+| `ncds_20b` (44.70°N–47.01°N, the trail) | 371 MB  | est. 290 MB | —           | Estimate based on `ncds_20c` ratio; production region since 2026-11-17                               |
 
 PMTiles is a re-container, not a re-compressor. The size reduction
 comes entirely from content-addressed deduplication of repeated PNG
@@ -138,8 +138,41 @@ and download URL:
 curl -s 'https://gis.charttools.noaa.gov/arcgis/rest/services/MarineChart_Services/ncds_tilecache_metadata/MapServer/0/query?geometry=-123.4,47.0,-122.0,49.0&geometryType=esriGeometryEnvelope&inSR=4326&spatialRel=esriSpatialRelIntersects&outFields=name,size,baseline&f=json&returnGeometry=false' | jq '.features[].attributes'
 ```
 
-The Salish Sea splits across `ncds_20b` (north — San Juans + Strait of
-Juan de Fuca) and `ncds_20c` (south — Puget Sound proper).
+NCDS regions are **latitude bands**, not named areas. In the Pacific
+Northwest:
+
+| Region     | Latitude          | Covers                                                    |
+| ---------- | ----------------- | --------------------------------------------------------- |
+| `ncds_20a` | 39.05°N – 44.70°N | Northern California, Oregon south of Newport              |
+| `ncds_20b` | 44.70°N – 47.01°N | **The water trail**: Columbia and Snake, plus coast       |
+| `ncds_20c` | 47.01°N – 60.33°N | Puget Sound, San Juans, Strait of Juan de Fuca, the north |
+| `ncds_21`  | 44.70°N – 52.49°N | Offshore, west of 129.92°W                                |
+
+An earlier version of this doc labeled `20b` as "north Salish Sea +
+San Juans"; that was wrong. The San Juans and the Strait are in `20c`.
+
+To find the region for a point, query the metadata service with that
+point:
+
+```sh
+curl -s 'https://gis.charttools.noaa.gov/arcgis/rest/services/MarineChart_Services/ncds_tilecache_metadata/MapServer/0/query?geometry=-121.52,45.71&geometryType=esriGeometryPoint&inSR=4326&spatialRel=esriSpatialRelIntersects&outFields=name,size,baseline&returnGeometry=false&f=json' | jq '.features[].attributes'
+```
+
+### Coverage along the trail (`ncds_20b`, checked 2026-11-17)
+
+Share of the trail's 159 sites whose map tile has real chart content
+(not NOAA's ~177-byte empty tile):
+
+| River      | Sites | Zoom 11 | Zoom 13 | Zoom 15 |
+| ---------- | ----- | ------- | ------- | ------- |
+| Columbia   | 81    | 36      | 79      | 75      |
+| Snake      | 55    | 0       | 54      | 51      |
+| Clearwater | 23    | 2       | 5       | 4       |
+
+- Above The Dalles, chart content only appears from about zoom 12, so
+  a whole-trail view looks empty until you zoom in.
+- NOAA doesn't chart the Clearwater above its confluence with the
+  Snake, so that stretch stays blank regardless of region.
 
 ## Production deployment
 
@@ -220,16 +253,16 @@ export R2_ACCESS_KEY_ID=...
 export R2_SECRET_ACCESS_KEY=...
 export R2_ENDPOINT_URL=https://<ACCOUNT_ID>.r2.cloudflarestorage.com
 export R2_BUCKET=wwta
-./scripts/upload-noaa-charts.sh ncds_20c
+./scripts/upload-noaa-charts.sh ncds_20b
 ```
 
-Both paths produce `s3://wwta/charts/ncds_20c.pmtiles`.
+Both paths produce `s3://wwta/charts/ncds_20b.pmtiles`.
 
 #### 4. Verify the file is publicly readable with range requests
 
 ```sh
 # Replace with your actual public R2 URL (r2.dev or custom domain):
-curl -sI -r 0-1023 https://<your-public-r2-url>/charts/ncds_20c.pmtiles
+curl -sI -r 0-1023 https://<your-public-r2-url>/charts/ncds_20b.pmtiles
 # Expect:
 #   HTTP/2 206
 #   accept-ranges: bytes
@@ -258,7 +291,7 @@ In the Netlify site dashboard → Site configuration → Environment
 variables → Add a variable:
 
 ```text
-NEXT_PUBLIC_NOAA_CHARTS_URL = https://<your-public-r2-url>/charts/ncds_20c.pmtiles
+NEXT_PUBLIC_NOAA_CHARTS_URL = https://<your-public-r2-url>/charts/ncds_20b.pmtiles
 ```
 
 `NEXT_PUBLIC_*` is read at build time by Next, so the next deploy
@@ -268,12 +301,12 @@ will pick it up. Trigger a redeploy or push any commit.
 
 - **Weekly refresh** runs automatically via
   `.github/workflows/refresh-noaa-charts.yml` — Mondays at 12:00 UTC.
-  The workflow downloads the latest NOAA NCDS region 20c, converts to
+  The workflow downloads the latest NOAA NCDS region 20b, converts to
   PMTiles, and uploads to R2 at the same path. PMTiles is content-
   addressed by tile bytes, so unchanged tiles produce identical
   range-response payloads; browsers' HTTP caches degrade gracefully.
 - **Manual refresh** for ad-hoc updates: `gh workflow run
-refresh-noaa-charts.yml -f region=ncds_20c` (or any other NCDS
+refresh-noaa-charts.yml -f region=ncds_20b` (or any other NCDS
   region name).
 - **Cloudflare edge cache**: R2 doesn't front-cache by default; if
   you've enabled Cloudflare CDN caching on the bucket's custom
@@ -313,12 +346,9 @@ handles range responses correctly.
 navigation</strong>`. OL renders attribution as HTML by default;
    double-check this works in the production attribution control
    before shipping.
-5. **Chart edges are abrupt.** The R2-hosted archive currently
-   covers only `ncds_20c` (Puget Sound); panning west into the
-   Strait of Juan de Fuca or north into the Gulf Islands shows no
-   tiles. To extend coverage, the GHA workflow accepts a `region`
-   input — run `gh workflow run refresh-noaa-charts.yml -f
-region=ncds_20b` to upload `ncds_20b.pmtiles` alongside. A future
-   refinement could compose multiple archives into one via the
-   `pmtiles merge` command so the chart layer covers the full
-   Salish Sea seamlessly.
+5. **One region at a time.** Production serves only `ncds_20b`, so
+   charts stop at 47.01°N; Puget Sound needs `ncds_20c`. The old
+   `charts/ncds_20c.pmtiles` is still in the bucket but is no
+   longer refreshed. Serving both would mean the map drawing more
+   than one PMTiles source (the bands meet at 47.01°N, so they line
+   up) and the workflow refreshing both regions.

@@ -22,8 +22,9 @@
 # Usage:
 #   ./scripts/upload-noaa-charts.sh [region]
 #
-# Defaults to region ncds_20c (Puget Sound). Pass any NCDS region name
-# (e.g. ncds_20b for the north Salish Sea + San Juans) as the first arg
+# Defaults to region ncds_20b (44.70°N–47.01°N: the Columbia and Snake
+# along the water trail). Pass any NCDS region name (e.g. ncds_20c for
+# Puget Sound and the Salish Sea, 47.01°N and north) as the first arg
 # to refresh a different region. The region list is at
 # https://distribution.charts.noaa.gov/ncds/index.html.
 #
@@ -31,7 +32,7 @@
 
 set -euo pipefail
 
-region="${1:-ncds_20c}"
+region="${1:-ncds_20b}"
 workdir="$(mktemp -d -t noaa-pmtiles-XXXXXX)"
 trap 'rm -rf "${workdir}"' EXIT
 
