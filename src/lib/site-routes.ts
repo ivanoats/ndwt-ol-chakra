@@ -101,4 +101,5 @@ export const allStaticRoutes = (): readonly StaticRoute[] => [
   ...editorialRoutes(),
 ];
 
+/** Canonical path for a site detail page, e.g. `/sites/blalock-canyon/`. */
 export const sitePath = (slug: string): string => `/sites/${slug}/`;

@@ -42,8 +42,13 @@ export const legacySiteId = (sourceUrl: string): string | undefined => {
   return id !== null && /^\d+$/.test(id) ? id : undefined;
 };
 
+/** Format one permanent-redirect line for `_redirects`. */
 const rule = (from: string, to: string): string => `${from}  ${to}  301`;
 
+/**
+ * Render the full `_redirects` body: per-site hops, editorial pages,
+ * section catch-alls, then the global `/ndwt/*` fallback.
+ */
 export const buildRedirects = (sites: readonly LegacySite[]): string => {
   const lines: string[] = [
     '# Generated at build time by app/%5Fredirects/route.ts.',

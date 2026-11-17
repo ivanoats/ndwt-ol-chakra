@@ -40,6 +40,10 @@ export interface PageMetadataInput {
   readonly type?: 'website' | 'article';
 }
 
+/**
+ * Build a page's complete metadata: suffixed title, description,
+ * canonical path, OpenGraph, and Twitter card.
+ */
 export const pageMetadata = ({
   title,
   description,

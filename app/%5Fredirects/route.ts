@@ -10,6 +10,7 @@ import { buildRedirects } from '@/lib/legacy-redirects';
 
 export const dynamic = 'force-static';
 
+/** Render the Netlify `_redirects` file from the site dataset. */
 export async function GET(): Promise<Response> {
   const sites = await loadSites();
   return new Response(buildRedirects(sites), {

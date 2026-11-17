@@ -8,6 +8,7 @@ export const dynamic = 'force-static';
 
 // No `lastModified`: the build has no reliable per-page edit date,
 // and a build-time timestamp on every URL tells crawlers nothing.
+/** Every static, editorial, and per-site URL as an absolute `<loc>`. */
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const sites = await loadSites();
   return [

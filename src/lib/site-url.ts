@@ -13,6 +13,10 @@
 
 const FALLBACK_SITE_URL = 'http://localhost:3000';
 
+/**
+ * Pick the site origin from build-time env vars (see precedence
+ * above). Throws on a malformed URL so a bad env var fails the build.
+ */
 export const resolveSiteUrl = (
   env: Readonly<Record<string, string | undefined>>
 ): string => {

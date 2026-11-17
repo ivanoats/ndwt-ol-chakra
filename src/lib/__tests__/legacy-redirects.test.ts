@@ -4,6 +4,7 @@ import { buildRedirects, legacySiteId } from '../legacy-redirects';
 
 const LEGACY = 'http://www.ndwt.org/ndwt/explore/site.asp?site=';
 
+/** Parse the `_redirects` body into whitespace-split rule tokens. */
 const rules = (body: string): string[][] =>
   body
     .split('\n')
@@ -12,7 +13,7 @@ const rules = (body: string): string[][] =>
 
 /** Index of the first rule whose source is `from`. */
 const indexOf = (body: string, from: string): number =>
-  rules(body).findIndex((r) => r[0] === from);
+  rules(body).findIndex((tokens) => tokens[0] === from);
 
 describe('legacySiteId', () => {
   it('extracts the numeric site id', () => {
@@ -53,19 +54,23 @@ describe('buildRedirects', () => {
   });
 
   it('maps each legacy id to its slug, first wins on duplicates', () => {
-    const r = rules(body);
-    expect(r).toContainEqual([
+    const parsed = rules(body);
+    expect(parsed).toContainEqual([
       '/sites/legacy/130/',
       '/sites/blalock-canyon/',
       '301',
     ]);
-    expect(r).toContainEqual([
+    expect(parsed).toContainEqual([
       '/sites/legacy/202/',
       '/sites/harper-s-bend/',
       '301',
     ]);
-    expect(r.filter((x) => x[0] === '/sites/legacy/130/')).toHaveLength(1);
-    expect(r.some((x) => x[1] === '/sites/no-source/')).toBe(false);
+    expect(
+      parsed.filter((tokens) => tokens[0] === '/sites/legacy/130/')
+    ).toHaveLength(1);
+    expect(parsed.some((tokens) => tokens[1] === '/sites/no-source/')).toBe(
+      false
+    );
   });
 
   it('maps legacy editorial pages to their new routes', () => {
@@ -96,6 +101,6 @@ describe('buildRedirects', () => {
   });
 
   it('emits only 301s', () => {
-    for (const r of rules(body)) expect(r.at(-1)).toBe('301');
+    for (const tokens of rules(body)) expect(tokens.at(-1)).toBe('301');
   });
 });

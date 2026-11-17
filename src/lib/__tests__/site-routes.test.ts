@@ -16,18 +16,22 @@ const ROOT = process.cwd();
 const APP = join(ROOT, 'app');
 const CONTENT = join(ROOT, 'content');
 
+/** Every `page.tsx` under app/, as paths relative to app/. */
 const pageFiles = (): string[] =>
   readdirSync(APP, { recursive: true })
     .map(String)
     .filter((f) => f.endsWith(`${sep}page.tsx`) || f === 'page.tsx');
 
+/** True for routes with a `[param]` or `[[...catchAll]]` segment. */
 const isDynamic = (file: string): boolean => file.includes('[');
 
+/** Map `about/history/page.tsx` to `/about/history/`. */
 const routeFor = (file: string): string => {
   const dir = file === 'page.tsx' ? '' : file.slice(0, -'/page.tsx'.length);
   return dir === '' ? '/' : `/${dir.split(sep).join('/')}/`;
 };
 
+/** Editorial MDX files under content/, excluding blog drafts. */
 const mdxFiles = (): string[] =>
   readdirSync(CONTENT, { recursive: true })
     .map(String)

@@ -52,7 +52,11 @@ jobs:
   e2e:
     name: Playwright e2e
     needs: build
-    runs-on: ubuntu-latest
+    # Pinned: ubuntu-latest moved to 26.04, which Playwright's
+    # `install chromium` rejects ("does not support chromium on
+    # ubuntu26.04-x64"). Return to ubuntu-latest once Playwright
+    # supports it.
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
 

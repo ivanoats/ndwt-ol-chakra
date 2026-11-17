@@ -60,6 +60,7 @@ PR or issue that tracks the cutover.
    PREVIEW=https://<preview>.netlify.app
    for path in \
      "/ndwt/explore/site.asp?site=130" \
+     "/ndwt/explore/site.asp?site=130&utm_source=newsletter" \
      "/sites/legacy/130/" \
      "/ndwt/water_safety/reading_rivers.asp" \
      "/ndwt/navigation/dam_protocol.asp" \
