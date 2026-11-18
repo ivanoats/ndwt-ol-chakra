@@ -38,7 +38,7 @@ graph TB
 
   subgraph Map_["src/components/ (map)"]
     MapApp["MapApp.tsx<br/>'use client'<br/>composition + dynamic map"]
-    MapTSX["map.tsx<br/>OL Map instance<br/>5 tile layers + vectors"]
+    MapTSX["map.tsx<br/>OL Map instance<br/>base maps + overlays + site markers"]
     LayerSwitcher_["LayerSwitcher.tsx<br/>base-map + overlay toggles<br/>+ per-layer health dots"]
     Handlers["map-handlers.ts<br/>pure click + pointermove"]
     Theme["ThemeToggleButton.tsx"]
@@ -281,11 +281,10 @@ The OpenLayers integration:
   and settings button as siblings of the map.
 - `map.tsx` owns the `ol.Map` instance and its lifecycle (mount
   on `useEffect`, set the global test handle, clean up). It
-  registers five tile layers (OSM / USGS / OpenTopoMap base
-  maps + OpenSeaMap / Waymarked Trails overlays), syncs their
-  visibility from React state, and wires `tileloadend` /
-  `tileloaderror` events from each source into the tile-health
-  store.
+  offers OSM, USGS topo and aerial, OpenTopoMap and NOAA Charts,
+  plus OpenSeaMap and Waymarked Trails overlays. React state controls
+  visibility. The OSM and XYZ sources feed the tile-health store.
+  NOAA Charts uses a separate PMTiles raster source for R2 range reads.
 - `LayerSwitcher.tsx` is the floating dropdown that drives the
   base-map and overlay state, plus the per-layer health dots
   (🟢 ok / 🟡 degraded / 🔴 down) read off the tile-health
@@ -317,7 +316,16 @@ The graceful-degradation stack on top of the OL integration:
   view for offline use" pre-warm action. Reuses the
   `globalThis.__ndwtMap` handle to enumerate viewport tiles.
 
-### `src/lib/` (`register-service-worker.ts`, `tile-cache.ts`)
+### Build-time routes and metadata
+
+In `src/lib/`, `site-routes.ts` lists public routes and legacy paths.
+The sitemap adds site slugs from the loader. `legacy-redirects.ts`
+turns legacy IDs and paths into Netlify rules for the static
+`app/%5Fredirects/route.ts` export. `page-metadata.ts` supplies each
+page's canonical and share tags. `site-url.ts` provides the origin for
+the layout, sitemap and robots output.
+
+### Browser helpers in `src/lib/`
 
 Browser-edge helpers that the React tree consumes:
 

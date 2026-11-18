@@ -33,6 +33,14 @@ Architecture Decision Records explain the load-bearing choices:
   Tile resilience via tracker + service worker + cache storage
   (issue #64; PRs #65 / #67 / #68 / #70 / #71).
 
+- [0005 — NOAA charts on R2](decisions/0005-noaa-charts-on-r2.md) records
+  the choice of archive format and hosting.
+
+## Operations
+
+- [DNS cutover](operations/dns-cutover.md) covers preview checks,
+  legacy redirects, domain changes and rollback.
+
 ## Plans
 
 - [`plans/modernization.md`](./plans/modernization.md) — the
@@ -46,6 +54,12 @@ Architecture Decision Records explain the load-bearing choices:
   the photo-discovery scraper (Wikimedia Commons + WWTA blog +
   planned Flickr / Mapillary) and the curation workflow that
   feeds per-site detail pages.
+
+- [NOAA charts](plans/noaa-charts-pmtiles.md) covers region selection,
+  weekly uploads and range-request checks.
+- [OpenPOIs layer](plans/openpois-layer.md) explores a points-of-interest overlay.
+- [PNW water trails](plans/pnw-water-trails-integration.md) explores regional integration.
+- [Recreation.gov site info](plans/recreation-gov-site-info.md) assesses data enrichment.
 
 ## Other
 

@@ -334,11 +334,10 @@ handles range responses correctly.
    confirming the equivalent events on `DataTileSource`. Low
    priority — the chart layer's failure mode is "blank canvas at the
    right coordinate," which is visible enough.
-2. **No e2e coverage of the R2-served layer.** The Netlify env var
-   isn't set on PR-preview deploys (only on production), so an e2e
-   that asserts chart tiles render only fires meaningfully on
-   `main`. The LayerSwitcher button test (added in PR #73) is the
-   only unit coverage today.
+2. **Preview verification.** Production and deploy-preview builds use
+   the chart URL. To smoke-test a preview, select NOAA Charts at Hood
+   River at zoom 13 and confirm the channel draws and archive requests
+   return HTTP 206. The automated layer-switcher test covers the button.
 3. **No `LayerKey` mapping for tile-health.** `'noaa-charts'` is
    included in `BaseMapId` so the type system accepts it, but no
    tracker calls it.

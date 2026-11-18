@@ -6,12 +6,28 @@ click** that opens the info panel for a selected marker, and the
 **tile fetch with resilience** that the user actually exercises every
 time they pan the map.
 
+## Chart updates and reads
+
+The Monday GitHub Actions workflow converts NOAA region `ncds_20b` from
+MBTiles to PMTiles and overwrites the archive in R2. Selecting NOAA
+Charts makes OpenLayers request byte ranges from that archive as the
+view changes. The R2 host falls outside the tile service worker's cache.
+
+## Static export for crawlers and legacy bookmarks
+
+The build combines the route manifest and site slugs for `out/sitemap.xml`.
+The robots route points crawlers to that sitemap. Page metadata uses the
+same build-time origin. The redirects route writes `out/_redirects` from
+legacy site IDs and editorial paths. At request time Netlify applies
+those rules, including the two redirects from a legacy site query to
+its current slug.
+
 ## Build-time: GeoJSON → static HTML
 
 ```mermaid
 sequenceDiagram
   autonumber
-  participant CI as GitHub Actions
+  participant CI as Netlify build
   participant Next as next build
   participant Page as app/page.tsx<br/>(server)
   participant Loader as load-sites.ts<br/>(server-only)

@@ -22,7 +22,9 @@ flowchart LR
 
   netlify[("Netlify CDN<br/>HTTPS, deploy previews")]
   github[("GitHub<br/>repo · CI · dependabot")]
-  tiles[("Tile providers<br/>OSM · USGS Topo · OpenTopoMap<br/>OpenSeaMap · Waymarked Trails")]
+  tiles[("Tile providers<br/>OSM · USGS topo and aerial · OpenTopoMap<br/>OpenSeaMap · Waymarked Trails")]
+  charts[("Cloudflare R2 · NOAA PMTiles")]
+  site -.->|Chart byte ranges| charts
   wwta[("Washington Water Trails Assoc.<br/>future data integration")]
 
   boater -->|Browses, opens site panel,<br/>downloads GPX| netlify
@@ -65,7 +67,7 @@ flowchart TB
   end
 
   ci(["GitHub Actions CI<br/>lint · typecheck · Vitest<br/>Playwright · SonarCloud · DeepSource"])
-  tiles[("Tile servers<br/>OSM · USGS · OpenTopoMap<br/>OpenSeaMap · Waymarked Trails")]
+  tiles[("Tile servers<br/>OSM · USGS topo and aerial · OpenTopoMap<br/>OpenSeaMap · Waymarked Trails")]
   repo[("ivanoats/ndwt-ol-chakra<br/>source of truth")]
 
   boater -->|HTTPS| html
@@ -77,7 +79,10 @@ flowchart TB
   html -.->|Baked at build time| data
   html -.->|Baked at build time| mdx
   repo -->|Push triggers| ci
-  ci -->|Static export → out/| deploy
+  repo -->|Git integration| build["Netlify build"]
+  build -->|Publishes out/| deploy
+  refresh["Scheduled GitHub Actions chart refresh"] -->|Convert NOAA MBTiles and upload| r2[("Cloudflare R2")]
+  js -->|HTTP Range requests| r2
 
   classDef container fill:#f3e8ff,stroke:#9333ea,color:#581c87;
   classDef store fill:#fef3c7,stroke:#d97706,color:#78350f;
@@ -104,7 +109,7 @@ flowchart TB
   pre-rendered HTML; no MDX runtime in the client bundle.
 - **Multiple tile providers, all client-fetched** — the map UI
   exposes a layer switcher so users can toggle between the
-  OSM street basemap, USGS topo, and OpenTopoMap, and overlay
+  OSM street basemap, USGS topo or aerial, OpenTopoMap, or NOAA charts, and overlay
   OpenSeaMap sea marks or Waymarked Trails hiking. All tile
   fetches are direct from the browser to the provider; the
   static deploy never proxies them.

@@ -8,7 +8,7 @@
 | Title/mime filter for orbital + aerial noise                 | Done                                  |
 | WWTA WordPress NextGen Gallery — stubbed (Keychain auth)     | Dormant — zero NDWT galleries on WWTA |
 | WWTA blog posts (`<img>` extraction from `content.rendered`) | Done (smoke-tested)                   |
-| Flickr CC search                                             | Next priority                         |
+| Flickr CC search                                             | Proposed                              |
 | Mapillary street-level imagery                               | Planned                               |
 | USGS / NPS public-domain libraries                           | Planned                               |
 | Curated `photo-candidates.json` committed to repo            | Planned                               |
@@ -277,11 +277,7 @@ interface SitePhoto {
   readonly license: string;
   readonly licenseUrl?: string;
   readonly source:
-    | 'wikimedia-commons'
-    | 'flickr'
-    | 'wwta-gallery'
-    | 'mapillary'
-    | 'other';
+    'wikimedia-commons' | 'flickr' | 'wwta-gallery' | 'mapillary' | 'other';
   readonly sourceUrl: string;
   readonly caption?: string;
 }

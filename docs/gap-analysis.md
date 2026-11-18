@@ -1,5 +1,10 @@
 # Gap analysis: this site vs. ndwt.org
 
+**Historical snapshot after Phase 6.** Phases 8–13 subsequently shipped
+site details, the searchable index and editorial sections. For current
+delivery status see the [feature parity plan](plans/feature-parity.md).
+The comparisons and priorities below describe the earlier site.
+
 A snapshot of what the original
 [ndwt.org](http://www.ndwt.org) offers that this site doesn't yet,
 what this site offers that ndwt.org doesn't, and a recommended
