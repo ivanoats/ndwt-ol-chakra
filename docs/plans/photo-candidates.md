@@ -277,11 +277,7 @@ interface SitePhoto {
   readonly license: string;
   readonly licenseUrl?: string;
   readonly source:
-    | 'wikimedia-commons'
-    | 'flickr'
-    | 'wwta-gallery'
-    | 'mapillary'
-    | 'other';
+    'wikimedia-commons' | 'flickr' | 'wwta-gallery' | 'mapillary' | 'other';
   readonly sourceUrl: string;
   readonly caption?: string;
 }
