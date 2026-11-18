@@ -137,9 +137,14 @@ Every PR runs:
 - GitGuardian secret scan
 - WSG sustainability check
   ([wsg-check](https://github.com/ivanoats/wsg-check)) against the
-  Netlify deploy preview — advisory only (`--fail-threshold 0`),
+  Netlify deploy preview uses `--fail-threshold 50`,
   emits `wsg-report.{json,md}` as a workflow artifact and pastes
   the Markdown report into the job summary
+- Playwright runs on `ubuntu-24.04`. The pinned browser installer
+  supports that runner.
+- Set `NEXT_PUBLIC_NOAA_CHARTS_URL` at build time for NOAA Charts.
+  See the [chart runbook](docs/plans/noaa-charts-pmtiles.md) for the
+  archive path, CORS policy and refresh workflow.
 - Inline reviews from Gemini Code Assist and GitHub Copilot
 
 After CI is green, sweep every bot's comments before requesting
