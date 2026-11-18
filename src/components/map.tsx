@@ -12,7 +12,6 @@ import OSM from 'ol/source/OSM';
 import VectorSource from 'ol/source/Vector';
 import XYZ from 'ol/source/XYZ';
 import { Circle, Fill, Stroke, Style } from 'ol/style';
-import { PMTilesRasterSource } from 'ol-pmtiles';
 import { useEffect, useRef, useState } from 'react';
 
 import type { GetSite } from '../application/use-cases/get-site';
@@ -26,6 +25,7 @@ import LayerSwitcher, {
   type OverlayId,
 } from './LayerSwitcher';
 import { makeHandleClick, makeHandlePointerMove } from './map-handlers';
+import { NOAAChartSource } from './noaa-chart-source';
 import OfflineIndicator from './OfflineIndicator';
 import TileHealthBanner from './TileHealthBanner';
 
@@ -64,7 +64,7 @@ interface LayerRefs {
 // archive — see docs/plans/noaa-charts-pmtiles.md for the upload
 // runbook. When the env var is unset (or set to empty string), the
 // NOAA Charts button stays visible in the layer switcher but selecting
-// it renders a blank canvas with just the attribution string. This is
+// it shows the street map underneath. This is
 // the default on local dev (without `.env.local`) and on any
 // environment that hasn't been configured with an R2 URL yet.
 const NOAA_CHARTS_PMTILES_URL = process.env.NEXT_PUBLIC_NOAA_CHARTS_URL ?? '';
@@ -104,7 +104,7 @@ export default function MapComponent({ sites, getSite }: MapComponentProps) {
     // toggles without rebuilding the map.
     const osmLayer = new TileLayer({
       source: new OSM(),
-      visible: activeBaseMap === 'osm',
+      visible: activeBaseMap === 'osm' || activeBaseMap === 'noaa-charts',
     });
     // USGS National Map — official US government topographic basemap.
     // Service docs: https://basemap.nationalmap.gov/arcgis/rest/services/USGSTopo/MapServer
@@ -161,13 +161,13 @@ export default function MapComponent({ sites, getSite }: MapComponentProps) {
     // is conditional on NOAA_CHARTS_PMTILES_URL being set — without a
     // URL we skip the source entirely so the page doesn't issue a
     // failed fetch on first paint. The button still appears in the
-    // layer switcher; clicking it without the URL configured renders
-    // a blank canvas with the attribution string only.
+    // layer switcher; clicking it without the URL configured shows
+    // the street map underneath.
     const noaaChartsLayer = new TileLayer<DataTileSource>({
       source:
         NOAA_CHARTS_PMTILES_URL === ''
           ? undefined
-          : new PMTilesRasterSource({
+          : new NOAAChartSource({
               url: NOAA_CHARTS_PMTILES_URL,
               attributions:
                 'Charts: © <a href="https://nauticalcharts.noaa.gov/">NOAA Office of Coast Survey</a> — <strong>Not for navigation</strong>',
@@ -269,7 +269,7 @@ export default function MapComponent({ sites, getSite }: MapComponentProps) {
   // Sync base map visibility whenever activeBaseMap changes.
   useEffect(() => {
     const { osm, usgs, openTopo, aerial, noaaCharts } = layerRefs.current;
-    osm?.setVisible(activeBaseMap === 'osm');
+    osm?.setVisible(activeBaseMap === 'osm' || activeBaseMap === 'noaa-charts');
     usgs?.setVisible(activeBaseMap === 'usgs');
     openTopo?.setVisible(activeBaseMap === 'opentopomap');
     aerial?.setVisible(activeBaseMap === 'aerial');

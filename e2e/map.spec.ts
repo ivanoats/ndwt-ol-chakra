@@ -30,6 +30,51 @@ test.describe('Northwest Discovery Water Trail map', () => {
     expect(box.height).toBeGreaterThan(0);
   });
 
+  test('keeps the street map under NOAA charts at high zoom', async ({
+    page,
+  }) => {
+    await page.goto('/');
+    await page.waitForFunction(
+      () =>
+        Boolean((globalThis as unknown as { __ndwtMap?: unknown }).__ndwtMap),
+      undefined,
+      { timeout: 15_000 }
+    );
+    await page.getByRole('button', { name: 'Toggle layer switcher' }).click();
+    await page.getByRole('button', { name: 'NOAA Charts' }).click();
+    await page.evaluate(() => {
+      const map = (
+        globalThis as unknown as {
+          __ndwtMap: {
+            getView: () => { setZoom: (zoom: number) => void };
+          };
+        }
+      ).__ndwtMap;
+      map.getView().setZoom(19);
+    });
+
+    const visibility = () =>
+      page.evaluate(() => {
+        const map = (
+          globalThis as unknown as {
+            __ndwtMap: {
+              getLayers: () => {
+                getArray: () => Array<{ getVisible: () => boolean }>;
+              };
+            };
+          }
+        ).__ndwtMap;
+        const layers = map.getLayers().getArray();
+        return [layers[0]?.getVisible(), layers[4]?.getVisible()];
+      });
+
+    await expect.poll(visibility).toEqual([true, true]);
+    await page.getByRole('button', { name: 'USGS Topo' }).click();
+    await expect.poll(visibility).toEqual([false, false]);
+    await page.getByRole('button', { name: 'Street Map' }).click();
+    await expect.poll(visibility).toEqual([true, false]);
+  });
+
   test('serves the GeoJSON dataset as a static asset', async ({ request }) => {
     // Phase 4 inlines the parsed sites into the page tree at build
     // time, so the map no longer fetches /data/ndwt.geojson at
