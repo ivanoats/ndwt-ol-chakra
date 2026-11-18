@@ -32,6 +32,8 @@ Architecture Decision Records explain the load-bearing choices:
 - [`decisions/0004-tile-resilience.md`](./decisions/0004-tile-resilience.md) —
   Tile resilience via tracker + service worker + cache storage
   (issue #64; PRs #65 / #67 / #68 / #70 / #71).
+- [`decisions/0005-noaa-high-zoom.md`](./decisions/0005-noaa-high-zoom.md) —
+  NOAA chart coverage and high-zoom fallback (issue #106).
 
 - [0005 — NOAA charts on R2](decisions/0005-noaa-charts-on-r2.md) records
   the choice of archive format and hosting.
