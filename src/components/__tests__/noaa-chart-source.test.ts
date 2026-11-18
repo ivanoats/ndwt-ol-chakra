@@ -1,33 +1,25 @@
 import TileState from 'ol/TileState';
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { type Header, PMTiles } from 'pmtiles';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { NOAAChartSource } from '../noaa-chart-source';
 
-const { loadTile } = vi.hoisted(() => ({ loadTile: vi.fn() }));
-
-vi.mock('ol-pmtiles', async () => {
-  const { default: DataTileSource } = await import('ol/source/DataTile');
-  const { createXYZ } = await import('ol/tilegrid');
-  return {
-    PMTilesRasterSource: class extends DataTileSource {
-      constructor() {
-        super({ tileGrid: createXYZ({ maxZoom: 15 }) });
-        this.setLoader(loadTile);
-      }
-    },
-  };
-});
-
 describe('NOAAChartSource', () => {
   beforeEach(() => {
-    loadTile.mockReset();
+    vi.spyOn(PMTiles.prototype, 'getHeader').mockResolvedValue({
+      minZoom: 0,
+      maxZoom: 15,
+    } as Header);
   });
 
+  afterEach(() => vi.restoreAllMocks());
+
   it('renders missing tiles as transparent images', async () => {
-    loadTile.mockResolvedValue(new Uint8Array());
+    vi.spyOn(PMTiles.prototype, 'getZxy').mockResolvedValue(undefined);
     const source = new NOAAChartSource({
       url: 'https://example.com/chart.pmtiles',
     });
+    await vi.waitFor(() => expect(source.getState()).toBe('ready'));
     const grid = source.getTileGrid();
     expect(grid?.getMaxZoom()).toBe(15);
     expect(grid?.getZForResolution((grid?.getResolution(15) ?? 0) / 4)).toBe(
@@ -46,21 +38,36 @@ describe('NOAAChartSource', () => {
 
   it('preserves chart images', async () => {
     const image = document.createElement('img');
-    loadTile.mockResolvedValue(image);
+    vi.spyOn(PMTiles.prototype, 'getZxy').mockResolvedValue({
+      data: new Uint8Array([1]).buffer,
+    });
     const source = new NOAAChartSource({
       url: 'https://example.com/chart.pmtiles',
     });
-    const tile = source.getTile(15, 0, 0, 1);
-    tile?.load();
-    await vi.waitFor(() => expect(tile?.getState()).toBe(TileState.LOADED));
-    expect(tile?.getData()).toBe(image);
+    vi.spyOn(source, 'loadImage').mockResolvedValue(image);
+    vi.stubGlobal('URL', {
+      createObjectURL: vi.fn(() => 'blob:chart'),
+      revokeObjectURL: vi.fn(),
+    });
+    try {
+      await vi.waitFor(() => expect(source.getState()).toBe('ready'));
+      const tile = source.getTile(15, 0, 0, 1);
+      tile?.load();
+      await vi.waitFor(() => expect(tile?.getState()).toBe(TileState.LOADED));
+      expect(tile?.getData()).toBe(image);
+    } finally {
+      vi.unstubAllGlobals();
+    }
   });
 
   it('preserves tile load errors', async () => {
-    loadTile.mockRejectedValue(new Error('archive unavailable'));
+    vi.spyOn(PMTiles.prototype, 'getZxy').mockRejectedValue(
+      new Error('archive unavailable')
+    );
     const source = new NOAAChartSource({
       url: 'https://example.com/chart.pmtiles',
     });
+    await vi.waitFor(() => expect(source.getState()).toBe('ready'));
     const tile = source.getTile(15, 0, 0, 1);
     tile?.load();
     await vi.waitFor(() => expect(tile?.getState()).toBe(TileState.ERROR));

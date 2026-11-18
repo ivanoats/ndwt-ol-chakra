@@ -71,26 +71,29 @@ hosting too.
   — `BaseMapId` union extended with `'noaa-charts'`; `BASE_MAPS`
   array now has a `{ id: 'noaa-charts', label: 'NOAA Charts' }`
   entry.
-- [`src/components/map.tsx`](../../src/components/map.tsx) — imports
-  `PMTilesRasterSource` from `ol-pmtiles`, constructs a
-  `TileLayer<DataTileSource>` from the env-var URL, adds it to the
+- [`src/components/map.tsx`](../../src/components/map.tsx) — constructs
+  a `TileLayer<DataTileSource>` from the env-var URL, adds it to the
   layer array and to the visibility sync effect.
+- [`src/components/noaa-chart-source.ts`](../../src/components/noaa-chart-source.ts)
+  — adapts missing PMTiles entries into transparent tiles, with the
+  street map underneath. See ADR
+  [0005](../decisions/0005-noaa-high-zoom.md).
 
 ### Runtime URL resolution
 
 The NOAA chart layer's source URL comes from
 `NEXT_PUBLIC_NOAA_CHARTS_URL` at build time. When the env var is
 unset (or empty string), the layer's source is `undefined` —
-selecting "NOAA Charts" in the layer switcher renders a blank canvas
-with just the attribution string. This is the default on `main` and
-on any environment that hasn't been configured.
+selecting "NOAA Charts" in the layer switcher shows the street map
+underneath. This is the default in environments that haven't been
+configured.
 
 ```ts
 const noaaChartsLayer = new TileLayer<DataTileSource>({
   source:
     NOAA_CHARTS_PMTILES_URL === ''
       ? undefined
-      : new PMTilesRasterSource({
+      : new NOAAChartSource({
           url: NOAA_CHARTS_PMTILES_URL,
           attributions:
             'Charts: © NOAA Office of Coast Survey — <strong>Not for navigation</strong>',
