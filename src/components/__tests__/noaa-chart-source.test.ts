@@ -15,7 +15,9 @@ describe('NOAAChartSource', () => {
   afterEach(() => vi.restoreAllMocks());
 
   it('renders missing tiles as transparent images', async () => {
-    vi.spyOn(PMTiles.prototype, 'getZxy').mockResolvedValue(undefined);
+    vi.spyOn(PMTiles.prototype, 'getZxy').mockImplementation(
+      async () => undefined
+    );
     const source = new NOAAChartSource({
       url: 'https://example.com/chart.pmtiles',
     });
